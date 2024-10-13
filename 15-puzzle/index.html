@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <script type="module" src="./game_15.js"></script>
+    <style type="text/css">
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: sans-serif;
+    background-color: black;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.fullscreen-game {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: black;
+}
+.game {
+    position: relative;
+    background-color: #222;
+    width: 100vmin;
+    height: 100vmin;
+    color: white;
+}
+.congratulation-name {
+    width: 100%;
+    height: auto;
+    font-size: clamp(1.5em, 8vw, 5em);
+    text-align: center;
+    padding: 2vw;
+}
+.congratulation-desc {
+    width: auto;
+    height: auto;
+    font-size: clamp(1em, 5vw, 2.5em);
+    margin: 1vw;
+    padding: 2vw;
+}
+.congratulation-button {
+    width: 50%;
+    height: auto;
+    font-size: clamp(1em, 5vw, 2.5em);
+    padding: 3vw;
+    background-color: blue;
+    border-radius: 10px;
+    margin: 1vw auto;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+@media (orientation: landscape) {
+    .game {
+        height: 100vh; /* В ландшафтном режиме квадрат по высоте экрана */
+        width: 100vh;  /* В ландшафтном режиме квадрат по высоте экрана */
+    }
+    .fullscreen-game {
+        flex-direction: column;
+    }
+}
+
+@media (orientation: portrait) {
+    .game {
+        height: 100vw; /* В портретном режиме квадрат по ширине экрана */
+        width: 100vw;  /* В портретном режиме квадрат по ширине экрана */
+    }
+    .fullscreen-game {
+        flex-direction: row;
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="myGame" class="fullscreen-game"><div id="game" class="game"><div class="congratulation-name"><img src="https://i.imgur.com/5JNhY2u.png"><br>Пятнашки</div><div class="congratulation-desc">Расположите костяшки так, чтобы числа шли подряд.</div><div id="run_button" class="congratulation-button">Играть</div></div></div>
+    <script type="text/javascript">
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        document.getElementById('run_button').addEventListener('click', async function() {
+            const { default: Game } = await import('./game_15.js');  // Асинхронный импорт
+            const game = new Game();
+            game.runGame(); // Запуск игры
+        });
+    </script>
+</body>
+</html>
