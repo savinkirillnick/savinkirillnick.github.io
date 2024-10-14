@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<title>Crypto Maniacs</title>
+  <script type="text/javascript">
+
+	async function sendBase64ToServer(base64String, url) {
+	    const data = {
+	        base64: base64String
+	    };
+
+	    try {
+	        const response = await fetch(url, {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/json'
+	            },
+	            body: JSON.stringify(data)
+	        });
+
+	        if (!response.ok) {
+	            throw new Error(`HTTP error! Status: ${response.status}`);
+	        }
+
+	        // Ожидаем ответа в формате JSON
+	        const jsonResponse = await response.json();
+	        return jsonResponse;
+
+	    } catch (error) {
+	        console.error('Ошибка при отправке данных:', error);
+	        throw error; // Пробрасываем ошибку дальше, если нужно
+	    }
+	}
+
+	// Пример использования функции
+	const base64String = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...'; // Ваша строка Base64
+	const apiUrl = 'https://cryptobro.free.nf/api.php?i=1'; // URL вашего API
+
+	sendBase64ToServer(base64String, apiUrl)
+	    .then(response => {
+	        console.log('Ответ от сервера:', response);
+	    })
+	    .catch(error => {
+	        console.error('Ошибка:', error);
+	    });
+
+  </script>
+  </head>
+  <body>
+    <div class="main" id="main"></div>
+  </body>
+</html>
