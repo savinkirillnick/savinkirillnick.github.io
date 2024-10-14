@@ -4,45 +4,40 @@
   	<title>Crypto Maniacs</title>
   <script type="text/javascript">
 
-	async function sendBase64ToServer(base64String, url) {
-	    const data = {
-	        base64: base64String
-	    };
-
+	// Функция для скачивания файла и чтения его содержимого
+	async function downloadAndReadFile(url) {
 	    try {
-	        const response = await fetch(url, {
-	            method: 'POST',
-	            headers: {
-	                'Content-Type': 'application/json'
-	            },
-	            body: JSON.stringify(data)
-	        });
-
+	        // Используем fetch для получения файла
+	        const response = await fetch(url);
+	        
+	        // Проверяем, успешный ли ответ
 	        if (!response.ok) {
-	            throw new Error(`HTTP error! Status: ${response.status}`);
+	            throw new Error(`Ошибка при загрузке файла: ${response.statusText}`);
 	        }
-
-	        // Ожидаем ответа в формате JSON
-	        const jsonResponse = await response.json();
-	        return jsonResponse;
-
+	
+	        // Читаем содержимое как текст (или как Blob, если это необходимо)
+	        const text = await response.text();
+	        
+	        // Выводим содержимое в консоль
+	        console.log(text);
+	        
+	        // Если файл в другом формате, можно использовать разные методы:
+	        // Например, для чтения JSON:
+	        // const json = await response.json();
+	        // console.log(json);
+	        
+	        // Или для работы с бинарными данными:
+	        // const blob = await response.blob();
+	        // console.log(blob);
+	        
 	    } catch (error) {
-	        console.error('Ошибка при отправке данных:', error);
-	        throw error; // Пробрасываем ошибку дальше, если нужно
+	        console.error('Ошибка:', error);
 	    }
 	}
-
-	// Пример использования функции
-	const base64String = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...'; // Ваша строка Base64
-	const apiUrl = 'https://cryptobro.free.nf/api.php?i=1'; // URL вашего API
-
-	sendBase64ToServer(base64String, apiUrl)
-	    .then(response => {
-	        console.log('Ответ от сервера:', response);
-	    })
-	    .catch(error => {
-	        console.error('Ошибка:', error);
-	    });
+	
+	// Пример использования
+	const fileUrl = 'https://cryptobro.free.nf/api.php?i=2';
+	downloadAndReadFile(fileUrl);
 
   </script>
   </head>
