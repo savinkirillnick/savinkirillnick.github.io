@@ -1,0 +1,152 @@
+
+/* Обычный */
+@font-face {
+    font-family: "Miniablo";
+    font-style: normal;
+    font-weight: 400;
+    /* Браузер сначала попробует найти шрифт локально */
+    src: local(""),
+         /* Если не получилось, загрузит ttf */
+         url("./fonts/MiniabloRegular.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "MiniabloBold";
+    font-style: normal;
+    font-weight: 400;
+    /* Браузер сначала попробует найти шрифт локально */
+    src: local(""),
+         /* Если не получилось, загрузит ttf */
+         url("./fonts/MiniabloBold.ttf") format("truetype");
+  }
+
+  body {
+      font-family: "Miniablo";
+      background-color: black;
+      margin: 0;
+      padding: 0;
+  }
+  .container {
+      text-align: center;
+  }
+  
+  .title_head {
+      position: absolute;
+      font-family: "MiniabloBold";
+      width: auto;
+      height: auto;
+      font-size: min(20vw, 20vh);
+      top: 50%;
+      left: 50%;
+  }
+  .split_1 {
+      translate: -50% -92.5%;
+      color: #c00;
+  }
+  .split_2 {
+      translate: -50% -100%;
+      color: #eb0;
+  }
+  .title_desc {
+      width: auto;
+      height: auto;
+      font-size: min(5vw, 10vh);
+      color: #c90;
+      top: 50%;
+      left: 50%;
+      translate: -50% 0;
+      position: absolute;
+  }
+  .bottom_press {
+      position: absolute;
+      width: auto;
+      height: auto;
+      font-size: min(5vw, 10vh);
+      color: #333;
+      top: 100%;
+      left: 50%;
+      translate: -50% -100%;
+  }
+  .title_bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -60%;
+      width: min(50vw, 50vh);
+      height: min(50vw, 50vh);
+      background-color: black;
+      box-shadow: inset 0 calc(max(-30vw, -30vh)) 0 calc(min(10vw, 10vh)) #300;
+      z-index: -1;
+  }
+  .menu_head {
+      position: absolute;
+      font-family: "MiniabloBold";
+      width: auto;
+      height: auto;
+      font-size: min(20vw, 20vh);
+      top: 40%;
+      left: 50%;
+  }
+  .button {
+      position: absolute;
+      font-family: 'MiniabloBold';
+      width: auto;
+      height: auto;
+      padding: min(2vw, 2vh);
+      font-size: min(5vw, 5vh);
+      top: 50%;
+      left: 50%;
+  }
+  .button_start {
+      translate: -50% -50%;
+      background-color: #900;
+      color: #c90;
+  }
+  .button_continue {
+      translate: -50% 60%;
+      background-color: #900;
+      color: #c90;
+  }
+  .button_demo {
+      translate: -50% 170%;
+      background-color: #900;
+      color: #c90;
+  }
+  .full_screen {
+      width: 100vw;
+      height: 100vh;
+  }
+  
+  .flex_container {
+      width: min(100vw, 100vh);
+      display: flex;
+      margin: auto;
+  }
+  .hero_tile {
+      width: 50%;
+      height: auto;
+      color: #663;
+      font-size: min(5vw, 5vh);
+      margin: auto;
+  }
+  .hero_warrior {
+      width: min(5vw, 5vh);
+      height: calc(3* min(5vw, 5vh));
+      background: #988;
+      box-shadow: inset 0 calc(min(4vw, 4vh)) 0 0 #ffd;
+  }
+  .hero_mage {
+      width: min(5vw, 5vh);
+      height: calc(3* min(5vw, 5vh));
+      background: #889;
+      box-shadow: inset 0 calc(min(4vw, 4vh)) 0 0 #ffd;
+  }
+  .hero_selected {
+      width: min(5vw, 5vh);
+      height: auto;
+      border: min(1vw, 1vh) solid transparent;
+      margin: auto;
+  }
+  .hero_selected:hover {
+      border: min(1vw, 1vh) solid #c90;
+  }
