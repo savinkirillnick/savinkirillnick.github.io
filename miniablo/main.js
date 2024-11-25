@@ -79,6 +79,15 @@ const hero_select_screen = () => {
 
 }
 
+const create_demo = () => {
+    const text = `<canvas class="full_screen" id="gameCanvas"></canvas>`;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'full_screen';
+    canvas.id = 'gameCanvas';
+    d.appendChild(canvas);
+}
+
 const main = () => {
     title_screen();
 };
