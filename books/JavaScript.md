@@ -2978,5 +2978,525 @@ document.body.appendChild(script);
 - Важно помнить о безопасности и не пытаться обойти CORS через несанкционированные методы.
 
 
+---
+
+### Работа с DOM
+
+#### Вопрос 36. Что такое DOM? 
+
+DOM (Document Object Model) — это интерфейс программирования для веб-документов. Он представляет структуру документа в виде дерева, где каждый элемент HTML или XML представлен как объект. DOM позволяет программам и скриптам динамически изменять содержание, структуру и стили документа.
+
+**Основные особенности DOM**:
+
+1. **Структура дерева**: Все элементы, текст и атрибуты документа представляются как узлы в дереве. Корень дерева — это объект `document`.
+
+2. **Язык независимости**: Хотя DOM часто используется с JavaScript, он не привязан к конкретному языку программирования. Многие языки могут работать с DOM.
+
+3. **Динамическое изменение**: DOM позволяет изменять содержимое и структуру веб-страницы после её загрузки, создавая интерактивный пользовательский интерфейс.
+
+**Примеры работы с DOM в JavaScript**:
+
+1. **Получение элементов**
+
+Вы можете получить элементы документа с помощью различных методов.
+
+**Пример**:
+```javascript
+// Получаем элемент по ID
+const header = document.getElementById('header');
+
+// Получаем элементы по классу
+const items = document.getElementsByClassName('item');
+
+// Получаем элементы по селектору CSS
+const buttons = document.querySelectorAll('.button');
+```
+
+2. **Изменение содержимого**
+
+Используя свойства объектов DOM, можно изменять содержимое элементов.
+
+**Пример**:
+```javascript
+const header = document.getElementById('header');
+header.textContent = "Новый заголовок"; // Изменяем текст заголовка
+
+const paragraph = document.querySelector('p');
+paragraph.innerHTML = "<strong>Этот текст будет выделен</strong>"; // Изменяем HTML содержимое
+```
+
+3. **Изменение стилей**
+
+Вы также можете изменять стили элементов, используя свойство `style`.
+
+**Пример**:
+```javascript
+const button = document.querySelector('.button');
+button.style.backgroundColor = "blue"; // Меняем цвет фона кнопки
+button.style.color = "white"; // Меняем цвет текста
+```
+
+4. **Добавление и удаление элементов**
+
+DOM позволяет добавлять и удалять элементы из документа.
+
+**Пример добавления элемента**:
+```javascript
+const newDiv = document.createElement('div'); // Создаем новый элемент
+newDiv.textContent = "Новый элемент"; // Задаем текст
+document.body.appendChild(newDiv); // Добавляем в конец документа
+```
+
+**Пример удаления элемента**:
+```javascript
+const elementToDelete = document.getElementById('toDelete'); // Находим элемент
+elementToDelete.parentNode.removeChild(elementToDelete); // Удаляем элемент
+```
+
+5. **Обработка событий**
+
+DOM позволяет реагировать на действия пользователя, такие как клики, ввод текста и т.д.
+
+**Пример**:
+```javascript
+const button = document.querySelector('.button');
+button.addEventListener('click', () => {
+    alert("Кнопка нажата!"); // Отображаем сообщение при нажатии кнопки
+});
+```
+
+**Резюме**
+
+- **DOM** — это объектная модель, представляющая структуру HTML или XML документа как дерево узлов.
+- Вы можете использовать JavaScript для манипуляции DOM: получать, изменять, добавлять и удалять элементы, а также обрабатывать события.
+
+
+#### Вопрос 37. Как найти элемент на странице? (`getElementById`, `querySelector` и др.) 
+
+В JavaScript для поиска элементов на странице можно использовать несколько методов. Каждый из них предоставляет различные способы доступа к элементам DOM в зависимости от ваших нужд. Вот основные из них:
+
+1. **`getElementById`**
+
+Метод `getElementById` находит элемент по его уникальному идентификатору. Этот метод возвращает единственный элемент, так как идентификатор должен быть уникальным на странице.
+
+**Пример**:
+```html
+<div id="myElement">Привет, мир!</div>
+<script>
+const element = document.getElementById('myElement');
+console.log(element.textContent); // Выводит: "Привет, мир!"
+</script>
+```
+
+2. **`getElementsByClassName`**
+
+Метод `getElementsByClassName` возвращает коллекцию элементов, которые имеют заданный класс. Это не массив, а "живую" коллекцию, т.е. она обновляется автоматически при изменении DOM.
+
+**Пример**:
+```html
+<div class="item">Элемент 1</div>
+<div class="item">Элемент 2</div>
+<div class="item">Элемент 3</div>
+<script>
+const items = document.getElementsByClassName('item');
+console.log(items.length); // Выводит: 3
+console.log(items[0].textContent); // Выводит: "Элемент 1"
+</script>
+```
+
+3. **`getElementsByTagName`**
+
+Метод `getElementsByTagName` возвращает коллекцию всех элементов с указанным тегом.
+
+**Пример**:
+```html
+<p>Первый параграф</p>
+<p>Второй параграф</p>
+<script>
+const paragraphs = document.getElementsByTagName('p');
+console.log(paragraphs.length); // Выводит: 2
+console.log(paragraphs[1].textContent); // Выводит: "Второй параграф"
+</script>
+```
+
+4. **`querySelector`**
+
+Метод `querySelector` возвращает первый элемент, который соответствует указанному CSS-селектору. Это универсальный метод, позволяющий использовать любую комбинацию селекторов.
+
+**Пример**:
+```html
+<div class="content">
+    <p class="text">Hello, world!</p>
+</div>
+<script>
+const paragraph = document.querySelector('.content .text');
+console.log(paragraph.textContent); // Выводит: "Hello, world!"
+</script>
+```
+
+5. **`querySelectorAll`**
+
+Метод `querySelectorAll` возвращает все элементы, которые соответствуют указанному CSS-селектору, в виде статической коллекции (NodeList).
+
+**Пример**:
+```html
+<div class="box">Куб 1</div>
+<div class="box">Куб 2</div>
+<div class="box">Куб 3</div>
+<script>
+const boxes = document.querySelectorAll('.box');
+console.log(boxes.length); // Выводит: 3
+boxes.forEach((box, index) => {
+    console.log(`Куб ${index + 1}: ${box.textContent}`); // Выводит текст каждого куба
+});
+</script>
+```
+
+6. **`parentNode` и `children`**
+
+Вы также можете находить элементы относительно других элементов, используя свойства `parentNode` и `children`.
+
+**Пример**:
+```html
+<div id="parent">
+    <p class="child">Дочерний элемент 1</p>
+    <p class="child">Дочерний элемент 2</p>
+</div>
+<script>
+const parent = document.getElementById('parent');
+const children = parent.children;
+console.log(children.length); // Выводит: 2
+console.log(children[0].textContent); // Выводит: "Дочерний элемент 1"
+</script>
+```
+
+**Резюме**
+
+В JavaScript есть множество методов для поиска элементов на странице, включая `getElementById`, `getElementsByClassName`, `getElementsByTagName`, `querySelector` и `querySelectorAll`. Выбор метода зависит от того, какую задачу вы решаете: хотите ли вы найти один элемент или несколько, и как именно вы хотите их идентифицировать.
+
+
+#### Вопрос 38. Как создать новый элемент и добавить его в DOM? 
+
+В JavaScript создание нового элемента и добавление его в DOM можно выполнить с использованием методов, таких как `document.createElement()` и `appendChild()`. Вот шаги и примеры, которые помогут вам понять данный процесс.
+
+**Шаги для создания нового элемента и его добавления в DOM**:
+
+1. **Создайте новый элемент с помощью `document.createElement()`.**
+2. **Установите свойства или содержимое для созданного элемента (если необходимо).**
+3. **Добавьте созданный элемент в нужное место в DOM с использованием методов, таких как `appendChild()`, `insertBefore()`, или `replaceChild()`.**
+
+**Примеры создания и добавления элементов в DOM**:
+
+1. **Простой пример добавления элемента**
+
+**Пример**:
+```html
+<div id="container"></div>
+<script>
+    // Шаг 1: Создаём новый элемент
+    const newDiv = document.createElement('div');
+
+    // Шаг 2: Устанавливаем содержимое и другие свойства
+    newDiv.textContent = 'Это новый элемент';
+    newDiv.style.backgroundColor = 'lightblue'; // Задаём стиль
+
+    // Шаг 3: Находим элемент, в который нужно добавить новый элемент
+    const container = document.getElementById('container');
+
+    // Шаг 4: Добавляем новый элемент в DOM
+    container.appendChild(newDiv);
+</script>
+```
+
+2. **Добавление нескольких элементов**
+
+**Пример**:
+```html
+<ul id="list"></ul>
+<script>
+    const list = document.getElementById('list');
+
+    // Создаем массив с данными
+    const items = ['Элемент 1', 'Элемент 2', 'Элемент 3'];
+
+    items.forEach(item => {
+        // Создаем новый элемент списка
+        const listItem = document.createElement('li');
+        listItem.textContent = item; // Устанавливаем текст
+        list.appendChild(listItem); // Добавляем элемент в список
+    });
+</script>
+```
+
+3. **Вставка элемента перед другим элементом**
+
+**Пример**:
+```html
+<div id="parent">
+    <p id="reference">Это ссылка</p>
+</div>
+<script>
+    // Создаём новый элемент
+    const newParagraph = document.createElement('p');
+    newParagraph.textContent = 'Это новый параграф';
+
+    // Находим родительский элемент и ссылку
+    const parent = document.getElementById('parent');
+    const reference = document.getElementById('reference');
+
+    // Вставляем новый элемент перед ссылкой
+    parent.insertBefore(newParagraph, reference);
+</script>
+```
+
+4. **Замена существующего элемента**
+
+**Пример**:
+```html
+<div id="container">
+    <p id="oldElement">Старый элемент</p>
+</div>
+<script>
+    // Создаём новый элемент
+    const newElement = document.createElement('p');
+    newElement.textContent = 'Это новый элемент, заменяющий старый';
+
+    // Находим старый элемент
+    const oldElement = document.getElementById('oldElement');
+
+    // Заменяем старый элемент новым
+    oldElement.parentNode.replaceChild(newElement, oldElement);
+</script>
+```
+
+**Резюме**
+
+В JavaScript создание новых элементов и их добавление в DOM осуществляется через методы `document.createElement()`, `appendChild()`, `insertBefore()` и `replaceChild()`. Эти методы предоставляют гибкие возможности для динамического изменения контента веб-страницы.
+
+
+#### Вопрос 39. Как изменить стиль элемента через JavaScript?
+
+В JavaScript можно изменять стиль элемента, обращаясь к его свойствам через объект `style`. Давайте рассмотрим, как это сделать, а также приведём несколько примеров.
+
+**Основные способы изменения стилей элементов**:
+
+1. **Прямое изменение через свойство `style`**.
+2. **Добавление или удаление классов с помощью `classList`**.
+3. **Использование алерта стилей через CSS в JavaScript, добавляя или изменяя атрибуты.**
+
+**Примеры изменения стилей элемента**:
+
+1. **Прямое изменение стилей через `style`**
+
+**Пример**:
+```html
+<div id="myElement" style="width: 100px; height: 100px; background-color: red;"></div>
+<button id="changeStyle">Изменить стиль</button>
+
+<script>
+    document.getElementById('changeStyle').onclick = function() {
+        const element = document.getElementById('myElement');
+        // Изменяем стиль элемента
+        element.style.backgroundColor = 'blue'; // Меняем цвет фона
+        element.style.width = '200px'; // Меняем ширину
+        element.style.height = '200px'; // Меняем высоту
+    };
+</script>
+```
+
+В этом примере, при нажатии на кнопку, цвет фона, ширина и высота div изменятся.
+
+2. **Изменение стилей с помощью `classList`**
+
+Метод `classList` позволяет добавлять, удалять и переключать классы CSS у элементов. Это удобно, если у вас есть заранее определенные стили в CSS.
+
+**Пример**:
+```html
+<style>
+    .newStyle {
+        background-color: yellow;
+        width: 150px;
+        height: 150px;
+    }
+</style>
+
+<div id="myElement" class="box" style="width: 100px; height: 100px; background-color: red;"></div>
+<button id="applyClass">Применить класс</button>
+
+<script>
+    document.getElementById('applyClass').onclick = function() {
+        const element = document.getElementById('myElement');
+        // Добавляем новый класс
+        element.classList.add('newStyle');
+    };
+</script>
+```
+
+В этом примере при нажатии на кнопку элемент получит новый стиль, определенный в классе `newStyle`.
+
+3. **Удаление стилей**
+
+Вы также можете удалять стили у элемента, устанавливая свойства в пустое значение или удаляя класс.
+
+**Пример**:
+```html
+<style>
+    .highlight {
+        background-color: green;
+    }
+</style>
+
+<div id="myElement" class="box highlight" style="width: 100px; height: 100px;"></div>
+<button id="removeStyle">Удалить стиль</button>
+
+<script>
+    document.getElementById('removeStyle').onclick = function() {
+        const element = document.getElementById('myElement');
+        // Удаляем класс
+        element.classList.remove('highlight');
+        // Можно также удалить инлайн-стили
+        element.style.width = '';
+        element.style.height = '';
+    };
+</script>
+```
+
+При нажатии на кнопку у элемента будет удален класс `highlight`, и установленные стили также будут сброшены.
+
+4. **Изменение нескольких стилей**
+
+Можно устанавливать несколько стилей одновременно, используя объект стилей.
+
+**Пример**:
+```html
+<div id="myElement" style="width: 100px; height: 100px; background-color: red;"></div>
+<button id="changeAllStyles">Изменить все стили</button>
+
+<script>
+    document.getElementById('changeAllStyles').onclick = function() {
+        const element = document.getElementById('myElement');
+        
+        // Меняем несколько стилей одновременно
+        Object.assign(element.style, {
+            backgroundColor: 'purple',
+            width: '300px',
+            height: '300px',
+        });
+    };
+</script>
+```
+
+**Резюме**
+
+Вы можете изменять стиль элемента в JavaScript, используя свойство `style` для прямого изменения стилей, `classList` для управления классами CSS, а также с помощью метода `Object.assign` для изменения нескольких стилей одновременно. Это позволяет гибко управлять внешним видом элементов на странице.
+
+
+#### Вопрос 40. Как обработать событие клика на кнопке? 
+
+В JavaScript обработка события клика на кнопке осуществляется с использованием метода `addEventListener()` или через атрибут `onclick` элемента. Рассмотрим оба способа и приведем примеры.
+
+1. **Использование `addEventListener()`**
+
+Метод `addEventListener()` добавляет обработчик события к элементу, что позволяет отслеживать различные события, такие как клики, наведение и т.д.
+
+**Пример**:
+```html
+<button id="myButton">Нажми меня!</button>
+
+<script>
+    const button = document.getElementById('myButton');
+
+    // Добавляем обработчик события клика
+    button.addEventListener('click', function() {
+        alert('Кнопка нажата!'); // Показать уведомление при клике
+    });
+</script>
+```
+
+2. **Использование атрибута `onclick`**
+
+Вы можете установить обработчик события непосредственно через атрибут `onclick` в HTML. Однако этот способ менее предпочтителен, так как он смешивает HTML и JavaScript.
+
+**Пример**:
+```html
+<button id="myButton" onclick="handleClick()">Нажми меня!</button>
+
+<script>
+    function handleClick() {
+        alert('Кнопка нажата!'); // Показать уведомление при клике
+    }
+</script>
+```
+
+3. **Обработка события клика с использованием стрелочной функции**
+
+Вы можете использовать стрелочные функции для более компактной записи обработчиков событий.
+
+**Пример**:
+```html
+<button id="myButton">Нажми меня!</button>
+
+<script>
+    const button = document.getElementById('myButton');
+
+    // Используем стрелочную функцию в качестве обработчика
+    button.addEventListener('click', () => {
+        alert('Кнопка нажата!');
+    });
+</script>
+```
+
+4. **Передача параметров в обработчик**
+
+Если вам нужно передать параметры в функцию-обработчик, вы можете использовать обертку.
+
+**Пример**:
+```html
+<button id="myButton">Нажми меня!</button>
+
+<script>
+    const button = document.getElementById('myButton');
+
+    // Обертка для передачи параметров
+    button.addEventListener('click', (event) => handleClick(event, 'Кнопка нажата!'));
+
+    function handleClick(event, message) {
+        alert(message); // Показать переданное сообщение
+    }
+</script>
+```
+
+5. **Удаление обработчика события**
+
+Если вам нужно удалить обработчик события, вы можете сделать это с помощью метода `removeEventListener()`.
+
+**Пример**:
+```html
+<button id="myButton">Нажми меня!</button>
+<button id="removeButton">Удалить обработчик</button>
+
+<script>
+    const button = document.getElementById('myButton');
+    const removeButton = document.getElementById('removeButton');
+
+    function handleClick() {
+        alert('Кнопка нажата!');
+    }
+
+    button.addEventListener('click', handleClick);
+
+    // Удаляем обработчик события
+    removeButton.addEventListener('click', () => {
+        button.removeEventListener('click', handleClick);
+        alert('Обработчик события удален!');
+    });
+</script>
+```
+
+**Резюме**
+
+Обработку события клика на кнопке можно выполнить разными способами в JavaScript, включая использование `addEventListener()` и атрибута `onclick`. Выбор способа зависит от ваших предпочтений и требований к структуре кода. Использование `addEventListener()` является более предпочтительным, поскольку позволяет разделять логику и структуру.
+
+
 
 
