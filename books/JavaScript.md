@@ -2757,5 +2757,226 @@ fetch("https://jsonplaceholder.typicode.com/posts/1", {
 - **HEAD**: Получение заголовков ответа без тела.
 - **OPTIONS**: Запрос доступных методов для ресурса.
 
+#### Вопрос 34. Как работать с `fetch`? 
+
+`fetch` — это современный API для выполнения HTTP-запросов в JavaScript. Он позволяет осуществлять асинхронные запросы, возвращая промис, который можно использовать для обработки ответа.
+
+Вот основные моменты, которые нужно знать о `fetch`, а затем приведём примеры использования.
+
+**Основные особенности `fetch`**:
+
+1. `fetch()` принимает URL как обязательный аргумент и опционально принимает объект параметров для настройки запроса.
+2. Возвращает промис, который разрешается в объект `Response`, представляющий ответ на запрос.
+3. Методы для извлечения данных из `Response`: `json()`, `text()`, `blob()`, `formData()`, и `arrayBuffer()`.
+4. Не выбрасывает исключение для HTTP-статусов 4xx и 5xx; необходимо явно проверять `response.ok`.
+
+**Примеры использования `fetch`**:
+
+1. **GET-запрос**
+
+**Пример получения данных**:
+```javascript
+fetch("https://jsonplaceholder.typicode.com/posts/1")
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json(); // Парсим ответ в JSON
+    })
+    .then((data) => {
+        console.log(data); // Выводим полученные данные
+    })
+    .catch((error) => {
+        console.error("Fetch error:", error);
+    });
+```
+
+2. **POST-запрос**
+
+**Пример отправки данных**:
+```javascript
+const postData = {
+    title: "foo",
+    body: "bar",
+    userId: 1,
+};
+
+fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST", // Указываем метод
+    headers: {
+        "Content-Type": "application/json", // Указываем тип контента
+    },
+    body: JSON.stringify(postData), // Преобразуем объект в JSON
+})
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json(); // Парсим ответ в JSON
+    })
+    .then((data) => {
+        console.log("Data posted successfully:", data); // Выводим ответ сервера
+    })
+    .catch((error) => {
+        console.error("Fetch error:", error);
+    });
+```
+
+3. **PUT-запрос**
+
+**Пример обновления данных**:
+```javascript
+const updatedData = {
+    title: "foo",
+    body: "updated text",
+    userId: 1,
+};
+
+fetch("https://jsonplaceholder.typicode.com/posts/1", {
+    method: "PUT", // Указываем метод
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedData), // Преобразуем объект в JSON
+})
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json(); // Парсим ответ в JSON
+    })
+    .then((data) => {
+        console.log("Data updated successfully:", data);
+    })
+    .catch((error) => {
+        console.error("Fetch error:", error);
+    });
+```
+
+4. **DELETE-запрос**
+
+**Пример удаления данных**:
+```javascript
+fetch("https://jsonplaceholder.typicode.com/posts/1", {
+    method: "DELETE", // Указываем метод
+})
+    .then((response) => {
+        if (response.ok) {
+            console.log("Resource deleted successfully");
+        } else {
+            throw new Error("Delete request failed");
+        }
+    })
+    .catch((error) => {
+        console.error("Fetch error:", error);
+    });
+```
+
+5. **Обработка ошибок**
+
+В случае ошибок сетевого запроса можно использовать блок `catch`, чтобы обработать ошибки. Следует также всегда проверять `response.ok` для обработки возможных ошибок на сервере.
+
+**Резюме**
+
+`fetch` предоставляет простой и удобный способ для выполнения HTTP-запросов в JavaScript. Он поддерживает различные методы, включая `GET`, `POST`, `PUT`, и `DELETE`, а также позволяет настраивать заголовки и тело запросов. 
+
+
+
+#### Вопрос 35. Что такое CORS? Как обойти ограничения?
+
+CORS (Cross-Origin Resource Sharing) — это механизм безопасности, который позволяет или запрещает веб-приложениям, работающим на одном домене, запрашивать ресурсы с другого домена. Этот механизм помогает предотвратить атаки злоумышленников, такие как CSRF (Cross-Site Request Forgery).
+
+**Как работает CORS?**
+
+Когда веб-страница пытается сделать HTTP-запрос к ресурсам на другом домене (например, с `http://example.com` к `http://api.example.com`), браузер автоматически добавляет заголовок `Origin` к запросу. Сервер, обрабатывающий этот запрос, должен явным образом разрешить доступ к своим ресурсам, добавив заголовок `Access-Control-Allow-Origin` в ответ.
+
+**Пример CORS**
+
+- **Запрос**:
+```http
+GET /resource HTTP/1.1
+Host: api.example.com
+Origin: http://example.com
+```
+
+- **Ответ**:
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://example.com
+```
+
+Если сервер не возвращает заголовок `Access-Control-Allow-Origin` с указанием источника, запрашивающее приложение не сможет получить доступ к ресурсу, и браузер заблокирует ответ.
+
+**Как обойти ограничения CORS?**
+
+Обходить ограничения CORS не рекомендуется, поскольку это может привести к нарушению безопасности приложения. Однако, если вы управляете сервером или у вас есть разрешение, вы можете следовать некоторым подходам для настройки CORS.
+
+1. **Настройка сервера для разрешения CORS**
+
+Если вы контролируете сервер, добавьте нужные заголовки CORS в свои ответы. Например, для Node.js с использованием Express можно сделать так:
+
+```javascript
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+app.use(cors()); // Разрешаем CORS для всех источников
+
+app.get('/resource', (req, res) => {
+    res.json({ message: 'Hello from CORS-enabled server!' });
+});
+
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});
+```
+
+С помощью библиотеки `cors`, вы можете настроить разрешения, передав параметры, чтобы ограничить доступ только для определённых источников.
+
+2. **Использование прокси-сервера**
+
+Вы можете настроить прокси-сервер, который будет выступать посредником между клиентом и сервером. Это позволит избежать проблем с CORS (поскольку запрос будет отправляться к вашему прокси-серверу, а не напрямую к другому домену).
+
+**Пример на Node.js с использованием `http-proxy-middleware`**:
+```javascript
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+const app = express();
+
+app.use('/api', createProxyMiddleware({
+    target: 'http://api.example.com',
+    changeOrigin: true,
+}));
+
+app.listen(3000, () => {
+    console.log('Proxy server is running on port 3000');
+});
+```
+
+3. **Использование JSONP (только для GET-запросов)**
+
+JSONP (JSON with Padding) — это старый метод обхода ограничений CORS, который использует теги `<script>` для выполнения запросов. Однако этот метод поддерживает только GET-запросы.
+
+**Пример JSONP**:
+```html
+<script>
+function handleResponse(data) {
+    console.log(data); // Обработка ответа
+}
+
+const script = document.createElement('script');
+script.src = "http://api.example.com/resource?callback=handleResponse"; // Указываем функцию обратного вызова
+document.body.appendChild(script);
+</script>
+```
+
+**Резюме**
+
+- CORS — это механизм безопасности, который позволяет контролировать доступ к ресурсам между различными доменами.
+- Чтобы обойти ограничения CORS, вы можете настраивать сервер для разрешения нужных заголовков, использовать прокси-сервер или применять JSONP (только для GET).
+- Важно помнить о безопасности и не пытаться обойти CORS через несанкционированные методы.
+
+
 
 
