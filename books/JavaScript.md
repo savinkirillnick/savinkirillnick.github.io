@@ -915,7 +915,7 @@ person.greet(); // "Hello, undefined", поскольку `this` не указы
 ```javascript
 // Обычная функция
 function add(a, b) {
-   return a + b;
+  return a + b;
 }
 
 // Стрелочная функция
@@ -1082,20 +1082,20 @@ Callback-функция — это функция, которая передае
 
 ```javascript
 function greet(name, callback) {
-    console.log("Hello, " + name);
-    if (callback) {
-        callback();
-    }
+  console.log("Hello, " + name);
+  if (callback) {
+    callback();
+  }
 }
 
 function goodBye() {
-    console.log("Goodbye!");
+  console.log("Goodbye!");
 }
 
 greet("Alice", goodBye);
 // Вывод:
- // Hello, Alice
- // Goodbye!
+// Hello, Alice
+// Goodbye!
 ```
 В этом примере функция `greet` принимает имя и callback-функцию `goodBye`, которая вызывается после приветствия.
 
@@ -1103,10 +1103,10 @@ greet("Alice", goodBye);
 
 ```javascript
 function fetchData(callback) {
-    setTimeout(() => {
-        const data = "Data from server";
-        callback(data);
-    }, 1000);
+  setTimeout(() => {
+    const data = "Data from server";
+    callback(data);
+  }, 1000);
 }
 
 fetchData(function(result) {
@@ -1150,10 +1150,10 @@ console.log(squaredNumbers); // [1, 4, 9, 16, 25]
 
 ```javascript
 function factorial(n) {
-    if (n === 0 || n === 1) {
-        return 1; // Базовое условие
-    }
-    return n * factorial(n - 1); // Рекурсивный случай
+  if (n === 0 || n === 1) {
+    return 1; // Базовое условие
+  }
+  return n * factorial(n - 1); // Рекурсивный случай
 }
 
 console.log(factorial(5)); // 120
@@ -1167,13 +1167,13 @@ console.log(factorial(5)); // 120
 
 ```javascript
 function fibonacci(n) {
-    if (n === 0) {
-        return 0; // Базовое условие
-    }
-    if (n === 1) {
-        return 1; // Базовое условие
-    }
-    return fibonacci(n - 1) + fibonacci(n - 2); // Рекурсивный случай
+  if (n === 0) {
+    return 0; // Базовое условие
+  }
+  if (n === 1) {
+    return 1; // Базовое условие
+  }
+  return fibonacci(n - 1) + fibonacci(n - 2); // Рекурсивный случай
 }
 
 console.log(fibonacci(6)); // 8 (последовательность: 0, 1, 1, 2, 3, 5, 8)
@@ -1187,25 +1187,25 @@ console.log(fibonacci(6)); // 8 (последовательность: 0, 1, 1, 
 
 ```javascript
 const tree = {
-    value: 1,
-    left: {
-        value: 2,
-        left: null,
-        right: null
-    },
-    right: {
-        value: 3,
-        left: null,
-        right: null
-    }
+  value: 1,
+  left: {
+    value: 2,
+    left: null,
+    right: null
+  },
+  right: {
+    value: 3,
+    left: null,
+    right: null
+  }
 };
 
 function traverse(node) {
-    if (node) {
-        console.log(node.value); // Вывод значения текущего узла
-        traverse(node.left); // Рекурсивный вызов для левого поддерева
-        traverse(node.right); // Рекурсивный вызов для правого поддерева
-    }
+  if (node) {
+    console.log(node.value); // Вывод значения текущего узла
+    traverse(node.left); // Рекурсивный вызов для левого поддерева
+    traverse(node.right); // Рекурсивный вызов для правого поддерева
+  }
 }
 
 traverse(tree); // 1 2 3
@@ -1231,7 +1231,7 @@ traverse(tree); // 1 2 3
 **Синтаксис**:
 ```javascript
 const newArray = array.map((element, index, array) => {
-    // Возвращаемое значение для нового массива
+  // Возвращаемое значение для нового массива
 });
 ```
 
@@ -1251,7 +1251,7 @@ console.log(squaredNumbers); // [1, 4, 9, 16]
 **Синтаксис**:
 ```javascript
 const newArray = array.filter((element, index, array) => {
-    // Условие для фильтрации
+  // Условие для фильтрации
 });
 ```
 
@@ -1271,7 +1271,7 @@ console.log(evenNumbers); // [2, 4]
 **Синтаксис**:
 ```javascript
 const result = array.reduce((accumulator, currentValue, index, array) => {
-    // Логика аккумуляции
+  // Логика аккумуляции
 }, initialValue);
 ```
 
@@ -1299,8 +1299,8 @@ const numbers = [1, 2, 3, 4, 5, 6];
 
 // Сначала фильтруем четные числа, затем возводим их в квадрат
 const result = numbers
-    .filter(num => num % 2 === 0) // [2, 4, 6]
-    .map(num => num * num);      // [4, 16, 36]
+  .filter(num => num % 2 === 0) // [2, 4, 6]
+  .map(num => num * num);      // [4, 16, 36]
 
 console.log(result); // [4, 16, 36]
 ```
@@ -1386,13 +1386,13 @@ console.log(obj.constructor === Array); // false
 **Пример**:
 ```javascript
 const original = {
-    name: "Alice",
-    age: 30,
-    hobbies: ["reading", "traveling"],
-    address: {
-        city: "Wonderland",
-        zip: "12345"
-    }
+  name: "Alice",
+  age: 30,
+  hobbies: ["reading", "traveling"],
+  address: {
+    city: "Wonderland",
+    zip: "12345"
+  }
 };
 
 const copy = JSON.parse(JSON.stringify(original));
@@ -1413,34 +1413,34 @@ console.log(original.address.city); // Wonderland
 **Пример**:
 ```javascript
 function deepClone(obj) {
-    // Проверяем, является ли объект массивом
-    if (Array.isArray(obj)) {
-        return obj.map(item => deepClone(item));
-    }
+  // Проверяем, является ли объект массивом
+  if (Array.isArray(obj)) {
+    return obj.map(item => deepClone(item));
+  }
 
-    // Проверяем, является ли объект обычным объектом
-    if (obj && typeof obj === 'object') {
-        const clonedObj = {};
-        for (let key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                clonedObj[key] = deepClone(obj[key]);
-            }
-        }
-        return clonedObj;
+  // Проверяем, является ли объект обычным объектом
+  if (obj && typeof obj === 'object') {
+    const clonedObj = {};
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        clonedObj[key] = deepClone(obj[key]);
+      }
     }
+    return clonedObj;
+  }
 
-    // Если это не объект или массив, просто возвращаем его
-    return obj;
+  // Если это не объект или массив, просто возвращаем его
+  return obj;
 }
 
 const original = {
-    name: "Alice",
-    age: 30,
-    hobbies: ["reading", "traveling"],
-    address: {
-        city: "Wonderland",
-        zip: "12345"
-    }
+  name: "Alice",
+  age: 30,
+  hobbies: ["reading", "traveling"],
+  address: {
+    city: "Wonderland",
+    zip: "12345"
+  }
 };
 
 const copy = deepClone(original);
@@ -1464,13 +1464,13 @@ console.log(original.address.city); // Wonderland
 const _ = require('lodash');
 
 const original = {
-    name: "Alice",
-    age: 30,
-    hobbies: ["reading", "traveling"],
-    address: {
-        city: "Wonderland",
-        zip: "12345"
-    }
+  name: "Alice",
+  age: 30,
+  hobbies: ["reading", "traveling"],
+  address: {
+    city: "Wonderland",
+    zip: "12345"
+  }
 };
 
 const copy = _.cloneDeep(original);
@@ -1579,8 +1579,8 @@ console.log(merged); // { a: 1, b: { c: 2, d: 3 }, e: 4 }
 **Пример**:
 ```javascript
 const obj = {
-    name: "Alice",
-    age: 30
+  name: "Alice",
+  age: 30
 };
 
 console.log("name" in obj); // true
@@ -1594,8 +1594,8 @@ console.log("address" in obj); // false
 **Пример**:
 ```javascript
 const obj = {
-    name: "Alice",
-    age: 30
+  name: "Alice",
+  age: 30
 };
 
 console.log(obj.hasOwnProperty("name")); // true
@@ -1609,8 +1609,8 @@ console.log(obj.hasOwnProperty("address")); // false
 **Пример**:
 ```javascript
 const obj = {
-    name: "Alice",
-    age: undefined
+  name: "Alice",
+  age: undefined
 };
 
 console.log(obj.age !== undefined); // false (плохо, если `age` действительно должно быть `undefined`)
@@ -1624,8 +1624,8 @@ console.log(obj.address !== undefined); // false
 **Пример**:
 ```javascript
 const obj = {
-    name: "Alice",
-    age: 30
+  name: "Alice",
+  age: 30
 };
 
 const keys = Object.keys(obj);
@@ -1652,9 +1652,9 @@ console.log(keys.includes("address")); // false
 **Пример**:
 ```javascript
 const person = {
-    name: "Alice",
-    age: 30,
-    city: "Wonderland"
+  name: "Alice",
+  age: 30,
+  city: "Wonderland"
 };
 
 // Деструктурируем объект
@@ -1673,8 +1673,8 @@ console.log(age); // 30
 **Пример**:
 ```javascript
 const person = {
-    name: "Alice",
-    age: 30
+  name: "Alice",
+  age: 30
 };
 
 // Деструктурируем и переименовываем
@@ -1706,7 +1706,7 @@ console.log(secondColor); // green
 **Пример**:
 ```javascript
 const person = {
-    name: "Alice"
+  name: "Alice"
 };
 
 // Деструктурируем с значением по умолчанию
@@ -1723,11 +1723,11 @@ console.log(age); // 25 (значение по умолчанию)
 **Пример**:
 ```javascript
 const person = {
-    name: "Alice",
-    address: {
-        city: "Wonderland",
-        zip: "12345"
-    }
+  name: "Alice",
+  address: {
+    city: "Wonderland",
+    zip: "12345"
+  }
 };
 
 // Деструктурируем вложенный объект
@@ -1789,7 +1789,7 @@ console.log(merged); // { a: 1, b: 3, c: 4 }
 **Передача переменного количества аргументов**:
 ```javascript
 function sum(...numbers) {
-    return numbers.reduce((acc, num) => acc + num, 0);
+  return numbers.reduce((acc, num) => acc + num, 0);
 }
 
 console.log(sum(1, 2, 3)); // 6
@@ -1799,9 +1799,9 @@ console.log(sum(10, 20, 30, 40)); // 100
 **Сбор свойств объекта**:
 ```javascript
 const person = {
-    name: "Alice",
-    age: 30,
-    city: "Wonderland"
+  name: "Alice",
+  age: 30,
+  city: "Wonderland"
 };
 
 // Извлечение свойств с использованием rest оператора
@@ -1828,9 +1828,9 @@ console.log(otherProperties); // { age: 30, city: "Wonderland" }
 **Пример**:
 ```javascript
 const person = {
-    name: "Alice",
-    age: 30,
-    city: "Wonderland"
+  name: "Alice",
+  age: 30,
+  city: "Wonderland"
 };
 
 const keys = Object.keys(person);
@@ -1844,9 +1844,9 @@ console.log(keys); // ["name", "age", "city"]
 **Пример**:
 ```javascript
 const person = {
-    name: "Alice",
-    age: 30,
-    city: "Wonderland"
+  name: "Alice",
+  age: 30,
+  city: "Wonderland"
 };
 
 const values = Object.values(person);
@@ -1860,9 +1860,9 @@ console.log(values); // ["Alice", 30, "Wonderland"]
 **Пример**:
 ```javascript
 const person = {
-    name: "Alice",
-    age: 30,
-    city: "Wonderland"
+  name: "Alice",
+  age: 30,
+  city: "Wonderland"
 };
 
 const entries = Object.entries(person);
@@ -1879,24 +1879,24 @@ console.log(entries); // [["name", "Alice"], ["age", 30], ["city", "Wonderland"]
 
 ```javascript
 const person = {
-    name: "Alice",
-    age: 30,
-    city: "Wonderland"
+  name: "Alice",
+  age: 30,
+  city: "Wonderland"
 };
 
 // Итерация с использованием Object.keys()
 Object.keys(person).forEach(key => {
-    console.log(`${key}: ${person[key]}`);
+  console.log(`${key}: ${person[key]}`);
 });
 
 // Итерация с использованием Object.values()
 Object.values(person).forEach(value => {
-    console.log(value);
+  console.log(value);
 });
 
 // Итерация с использованием Object.entries()
 Object.entries(person).forEach(([key, value]) => {
-    console.log(`${key} = ${value}`);
+  console.log(`${key} = ${value}`);
 });
 ```
 
@@ -1934,11 +1934,11 @@ Event Loop (цикл событий) в JavaScript — это механизм, 
 console.log("Start");
 
 setTimeout(() => {
-    console.log("Callback 1");
+  console.log("Callback 1");
 }, 0);
 
 setTimeout(() => {
-    console.log("Callback 2");
+  console.log("Callback 2");
 }, 100);
 
 console.log("End");
@@ -1970,13 +1970,13 @@ Promises также работают с Event Loop и позволяют обр�
 console.log("Start");
 
 setTimeout(() => {
-    console.log("Timeout");
+  console.log("Timeout");
 }, 0);
 
 Promise.resolve()
-    .then(() => {
-        console.log("Promise");
-    });
+  .then(() => {
+    console.log("Promise");
+  });
 
 console.log("End");
 ```
@@ -2017,7 +2017,7 @@ Event Loop — это механизм, позволяющий JavaScript вып
 console.log("Start");
 
 setTimeout(() => {
-    console.log("Executed after 2 seconds");
+  console.log("Executed after 2 seconds");
 }, 2000);
 
 console.log("End");
@@ -2038,13 +2038,13 @@ Executed after 2 seconds
 ```javascript
 let count = 0;
 const intervalId = setInterval(() => {
-    count++;
-    console.log(`Executed ${count} times`);
+  count++;
+  console.log(`Executed ${count} times`);
     
-    if (count === 5) {
-        clearInterval(intervalId); // Остановка интервала
-        console.log("Interval cleared");
-    }
+  if (count === 5) {
+    clearInterval(intervalId); // Остановка интервала
+    console.log("Interval cleared");
+  }
 }, 1000);
 ```
 
@@ -2067,12 +2067,12 @@ Interval cleared
 let pos = 0;
 
 function animate() {
-    pos += 1; // Изменение позиции
-    console.log(`Position: ${pos}`);
+  pos += 1; // Изменение позиции
+  console.log(`Position: ${pos}`);
     
-    if (pos < 100) {
-        requestAnimationFrame(animate); // Рекурсивный вызов
-    }
+  if (pos < 100) {
+    requestAnimationFrame(animate); // Рекурсивный вызов
+  }
 }
 
 requestAnimationFrame(animate);
@@ -2120,13 +2120,13 @@ Promise в JavaScript — это объект, который представл
 **Пример**:
 ```javascript
 const myPromise = new Promise((resolve, reject) => {
-    const success = true; // Условие успешного выполнения
+  const success = true; // Условие успешного выполнения
 
-    if (success) {
-        resolve("Operation was successful!"); // Завершение промиса успешно
-    } else {
-        reject("Operation failed!"); // Отказ в промисе
-    }
+  if (success) {
+    resolve("Operation was successful!"); // Завершение промиса успешно
+  } else {
+    reject("Operation failed!"); // Отказ в промисе
+  }
 });
 ```
 
@@ -2140,12 +2140,12 @@ const myPromise = new Promise((resolve, reject) => {
 **Пример**:
 ```javascript
 myPromise
-    .then(result => {
-        console.log(result); // "Operation was successful!"
-    })
-    .catch(error => {
-        console.error(error); // Если промис отклонён
-    });
+  .then(result => {
+    console.log(result); // "Operation was successful!"
+  })
+  .catch(error => {
+    console.error(error); // Если промис отклонён
+  });
 ```
 
 **Пример с асинхронной операцией**
@@ -2154,26 +2154,26 @@ myPromise
 
 ```javascript
 const fetchData = () => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const success = true; // Измените на false для тестирования отклонения
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const success = true; // Измените на false для тестирования отклонения
 
-            if (success) {
-                resolve("Data received!");
-            } else {
-                reject("Error fetching data!");
-            }
-        }, 2000); // Имитация задержки 2 секунды
-    });
+      if (success) {
+        resolve("Data received!");
+      } else {
+        reject("Error fetching data!");
+      }
+    }, 2000); // Имитация задержки 2 секунды
+  });
 };
 
 fetchData()
-    .then(data => {
-        console.log(data); // "Data received!"
-    })
-    .catch(error => {
-        console.error(error); // "Error fetching data!"
-    });
+  .then(data => {
+    console.log(data); // "Data received!"
+  })
+  .catch(error => {
+    console.error(error); // "Error fetching data!"
+  });
 ```
 
 **Использование `async` и `await`**
@@ -2183,12 +2183,12 @@ fetchData()
 **Пример**:
 ```javascript
 const fetchDataWithAsync = async () => {
-    try {
-        const data = await fetchData(); // Ждём, пока промис выполнится
-        console.log(data); // "Data received!"
-    } catch (error) {
-        console.error(error); // Обработка ошибок
-    }
+  try {
+    const data = await fetchData(); // Ждём, пока промис выполнится
+    console.log(data); // "Data received!"
+  } catch (error) {
+    console.error(error); // Обработка ошибок
+  }
 };
 
 fetchDataWithAsync();
@@ -2218,8 +2218,8 @@ fetchDataWithAsync();
 
 ```javascript
 const myPendingPromise = new Promise((resolve, reject) => {
-    console.log("Promise is in pending state.");
-    // Операция всё ещё выполняется
+  console.log("Promise is in pending state.");
+  // Операция всё ещё выполняется
 });
 
 // Промис в ожидании
@@ -2233,14 +2233,14 @@ console.log(myPendingPromise); // Promise { <pending> }
 **Пример**:
 ```javascript
 const myFulfilledPromise = new Promise((resolve) => {
-    setTimeout(() => {
-        resolve("Operation completed successfully!");
-    }, 2000); // Имитация задержки 2 секунды
+  setTimeout(() => {
+    resolve("Operation completed successfully!");
+  }, 2000); // Имитация задержки 2 секунды
 });
 
 // Обработка результата
 myFulfilledPromise.then(result => {
-    console.log(result); // "Operation completed successfully!"
+  console.log(result); // "Operation completed successfully!"
 });
 ```
 
@@ -2251,14 +2251,14 @@ myFulfilledPromise.then(result => {
 **Пример**:
 ```javascript
 const myRejectedPromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        reject("Operation failed due to an error!");
-    }, 2000); // Имитация задержки 2 секунды
+  setTimeout(() => {
+    reject("Operation failed due to an error!");
+  }, 2000); // Имитация задержки 2 секунды
 });
 
 // Обработка ошибки
 myRejectedPromise.catch(error => {
-    console.error(error); // "Operation failed due to an error!"
+  console.error(error); // "Operation failed due to an error!"
 });
 ```
 
@@ -2268,27 +2268,27 @@ myRejectedPromise.catch(error => {
 
 ```javascript
 const myPromise = new Promise((resolve, reject) => {
-    console.log("Promise is still pending...");
+  console.log("Promise is still pending...");
 
-    const success = Math.random() > 0.5; // 50% шанс на успех
+  const success = Math.random() > 0.5; // 50% шанс на успех
 
-    setTimeout(() => {
-        if (success) {
-            resolve("Promise fulfilled: Operation completed successfully!");
-        } else {
-            reject("Promise rejected: Operation failed due to an error!");
-        }
-    }, 2000); // Имитация задержки 2 секунды
+  setTimeout(() => {
+    if (success) {
+      resolve("Promise fulfilled: Operation completed successfully!");
+    } else {
+      reject("Promise rejected: Operation failed due to an error!");
+    }
+  }, 2000); // Имитация задержки 2 секунды
 });
 
 // Обработка результата и ошибки
 myPromise
-    .then(result => {
-        console.log(result); // "Promise fulfilled: Operation completed successfully!" (если успешно)
-    })
-    .catch(error => {
-        console.error(error); // "Promise rejected: Operation failed due to an error!" (если отклонён)
-    });
+  .then(result => {
+    console.log(result); // "Promise fulfilled: Operation completed successfully!" (если успешно)
+  })
+  .catch(error => {
+    console.error(error); // "Promise rejected: Operation failed due to an error!" (если отклонён)
+  });
 ```
 
 **Резюме**
@@ -2314,18 +2314,18 @@ myPromise
 ```javascript
 // Функция, возвращающая промис
 const fetchData = () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve("Data received");
-        }, 2000); // Имитация задержки 2 секунды
-    });
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Data received");
+    }, 2000); // Имитация задержки 2 секунды
+  });
 };
 
 // Асинхронная функция
 const asyncFunction = async () => {
-    console.log("Fetching data...");
-    const data = await fetchData(); // Ожидаем завершения промиса
-    console.log(data); // "Data received"
+  console.log("Fetching data...");
+  const data = await fetchData(); // Ожидаем завершения промиса
+  console.log(data); // "Data received"
 };
 
 // Вызов асинхронной функции
@@ -2340,27 +2340,27 @@ asyncFunction();
 
 ```javascript
 const fetchDataWithError = () => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const error = Math.random() > 0.5; // 50% шанс на ошибку
-            if (error) {
-                reject("Error fetching data");
-            } else {
-                resolve("Data received");
-            }
-        }, 2000);
-    });
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const error = Math.random() > 0.5; // 50% шанс на ошибку
+      if (error) {
+        reject("Error fetching data");
+      } else {
+        resolve("Data received");
+      }
+    }, 2000);
+  });
 };
 
 // Асинхронная функция с обработкой ошибок
 const asyncFunctionWithErrorHandling = async () => {
-    try {
-        console.log("Fetching data...");
-        const data = await fetchDataWithError(); // Ожидаем завершения промиса
-        console.log(data); // Если успешно
-    } catch (error) {
-        console.error(error); // Обработка ошибки
-    }
+  try {
+    console.log("Fetching data...");
+    const data = await fetchDataWithError(); // Ожидаем завершения промиса
+    console.log(data); // Если успешно
+  } catch (error) {
+    console.error(error); // Обработка ошибки
+  }
 };
 
 // Вызов асинхронной функции
@@ -2371,26 +2371,26 @@ asyncFunctionWithErrorHandling();
 
 ```javascript
 const fetchAnotherData = () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve("Another data received");
-        }, 1000); // Имитация задержки 1 секунда
-    });
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Another data received");
+    }, 1000); // Имитация задержки 1 секунда
+  });
 };
 
 // Асинхронная функция, использующая несколько промисов
 const asyncFunctionMultiplePromises = async () => {
-    try {
-        console.log("Fetching first data...");
-        const firstData = await fetchData(); // Ждём первое получение данных
-        console.log(firstData); // "Data received"
+  try {
+    console.log("Fetching first data...");
+    const firstData = await fetchData(); // Ждём первое получение данных
+    console.log(firstData); // "Data received"
 
-        console.log("Fetching second data...");
-        const secondData = await fetchAnotherData(); // Ждём второе получение данных
-        console.log(secondData); // "Another data received"
-    } catch (error) {
-        console.error(error); // Обработка ошибок
-    }
+    console.log("Fetching second data...");
+    const secondData = await fetchAnotherData(); // Ждём второе получение данных
+    console.log(secondData); // "Another data received"
+  } catch (error) {
+    console.error(error); // Обработка ошибок
+  }
 };
 
 // Вызов асинхронной функции
@@ -2420,12 +2420,12 @@ const promise2 = new Promise((resolve) => setTimeout(resolve, 2000, "Result from
 const promise3 = new Promise((resolve) => setTimeout(resolve, 1500, "Result from Promise 3"));
 
 Promise.all([promise1, promise2, promise3])
-    .then((results) => {
-        console.log(results); // ["Result from Promise 1", "Result from Promise 2", "Result from Promise 3"]
-    })
-    .catch((error) => {
-        console.error("One of the promises failed:", error);
-    });
+  .then((results) => {
+    console.log(results); // ["Result from Promise 1", "Result from Promise 2", "Result from Promise 3"]
+  })
+  .catch((error) => {
+    console.error("One of the promises failed:", error);
+  });
 ```
 
 2. **`Promise.race`**
@@ -2439,12 +2439,12 @@ const promise2 = new Promise((resolve) => setTimeout(resolve, 500, "Result from 
 const promise3 = new Promise((resolve, reject) => setTimeout(reject, 800, "Error from Promise 3"));
 
 Promise.race([promise1, promise2, promise3])
-    .then((result) => {
-        console.log("First completed promise:", result); // "Result from Promise 2"
-    })
-    .catch((error) => {
-        console.error("Race failed with error:", error); // "Error from Promise 3" (если произойдёт)
-    });
+  .then((result) => {
+    console.log("First completed promise:", result); // "Result from Promise 2"
+  })
+  .catch((error) => {
+    console.error("Race failed with error:", error); // "Error from Promise 3" (если произойдёт)
+  });
 ```
 
 3. **`Promise.allSettled`**
@@ -2458,11 +2458,11 @@ const promise2 = new Promise((resolve, reject) => setTimeout(reject, 500, "Error
 const promise3 = new Promise((resolve) => setTimeout(resolve, 1500, "Result from Promise 3"));
 
 Promise.allSettled([promise1, promise2, promise3])
-    .then((results) => {
-        results.forEach((result) => {
-            console.log(result);
-        });
+  .then((results) => {
+    results.forEach((result) => {
+      console.log(result);
     });
+  });
 ```
 
 **Вывод**:
@@ -2483,12 +2483,12 @@ const promise2 = new Promise((resolve) => setTimeout(resolve, 500, "Result from 
 const promise3 = new Promise((resolve, reject) => setTimeout(reject, 700, "Error from Promise 3"));
 
 Promise.any([promise1, promise2, promise3])
-    .then((result) => {
-        console.log("First fulfilled promise:", result); // "Result from Promise 2"
-    })
-    .catch((error) => {
-        console.error("All promises were rejected:", error);
-    });
+  .then((result) => {
+    console.log("First fulfilled promise:", result); // "Result from Promise 2"
+  })
+  .catch((error) => {
+    console.error("All promises were rejected:", error);
+  });
 ```
 
 **Резюме**
@@ -2516,16 +2516,16 @@ const xhr = new XMLHttpRequest();
 xhr.open("GET", "https://jsonplaceholder.typicode.com/posts", true); // Настраиваем запрос
 
 xhr.onload = function() {
-    if (xhr.status >= 200 && xhr.status < 300) {
-        const response = JSON.parse(xhr.responseText); // Парсим ответ
-        console.log(response); // Выводим данные в консоль
-    } else {
-        console.error("Request failed with status:", xhr.status); // Обработка ошибок
-    }
+  if (xhr.status >= 200 && xhr.status < 300) {
+    const response = JSON.parse(xhr.responseText); // Парсим ответ
+    console.log(response); // Выводим данные в консоль
+  } else {
+    console.error("Request failed with status:", xhr.status); // Обработка ошибок
+  }
 };
 
 xhr.onerror = function() {
-    console.error("Request failed"); // Обработка ошибок сети
+  console.error("Request failed"); // Обработка ошибок сети
 };
 
 xhr.send(); // Отправляем запрос
@@ -2539,48 +2539,48 @@ xhr.send(); // Отправляем запрос
 
 ```javascript
 fetch("https://jsonplaceholder.typicode.com/posts")
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok: " + response.statusText);
-        }
-        return response.json(); // Парсим ответ в формате JSON
-    })
-    .then((data) => {
-        console.log(data); // Выводим полученные данные
-    })
-    .catch((error) => {
-        console.error("Fetch error:", error); // Обработка ошибок
-    });
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    }
+    return response.json(); // Парсим ответ в формате JSON
+  })
+  .then((data) => {
+    console.log(data); // Выводим полученные данные
+  })
+  .catch((error) => {
+    console.error("Fetch error:", error); // Обработка ошибок
+  });
 ```
 
 **Пример отправки данных с использованием POST-запроса**:
 
 ```javascript
 const postData = {
-    title: "foo",
-    body: "bar",
-    userId: 1,
+  title: "foo",
+  body: "bar",
+  userId: 1,
 };
 
 fetch("https://jsonplaceholder.typicode.com/posts", {
-    method: "POST", // Указываем метод
-    headers: {
-        "Content-Type": "application/json", // Указываем тип контента
-    },
-    body: JSON.stringify(postData), // Преобразуем объект в JSON
+  method: "POST", // Указываем метод
+  headers: {
+    "Content-Type": "application/json", // Указываем тип контента
+  },
+  body: JSON.stringify(postData), // Преобразуем объект в JSON
 })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok: " + response.statusText);
-        }
-        return response.json(); // Парсим ответ в формате JSON
-    })
-    .then((data) => {
-        console.log("Data posted successfully:", data); // Выводим ответ сервера
-    })
-    .catch((error) => {
-        console.error("Fetch error:", error); // Обработка ошибок
-    });
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    }
+    return response.json(); // Парсим ответ в формате JSON
+  })
+  .then((data) => {
+    console.log("Data posted successfully:", data); // Выводим ответ сервера
+  })
+  .catch((error) => {
+    console.error("Fetch error:", error); // Обработка ошибок
+  });
 ```
 
 **Резюме**
@@ -2601,13 +2601,13 @@ HTTP (Hypertext Transfer Protocol) поддерживает несколько �
 **Пример**:
 ```javascript
 fetch("https://jsonplaceholder.typicode.com/posts/1")
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data); // Полученные данные
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data); // Полученные данные
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 ```
 
 2. **POST**
@@ -2617,25 +2617,25 @@ fetch("https://jsonplaceholder.typicode.com/posts/1")
 **Пример**:
 ```javascript
 const postData = {
-    title: "foo",
-    body: "bar",
-    userId: 1,
+  title: "foo",
+  body: "bar",
+  userId: 1,
 };
 
 fetch("https://jsonplaceholder.typicode.com/posts", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(postData),
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(postData),
 })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("Data posted successfully:", data);
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("Data posted successfully:", data);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 ```
 
 3. **PUT**
@@ -2645,25 +2645,25 @@ fetch("https://jsonplaceholder.typicode.com/posts", {
 **Пример**:
 ```javascript
 const updatedData = {
-    title: "foo",
-    body: "updated text",
-    userId: 1,
+  title: "foo",
+  body: "updated text",
+  userId: 1,
 };
 
 fetch("https://jsonplaceholder.typicode.com/posts/1", {
-    method: "PUT",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(updatedData),
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(updatedData),
 })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("Data updated successfully:", data);
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("Data updated successfully:", data);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 ```
 
 4. **DELETE**
@@ -2673,18 +2673,18 @@ fetch("https://jsonplaceholder.typicode.com/posts/1", {
 **Пример**:
 ```javascript
 fetch("https://jsonplaceholder.typicode.com/posts/1", {
-    method: "DELETE",
+  method: "DELETE",
 })
-    .then((response) => {
-        if (response.ok) {
-            console.log("Resource deleted successfully");
-        } else {
-            throw new Error("Delete request failed");
-        }
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+  .then((response) => {
+    if (response.ok) {
+      console.log("Resource deleted successfully");
+    } else {
+      throw new Error("Delete request failed");
+    }
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 ```
 
 5. **PATCH**
@@ -2698,19 +2698,19 @@ const partialUpdateData = {
 };
 
 fetch("https://jsonplaceholder.typicode.com/posts/1", {
-    method: "PATCH",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(partialUpdateData),
+  method: "PATCH",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(partialUpdateData),
 })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("Data partially updated successfully:", data);
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("Data partially updated successfully:", data);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 ```
 
 6. **HEAD**
@@ -2720,14 +2720,14 @@ fetch("https://jsonplaceholder.typicode.com/posts/1", {
 **Пример**:
 ```javascript
 fetch("https://jsonplaceholder.typicode.com/posts/1", {
-    method: "HEAD",
+  method: "HEAD",
 })
-    .then((response) => {
-        console.log("Response headers:", response.headers);
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+  .then((response) => {
+    console.log("Response headers:", response.headers);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 ```
 
 7. **OPTIONS**
@@ -2737,14 +2737,14 @@ fetch("https://jsonplaceholder.typicode.com/posts/1", {
 **Пример**:
 ```javascript
 fetch("https://jsonplaceholder.typicode.com/posts/1", {
-    method: "OPTIONS",
+  method: "OPTIONS",
 })
-    .then((response) => {
-        console.log("Allowed methods:", response.headers.get("Allow"));
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+  .then((response) => {
+    console.log("Allowed methods:", response.headers.get("Allow"));
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 ```
 
 **Резюме**
@@ -2777,18 +2777,18 @@ fetch("https://jsonplaceholder.typicode.com/posts/1", {
 **Пример получения данных**:
 ```javascript
 fetch("https://jsonplaceholder.typicode.com/posts/1")
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.json(); // Парсим ответ в JSON
-    })
-    .then((data) => {
-        console.log(data); // Выводим полученные данные
-    })
-    .catch((error) => {
-        console.error("Fetch error:", error);
-    });
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json(); // Парсим ответ в JSON
+  })
+  .then((data) => {
+    console.log(data); // Выводим полученные данные
+  })
+  .catch((error) => {
+    console.error("Fetch error:", error);
+  });
 ```
 
 2. **POST-запрос**
@@ -2796,30 +2796,30 @@ fetch("https://jsonplaceholder.typicode.com/posts/1")
 **Пример отправки данных**:
 ```javascript
 const postData = {
-    title: "foo",
-    body: "bar",
-    userId: 1,
+  title: "foo",
+  body: "bar",
+  userId: 1,
 };
 
 fetch("https://jsonplaceholder.typicode.com/posts", {
-    method: "POST", // Указываем метод
-    headers: {
-        "Content-Type": "application/json", // Указываем тип контента
-    },
-    body: JSON.stringify(postData), // Преобразуем объект в JSON
+  method: "POST", // Указываем метод
+  headers: {
+    "Content-Type": "application/json", // Указываем тип контента
+  },
+  body: JSON.stringify(postData), // Преобразуем объект в JSON
 })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.json(); // Парсим ответ в JSON
-    })
-    .then((data) => {
-        console.log("Data posted successfully:", data); // Выводим ответ сервера
-    })
-    .catch((error) => {
-        console.error("Fetch error:", error);
-    });
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json(); // Парсим ответ в JSON
+  })
+  .then((data) => {
+    console.log("Data posted successfully:", data); // Выводим ответ сервера
+  })
+  .catch((error) => {
+    console.error("Fetch error:", error);
+  });
 ```
 
 3. **PUT-запрос**
@@ -2827,30 +2827,30 @@ fetch("https://jsonplaceholder.typicode.com/posts", {
 **Пример обновления данных**:
 ```javascript
 const updatedData = {
-    title: "foo",
-    body: "updated text",
-    userId: 1,
+  title: "foo",
+  body: "updated text",
+  userId: 1,
 };
 
 fetch("https://jsonplaceholder.typicode.com/posts/1", {
-    method: "PUT", // Указываем метод
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(updatedData), // Преобразуем объект в JSON
+  method: "PUT", // Указываем метод
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(updatedData), // Преобразуем объект в JSON
 })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.json(); // Парсим ответ в JSON
-    })
-    .then((data) => {
-        console.log("Data updated successfully:", data);
-    })
-    .catch((error) => {
-        console.error("Fetch error:", error);
-    });
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json(); // Парсим ответ в JSON
+  })
+  .then((data) => {
+    console.log("Data updated successfully:", data);
+  })
+  .catch((error) => {
+    console.error("Fetch error:", error);
+  });
 ```
 
 4. **DELETE-запрос**
@@ -2858,18 +2858,18 @@ fetch("https://jsonplaceholder.typicode.com/posts/1", {
 **Пример удаления данных**:
 ```javascript
 fetch("https://jsonplaceholder.typicode.com/posts/1", {
-    method: "DELETE", // Указываем метод
+  method: "DELETE", // Указываем метод
 })
-    .then((response) => {
-        if (response.ok) {
-            console.log("Resource deleted successfully");
-        } else {
-            throw new Error("Delete request failed");
-        }
-    })
-    .catch((error) => {
-        console.error("Fetch error:", error);
-    });
+  .then((response) => {
+    if (response.ok) {
+      console.log("Resource deleted successfully");
+    } else {
+      throw new Error("Delete request failed");
+    }
+  })
+  .catch((error) => {
+    console.error("Fetch error:", error);
+  });
 ```
 
 5. **Обработка ошибок**
@@ -2879,7 +2879,6 @@ fetch("https://jsonplaceholder.typicode.com/posts/1", {
 **Резюме**
 
 `fetch` предоставляет простой и удобный способ для выполнения HTTP-запросов в JavaScript. Он поддерживает различные методы, включая `GET`, `POST`, `PUT`, и `DELETE`, а также позволяет настраивать заголовки и тело запросов. 
-
 
 
 #### Вопрос 35. Что такое CORS? Как обойти ограничения?
@@ -2923,11 +2922,11 @@ const app = express();
 app.use(cors()); // Разрешаем CORS для всех источников
 
 app.get('/resource', (req, res) => {
-    res.json({ message: 'Hello from CORS-enabled server!' });
+  res.json({ message: 'Hello from CORS-enabled server!' });
 });
 
 app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+  console.log('Server is running on port 3000');
 });
 ```
 
@@ -2945,12 +2944,12 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 
 app.use('/api', createProxyMiddleware({
-    target: 'http://api.example.com',
-    changeOrigin: true,
+  target: 'http://api.example.com',
+  changeOrigin: true,
 }));
 
 app.listen(3000, () => {
-    console.log('Proxy server is running on port 3000');
+  console.log('Proxy server is running on port 3000');
 });
 ```
 
@@ -2962,7 +2961,7 @@ JSONP (JSON with Padding) — это старый метод обхода огр
 ```html
 <script>
 function handleResponse(data) {
-    console.log(data); // Обработка ответа
+  console.log(data); // Обработка ответа
 }
 
 const script = document.createElement('script');
@@ -3061,7 +3060,7 @@ DOM позволяет реагировать на действия пользо
 ```javascript
 const button = document.querySelector('.button');
 button.addEventListener('click', () => {
-    alert("Кнопка нажата!"); // Отображаем сообщение при нажатии кнопки
+  alert("Кнопка нажата!"); // Отображаем сообщение при нажатии кнопки
 });
 ```
 
@@ -3126,7 +3125,7 @@ console.log(paragraphs[1].textContent); // Выводит: "Второй пар�
 **Пример**:
 ```html
 <div class="content">
-    <p class="text">Hello, world!</p>
+  <p class="text">Hello, world!</p>
 </div>
 <script>
 const paragraph = document.querySelector('.content .text');
@@ -3147,7 +3146,7 @@ console.log(paragraph.textContent); // Выводит: "Hello, world!"
 const boxes = document.querySelectorAll('.box');
 console.log(boxes.length); // Выводит: 3
 boxes.forEach((box, index) => {
-    console.log(`Куб ${index + 1}: ${box.textContent}`); // Выводит текст каждого куба
+  console.log(`Куб ${index + 1}: ${box.textContent}`); // Выводит текст каждого куба
 });
 </script>
 ```
@@ -3159,8 +3158,8 @@ boxes.forEach((box, index) => {
 **Пример**:
 ```html
 <div id="parent">
-    <p class="child">Дочерний элемент 1</p>
-    <p class="child">Дочерний элемент 2</p>
+  <p class="child">Дочерний элемент 1</p>
+  <p class="child">Дочерний элемент 2</p>
 </div>
 <script>
 const parent = document.getElementById('parent');
@@ -3193,18 +3192,18 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 ```html
 <div id="container"></div>
 <script>
-    // Шаг 1: Создаём новый элемент
-    const newDiv = document.createElement('div');
+  // Шаг 1: Создаём новый элемент
+  const newDiv = document.createElement('div');
 
-    // Шаг 2: Устанавливаем содержимое и другие свойства
-    newDiv.textContent = 'Это новый элемент';
-    newDiv.style.backgroundColor = 'lightblue'; // Задаём стиль
+  // Шаг 2: Устанавливаем содержимое и другие свойства
+  newDiv.textContent = 'Это новый элемент';
+  newDiv.style.backgroundColor = 'lightblue'; // Задаём стиль
 
-    // Шаг 3: Находим элемент, в который нужно добавить новый элемент
-    const container = document.getElementById('container');
+  // Шаг 3: Находим элемент, в который нужно добавить новый элемент
+  const container = document.getElementById('container');
 
-    // Шаг 4: Добавляем новый элемент в DOM
-    container.appendChild(newDiv);
+  // Шаг 4: Добавляем новый элемент в DOM
+  container.appendChild(newDiv);
 </script>
 ```
 
@@ -3214,17 +3213,17 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 ```html
 <ul id="list"></ul>
 <script>
-    const list = document.getElementById('list');
+  const list = document.getElementById('list');
 
-    // Создаем массив с данными
-    const items = ['Элемент 1', 'Элемент 2', 'Элемент 3'];
+  // Создаем массив с данными
+  const items = ['Элемент 1', 'Элемент 2', 'Элемент 3'];
 
-    items.forEach(item => {
-        // Создаем новый элемент списка
-        const listItem = document.createElement('li');
-        listItem.textContent = item; // Устанавливаем текст
-        list.appendChild(listItem); // Добавляем элемент в список
-    });
+  items.forEach(item => {
+    // Создаем новый элемент списка
+    const listItem = document.createElement('li');
+    listItem.textContent = item; // Устанавливаем текст
+    list.appendChild(listItem); // Добавляем элемент в список
+  });
 </script>
 ```
 
@@ -3233,19 +3232,19 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 **Пример**:
 ```html
 <div id="parent">
-    <p id="reference">Это ссылка</p>
+  <p id="reference">Это ссылка</p>
 </div>
 <script>
-    // Создаём новый элемент
-    const newParagraph = document.createElement('p');
-    newParagraph.textContent = 'Это новый параграф';
+  // Создаём новый элемент
+  const newParagraph = document.createElement('p');
+  newParagraph.textContent = 'Это новый параграф';
 
-    // Находим родительский элемент и ссылку
-    const parent = document.getElementById('parent');
-    const reference = document.getElementById('reference');
+  // Находим родительский элемент и ссылку
+  const parent = document.getElementById('parent');
+  const reference = document.getElementById('reference');
 
-    // Вставляем новый элемент перед ссылкой
-    parent.insertBefore(newParagraph, reference);
+  // Вставляем новый элемент перед ссылкой
+  parent.insertBefore(newParagraph, reference);
 </script>
 ```
 
@@ -3254,18 +3253,18 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 **Пример**:
 ```html
 <div id="container">
-    <p id="oldElement">Старый элемент</p>
+  <p id="oldElement">Старый элемент</p>
 </div>
 <script>
-    // Создаём новый элемент
-    const newElement = document.createElement('p');
-    newElement.textContent = 'Это новый элемент, заменяющий старый';
+  // Создаём новый элемент
+  const newElement = document.createElement('p');
+  newElement.textContent = 'Это новый элемент, заменяющий старый';
 
-    // Находим старый элемент
-    const oldElement = document.getElementById('oldElement');
+  // Находим старый элемент
+  const oldElement = document.getElementById('oldElement');
 
-    // Заменяем старый элемент новым
-    oldElement.parentNode.replaceChild(newElement, oldElement);
+  // Заменяем старый элемент новым
+  oldElement.parentNode.replaceChild(newElement, oldElement);
 </script>
 ```
 
@@ -3294,13 +3293,13 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 <button id="changeStyle">Изменить стиль</button>
 
 <script>
-    document.getElementById('changeStyle').onclick = function() {
-        const element = document.getElementById('myElement');
-        // Изменяем стиль элемента
-        element.style.backgroundColor = 'blue'; // Меняем цвет фона
-        element.style.width = '200px'; // Меняем ширину
-        element.style.height = '200px'; // Меняем высоту
-    };
+  document.getElementById('changeStyle').onclick = function() {
+    const element = document.getElementById('myElement');
+    // Изменяем стиль элемента
+    element.style.backgroundColor = 'blue'; // Меняем цвет фона
+    element.style.width = '200px'; // Меняем ширину
+    element.style.height = '200px'; // Меняем высоту
+  };
 </script>
 ```
 
@@ -3313,22 +3312,22 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 **Пример**:
 ```html
 <style>
-    .newStyle {
-        background-color: yellow;
-        width: 150px;
-        height: 150px;
-    }
+  .newStyle {
+    background-color: yellow;
+    width: 150px;
+    height: 150px;
+  }
 </style>
 
 <div id="myElement" class="box" style="width: 100px; height: 100px; background-color: red;"></div>
 <button id="applyClass">Применить класс</button>
 
 <script>
-    document.getElementById('applyClass').onclick = function() {
-        const element = document.getElementById('myElement');
-        // Добавляем новый класс
-        element.classList.add('newStyle');
-    };
+  document.getElementById('applyClass').onclick = function() {
+    const element = document.getElementById('myElement');
+    // Добавляем новый класс
+    element.classList.add('newStyle');
+  };
 </script>
 ```
 
@@ -3341,23 +3340,23 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 **Пример**:
 ```html
 <style>
-    .highlight {
-        background-color: green;
-    }
+  .highlight {
+    background-color: green;
+  }
 </style>
 
 <div id="myElement" class="box highlight" style="width: 100px; height: 100px;"></div>
 <button id="removeStyle">Удалить стиль</button>
 
 <script>
-    document.getElementById('removeStyle').onclick = function() {
-        const element = document.getElementById('myElement');
-        // Удаляем класс
-        element.classList.remove('highlight');
-        // Можно также удалить инлайн-стили
-        element.style.width = '';
-        element.style.height = '';
-    };
+  document.getElementById('removeStyle').onclick = function() {
+    const element = document.getElementById('myElement');
+    // Удаляем класс
+    element.classList.remove('highlight');
+    // Можно также удалить инлайн-стили
+    element.style.width = '';
+    element.style.height = '';
+  };
 </script>
 ```
 
@@ -3373,16 +3372,16 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 <button id="changeAllStyles">Изменить все стили</button>
 
 <script>
-    document.getElementById('changeAllStyles').onclick = function() {
-        const element = document.getElementById('myElement');
-        
-        // Меняем несколько стилей одновременно
-        Object.assign(element.style, {
-            backgroundColor: 'purple',
-            width: '300px',
-            height: '300px',
-        });
-    };
+  document.getElementById('changeAllStyles').onclick = function() {
+    const element = document.getElementById('myElement');
+    
+    // Меняем несколько стилей одновременно
+    Object.assign(element.style, {
+      backgroundColor: 'purple',
+      width: '300px',
+      height: '300px',
+    });
+  };
 </script>
 ```
 
@@ -3404,12 +3403,12 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 <button id="myButton">Нажми меня!</button>
 
 <script>
-    const button = document.getElementById('myButton');
+  const button = document.getElementById('myButton');
 
-    // Добавляем обработчик события клика
-    button.addEventListener('click', function() {
-        alert('Кнопка нажата!'); // Показать уведомление при клике
-    });
+  // Добавляем обработчик события клика
+  button.addEventListener('click', function() {
+    alert('Кнопка нажата!'); // Показать уведомление при клике
+  });
 </script>
 ```
 
@@ -3422,9 +3421,9 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 <button id="myButton" onclick="handleClick()">Нажми меня!</button>
 
 <script>
-    function handleClick() {
-        alert('Кнопка нажата!'); // Показать уведомление при клике
-    }
+  function handleClick() {
+    alert('Кнопка нажата!'); // Показать уведомление при клике
+  }
 </script>
 ```
 
@@ -3437,12 +3436,12 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 <button id="myButton">Нажми меня!</button>
 
 <script>
-    const button = document.getElementById('myButton');
+  const button = document.getElementById('myButton');
 
-    // Используем стрелочную функцию в качестве обработчика
-    button.addEventListener('click', () => {
-        alert('Кнопка нажата!');
-    });
+  // Используем стрелочную функцию в качестве обработчика
+  button.addEventListener('click', () => {
+    alert('Кнопка нажата!');
+  });
 </script>
 ```
 
@@ -3455,14 +3454,14 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 <button id="myButton">Нажми меня!</button>
 
 <script>
-    const button = document.getElementById('myButton');
+  const button = document.getElementById('myButton');
 
-    // Обертка для передачи параметров
-    button.addEventListener('click', (event) => handleClick(event, 'Кнопка нажата!'));
+  // Обертка для передачи параметров
+  button.addEventListener('click', (event) => handleClick(event, 'Кнопка нажата!'));
 
-    function handleClick(event, message) {
-        alert(message); // Показать переданное сообщение
-    }
+  function handleClick(event, message) {
+    alert(message); // Показать переданное сообщение
+  }
 </script>
 ```
 
@@ -3476,20 +3475,20 @@ console.log(children[0].textContent); // Выводит: "Дочерний эл�
 <button id="removeButton">Удалить обработчик</button>
 
 <script>
-    const button = document.getElementById('myButton');
-    const removeButton = document.getElementById('removeButton');
+  const button = document.getElementById('myButton');
+  const removeButton = document.getElementById('removeButton');
 
-    function handleClick() {
-        alert('Кнопка нажата!');
-    }
+  function handleClick() {
+    alert('Кнопка нажата!');
+  }
 
-    button.addEventListener('click', handleClick);
+  button.addEventListener('click', handleClick);
 
-    // Удаляем обработчик события
-    removeButton.addEventListener('click', () => {
-        button.removeEventListener('click', handleClick);
-        alert('Обработчик события удален!');
-    });
+  // Удаляем обработчик события
+  removeButton.addEventListener('click', () => {
+    button.removeEventListener('click', handleClick);
+    alert('Обработчик события удален!');
+  });
 </script>
 ```
 
@@ -3508,18 +3507,18 @@ Event Bubbling — это процесс, при котором событие �
 **Пример**:
 ```html
 <div id="parent" style="padding: 20px; background-color: lightgray;">
-    Родительский элемент
-    <button id="child">Нажми меня!</button>
+  Родительский элемент
+  <button id="child">Нажми меня!</button>
 </div>
 
 <script>
-    document.getElementById('parent').addEventListener('click', () => {
-        alert('Клик на родительском элементе!');
-    });
+  document.getElementById('parent').addEventListener('click', () => {
+    alert('Клик на родительском элементе!');
+  });
 
-    document.getElementById('child').addEventListener('click', () => {
-        alert('Клик на дочернем элементе!');
-    });
+  document.getElementById('child').addEventListener('click', () => {
+    alert('Клик на дочернем элементе!');
+  });
 </script>
 ```
 
@@ -3534,18 +3533,18 @@ Event Capturing, наоборот, — это процесс, при котор�
 **Пример**:
 ```html
 <div id="parent" style="padding: 20px; background-color: lightgray;">
-    Родительский элемент
-    <button id="child">Нажми меня!</button>
+  Родительский элемент
+  <button id="child">Нажми меня!</button>
 </div>
 
 <script>
-    document.getElementById('parent').addEventListener('click', () => {
-        alert('Клик на родительском элементе! (Capturing)');
-    }, true); // Указываем true для активации Capturing
+  document.getElementById('parent').addEventListener('click', () => {
+    alert('Клик на родительском элементе! (Capturing)');
+  }, true); // Указываем true для активации Capturing
 
-    document.getElementById('child').addEventListener('click', () => {
-        alert('Клик на дочернем элементе!');
-    });
+  document.getElementById('child').addEventListener('click', () => {
+    alert('Клик на дочернем элементе!');
+  });
 </script>
 ```
 
@@ -3564,22 +3563,22 @@ Event Capturing, наоборот, — это процесс, при котор�
 **Пример**:
 ```html
 <div id="parent" style="padding: 20px; background-color: lightgray;">
-    Родительский элемент
-    <button id="child">Нажми меня!</button>
+  Родительский элемент
+  <button id="child">Нажми меня!</button>
 </div>
 
 <script>
-    document.getElementById('parent').addEventListener('click', () => {
-        alert('Клик на родительском элементе! (Bubbling)');
-    }); // Bubbling (по умолчанию)
+  document.getElementById('parent').addEventListener('click', () => {
+    alert('Клик на родительском элементе! (Bubbling)');
+  }); // Bubbling (по умолчанию)
 
-    document.getElementById('parent').addEventListener('click', () => {
-        alert('Клик на родительском элементе! (Capturing)');
-    }, true); // Capturing
+  document.getElementById('parent').addEventListener('click', () => {
+    alert('Клик на родительском элементе! (Capturing)');
+  }, true); // Capturing
 
-    document.getElementById('child').addEventListener('click', () => {
-        alert('Клик на дочернем элементе!');
-    });
+  document.getElementById('child').addEventListener('click', () => {
+    alert('Клик на дочернем элементе!');
+  });
 </script>
 ```
 
@@ -3601,21 +3600,21 @@ Event Bubbling и Event Capturing — это два подхода к распр
 **HTML и JavaScript код**:
 ```html
 <div id="parent" style="padding: 20px; background-color: lightgray;">
-    Родительский элемент
-    <button id="child">Нажми меня!</button>
+  Родительский элемент
+  <button id="child">Нажми меня!</button>
 </div>
 
 <script>
-    // Обработчик для родительского элемента
-    document.getElementById('parent').addEventListener('click', () => {
-        alert('Клик на родительском элементе!');
-    });
+  // Обработчик для родительского элемента
+  document.getElementById('parent').addEventListener('click', () => {
+    alert('Клик на родительском элементе!');
+  });
 
-    // Обработчик для дочернего элемента
-    document.getElementById('child').addEventListener('click', (event) => {
-        alert('Клик на дочернем элементе!');
-        event.stopPropagation(); // Остановить всплытие события
-    });
+  // Обработчик для дочернего элемента
+  document.getElementById('child').addEventListener('click', (event) => {
+    alert('Клик на дочернем элементе!');
+    event.stopPropagation(); // Остановить всплытие события
+  });
 </script>
 ```
 
@@ -3631,26 +3630,26 @@ Event Bubbling и Event Capturing — это два подхода к распр
 **HTML и JavaScript код**:
 ```html
 <div id="parent" style="padding: 20px; background-color: lightgray;">
-    Родительский элемент
-    <button id="child">Нажми меня!</button>
+  Родительский элемент
+  <button id="child">Нажми меня!</button>
 </div>
 
 <script>
-    // Обработчик для родительского элемента
-    document.getElementById('parent').addEventListener('click', () => {
-        alert('Клик на родительском элементе!');
-    });
+  // Обработчик для родительского элемента
+  document.getElementById('parent').addEventListener('click', () => {
+    alert('Клик на родительском элементе!');
+  });
 
-    // Обработчик для дочернего элемента с остановкой всплытия
-    document.getElementById('child').addEventListener('click', (event) => {
-        alert('Клик на дочернем элементе!');
-        event.stopPropagation(); // Остановить всплытие события
-    });
+  // Обработчик для дочернего элемента с остановкой всплытия
+  document.getElementById('child').addEventListener('click', (event) => {
+    alert('Клик на дочернем элементе!');
+    event.stopPropagation(); // Остановить всплытие события
+  });
 
-    // Обработчик для дочернего элемента на мышь
-    document.getElementById('child').addEventListener('mouseover', () => {
-        console.log('Наведение на дочерний элемент!');
-    });
+  // Обработчик для дочернего элемента на мышь
+  document.getElementById('child').addEventListener('mouseover', () => {
+    console.log('Наведение на дочерний элемент!');
+  });
 </script>
 ```
 
@@ -3660,22 +3659,22 @@ Event Bubbling и Event Capturing — это два подхода к распр
 
 ```html
 <ul id="list">
-    <li>Пункт 1</li>
-    <li>Пункт 2</li>
-    <li>Пункт 3 <button class="button">Нажми меня!</button></li>
+  <li>Пункт 1</li>
+  <li>Пункт 2</li>
+  <li>Пункт 3 <button class="button">Нажми меня!</button></li>
 </ul>
 
 <script>
-    // Обработчик для списка
-    document.getElementById('list').addEventListener('click', (event) => {
-        alert('Клик на списке!');
-    });
+  // Обработчик для списка
+  document.getElementById('list').addEventListener('click', (event) => {
+    alert('Клик на списке!');
+  });
 
-    // Обработчик для кнопки
-    document.querySelector('.button').addEventListener('click', (event) => {
-        alert('Кнопка нажата!');
-        event.stopPropagation(); // Остановить всплытие события
-    });
+  // Обработчик для кнопки
+  document.querySelector('.button').addEventListener('click', (event) => {
+    alert('Кнопка нажата!');
+    event.stopPropagation(); // Остановить всплытие события
+  });
 </script>
 ```
 
@@ -3702,21 +3701,21 @@ Event Bubbling и Event Capturing — это два подхода к распр
 **HTML и JavaScript код**:
 ```html
 <ul id="myList">
-    <li>Элемент 1</li>
-    <li>Элемент 2</li>
-    <li>Элемент 3</li>
+  <li>Элемент 1</li>
+  <li>Элемент 2</li>
+  <li>Элемент 3</li>
 </ul>
 
 <script>
-    const list = document.getElementById('myList');
+  const list = document.getElementById('myList');
 
-    // Добавляем обработчик события на родительский элемент
-    list.addEventListener('click', (event) => {
-        // Определяем, на какой элемент списка кликнули
-        if (event.target.tagName === 'LI') {
-            alert('Вы кликнули на: ' + event.target.textContent);
-        }
-    });
+  // Добавляем обработчик события на родительский элемент
+  list.addEventListener('click', (event) => {
+    // Определяем, на какой элемент списка кликнули
+    if (event.target.tagName === 'LI') {
+      alert('Вы кликнули на: ' + event.target.textContent);
+    }
+  });
 </script>
 ```
 
@@ -3732,23 +3731,23 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <ul id="myList"></ul>
 
 <script>
-    const list = document.getElementById('myList');
-    const addItemButton = document.getElementById('addItem');
-    let itemCount = 1;
+  const list = document.getElementById('myList');
+  const addItemButton = document.getElementById('addItem');
+  let itemCount = 1;
 
-    // Добавляем обработчик события на родительский элемент
-    list.addEventListener('click', (event) => {
-        if (event.target.tagName === 'LI') {
-            alert('Вы кликнули на: ' + event.target.textContent);
-        }
-    });
+  // Добавляем обработчик события на родительский элемент
+  list.addEventListener('click', (event) => {
+    if (event.target.tagName === 'LI') {
+      alert('Вы кликнули на: ' + event.target.textContent);
+    }
+  });
 
-    // Добавляем новые элементы в список
-    addItemButton.addEventListener('click', () => {
-        const newItem = document.createElement('li');
-        newItem.textContent = 'Элемент ' + itemCount++;
-        list.appendChild(newItem);
-    });
+  // Добавляем новые элементы в список
+  addItemButton.addEventListener('click', () => {
+    const newItem = document.createElement('li');
+    newItem.textContent = 'Элемент ' + itemCount++;
+    list.appendChild(newItem);
+  });
 </script>
 ```
 
@@ -3761,29 +3760,29 @@ Event Bubbling и Event Capturing — это два подхода к распр
 **HTML и JavaScript код**:
 ```html
 <table id="myTable">
-    <tr>
-        <th>Имя</th>
-        <th>Возраст</th>
-    </tr>
-    <tr>
-        <td>Алекс</td>
-        <td>30</td>
-    </tr>
-    <tr>
-        <td>Мария</td>
-        <td>25</td>
-    </tr>
+  <tr>
+    <th>Имя</th>
+    <th>Возраст</th>
+  </tr>
+  <tr>
+    <td>Алекс</td>
+    <td>30</td>
+  </tr>
+  <tr>
+    <td>Мария</td>
+    <td>25</td>
+  </tr>
 </table>
 
 <script>
-    const table = document.getElementById('myTable');
+  const table = document.getElementById('myTable');
 
-    table.addEventListener('click', (event) => {
-        // Проверяем, попали ли мы на ячейку (td)
-        if (event.target.tagName === 'TD') {
-            alert('Вы кликнули на ячейку со значением: ' + event.target.textContent);
-        }
-    });
+  table.addEventListener('click', (event) => {
+    // Проверяем, попали ли мы на ячейку (td)
+    if (event.target.tagName === 'TD') {
+      alert('Вы кликнули на ячейку со значением: ' + event.target.textContent);
+    }
+  });
 </script>
 ```
 
@@ -3808,20 +3807,20 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <div id="myElement" style="width: 100px; height: 100px; background-color: lightblue;"></div>
 
 <script>
-    const button = document.getElementById('addClassButton');
-    const element = document.getElementById('myElement');
+  const button = document.getElementById('addClassButton');
+  const element = document.getElementById('myElement');
 
-    button.addEventListener('click', () => {
-        element.classList.add('newClass'); // Добавляем класс
-    });
+  button.addEventListener('click', () => {
+    element.classList.add('newClass'); // Добавляем класс
+  });
 </script>
 
 <style>
-    .newClass {
-        background-color: coral; /* Меняет цвет фона на коралловый */
-        width: 200px; /* Изменяет ширину */
-        height: 200px; /* Изменяет высоту */
-    }
+  .newClass {
+    background-color: coral; /* Меняет цвет фона на коралловый */
+    width: 200px; /* Изменяет ширину */
+    height: 200px; /* Изменяет высоту */
+  }
 </style>
 ```
 
@@ -3837,12 +3836,12 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <div id="myElement" class="newClass" style="width: 200px; height: 200px; background-color: coral;"></div>
 
 <script>
-    const button = document.getElementById('removeClassButton');
-    const element = document.getElementById('myElement');
+  const button = document.getElementById('removeClassButton');
+  const element = document.getElementById('myElement');
 
-    button.addEventListener('click', () => {
-        element.classList.remove('newClass'); // Удаляем класс
-    });
+  button.addEventListener('click', () => {
+    element.classList.remove('newClass'); // Удаляем класс
+  });
 </script>
 ```
 
@@ -3858,20 +3857,20 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <div id="myElement" style="width: 100px; height: 100px; background-color: lightblue;"></div>
 
 <script>
-    const button = document.getElementById('toggleClassButton');
-    const element = document.getElementById('myElement');
+  const button = document.getElementById('toggleClassButton');
+  const element = document.getElementById('myElement');
 
-    button.addEventListener('click', () => {
-        element.classList.toggle('newClass'); // Переключаем класс
-    });
+  button.addEventListener('click', () => {
+    element.classList.toggle('newClass'); // Переключаем класс
+  });
 </script>
 
 <style>
-    .newClass {
-        background-color: coral; /* Меняет цвет фона на коралловый */
-        width: 200px; /* Изменяет ширину */
-        height: 200px; /* Изменяет высоту */
-    }
+  .newClass {
+    background-color: coral; /* Меняет цвет фона на коралловый */
+    width: 200px; /* Изменяет ширину */
+    height: 200px; /* Изменяет высоту */
+  }
 </style>
 ```
 
@@ -3887,21 +3886,21 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <div id="myElement" style="width: 100px; height: 100px; background-color: lightblue;"></div>
 
 <script>
-    const button = document.getElementById('addMultipleClassesButton');
-    const element = document.getElementById('myElement');
+  const button = document.getElementById('addMultipleClassesButton');
+  const element = document.getElementById('myElement');
 
-    button.addEventListener('click', () => {
-        element.classList.add('newClass', 'extraClass'); // Добавляем несколько классов
-    });
+  button.addEventListener('click', () => {
+    element.classList.add('newClass', 'extraClass'); // Добавляем несколько классов
+  });
 </script>
 
 <style>
-    .newClass {
-        background-color: coral; /* Меняет цвет фона на коралловый */
-    }
-    .extraClass {
-        border: 2px solid red; /* Добавляет красную рамку */
-    }
+  .newClass {
+    background-color: coral; /* Меняет цвет фона на коралловый */
+  }
+  .extraClass {
+    border: 2px solid red; /* Добавляет красную рамку */
+  }
 </style>
 ```
 
@@ -3927,14 +3926,14 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <p id="output"></p>
 
 <script>
-    const button = document.getElementById('submitButton');
-    const input = document.getElementById('myInput');
-    const output = document.getElementById('output');
+  const button = document.getElementById('submitButton');
+  const input = document.getElementById('myInput');
+  const output = document.getElementById('output');
 
-    button.addEventListener('click', () => {
-        const inputValue = input.value; // Получаем значение из input
-        output.textContent = 'Вы ввели: ' + inputValue; // Показываем результат
-    });
+  button.addEventListener('click', () => {
+    const inputValue = input.value; // Получаем значение из input
+    output.textContent = 'Вы ввели: ' + inputValue; // Показываем результат
+  });
 </script>
 ```
 
@@ -3945,32 +3944,32 @@ Event Bubbling и Event Capturing — это два подхода к распр
 **HTML и JavaScript код**:
 ```html
 <form id="myForm">
-    <label>
-        <input type="radio" name="color" value="red" /> Красный
-    </label>
-    <label>
-        <input type="radio" name="color" value="green" /> Зеленый
-    </label>
-    <label>
-        <input type="radio" name="color" value="blue" /> Синий
-    </label>
-    <button id="colorButton">Получить выбранный цвет</button>
+  <label>
+    <input type="radio" name="color" value="red" /> Красный
+  </label>
+  <label>
+    <input type="radio" name="color" value="green" /> Зеленый
+  </label>
+  <label>
+    <input type="radio" name="color" value="blue" /> Синий
+  </label>
+  <button id="colorButton">Получить выбранный цвет</button>
 </form>
 <p id="output"></p>
 
 <script>
-    const button = document.getElementById('colorButton');
-    const output = document.getElementById('output');
+  const button = document.getElementById('colorButton');
+  const output = document.getElementById('output');
 
-    button.addEventListener('click', (event) => {
-        event.preventDefault(); // Предотвратить отправку формы
-        const selectedColor = document.querySelector('input[name="color"]:checked'); // Получаем выбранный элемент
-        if (selectedColor) {
-            output.textContent = 'Вы выбрали цвет: ' + selectedColor.value; // Показываем выбранный цвет
-        } else {
-            output.textContent = 'Пожалуйста, выберите цвет.'; // Сообщение, если цвет не выбран
-        }
-    });
+  button.addEventListener('click', (event) => {
+    event.preventDefault(); // Предотвратить отправку формы
+    const selectedColor = document.querySelector('input[name="color"]:checked'); // Получаем выбранный элемент
+    if (selectedColor) {
+      output.textContent = 'Вы выбрали цвет: ' + selectedColor.value; // Показываем выбранный цвет
+    } else {
+      output.textContent = 'Пожалуйста, выберите цвет.'; // Сообщение, если цвет не выбран
+    }
+  });
 </script>
 ```
 
@@ -3981,29 +3980,29 @@ Event Bubbling и Event Capturing — это два подхода к распр
 **HTML и JavaScript код**:
 ```html
 <form id="myForm">
-    <label>
-        <input type="checkbox" name="hobby" value="reading" /> Чтение
-    </label>
-    <label>
-        <input type="checkbox" name="hobby" value="sports" /> Спорт
-    </label>
-    <label>
-        <input type="checkbox" name="hobby" value="music" /> Музыка
-    </label>
-    <button id="hobbyButton">Получить хобби</button>
+  <label>
+    <input type="checkbox" name="hobby" value="reading" /> Чтение
+  </label>
+  <label>
+    <input type="checkbox" name="hobby" value="sports" /> Спорт
+  </label>
+  <label>
+    <input type="checkbox" name="hobby" value="music" /> Музыка
+  </label>
+  <button id="hobbyButton">Получить хобби</button>
 </form>
 <p id="output"></p>
 
 <script>
-    const button = document.getElementById('hobbyButton');
-    const output = document.getElementById('output');
+  const button = document.getElementById('hobbyButton');
+  const output = document.getElementById('output');
 
-    button.addEventListener('click', (event) => {
-        event.preventDefault(); // Предотвратить отправку формы
-        const checkboxes = document.querySelectorAll('input[name="hobby"]:checked'); // Получаем отмеченные флажки
-        const hobbies = Array.from(checkboxes).map(checkbox => checkbox.value); // Извлекаем значения
-        output.textContent = 'Вы выбрали хобби: ' + (hobbies.length > 0 ? hobbies.join(', ') : 'ничего');
-    });
+  button.addEventListener('click', (event) => {
+    event.preventDefault(); // Предотвратить отправку формы
+    const checkboxes = document.querySelectorAll('input[name="hobby"]:checked'); // Получаем отмеченные флажки
+    const hobbies = Array.from(checkboxes).map(checkbox => checkbox.value); // Извлекаем значения
+    output.textContent = 'Вы выбрали хобби: ' + (hobbies.length > 0 ? hobbies.join(', ') : 'ничего');
+  });
 </script>
 ```
 
@@ -4018,14 +4017,14 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <p id="output"></p>
 
 <script>
-    const button = document.getElementById('passwordButton');
-    const passwordInput = document.getElementById('passwordInput');
-    const output = document.getElementById('output');
+  const button = document.getElementById('passwordButton');
+  const passwordInput = document.getElementById('passwordInput');
+  const output = document.getElementById('output');
 
-    button.addEventListener('click', () => {
-        const passwordValue = passwordInput.value; // Получаем значение пароля
-        output.textContent = 'Вы ввели пароль: ' + passwordValue; // Показываем пароль (в реальных приложениях избегайте этого!)
-    });
+  button.addEventListener('click', () => {
+    const passwordValue = passwordInput.value; // Получаем значение пароля
+    output.textContent = 'Вы ввели пароль: ' + passwordValue; // Показываем пароль (в реальных приложениях избегайте этого!)
+  });
 </script>
 ```
 
@@ -4045,28 +4044,28 @@ Event Bubbling и Event Capturing — это два подхода к распр
 
 1. **Инкапсуляция**: Это механизм, который объединяет данные и методы, работающие с этими данными, в один модуль (объект). Это позволяет скрывать внутренние детали реализации и защищать данные от несанкционированного доступа. В JavaScript инкапсуляция может быть достигнута через замыкания или использование классов.
 
-   **Пример**:
-   ```javascript
-   class BankAccount {
-       constructor(balance) {
-           let _balance = balance; // Закрытое свойство
+ **Пример**:
+ ```javascript
+ class BankAccount {
+   constructor(balance) {
+     let _balance = balance; // Закрытое свойство
 
-           this.getBalance = function() {
-               return _balance; // Метод для доступа к закрытому свойству
-           };
+     this.getBalance = function() {
+       return _balance; // Метод для доступа к закрытому свойству
+     };
 
-           this.deposit = function(amount) {
-               if (amount > 0) {
-                   _balance += amount;
-               }
-           };
+     this.deposit = function(amount) {
+       if (amount > 0) {
+         _balance += amount;
        }
+     };
    }
+ }
 
-   const account = new BankAccount(100);
-   account.deposit(50);
-   console.log(account.getBalance()); // 150
-   ```
+ const account = new BankAccount(100);
+ account.deposit(50);
+ console.log(account.getBalance()); // 150
+ ```
 
 2. **Наследование**: Это механизм, который позволяет создавать новые классы (наследники) на основе уже существующих классов (родителей). Наследники могут наследовать свойства и методы родителя, а также добавлять свои собственные.
 
@@ -4094,53 +4093,52 @@ Event Bubbling и Event Capturing — это два подхода к распр
 
 3. **Полиморфизм**: Это возможность использовать один и тот же интерфейс для работы с объектами различных типов. Полиморфизм позволяет методам одного класса переопределять методы других классов, что обеспечивает более гибкое поведение.
 
-   **Пример**:
-   ```javascript
-   class Cat extends Animal {
-       speak() {
-           console.log(`${this.name} мяукает.`);
-       }
+ **Пример**:
+ ```javascript
+ class Cat extends Animal {
+   speak() {
+     console.log(`${this.name} мяукает.`);
    }
+ }
 
-   const animals = [new Dog('Бобик'), new Cat('Мурка')];
+ const animals = [new Dog('Бобик'), new Cat('Мурка')];
 
-   animals.forEach(animal => {
-       animal.speak(); // Вызывает метод speak для каждого животного
-   });
+ animals.forEach(animal => {
+   animal.speak(); // Вызывает метод speak для каждого животного
+ });
 
-   // Бобик гавкает.
-   // Мурка мяукает.
-   ```
+ // Бобик гавкает.
+ // Мурка мяукает.
+ ```
 
 4. **Абстракция**: Это процесс выделения общих характеристик объектов и их поведения. Абстракция позволяет создавать abstract классы и интерфейсы, которые могут быть реализованы другими классами.
 
-   **Пример**:
-   ```javascript
-   class Shape {
-       area() {
-           throw new Error("Метод area() должен быть реализован в подклассе.");
-       }
+ **Пример**:
+ ```javascript
+ class Shape {
+   area() {
+     throw new Error("Метод area() должен быть реализован в подклассе.");
+   }
+ }
+
+ class Circle extends Shape {
+   constructor(radius) {
+     super();
+     this.radius = radius;
    }
 
-   class Circle extends Shape {
-       constructor(radius) {
-           super();
-           this.radius = radius;
-       }
-
-       area() {
-           return Math.PI * this.radius * this.radius;
-       }
+   area() {
+     return Math.PI * this.radius * this.radius;
    }
+ }
 
-   const circle = new Circle(5);
-   console.log(circle.area()); // 78.53981633974483
-   ```
+ const circle = new Circle(5);
+ console.log(circle.area()); // 78.53981633974483
+ ```
 
 **Резюме**
 
 Объектно-ориентированное программирование (ООП) — это концепция, которая основывается на использовании объектов для структурирования кода. Основные принципы ООП включают инкапсуляцию, наследование, полиморфизм и абстракцию, что помогает улучшить читаемость, гибкость и переиспользование кода.
-
 
 
 #### Вопрос 47. Как создать класс в JavaScript?
@@ -4156,26 +4154,26 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пример класса в JavaScript</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пример класса в JavaScript</title>
 </head>
 <body>
-    <script>
-        class Person {
-            constructor(name, age) {
-                this.name = name;
-                this.age = age;
-            }
+  <script>
+    class Person {
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
 
-            introduce() {
-                console.log(`Меня зовут ${this.name}, мне ${this.age} лет.`);
-            }
-        }
+      introduce() {
+        console.log(`Меня зовут ${this.name}, мне ${this.age} лет.`);
+      }
+    }
 
-        const person1 = new Person('Александр', 30);
-        person1.introduce(); // Меня зовут Александр, мне 30 лет.
-    </script>
+    const person1 = new Person('Александр', 30);
+    person1.introduce(); // Меня зовут Александр, мне 30 лет.
+  </script>
 </body>
 </html>
 ```
@@ -4189,38 +4187,38 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Наследование классов</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Наследование классов</title>
 </head>
 <body>
-    <script>
-        class Person {
-            constructor(name, age) {
-                this.name = name;
-                this.age = age;
-            }
+  <script>
+    class Person {
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
 
-            introduce() {
-                console.log(`Меня зовут ${this.name}, мне ${this.age} лет.`);
-            }
-        }
+      introduce() {
+        console.log(`Меня зовут ${this.name}, мне ${this.age} лет.`);
+      }
+    }
 
-        class Student extends Person {
-            constructor(name, age, major) {
-                super(name, age); // Вызываем конструктор родительского класса
-                this.major = major;
-            }
+    class Student extends Person {
+      constructor(name, age, major) {
+        super(name, age); // Вызываем конструктор родительского класса
+        this.major = major;
+      }
 
-            study() {
-                console.log(`${this.name} изучает ${this.major}.`);
-            }
-        }
+      study() {
+        console.log(`${this.name} изучает ${this.major}.`);
+      }
+    }
 
-        const student1 = new Student('Мария', 22, 'математику');
-        student1.introduce(); // Меня зовут Мария, мне 22 лет.
-        student1.study(); // Мария изучает математику.
-    </script>
+    const student1 = new Student('Мария', 22, 'математику');
+    student1.introduce(); // Меня зовут Мария, мне 22 лет.
+    student1.study(); // Мария изучает математику.
+  </script>
 </body>
 </html>
 ```
@@ -4234,34 +4232,34 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Геттеры и Сеттеры</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Геттеры и Сеттеры</title>
 </head>
 <body>
-    <script>
-        class Rectangle {
-            constructor(width, height) {
-                this.width = width;
-                this.height = height;
-            }
+  <script>
+    class Rectangle {
+      constructor(width, height) {
+        this.width = width;
+        this.height = height;
+      }
 
-            get area() {
-                return this.width * this.height;
-            }
+      get area() {
+        return this.width * this.height;
+      }
 
-            set dimensions(dimensions) {
-                this.width = dimensions.width;
-                this.height = dimensions.height;
-            }
-        }
+      set dimensions(dimensions) {
+        this.width = dimensions.width;
+        this.height = dimensions.height;
+      }
+    }
 
-        const rect = new Rectangle(10, 5);
-        console.log(`Площадь: ${rect.area}`); // Площадь: 50
+    const rect = new Rectangle(10, 5);
+    console.log(`Площадь: ${rect.area}`); // Площадь: 50
 
-        rect.dimensions = { width: 20, height: 10 };
-        console.log(`Новая площадь: ${rect.area}`); // Новая площадь: 200
-    </script>
+    rect.dimensions = { width: 20, height: 10 };
+    console.log(`Новая площадь: ${rect.area}`); // Новая площадь: 200
+  </script>
 </body>
 </html>
 ```
@@ -4275,25 +4273,25 @@ Event Bubbling и Event Capturing — это два подхода к распр
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Статические методы</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Статические методы</title>
 </head>
 <body>
-    <script>
-        class MathUtils {
-            static add(a, b) {
-                return a + b;
-            }
+  <script>
+    class MathUtils {
+      static add(a, b) {
+        return a + b;
+      }
 
-            static multiply(a, b) {
-                return a * b;
-            }
-        }
+      static multiply(a, b) {
+        return a * b;
+      }
+    }
 
-        console.log(MathUtils.add(5, 10)); // 15
-        console.log(MathUtils.multiply(3, 4)); // 12
-    </script>
+    console.log(MathUtils.add(5, 10)); // 15
+    console.log(MathUtils.multiply(3, 4)); // 12
+  </script>
 </body>
 </html>
 ```
@@ -4314,11 +4312,11 @@ Event Bubbling и Event Capturing — это два подхода к распр
 **JavaScript код**:
 ```javascript
 function Animal(name) {
-    this.name = name;
+  this.name = name;
 }
 
 Animal.prototype.speak = function() {
-    console.log(`${this.name} издает звук.`);
+  console.log(`${this.name} издает звук.`);
 };
 
 const dog = new Animal('Собака');
@@ -4332,15 +4330,15 @@ dog.speak(); // Собака издает звук.
 **JavaScript код**:
 ```javascript
 function Animal(name) {
-    this.name = name;
+  this.name = name;
 }
 
 Animal.prototype.speak = function() {
-    console.log(`${this.name} издает звук.`);
+  console.log(`${this.name} издает звук.`);
 };
 
 function Dog(name) {
-    Animal.call(this, name); // Вызываем конструктор родителя
+  Animal.call(this, name); // Вызываем конструктор родителя
 }
 
 // Настраиваем прототипы для наследования
@@ -4349,7 +4347,7 @@ Dog.prototype.constructor = Dog;
 
 // Добавляем метод, специфичный для Dog
 Dog.prototype.speak = function() {
-    console.log(`${this.name} гавкает.`);
+  console.log(`${this.name} гавкает.`);
 };
 
 const dog = new Dog('Бобик');
@@ -4363,16 +4361,16 @@ dog.speak(); // Бобик гавкает.
 **JavaScript код**:
 ```javascript
 const animal = {
-    speak: function() {
-        console.log('Животное издает звук.');
-    }
+  speak: function() {
+    console.log('Животное издает звук.');
+  }
 };
 
 const dog = Object.create(animal); // Создаем dog с прототипом animal
 dog.speak(); // Животное издает звук.
 
 dog.bark = function() {
-    console.log('Гав, гав!');
+  console.log('Гав, гав!');
 };
 
 dog.bark(); // Гав, гав!
@@ -4385,16 +4383,16 @@ dog.bark(); // Гав, гав!
 **JavaScript код**:
 ```javascript
 const vehicle = {
-    start: function() {
-        console.log('Автомобиль запускается!');
-    }
+  start: function() {
+    console.log('Автомобиль запускается!');
+  }
 };
 
 const car = Object.create(vehicle); // Создаем car с прототипом vehicle
 car.start(); // Автомобиль запускается!
 
 vehicle.stop = function() {
-    console.log('Автомобиль останавливается!');
+  console.log('Автомобиль останавливается!');
 };
 
 car.stop(); // Автомобиль останавливается!
@@ -4416,21 +4414,21 @@ car.stop(); // Автомобиль останавливается!
 **Пример с использованием `extends`**:
 ```javascript
 class Animal {
-    constructor(name) {
-        this.name = name;
-    }
+  constructor(name) {
+    this.name = name;
+  }
 
-    speak() {
-        console.log(`${this.name} издает звук.`);
-    }
+  speak() {
+    console.log(`${this.name} издает звук.`);
+  }
 }
 
 // Класс Dog наследует от класса Animal
 class Dog extends Animal {
-    speak() {
-        // Переопределяем метод speak для Dog
-        console.log(`${this.name} гавкает.`);
-    }
+  speak() {
+    // Переопределяем метод speak для Dog
+    console.log(`${this.name} гавкает.`);
+  }
 }
 
 const dog = new Dog('Бобик');
@@ -4444,26 +4442,26 @@ dog.speak(); // Бобик гавкает.
 **Пример с использованием `super` в конструкторе**:
 ```javascript
 class Animal {
-    constructor(name) {
-        this.name = name;
-    }
+  constructor(name) {
+    this.name = name;
+  }
 
-    speak() {
-        console.log(`${this.name} издает звук.`);
-    }
+  speak() {
+    console.log(`${this.name} издает звук.`);
+  }
 }
 
 // Класс Cat наследует от класса Animal
 class Cat extends Animal {
-    constructor(name, color) {
-        super(name); // Вызываем конструктор родительского класса
-        this.color = color;
-    }
+  constructor(name, color) {
+    super(name); // Вызываем конструктор родительского класса
+    this.color = color;
+  }
 
-    speak() {
-        super.speak(); // Вызываем метод speak родительского класса
-        console.log(`${this.name} мяукает.`);
-    }
+  speak() {
+    super.speak(); // Вызываем метод speak родительского класса
+    console.log(`${this.name} мяукает.`);
+  }
 }
 
 const cat = new Cat('Мурка', 'черный');
@@ -4478,16 +4476,16 @@ cat.speak();
 
 ```javascript
 class Vehicle {
-    start() {
-        console.log('Транспортное средство запускается.');
-    }
+  start() {
+    console.log('Транспортное средство запускается.');
+  }
 }
 
 class Car extends Vehicle {
-    start() {
-        super.start(); // Вызов метода start родительского класса
-        console.log('Автомобиль готов к движению.');
-    }
+  start() {
+    super.start(); // Вызов метода start родительского класса
+    console.log('Автомобиль готов к движению.');
+  }
 }
 
 const car = new Car();
@@ -4517,23 +4515,23 @@ car.start();
 **Пример с использованием классов и приватных полей (ES2022)**:
 ```javascript
 class BankAccount {
-    #balance; // Приватное поле
+  #balance; // Приватное поле
 
-    constructor(initialBalance) {
-        this.#balance = initialBalance;
-    }
+  constructor(initialBalance) {
+    this.#balance = initialBalance;
+  }
 
-    // Метод для получения баланса
-    getBalance() {
-        return this.#balance;
-    }
+  // Метод для получения баланса
+  getBalance() {
+    return this.#balance;
+  }
 
-    // Метод для пополнения счета
-    deposit(amount) {
-        if (amount > 0) {
-            this.#balance += amount;
-        }
+  // Метод для пополнения счета
+  deposit(amount) {
+    if (amount > 0) {
+      this.#balance += amount;
     }
+  }
 }
 
 const account = new BankAccount(100);
@@ -4549,20 +4547,20 @@ console.log(account.getBalance()); // 150
 **Пример наследования**:
 ```javascript
 class Animal {
-    constructor(name) {
-        this.name = name;
-    }
+  constructor(name) {
+    this.name = name;
+  }
 
-    speak() {
-        console.log(`${this.name} издает звук.`);
-    }
+  speak() {
+    console.log(`${this.name} издает звук.`);
+  }
 }
 
 // Класс Dog наследует от класса Animal
 class Dog extends Animal {
-    speak() {
-        console.log(`${this.name} гавкает.`);
-    }
+  speak() {
+    console.log(`${this.name} гавкает.`);
+  }
 }
 
 const dog = new Dog('Бобик');
@@ -4576,27 +4574,27 @@ dog.speak(); // Бобик гавкает.
 **Пример полиморфизма**:
 ```javascript
 class Animal {
-    speak() {
-        console.log('Животное издает звук.');
-    }
+  speak() {
+    console.log('Животное издает звук.');
+  }
 }
 
 class Dog extends Animal {
-    speak() {
-        console.log('Собака гавкает.');
-    }
+  speak() {
+    console.log('Собака гавкает.');
+  }
 }
 
 class Cat extends Animal {
-    speak() {
-        console.log('Кошка мяукает.');
-    }
+  speak() {
+    console.log('Кошка мяукает.');
+  }
 }
 
 const animals = [new Dog(), new Cat()];
 
 animals.forEach(animal => {
-    animal.speak(); // Вызываем метод speak для каждого животного
+  animal.speak(); // Вызываем метод speak для каждого животного
 });
 // Собака гавкает.
 // Кошка мяукает.
@@ -4621,21 +4619,21 @@ animals.forEach(animal => {
 
 ```javascript
 const Singleton = (function() {
-    let instance; // Хранение экземпляра
+  let instance; // Хранение экземпляра
 
-    function createInstance() {
-        const object = new Object("Я - экземпляр Singleton!"); // Создаем новый объект
-        return object;
+  function createInstance() {
+    const object = new Object("Я - экземпляр Singleton!"); // Создаем новый объект
+    return object;
+  }
+
+  return {
+    getInstance: function() {
+      if (!instance) {
+        instance = createInstance(); // Создаем экземпляр только при первом вызове
+      }
+      return instance; // Возвращаем единственный экземпляр
     }
-
-    return {
-        getInstance: function() {
-            if (!instance) {
-                instance = createInstance(); // Создаем экземпляр только при первом вызове
-            }
-            return instance; // Возвращаем единственный экземпляр
-        }
-    };
+  };
 })();
 
 const instance1 = Singleton.getInstance();
@@ -4652,17 +4650,17 @@ console.log(instance1 === instance2); // true, оба ссылаются на о
 
 ```javascript
 class Singleton {
-    constructor(name) {
-        if (Singleton.instance) {
-            return Singleton.instance; // Возвращаем уже существующий экземпляр
-        }
-        this.name = name;
-        Singleton.instance = this; // Сохраняем экземпляр
+  constructor(name) {
+    if (Singleton.instance) {
+      return Singleton.instance; // Возвращаем уже существующий экземпляр
     }
+    this.name = name;
+    Singleton.instance = this; // Сохраняем экземпляр
+  }
 
-    getName() {
-        return this.name;
-    }
+  getName() {
+    return this.name;
+  }
 }
 
 const instance1 = new Singleton("Первый экземпляр");
@@ -4681,22 +4679,22 @@ console.log(instance1 === instance2); // true, оба ссылаются на о
 
 ```javascript
 class Config {
-    constructor() {
-        if (Config.instance) {
-            return Config.instance;
-        }
-
-        this.settings = {}; // Хранение настроек
-        Config.instance = this;
+  constructor() {
+    if (Config.instance) {
+      return Config.instance;
     }
 
-    setSetting(key, value) {
-        this.settings[key] = value;
-    }
+    this.settings = {}; // Хранение настроек
+    Config.instance = this;
+  }
 
-    getSetting(key) {
-        return this.settings[key];
-    }
+  setSetting(key, value) {
+    this.settings[key] = value;
+  }
+
+  getSetting(key) {
+    return this.settings[key];
+  }
 }
 
 const config1 = new Config();
@@ -4727,13 +4725,13 @@ console.log(config1 === config2); // true, оба ссылаются на оди
 
 ```javascript
 function createPerson(name, age) {
-    return {
-        name: name,
-        age: age,
-        introduce() {
-            console.log(`Меня зовут ${this.name}, мне ${this.age} лет.`);
-        },
-    };
+  return {
+    name: name,
+    age: age,
+    introduce() {
+      console.log(`Меня зовут ${this.name}, мне ${this.age} лет.`);
+    },
+  };
 }
 
 const person1 = createPerson('Александр', 30);
@@ -4751,21 +4749,21 @@ person2.introduce(); // Меня зовут Мария, мне 25 лет.
 
 ```javascript
 function createCounter() {
-    let count = 0; // Приватная переменная
+  let count = 0; // Приватная переменная
 
-    return {
-        increment() {
-            count++;
-            return count;
-        },
-        decrement() {
-            count--;
-            return count;
-        },
-        getCount() {
-            return count;
-        },
-    };
+  return {
+    increment() {
+      count++;
+      return count;
+    },
+    decrement() {
+      count--;
+      return count;
+    },
+    getCount() {
+      return count;
+    },
+  };
 }
 
 const counter = createCounter();
@@ -4785,14 +4783,14 @@ console.log(counter.decrement()); // 1
 
 ```javascript
 function createCar(brand = 'Ford', model = 'Mustang', year = 2020) {
-    return {
-        brand,
-        model,
-        year,
-        displayInfo() {
-            console.log(`Машина: ${this.brand} ${this.model}, ${this.year} года.`);
-        },
-    };
+  return {
+    brand,
+    model,
+    year,
+    displayInfo() {
+      console.log(`Машина: ${this.brand} ${this.model}, ${this.year} года.`);
+    },
+  };
 }
 
 const car1 = createCar('Tesla', 'Model S', 2022);
@@ -4821,7 +4819,7 @@ car2.displayInfo(); // Машина: Ford Mustang, 2020 года.
 
 // Экспортируем функцию
 export function add(a, b) {
-    return a + b;
+  return a + b;
 }
 
 // Экспортируем переменную
@@ -4853,7 +4851,7 @@ console.log(PI); // 3.14
 
 // Экспортируем функцию как экспорт по умолчанию
 export default function greet(name) {
-    console.log(`Привет, ${name}!`);
+  console.log(`Привет, ${name}!`);
 }
 ```
 
@@ -4881,7 +4879,7 @@ export const subtract = (a, b) => a - b;
 
 // Экспорт по умолчанию
 export default function multiply(a, b) {
-    return a * b;
+  return a * b;
 }
 ```
 
@@ -4912,16 +4910,16 @@ console.log(subtract(10, 5)); // 5
 **Пример с использованием приватного поля**:
 ```javascript
 class Person {
-    #name; // Приватное поле
+  #name; // Приватное поле
 
-    constructor(name, age) {
-        this.#name = name; // Инициализация приватного поля
-        this.age = age;
-    }
+  constructor(name, age) {
+    this.#name = name; // Инициализация приватного поля
+    this.age = age;
+  }
 
-    getName() {
-        return this.#name; // Доступ к приватному полю
-    }
+  getName() {
+    return this.#name; // Доступ к приватному полю
+  }
 }
 
 const person = new Person('Александр', 30);
@@ -4938,16 +4936,16 @@ console.log(person.getName()); // Александр
 **Пример с использованием замыкания**:
 ```javascript
 function createPerson(name, age) {
-    let privateName = name; // Приватное свойство
+  let privateName = name; // Приватное свойство
 
-    return {
-        getName() {
-            return privateName; // Доступ к приватному свойству
-        },
-        getAge() {
-            return age;
-        }
-    };
+  return {
+    getName() {
+      return privateName; // Доступ к приватному свойству
+    },
+    getAge() {
+      return age;
+    }
+  };
 }
 
 const person = createPerson('Мария', 25);
@@ -4967,17 +4965,17 @@ console.log(person.getAge());  // 25
 const privateProps = new WeakMap();
 
 class Person {
-    constructor(name, age) {
-        privateProps.set(this, { name, age }); // Сохраняем приватные свойства
-    }
+  constructor(name, age) {
+    privateProps.set(this, { name, age }); // Сохраняем приватные свойства
+  }
 
-    getName() {
-        return privateProps.get(this).name; // Доступ к приватному свойству
-    }
+  getName() {
+    return privateProps.get(this).name; // Доступ к приватному свойству
+  }
 
-    getAge() {
-        return privateProps.get(this).age;
-    }
+  getAge() {
+    return privateProps.get(this).age;
+  }
 }
 
 const person = new Person('Сергей', 40);
@@ -5015,21 +5013,21 @@ Mixins предоставляют методы и свойства, которы
 
 ```javascript
 const CanFly = {
-    fly() {
-        console.log(`${this.name} летит!`);
-    }
+  fly() {
+    console.log(`${this.name} летит!`);
+  }
 };
 
 const CanSwim = {
-    swim() {
-        console.log(`${this.name} плавает!`);
-    }
+  swim() {
+    console.log(`${this.name} плавает!`);
+  }
 };
 
 class Animal {
-    constructor(name) {
-        this.name = name;
-    }
+  constructor(name) {
+    this.name = name;
+  }
 }
 
 Object.assign(Animal.prototype, CanFly, CanSwim); // Добавляем методы миксинов к классу Animal
@@ -5047,29 +5045,29 @@ duck.swim(); // Утка плавает!
 
 ```javascript
 class CanRun {
-    run() {
-        console.log(`${this.name} бегает!`);
-    }
+  run() {
+    console.log(`${this.name} бегает!`);
+  }
 }
 
 class CanJump {
-    jump() {
-        console.log(`${this.name} прыгает!`);
-    }
+  jump() {
+    console.log(`${this.name} прыгает!`);
+  }
 }
 
 function applyMixins(derivedCtor, baseCtors) {
-    baseCtors.forEach(baseCtor => {
-        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
-            derivedCtor.prototype[name] = baseCtor.prototype[name];
-        });
+  baseCtors.forEach(baseCtor => {
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+      derivedCtor.prototype[name] = baseCtor.prototype[name];
     });
+  });
 }
 
 class Superhero {
-    constructor(name) {
-        this.name = name;
-    }
+  constructor(name) {
+    this.name = name;
+  }
 }
 
 applyMixins(Superhero, [CanRun, CanJump]); // Применяем миксины к классу Superhero
@@ -5087,21 +5085,21 @@ hero.jump(); // Человек-Паук прыгает!
 
 ```javascript
 const CanTalk = base => class extends base {
-    talk() {
-        console.log(`${this.name} говорит!`);
-    }
+  talk() {
+    console.log(`${this.name} говорит!`);
+  }
 };
 
 const CanEat = base => class extends base {
-    eat() {
-        console.log(`${this.name} ест!`);
-    }
+  eat() {
+    console.log(`${this.name} ест!`);
+  }
 };
 
 class Person {
-    constructor(name) {
-        this.name = name;
-    }
+  constructor(name) {
+    this.name = name;
+  }
 }
 
 class TalkingEatingPerson extends CanTalk(CanEat(Person)) {}
@@ -5227,9 +5225,9 @@ console.log(cookies); // Например, "username=Александр; session
 
 // Парсинг cookie
 function getCookieValue(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
 const username = getCookieValue('username');
@@ -5276,8 +5274,8 @@ Web Workers — это механизм, позволяющий выполнят
 ```javascript
 // worker.js
 self.onmessage = function(event) {
-    const result = event.data * 2; // Умножаем входное значение на 2
-    self.postMessage(result); // Отправляем результат обратно в основной поток
+  const result = event.data * 2; // Умножаем входное значение на 2
+  self.postMessage(result); // Отправляем результат обратно в основной поток
 };
 ```
 
@@ -5290,7 +5288,7 @@ self.onmessage = function(event) {
 const worker = new Worker('worker.js'); // Создаем нового worker
 
 worker.onmessage = function(event) {
-    console.log(`Результат от Worker: ${event.data}`); // Логируем результат
+  console.log(`Результат от Worker: ${event.data}`); // Логируем результат
 };
 
 // Отправляем сообщение в worker
@@ -5305,12 +5303,12 @@ worker.postMessage(10); // Отправляем 10 в worker
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Workers Example</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Workers Example</title>
 </head>
 <body>
-    <script src="main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
 ```
@@ -5331,30 +5329,30 @@ Web Workers полезны, когда необходимо выполнять �
 ```javascript
 // worker.js
 self.onmessage = function(event) {
-    const limit = event.data; // Получаем число от основного потока
-    const primes = [];
+  const limit = event.data; // Получаем число от основного потока
+  const primes = [];
 
-    for (let num = 2; num <= limit; num++) {
-        let isPrime = true;
-        for (let divis = 2; divis <= Math.sqrt(num); divis++) {
-            if (num % divis === 0) {
-                isPrime = false;
-                break;
-            }
-        }
-        if (isPrime) {
-            primes.push(num);
-        }
+  for (let num = 2; num <= limit; num++) {
+    let isPrime = true;
+    for (let divis = 2; divis <= Math.sqrt(num); divis++) {
+      if (num % divis === 0) {
+        isPrime = false;
+        break;
+      }
     }
+    if (isPrime) {
+      primes.push(num);
+    }
+  }
 
-    self.postMessage(primes); // Отправляем массив простых чисел обратно
+  self.postMessage(primes); // Отправляем массив простых чисел обратно
 };
 
 // main.js
 const worker = new Worker('worker.js');
 
 worker.onmessage = function(event) {
-    console.log(`Найденные простые числа: ${event.data}`);
+  console.log(`Найденные простые числа: ${event.data}`);
 };
 
 worker.postMessage(100); // Запускаем поиск простых чисел до 100
@@ -5384,23 +5382,23 @@ API Geolocation предоставляет два основных метода:
 
 ```javascript
 if ("geolocation" in navigator) { // Проверка поддержки Geolocation
-    navigator.geolocation.getCurrentPosition(
-        function(position) { // Успешный callback
-            const latitude = position.coords.latitude; // Широта
-            const longitude = position.coords.longitude; // Долгота
-            console.log(`Широта: ${latitude}, Долгота: ${longitude}`);
-        },
-        function(error) { // Обработка ошибок
-            console.error(`Ошибка: ${error.message}`);
-        },
-        {
-            enableHighAccuracy: true, // Опции, если нужны более точные данные
-            timeout: 5000, // Время ожидания ответа
-            maximumAge: 0 // Максимальный возраст кэша данных
-        }
-    );
+  navigator.geolocation.getCurrentPosition(
+    function(position) { // Успешный callback
+      const latitude = position.coords.latitude; // Широта
+      const longitude = position.coords.longitude; // Долгота
+      console.log(`Широта: ${latitude}, Долгота: ${longitude}`);
+    },
+    function(error) { // Обработка ошибок
+      console.error(`Ошибка: ${error.message}`);
+    },
+    {
+      enableHighAccuracy: true, // Опции, если нужны более точные данные
+      timeout: 5000, // Время ожидания ответа
+      maximumAge: 0 // Максимальный возраст кэша данных
+    }
+  );
 } else {
-    console.log("Геолокация не поддерживается этим браузером.");
+  console.log("Геолокация не поддерживается этим браузером.");
 }
 ```
 
@@ -5410,27 +5408,27 @@ if ("geolocation" in navigator) { // Проверка поддержки Geoloca
 
 ```javascript
 if ("geolocation" in navigator) {
-    const watchId = navigator.geolocation.watchPosition(
-        function(position) {
-            const latitude = position.coords.latitude; // Широта
-            const longitude = position.coords.longitude; // Долгота
-            console.log(`Текущее местоположение: Широта: ${latitude}, Долгота: ${longitude}`);
-        },
-        function(error) {
-            console.error(`Ошибка: ${error.message}`);
-        },
-        {
-            enableHighAccuracy: true,
-            maximumAge: 0,
-            timeout: 5000
-        }
-    );
+  const watchId = navigator.geolocation.watchPosition(
+    function(position) {
+      const latitude = position.coords.latitude; // Широта
+      const longitude = position.coords.longitude; // Долгота
+      console.log(`Текущее местоположение: Широта: ${latitude}, Долгота: ${longitude}`);
+    },
+    function(error) {
+      console.error(`Ошибка: ${error.message}`);
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 5000
+    }
+  );
 
-    // Прекращаем отслеживание через 30 секунд (для примера)
-    setTimeout(function() {
-        navigator.geolocation.clearWatch(watchId);
-        console.log("Отслеживание местоположения остановлено.");
-    }, 30000);
+  // Прекращаем отслеживание через 30 секунд (для примера)
+  setTimeout(function() {
+    navigator.geolocation.clearWatch(watchId);
+    console.log("Отслеживание местоположения остановлено.");
+  }, 30000);
 } else {
     console.log("Геолокация не поддерживается этим браузером.");
 }
@@ -5468,15 +5466,15 @@ Service Workers — это скрипты, которые функциониру
 
 ```javascript
 if ('serviceWorker' in navigator) { // Проверка на поддержку Service Workers
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then(function(registration) {
-                console.log('Service Worker зарегистрирован: ', registration);
-            })
-            .catch(function(error) {
-                console.error('Ошибка при регистрации Service Worker: ', error);
-            });
-    });
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(function(registration) {
+        console.log('Service Worker зарегистрирован: ', registration);
+      })
+      .catch(function(error) {
+        console.error('Ошибка при регистрации Service Worker: ', error);
+      });
+  });
 }
 ```
 
@@ -5489,48 +5487,48 @@ if ('serviceWorker' in navigator) { // Проверка на поддержку 
 ```javascript
 const CACHE_NAME = 'my-cache-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/script.js'
+  '/',
+  '/index.html',
+  '/styles.css',
+  '/script.js'
 ];
 
 // Событие install, кэшируем ресурсы
 self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                console.log('Кэширование ресурсов');
-                return cache.addAll(urlsToCache);
-            })
-    );
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Кэширование ресурсов');
+        return cache.addAll(urlsToCache);
+      })
+  );
 });
 
 // Событие fetch, используем кэш при сетевом запросе
 self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                // Возвращаем ресурс из кэша или загружаем его
-                return response || fetch(event.request);
-            })
-    );
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Возвращаем ресурс из кэша или загружаем его
+        return response || fetch(event.request);
+      })
+  );
 });
 
 // Событие activate, очищаем старые кэши
 self.addEventListener('activate', event => {
-    const cacheWhitelist = [CACHE_NAME];
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheWhitelist.indexOf(cacheName) === -1) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
         })
-    );
+      );
+    })
+  );
 });
 ```
 
@@ -5548,14 +5546,14 @@ self.addEventListener('activate', event => {
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Workers Example</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Workers Example</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Пример Service Workers</h1>
-    <script src="script.js"></script>
+  <h1>Пример Service Workers</h1>
+  <script src="script.js"></script>
 </body>
 </html>
 ```
@@ -5666,11 +5664,11 @@ console.log(history.state); // { page: 2 }
 ```javascript
 // Добавляем слушатель событий на изменение состояния
 window.onpopstate = function(event) {
-    if (event.state) {
-        console.log("Текущее состояние:", event.state);
-    } else {
-        console.log("Нет сохранённого состояния");
-    }
+  if (event.state) {
+    console.log("Текущее состояние:", event.state);
+  } else {
+    console.log("Нет сохранённого состояния");
+  }
 };
 
 // Пример использования pushState для перехода
@@ -5705,22 +5703,22 @@ window.history.back(); // Выведет: Текущее состояние: { p
 ```javascript
 // Определяем функцию обратного вызова
 const callback = (entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            console.log('Элемент видим:', entry.target);
-            // Можно выполнить необходимые действия, например, загрузить изображение
-            entry.target.classList.add('visible');
-            // При желании можем отключить наблюдение за элементом
-            observer.unobserve(entry.target);
-        }
-    });
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      console.log('Элемент видим:', entry.target);
+      // Можно выполнить необходимые действия, например, загрузить изображение
+      entry.target.classList.add('visible');
+      // При желании можем отключить наблюдение за элементом
+      observer.unobserve(entry.target);
+    }
+  });
 };
 
 // Настройки наблюдения
 const options = {
-    root: null, // использовать viewport
-    rootMargin: '0px',
-    threshold: 0.1 // 10% видимости
+  root: null, // использовать viewport
+  rootMargin: '0px',
+  threshold: 0.1 // 10% видимости
 };
 
 // Создаем экземпляр IntersectionObserver
@@ -5735,7 +5733,7 @@ const targets = document.querySelectorAll('.observe-me');
 
 // Начинаем наблюдение за каждым элементом
 targets.forEach(target => {
-    observer.observe(target);
+  observer.observe(target);
 });
 ```
 
@@ -5745,33 +5743,33 @@ targets.forEach(target => {
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intersection Observer Example</title>
-    <style>
-        .observe-me {
-            min-height: 100px;
-            background-color: lightblue;
-            margin: 20px 0;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        .visible {
-            opacity: 1;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intersection Observer Example</title>
+  <style>
+    .observe-me {
+      min-height: 100px;
+      background-color: lightblue;
+      margin: 20px 0;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .visible {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
 
-    <div style="height: 100vh;"></div> <!-- Создаем пространство для прокрутки -->
-    <div class="observe-me">Элемент 1</div>
-    <div class="observe-me">Элемент 2</div>
-    <div class="observe-me">Элемент 3</div>
-    <div style="height: 100vh;"></div> <!-- Создаем пространство для прокрутки -->
+  <div style="height: 100vh;"></div> <!-- Создаем пространство для прокрутки -->
+  <div class="observe-me">Элемент 1</div>
+  <div class="observe-me">Элемент 2</div>
+  <div class="observe-me">Элемент 3</div>
+  <div style="height: 100vh;"></div> <!-- Создаем пространство для прокрутки -->
 
-    <script>
-        // Вставьте JavaScript код из примеров выше здесь
-    </script>
+  <script>
+    // Вставьте JavaScript код из примеров выше здесь
+  </script>
 </body>
 </html>
 ```
@@ -5808,61 +5806,61 @@ targets.forEach(target => {
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag and Drop Example</title>
-    <style>
-        .draggable {
-            width: 100px;
-            height: 100px;
-            background-color: lightblue;
-            margin: 10px;
-            border: 1px solid #333;
-            cursor: pointer;
-        }
-        
-        .dropzone {
-            width: 120px;
-            height: 120px;
-            background-color: lightgray;
-            border: 2px dashed #333;
-            margin: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag and Drop Example</title>
+  <style>
+    .draggable {
+      width: 100px;
+      height: 100px;
+      background-color: lightblue;
+      margin: 10px;
+      border: 1px solid #333;
+      cursor: pointer;
+    }
+    
+    .dropzone {
+      width: 120px;
+      height: 120px;
+      background-color: lightgray;
+      border: 2px dashed #333;
+      margin: 10px;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="draggable" draggable="true">Перетаскиваемый элемент</div>
-    <div class="dropzone">Сбросьте сюда</div>
+  <div class="draggable" draggable="true">Перетаскиваемый элемент</div>
+  <div class="dropzone">Сбросьте сюда</div>
 
-    <script>
-        // Получение перетаскиваемого элемента и зоны сброса
-        const draggable = document.querySelector('.draggable');
-        const dropzone = document.querySelector('.dropzone');
+  <script>
+    // Получение перетаскиваемого элемента и зоны сброса
+    const draggable = document.querySelector('.draggable');
+    const dropzone = document.querySelector('.dropzone');
 
-        // Обработчик события dragstart
-        draggable.addEventListener('dragstart', (event) => {
-            event.dataTransfer.setData('text/plain', event.target.innerText);
-            event.target.style.opacity = 0.5; // Меняем стиль при перетаскивании
-        });
+    // Обработчик события dragstart
+    draggable.addEventListener('dragstart', (event) => {
+      event.dataTransfer.setData('text/plain', event.target.innerText);
+      event.target.style.opacity = 0.5; // Меняем стиль при перетаскивании
+    });
 
-        // Обработчик события dragend
-        draggable.addEventListener('dragend', (event) => {
-            event.target.style.opacity = 1; // Возвращаем стиль обратно
-        });
+    // Обработчик события dragend
+    draggable.addEventListener('dragend', (event) => {
+      event.target.style.opacity = 1; // Возвращаем стиль обратно
+    });
 
-        // Обработчик события dragover
-        dropzone.addEventListener('dragover', (event) => {
-            event.preventDefault(); // Разрешаем сброс
-        });
+    // Обработчик события dragover
+    dropzone.addEventListener('dragover', (event) => {
+      event.preventDefault(); // Разрешаем сброс
+    });
 
-        // Обработчик события drop
-        dropzone.addEventListener('drop', (event) => {
-            event.preventDefault(); // Отменяем стандартное поведение
-            const data = event.dataTransfer.getData('text/plain'); // Получаем данные
-            dropzone.innerText = data; // Отображаем данные в зоне сброса
-        });
-    </script>
+    // Обработчик события drop
+    dropzone.addEventListener('drop', (event) => {
+      event.preventDefault(); // Отменяем стандартное поведение
+      const data = event.dataTransfer.getData('text/plain'); // Получаем данные
+      dropzone.innerText = data; // Отображаем данные в зоне сброса
+    });
+  </script>
 </body>
 </html>
 ```
@@ -5911,23 +5909,23 @@ const socket = new WebSocket('ws://example.com/socket');
 
 // Обработка открытого соединения
 socket.addEventListener('open', function(event) {
-    console.log('Соединение установлено!');
-    socket.send('Привет, сервер!'); // Отправка сообщения на сервер
+  console.log('Соединение установлено!');
+  socket.send('Привет, сервер!'); // Отправка сообщения на сервер
 });
 
 // Обработка входящих сообщений
 socket.addEventListener('message', function(event) {
-    console.log('Сообщение от сервера: ', event.data);
+  console.log('Сообщение от сервера: ', event.data);
 });
 
 // Обработка ошибок
 socket.addEventListener('error', function(event) {
-    console.error('Ошибка WebSocket: ', event);
+  console.error('Ошибка WebSocket: ', event);
 });
 
 // Обработка закрытия соединения
 socket.addEventListener('close', function(event) {
-    console.log('Соединение закрыто: ', event);
+  console.log('Соединение закрыто: ', event);
 });
 ```
 
@@ -5937,8 +5935,8 @@ socket.addEventListener('close', function(event) {
 
 ```javascript
 function sendMessage() {
-    const message = 'Это сообщение от клиента';
-    socket.send(message);
+  const message = 'Это сообщение от клиента';
+  socket.send(message);
 }
 ```
 
@@ -5962,17 +5960,17 @@ const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
 
 wss.on('connection', function connection(ws) {
-    console.log('Клиент подключен');
+  console.log('Клиент подключен');
 
-    ws.on('message', function incoming(message) {
-        console.log('Получено сообщение: %s', message);
-        // Отправка ответа клиенту
-        ws.send('Вы сказали: ' + message);
-    });
+  ws.on('message', function incoming(message) {
+    console.log('Получено сообщение: %s', message);
+    // Отправка ответа клиенту
+    ws.send('Вы сказали: ' + message);
+  });
 
-    ws.on('close', function () {
-        console.log('Клиент отключился');
-    });
+  ws.on('close', function () {
+    console.log('Клиент отключился');
+  });
 });
 ```
 
@@ -5981,4 +5979,2008 @@ wss.on('connection', function connection(ws) {
 WebSockets позволяют устанавливать эффективное, постоянное соединение для обмена данными в реальном времени. Этот подход значительно упрощает создание динамичных приложений, которые требуют мгновенного взаимодействия с пользователями.
 
 
+---
+
+### ES6+ и современный JavaScript
+
+#### Вопрос 66. Что нового в ES6? 
+
+ES6, также известный как ECMAScript 2015, представляет собой значительное обновление языка JavaScript, которое добавляет множество новых функций и улучшений, упрощающих разработку и повышающих читаемость кода. Вот основные нововведения, которые были введены в ES6:
+
+1. **Лет и Конст**
+
+- **`let`**: Объявляет переменную с блочной областью видимости.
+- **`const`**: Объявляет постоянную переменную, значение которой не может быть изменено.
+
+```javascript
+let a = 10;
+const b = 20;
+// b = 30; // Это вызовет ошибку, так как `b` не может быть изменено.
+```
+
+2. **Стрелочные функции**
+
+Стрелочные функции позволяют писать более компактные функции и автоматически связывают значение `this`.
+
+```javascript
+const add = (x, y) => x + y;
+console.log(add(2, 3)); // 5
+
+// Пример с `this`
+const obj = {
+  value: 10,
+  getValue: function() {
+    return () => this.value; // `this` ссылается на `obj`
+  }
+};
+
+const getValue = obj.getValue();
+console.log(getValue()); // 10
+```
+
+3. **Шаблонные строки**
+
+Позволяют использовать интерполяцию и многострочные строки.
+
+```javascript
+const name = 'Мир';
+const greeting = `Привет, ${name}!`; // Интерполяция
+console.log(greeting); // Привет, Мир!
+```
+
+4. **Деструктуризация**
+
+Упрощает извлечение значений из массивов и объектов.
+
+```javascript
+const arr = [1, 2, 3];
+const [x, y] = arr; // Деструктуризация массива
+console.log(x, y); // 1 2
+
+const obj = { a: 1, b: 2 };
+const { a, b } = obj; // Деструктуризация объекта
+console.log(a, b); // 1 2
+```
+
+5. **Модули**
+
+ES6 вводит поддержку модулей, что упрощает организацию кода.
+
+```javascript
+// module.js
+export const name = 'Модуль';
+export function greet() {
+  console.log(`Привет из ${name}`);
+}
+
+// main.js
+import { name, greet } from './module.js';
+greet(); // Привет из Модуль
+```
+
+6. **Промисы**
+
+Простая работа с асинхронными операциями.
+
+```javascript
+const myPromise = new Promise((resolve, reject) => {
+  const success = true;
+  if (success) {
+    resolve('Успех!');
+  } else {
+    reject('Ошибка!');
+  }
+});
+
+myPromise
+  .then(result => console.log(result)) // Успех!
+  .catch(error => console.error(error));
+```
+
+7. **Классы**
+
+Синтаксический сахар для создания объектов и работы с прототипами.
+
+```javascript
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+  sayHello() {
+    console.log(`Привет, меня зовут ${this.name}`);
+  }
+}
+
+const person = new Person('Алекс');
+person.sayHello(); // Привет, меня зовут Алекс
+```
+
+8. **Расширенный литерал объектов**
+
+Позволяет писать более удобные литералы для объектов, включая методы и свойства.
+
+```javascript
+const name = 'Мир';
+const obj = {
+  name,
+  sayHello() {
+    console.log(`Привет, ${this.name}`);
+  }
+};
+obj.sayHello(); // Привет, Мир
+```
+
+9. **Spread и Rest операторы**
+
+- **Spread оператор (`...`)**: Разворачивает элементы массива или объекта.
+- **Rest оператор (`...`)**: Собирает остаточные параметры в массив.
+
+```javascript
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, ...arr1];
+console.log(arr2); // [4, 5, 1, 2, 3]
+
+const sum = (...args) => args.reduce((acc, curr) => acc + curr, 0);
+console.log(sum(1, 2, 3)); // 6
+```
+
+**Резюме**
+
+ES6 значительно упрощает написание JavaScript-кода, делая его более лаконичным, удобочитаемым и современным. Это лишь некоторые из основных нововведений, и существует еще множество других функций и улучшений, представленных в ES6.
+
+
+#### Вопрос 67. Что такое декораторы?
+
+Декораторы в JavaScript представляют собой экспериментальную функциональность, которая позволяет добавлять дополнительное поведение (или изменять существующее) к классам и их методам. Декораторы можно применять к классам, методам, аксессорам, свойствам и параметрам. Это мощный инструмент, который может сделать код более читабельным и модульным.
+
+**Примечание**
+
+На момент написания этот функционал всё еще находится в стадии предложения (Proposal), а это значит, что он может быть изменён или вовсе не добавлен в стандарт. Однако многие разработчики используют компиляторы, такие как Babel, которые позволяют применять декораторы в JavaScript.
+
+**Примеры использования декораторов**:
+
+1. **Декоратор для методов**
+
+Декоратор может быть использован для изменения поведения методов. Например, можно создать декоратор для логгирования входных и выходных данных:
+
+```javascript
+function log(target, key, descriptor) {
+  const originalMethod = descriptor.value; // Сохраняем оригинальный метод
+  descriptor.value = function(...args) {
+    console.log(`Вызов метода: ${key} с аргументами: ${args}`);
+    const result = originalMethod.apply(this, args);
+    console.log(`Результат: ${result}`);
+    return result;
+  };
+  return descriptor;
+}
+
+class Calculator {
+  @log
+  add(a, b) {
+    return a + b;
+  }
+}
+
+const calc = new Calculator();
+calc.add(5, 3); // Лог: Вызов метода: add с аргументами: 5,3
+// Лог: Результат: 8
+```
+
+2. **Декоратор для классов**
+
+Декоратор может добавлять новые свойства или методы к классу. Например, можно использовать декоратор для добавления информации о классе:
+
+```javascript
+function addDescription(description) {
+  return function (constructor) {
+    constructor.prototype.description = description;
+  };
+}
+
+@addDescription('Это класс для обработки пользователей')
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+const user = new User('Алекс');
+console.log(user.description); // Это класс для обработки пользователей
+```
+
+3. **Декораторы для свойств**
+
+Хотя возможности декораторов для свойств менее распространены, их также можно использовать. Например, для валидации значения свойства:
+
+```javascript
+function validate(target, key) {
+  let value = target[key];
+  
+  const getter = () => value;
+  const setter = (newVal) => {
+    if (typeof newVal !== 'string') {
+      throw new Error(`Значение для ${key} должно быть строкой`);
+    }
+    value = newVal;
+  };
+
+  Object.defineProperty(target, key, { get: getter, set: setter });
+}
+
+class Person {
+  @validate
+  name;
+
+  constructor(name) {
+    this.name = name; // Здесь происходит валидация
+  }
+}
+
+const person = new Person('Максим');
+console.log(person.name); // Максим
+// person.name = 123; // Это вызовет ошибку: Значение для name должно быть строкой
+```
+
+**Резюме**
+
+Декораторы позволяют улучшить архитектуру кода и облегчить повторное использование функциональности. Они особенно полезны для аспектно-ориентированного программирования, например, для логирования, управления транзакциями и проверки прав доступа.
+
+
+#### Вопрос 68. Что такое генераторы (`function*`)? 
+
+Генераторы в JavaScript — это особый вид функций, которые могут быть приостановлены и возобновлены. Генераторы позволяют создавать итераторы, которые могут возвращать несколько значений по одному за раз, а не возвращать все значения сразу. Это особенно полезно для работы с большими наборами данных или асинхронными операциями.
+
+**Обозначение генераторов**
+
+Генераторы определяются с использованием конструкции `function*` (обратите внимание на звездочку после `function`). Внутри тела генератора используется ключевое слово `yield` для выдачи значений.
+
+**Основные характеристики генераторов**:
+
+1. **Приостановка и возобновление**: Генератор может быть приостановлен при помощи `yield` и возобновлен позже.
+2. **Итераторы**: Генераторы автоматически создают объект итератора, который соответствует стандарту итерации.
+3. **Состояние**: Генераторы сохраняют своё состояние между вызовами.
+
+**Примеры использования генераторов**:
+
+1. **Простой генератор**
+
+```javascript
+function* simpleGenerator() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const gen = simpleGenerator();
+
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+console.log(gen.next().value); // 3
+console.log(gen.next().value); // undefined (генератор завершен)
+```
+
+Каждый вызов метода `.next()` возвращает объект с двумя свойствами: `value` — значение, которое было возвращено через `yield`, и `done` — логическое значение, которое указывает, завершён ли генератор.
+
+2. **Генератор для последовательностей**
+
+Генераторы полезны для создания последовательностей, таких как числа Фибоначчи:
+
+```javascript
+function* fibonacci() {
+  let a = 0, b = 1;
+  while (true) {
+    yield a; // Возвращаем текущее значение
+    [a, b] = [b, a + b]; // Обновляем значения
+  }
+}
+
+const fib = fibonacci();
+
+console.log(fib.next().value); // 0
+console.log(fib.next().value); // 1
+console.log(fib.next().value); // 1
+console.log(fib.next().value); // 2
+console.log(fib.next().value); // 3
+```
+
+3. **Генераторы и асинхронный код**
+
+Генераторы также используются с `Promise` и для асинхронной работы. Например, можно создать генератор, который будет работать с асинхронным кодом через библиотеку `co` или использовать их с `async/await`.
+
+```javascript
+function* asyncGenerator() {
+  const result1 = yield fetch('https://api.example.com/data1');
+  const result2 = yield fetch('https://api.example.com/data2');
+  return [result1, result2];
+}
+
+// Использование с Promises (необходимо будет обработать .next() с промисами)
+const gen = asyncGenerator();
+
+// Получаем первый запрос
+gen.next().value
+  .then(response => response.json())
+  .then(data => gen.next(data))
+  .then(result => {
+    console.log(result);
+  });
+```
+
+**Резюме**
+
+Генераторы предоставляют мощный и гибкий способ работы с данными и асинхронным кодом в JavaScript. Они позволяют создавать итераторы и управлять потоком выполнения программы, что делает их полезными для множества сценариев, особенно когда нужно управлять состоянием и вычислениями.
+
+
+#### Вопрос 69. Что такое `Symbol`? Где используется? 
+
+Генераторы в JavaScript — это особый вид функций, которые могут быть приостановлены и возобновлены. Генераторы позволяют создавать итераторы, которые могут возвращать несколько значений по одному за раз, а не возвращать все значения сразу. Это особенно полезно для работы с большими наборами данных или асинхронными операциями.
+
+**Обозначение генераторов**
+
+Генераторы определяются с использованием конструкции `function*` (обратите внимание на звездочку после `function`). Внутри тела генератора используется ключевое слово `yield` для выдачи значений.
+
+**Основные характеристики генераторов**:
+
+1. **Приостановка и возобновление**: Генератор может быть приостановлен при помощи `yield` и возобновлен позже.
+2. **Итераторы**: Генераторы автоматически создают объект итератора, который соответствует стандарту итерации.
+3. **Состояние**: Генераторы сохраняют своё состояние между вызовами.
+
+**Примеры использования генераторов**:
+
+1. **Простой генератор**
+
+```javascript
+function* simpleGenerator() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const gen = simpleGenerator();
+
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+console.log(gen.next().value); // 3
+console.log(gen.next().value); // undefined (генератор завершен)
+```
+
+Каждый вызов метода `.next()` возвращает объект с двумя свойствами: `value` — значение, которое было возвращено через `yield`, и `done` — логическое значение, которое указывает, завершён ли генератор.
+
+2. **Генератор для последовательностей**
+
+Генераторы полезны для создания последовательностей, таких как числа Фибоначчи:
+
+```javascript
+function* fibonacci() {
+  let a = 0, b = 1;
+  while (true) {
+    yield a; // Возвращаем текущее значение
+    [a, b] = [b, a + b]; // Обновляем значения
+  }
+}
+
+const fib = fibonacci();
+
+console.log(fib.next().value); // 0
+console.log(fib.next().value); // 1
+console.log(fib.next().value); // 1
+console.log(fib.next().value); // 2
+console.log(fib.next().value); // 3
+```
+
+3. **Генераторы и асинхронный код**
+
+Генераторы также используются с `Promise` и для асинхронной работы. Например, можно создать генератор, который будет работать с асинхронным кодом через библиотеку `co` или использовать их с `async/await`.
+
+```javascript
+function* asyncGenerator() {
+  const result1 = yield fetch('https://api.example.com/data1');
+  const result2 = yield fetch('https://api.example.com/data2');
+  return [result1, result2];
+}
+
+// Использование с Promises (необходимо будет обработать .next() с промисами)
+const gen = asyncGenerator();
+
+// Получаем первый запрос
+gen.next().value
+  .then(response => response.json())
+  .then(data => gen.next(data))
+  .then(result => {
+    console.log(result);
+  });
+```
+
+**Резюме**
+
+Генераторы предоставляют мощный и гибкий способ работы с данными и асинхронным кодом в JavaScript. Они позволяют создавать итераторы и управлять потоком выполнения программы, что делает их полезными для множества сценариев, особенно когда нужно управлять состоянием и вычислениями.
+
+
+#### Вопрос 70. Что такое `Map` и `Set`? Чем отличаются от объектов и массивов? 
+
+`Map` и `Set` — это две новые структуры данных, введенные в ES6 (ECMAScript 2015), которые обеспечивают более гибкое и мощное управление данными по сравнению с обычными объектами и массивами. Давайте рассмотрим каждую из структур, а также их основные отличия от объектов и массивов.
+
+1. **`Map`**
+
+`Map` — это коллекция пар "ключ-значение". Основные характеристики `Map`:
+
+- Ключи могут быть любого типа (включая объекты, функции и примитивы).
+- Порядок сохранения пар соответствует порядку их добавления.
+- Имеет методы для добавления, получения и удаления элементов.
+
+**Пример использования `Map`**:
+
+```javascript
+// Создание новой карты
+const map = new Map();
+
+// Добавление значений
+map.set('name', 'Алекс');
+map.set(1, 'число');
+map.set(true, 'булевое значение');
+
+// Получение значений
+console.log(map.get('name')); // Алекс
+console.log(map.get(1));      // число
+console.log(map.get(true));   // булевое значение
+
+// Проверка наличия ключа
+console.log(map.has('name')); // true
+console.log(map.has('age'));  // false
+
+// Удаление элемента
+map.delete('name');
+
+// Итерация по Map
+for (const [key, value] of map) {
+  console.log(`${key}: ${value}`);
+}
+// 1: число
+// true: булевое значение
+```
+
+2. **`Set`**
+
+`Set` — это коллекция уникальных значений. Основные характеристики `Set`:
+
+- Все значения в `Set` уникальны (даже если множество значений добавляется несколько раз, они учитываются только один раз).
+- Порядок сохранения значений соответствует порядку их добавления.
+- Имеет методы для добавления, проверки наличия и удаления значений.
+
+**Пример использования `Set`**:
+
+```javascript
+// Создание нового Set
+const set = new Set();
+
+// Добавление значений
+set.add(1);
+set.add(2);
+set.add(2); // Это значение не будет добавлено, так как оно уже существует
+set.add('текст');
+set.add({ a: 1 }); // Объекты могут быть добавлены
+
+// Проверка наличия значения
+console.log(set.has(1));       // true
+console.log(set.has(3));       // false
+
+// Удаление элемента
+set.delete(2);
+
+// Итерация по Set
+for (const value of set) {
+  console.log(value);
+}
+// 1
+// текст
+// { a: 1 }
+```
+
+**Отличия от объектов и массивов**:
+
+1. **Ключи и значения**:
+- В объектах ключи являются строками или символами. В `Map` ключи могут быть любого типа.
+- В массивах значения всегда хранятся по индексам (числовым ключам). В `Set` хранятся только уникальные значения.
+
+2. **Порядок хранения**:
+- В объектах порядок свойств не гарантируется (до ES2015), хотя для строковых ключей в современных движках JavaScript порядок сохраняется.
+- В `Map` и `Set` порядок элементов соответствует порядку их добавления.
+
+3. **Методы и операции**:
+- `Map` и `Set` предлагают удобные методы для работы с элементами (`set`, `get`, `has`, `delete`, `clear`), которые делают код более читабельным по сравнению с обычными операциями с объектами и массивами.
+- `Map` идеально подходит для случаев, когда вам нужно хранить ассоциированные с ключами значения, тогда как `Set` удобен для хранения уникальных значений.
+
+**Резюме**
+
+`Map` и `Set` — это мощные структуры данных, которые могут помочь вам писать более чистый и эффективный код. Они предоставляют дополнительные возможности по сравнению с обычными объектами и массивами, что делает их полезными в различных сценариях. 
+
+
+#### Вопрос 71. Что такое `WeakMap` и `WeakSet`?
+
+`WeakMap` и `WeakSet` — это специальные формы коллекций, которые были введены в ECMAScript 2015 (ES6). Они имеют уникальные характеристики, которые отличают их от обычных `Map` и `Set`. Основное отличие заключается в том, как они управляют памятью и референциями на объекты.
+
+1. **`WeakMap`**
+
+`WeakMap` — это коллекция пар "ключ-значение", где ключи являются объектами, а значения могут быть любого типа. Основные характеристики `WeakMap`:
+
+1. **Ключи только объекты**: В `WeakMap` ключи могут быть только объектами. Примитивные типы (например, строки, числа) не могут быть ключами.
+2. **Слабые ссылки**: `WeakMap` не предотвращает сборку мусора (garbage collection) для объектов, которые используются в качестве ключей. Это означает, что если на ключ больше нет ссылок, то объект может быть собран сборщиком мусора.
+3. **Нет итерации**: В `WeakMap` нельзя итерироваться по элементам, вы не можете получить список ключей или значений.
+
+**Пример использования `WeakMap`**:
+
+```javascript
+const weakMap = new WeakMap();
+
+let obj1 = { id: 1 };
+let obj2 = { id: 2 };
+
+weakMap.set(obj1, 'Объект 1');
+weakMap.set(obj2, 'Объект 2');
+
+console.log(weakMap.get(obj1)); // Объект 1
+console.log(weakMap.get(obj2)); // Объект 2
+
+// Если obj1 больше не используется, он может быть собран сборщиком мусора.
+obj1 = null;
+
+// После этого WeakMap освободит память, связанную с obj1, во время следующей сборки мусора.
+```
+
+2. **`WeakSet`**
+
+`WeakSet` — это коллекция уникальных объектов. Основные характеристики `WeakSet`:
+
+1. **Элементы только объекты**: В `WeakSet` могут храниться только объекты. Примитивные типы не могут быть частью `WeakSet`.
+2. **Слабые ссылки**: Как и в `WeakMap`, `WeakSet` не предотвращает сборку мусора для объектов. Если на объект больше нет ссылок, он может быть очищен сборщиком мусора.
+3. **Нет итерации**: В `WeakSet` нельзя итерироваться по элементам, вы не можете получить список всех объектов, которые находятся в `WeakSet`.
+
+**Пример использования `WeakSet`**:
+
+```javascript
+const weakSet = new WeakSet();
+
+let obj1 = { name: 'Алекс' };
+let obj2 = { name: 'Мария' };
+
+weakSet.add(obj1);
+weakSet.add(obj2);
+
+console.log(weakSet.has(obj1)); // true
+console.log(weakSet.has(obj2)); // true
+
+// Если obj1 больше не используется, он может быть собран сборщиком мусора.
+obj1 = null;
+
+// Объект больше не доступен, и WeakSet освободит память, связанную с ним, во время следующей сборки мусора.
+```
+
+**Когда использовать `WeakMap` и `WeakSet`**
+
+- **Используйте `WeakMap`**, когда вам нужно сопоставить значения с объектами, но при этом не хотите, чтобы эти объекты блокировали сборку мусора, если на них не осталось других ссылок.
+- **Используйте `WeakSet`**, когда вам нужно хранить уникальные объекты, но не хотите, чтобы эти объекты мешали сборке мусора.
+
+**Резюме**
+
+`WeakMap` и `WeakSet` представляют собой мощные инструменты для управления памятью и референциями в JavaScript. Они позволяют более эффективно использовать ресурсы без утечек памяти и сэкономить на уровне производительности.
+
+
+#### Вопрос 72. Что такое `Proxy` и `Reflect`?
+
+`Proxy` и `Reflect` — это два мощных инструмента, введенные в ECMAScript 2015 (ES6), которые позволяют управлять и перехватывать операции с объектами. Они обеспечивают более гибкий подход к контролю за поведением объектов и их взаимодействием. Давайте рассмотрим их подробнее, а также приведем примеры использования.
+
+1. **`Proxy`**
+
+`Proxy` — это объект, который позволяет перехватывать и настраивать базовые операции для другого объекта, такие как чтение и запись свойств, вызовы методов и т. д. `Proxy` может быть использован для создания более сложного поведения с объектами.
+
+**Основные характеристики `Proxy`**:
+
+- Позволяет перехватывать разные операции, включая получение, установку, удаление свойств и вызовы методов.
+- Может использоваться для валидации данных, логирования, трассировки и других целей.
+
+**Пример использования `Proxy`**:
+
+```javascript
+// Целевой объект
+const target = {
+  message: 'Привет, мир!',
+  count: 0
+};
+
+// Создаем Proxy
+const handler = {
+  get: function(target, property) {
+    if (property in target) {
+      console.log(`Получение свойства: ${property}`);
+      return target[property];
+    } else {
+      console.log(`Свойство ${property} не существует`);
+      return undefined;
+    }
+  },
+  set: function(target, property, value) {
+    console.log(`Установка свойства: ${property} = ${value}`);
+    target[property] = value;
+    return true; // Успех
+  }
+};
+
+const proxy = new Proxy(target, handler);
+
+// Использование Proxy
+console.log(proxy.message); // Получение свойства: message
+// Привет, мир!
+
+proxy.count = 5; // Установка свойства: count = 5
+console.log(proxy.count); // Получение свойства: count
+// 5
+
+console.log(proxy.nonExistent); // Свойство nonExistent не существует
+// undefined
+```
+
+2. **`Reflect`**
+
+`Reflect` — это встроенный объект, который предоставляет статические методы для работы с объектами. Он позволяет выполнять операции, аналогичные тем, которые могут быть перехвачены с помощью `Proxy`, но ему не требуется создавать `Proxy`. `Reflect` часто используется внутри `Proxy` для выполнения операций над целевым объектом.
+
+**Пример использования `Reflect`**:
+
+```javascript
+const target = {
+  a: 1,
+  b: 2
+};
+
+// Используем Reflect для получения свойства
+console.log(Reflect.get(target, 'a')); // 1
+
+// Используем Reflect для установки свойства
+Reflect.set(target, 'b', 3);
+console.log(target.b); // 3
+
+// Проверка наличия свойства
+console.log(Reflect.has(target, 'a')); // true
+console.log(Reflect.has(target, 'c')); // false
+
+// Удаление свойства
+Reflect.deleteProperty(target, 'a');
+console.log(target.a); // undefined
+
+// Примеры использования с Proxy
+const handler = {
+  get(target, property) {
+    return Reflect.get(target, property);
+  }
+};
+
+const proxy = new Proxy(target, handler);
+
+console.log(proxy.b); // 3
+```
+
+**Резюме**
+
+`Proxy` и `Reflect` предоставляют мощные средства для управления свойствами и методами объектов в JavaScript. `Proxy` позволяет настраивать поведение объектов, тогда как `Reflect` предлагает методы, которые можно использовать как для работы с объектами, так и внутри `Proxy`. Они отлично сочетаются друг с другом и могут значительно упростить работу с объектами, особенно в сложных сценариях.
+
+
+#### Вопрос 73. Что такое `BigInt`?  
+
+`BigInt` — это новый встроенный тип данных в JavaScript, который позволят работать с целыми числами произвольной длины. Он был добавлен в ECMAScript 2020 (ES11) для решения проблемы работы с числами, которые превосходят пределы стандартного типа `Number`.
+
+**Основные характеристики `BigInt`**:
+
+1. **Произвольная длина**: `BigInt` может представлять целые числа, которые превышают максимально допустимые значения для типа `Number`, равного \(2^{53} - 1\) (или 9007199254740991).
+2. **Синтаксис**: `BigInt` создается с помощью окончания `n` в литералах или функции `BigInt()`. Например, `123456789012345678901234567890n` или `BigInt(123456789012345678901234567890)`.
+3. **Тип данных**: `BigInt` не совместим с `Number`, что означает, что операции между ними должны быть явными.
+
+**Примеры использования `BigInt`**:
+
+1. **Создание `BigInt`**
+
+```javascript
+// Создаем BigInt с помощью литерала
+const bigIntFromLiteral = 123456789012345678901234567890n;
+
+// Создаем BigInt с помощью конструктора
+const bigIntFromConstructor = BigInt(123456789012345678901234567890);
+
+// Выводим значения
+console.log(bigIntFromLiteral); // 123456789012345678901234567890n
+console.log(bigIntFromConstructor); // 123456789012345678901234567890n
+```
+
+2. **Операции с `BigInt`**
+
+```javascript
+const a = 123456789012345678901234567890n;
+const b = 987654321098765432109876543210n;
+
+// Сложение
+const sum = a + b;
+console.log(sum); // 1111111110111111111011111111100n
+
+// Вычитание
+const difference = b - a;
+console.log(difference); // 864197532086419753208641975420n
+
+// Умножение
+const product = a * b;
+console.log(product); // 12193263113702179920658271616604420773656620229813375850852410330674011050900n
+
+// Деление
+const division = b / a;
+console.log(division); // 8n (результат округляется)
+```
+
+3. **Совместимость с `Number`**
+
+```javascript
+const num = 10;
+const bigInt = 20n;
+
+// Это вызовет ошибку, так как необходимо явное преобразование
+// const result = num + bigInt; 
+
+// Явное преобразование
+const result = BigInt(num) + bigInt;
+console.log(result); // 30n
+
+// Также можно преобразовать BigInt в Number, но это может вызвать потерю данных, если значение больше, чем допустимое для Number
+const bigIntValue = 123456789012345678901234567890n;
+// Преобразование в Number может вызвать ошибку
+const numValue = Number(bigIntValue); // Будет Infinity, так как значение выходит за пределы диапазона
+```
+
+**Ограничения**:
+
+- `BigInt` не поддерживает операции с плавающей запятой, такие как `Math.sqrt()`.
+- Не все операции над `BigInt` совместимы с `Number`, и любые смешанные операции требуют явного преобразования.
+
+**Резюме**
+
+`BigInt` — это полезный инструмент для работы с очень большими целыми числами, которые выходят за пределы стандартного диапазона `Number`. Он полезен в различных сценариях, включая финансовые вычисления и обработку больших данных, где точность имеет критическое значение.
+
+
+#### Вопрос 74. Что такое Optional Chaining (`?.`)? 
+
+Optional Chaining (опциональная цепочка) — это оператор в JavaScript, введенный в ECMAScript 2020 (ES11), который позволяет безопасно обращаться к вложенным свойствам объектов. Он облегчает работу с объектами, в которых некоторые свойства могут отсутствовать, и помогает избежать ошибок, связанных с попытками доступа к несуществующим свойствам.
+
+**Основные характеристики Optional Chaining (`?.`)**:
+
+- Oператор `?.` позволяет проверять наличие свойства на каждом уровне вложенности, и если свойство не существует, вместо возникновения ошибки возвращается `undefined`.
+- Можно использовать с объектами, массивами и функциями.
+- Позволяет избежать явных проверок наличия свойств с помощью условных конструкций или `&&`.
+
+**Примеры использования Optional Chaining**:
+
+1. **Доступ к вложенным свойствам**
+
+```javascript
+const user = {
+  name: 'Алекс',
+  address: {
+    city: 'Москва',
+    country: 'Россия'
+  }
+};
+
+// Доступ с использованием Optional Chaining
+const city = user.address?.city; // 'Москва'
+const postalCode = user.address?.postalCode; // undefined (не вызывает ошибку)
+
+console.log(city); // Москва
+console.log(postalCode); // undefined
+```
+
+2. **Работает с массивами**
+
+```javascript
+const users = [
+  { name: 'Алекс', address: { city: 'Москва' } },
+  { name: 'Мария' } // У этого пользователя отсутствует свойство address
+];
+
+// Использование Optional Chaining для доступа к свойствам в массиве
+const firstUserCity = users[0]?.address?.city; // 'Москва'
+const secondUserCity = users[1]?.address?.city; // undefined
+
+console.log(firstUserCity); // Москва
+console.log(secondUserCity); // undefined
+```
+
+3. **Вызов методов**
+
+```javascript
+const user = {
+  name: 'Алекс',
+  getName() {
+    return this.name;
+  }
+};
+
+const name = user.getName?.(); // 'Алекс'
+
+// Если бы у нас не было метода getName
+const undefinedMethod = user.getAge?.(); // undefined (не вызывает ошибку)
+
+console.log(name); // Алекс
+console.log(undefinedMethod); // undefined
+```
+
+4. **Использование с массивами и методами**
+
+```javascript
+const data = {
+  users: [
+    { name: 'Алекс' },
+    { name: 'Ирина', details: { age: 30 } }
+  ]
+};
+
+// Без Optional Chaining
+const userAge = data.users[1].details ? data.users[1].details.age : undefined; // 30
+
+// С Optional Chaining
+const userAgeOptional = data.users[1]?.details?.age; // 30
+const nonExistentAge = data.users[0]?.details?.age; // undefined
+
+console.log(userAge); // 30
+console.log(userAgeOptional); // 30
+console.log(nonExistentAge); // undefined
+```
+
+**Резюме**
+
+Optional Chaining (`?.`) — это мощный инструмент, который упрощает код и делает его более безопасным, особенно при работе с глубокими и вложенными структурами данных, где наличие свойств может варьироваться. Это позволяет избежать ошибок и улучшает читаемость кода. 
+
+
+#### Вопрос 75. Что такое Nullish Coalescing (`??`)?  
+
+Nullish Coalescing (оператор нулевого объединения) — это оператор, введенный в ECMAScript 2020 (ES11), который позволяет удобно обрабатывать значения `null` и `undefined`. Он дает возможность задать значение по умолчанию только в том случае, если выражение слева является `null` или `undefined`, в отличие от логического оператора `||`, который рассматривает более широкий спектр "ложных" значений (таких как `0`, `''`, и `false`).
+
+**Основные характеристики Nullish Coalescing (`??`)**:
+
+- Оператор `??` возвращает правое выражение только тогда, когда левое выражение равно `null` или `undefined`.
+- Он удобен для задания значений по умолчанию, когда нужно игнорировать все остальные ложные значения.
+
+**Примеры использования Nullish Coalescing**:
+
+1. **Основное использование**
+
+```javascript
+let defaultValue = 10;
+
+// Пример, где a имеет значение null
+let a = null;
+let result = a ?? defaultValue; // Если a null, то возвращается defaultValue
+console.log(result); // 10
+
+// Пример, где a имеет значение undefined
+a = undefined;
+result = a ?? defaultValue; // Если a undefined, то возвращается defaultValue
+console.log(result); // 10
+
+// Пример, где a имеет значение 0 (это "ложное" значение, но не null или undefined)
+a = 0;
+result = a ?? defaultValue; // Здесь вернется 0
+console.log(result); // 0
+```
+
+2. **Сравнение с логическим оператором OR**
+
+```javascript
+let defaultValue = 'default';
+
+// С логическим оператором OR
+let a = ''; // Пустая строка (ложное значение)
+let resultWithOr = a || defaultValue; 
+console.log(resultWithOr); // 'default' (пустая строка считается ложной)
+
+// С оператором нулевого объединения
+let resultWithNullish = a ?? defaultValue; 
+console.log(resultWithNullish); // '' (пустая строка не null и не undefined, возвращается сама строка)
+```
+
+3. **Использование с функциями**
+
+```javascript
+function getUserName(user) {
+  // Используем Nullish Coalescing для задания значения по умолчанию
+  return user.name ?? 'Гость';
+}
+
+console.log(getUserName({ name: 'Алекс' })); // 'Алекс'
+console.log(getUserName({ name: null })); // 'Гость' (null считается)
+console.log(getUserName({})); // 'Гость' (undefined считается)
+```
+
+Пример 4. **Комбинирование с другими операторами**
+
+```javascript
+let userSettings = {
+  theme: null,
+  notifications: undefined,
+  language: 'ru'
+};
+
+// Используем Nullish Coalescing для задания значений по умолчанию
+let theme = userSettings.theme ?? 'light';
+let notifications = userSettings.notifications ?? true;
+let language = userSettings.language ?? 'en';
+
+console.log(theme); // 'light' (значение null становится значением по умолчанию)
+console.log(notifications); // true (значение undefined становится значением по умолчанию)
+console.log(language); // 'ru' (значение предусмотрено, возвращается оно)
+```
+
+**Резюме**
+
+Оператор Nullish Coalescing (`??`) предоставляет более точный способ обработки значений по умолчанию, учитывая только `null` и `undefined`. Это делает код более предсказуемым и улучшает его читаемость, особенно в ситуациях, когда необходимо различать "явные" ложные значения (`0`, `false`, `''`) от отсутствующих значений (`null`, `undefined`). 
+
+---
+
+### Фреймворки и библиотеки
+
+#### Вопрос 76. Что такое React/Vue/Angular? В чем разница? 
+
+React, Vue и Angular — это три самых популярных фреймворка и библиотеки для разработки пользовательских интерфейсов в веб-приложениях. Каждый из них имеет свои особенности, преимущества и различные подходы к разработке. Давайте рассмотрим каждую из них подробнее и сравним их.
+
+1. **React**
+
+**React** — это библиотека для создания пользовательских интерфейсов, разработанная Facebook. Она позволяет разработчикам строить многоразовые компоненты, управляя состоянием и обновлениями пользовательского интерфейса.
+
+**Основные характеристики React**:
+- **Компонентный подход**: Все в React строится на компонентах, которые могут использовать другие компоненты. Каждый компонент управляет своим состоянием.
+- **Виртуальный DOM**: React использует виртуальный DOM, который позволяет эффективно обновлять интерфейс, минимизируя прямые манипуляции с реальным DOM.
+- **JSX**: React использует синтаксис JSX, позволяющий писать HTML-подобный код внутри JavaScript.
+
+**Пример кода на React**:
+
+```jsx
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Счетчик: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Увеличить</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+2. **Vue**
+
+**Vue.js** — это прогрессивный JavaScript-фреймворк для создания пользовательских интерфейсов. Он также может быть использован для создания одностраничных приложений (SPA) с помощью Vue Router и Vuex.
+
+**Основные характеристики Vue**:
+- **Простота интеграции**: Vue можно использовать для добавления интерактивности в страницы, уже написанные на HTML, благодаря его компонентному подходу.
+- **Реактивность**: Vue предоставляет простую и интуитивно понятную реактивную систему для управления состоянием.
+- **Шаблоны**: Vue использует шаблоны, которые позволяют разделять логику и представление.
+
+**Пример кода на Vue**:
+
+```html
+<template>
+  <div>
+    <p>Счетчик: {{ count }}</p>
+    <button @click="increment">Увеличить</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      count: 0
+    };
+  },
+  methods: {
+    increment() {
+      this.count++;
+    }
+  }
+};
+</script>
+```
+
+3. **Angular**
+
+**Angular** — это платформа и фреймворк для разработки веб-приложений, созданная Google. Она предоставляет полное решение для создания одностраничных приложений, включая маршрутизацию, формы, HTTP-запросы и многое другое.
+
+**Основные характеристики Angular**:
+- **Типизация с TypeScript**: Angular написан на TypeScript, что позволяет использовать строгую типизацию и улучшает поддержку современных редакторов кода.
+- **MVVM-архитектура**: Angular использует модели Model-View-ViewModel, что помогает разделять логику приложения и его представление.
+- **Полный стек**: Angular включает в себя все, что вам нужно для создания приложения, включая маршрутизацию, формирование, анимацию и прочие возможности.
+
+**Пример кода на Angular**:
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-counter',
+  template: `
+    <div>
+      <p>Счетчик: {{ count }}</p>
+      <button (click)="increment()">Увеличить</button>
+    </div>
+  `
+})
+export class CounterComponent {
+  count: number = 0;
+
+  increment() {
+    this.count++;
+  }
+}
+```
+
+**Основные различия**:
+
+1. **Стиль программирования**:
+ - **React**: компонентный подход, с использованием JSX и виртуального DOM.
+ - **Vue**: также компонентный, с использованием шаблонов, что делает его более интуитивно понятным.
+ - **Angular**: полностью структурированный фреймворк с использованием TypeScript и архитектуры MVVM.
+
+2. **Сложность**:
+ - **React**: проще в освоении, если вы знакомы с JavaScript.
+ - **Vue**: легкий в освоении и простой в интеграции в существующие проекты.
+ - **Angular**: более сложный из-за полного набора функций и использования TypeScript.
+
+3. **Экосистема**:
+ - **React**: требует дополнительных библиотек для управления состоянием, маршрутизации и т.д. (например, Redux, React Router).
+ - **Vue**: предлагает Vuex для управления состоянием и Vue Router для маршрутизации.
+ - **Angular**: "все включено", включает в себя все необходимые функции, такие как маршрутизация и управление состоянием.
+
+**Резюме**
+
+React, Vue и Angular — это мощные инструменты для создания пользовательских интерфейсов, и выбор между ними зависит от вашего проекта, стека технологий и личных предпочтений. 
+
+
+#### Вопрос 77. Что такое Virtual DOM?  
+
+Virtual DOM (виртуальный DOM) — это концепция, используемая в библиотеках и фреймворках для создания пользовательских интерфейсов, таких как React. Она позволяет повысить производительность приложения, минимизируя количество манипуляций с реальным DOM, который может быть медленным и ресурсоемким для обновления.
+
+**Что такое DOM?**
+
+**DOM (Document Object Model)** — это программный интерфейс, представляющий структуру HTML-документа в виде дерева, состоящего из узлов, где каждый узел представляет элемент, атрибут или текст. Когда вы меняете DOM, браузер должен пересоздать и перерисовать обновленную версию страницы, что может вызвать задержки, особенно в больших и сложных приложениях.
+
+**Что такое Virtual DOM?**
+
+**Virtual DOM** — это легкая копия реального DOM, которая сохраняется в памяти. Библиотеки, такие как React, изменяют именно виртуальный DOM, а не реальный. Когда состояние приложения изменяется, новый виртуальный DOM создается и сравнивается с предыдущей версией с помощью алгоритма, называемого "диффинг" (diffing). После сравнения библиотека определяет, какие части реального DOM необходимо обновить, и вносит только необходимые изменения.
+
+**Преимущества Virtual DOM**:
+
+1. **Производительность**: Вместо обновления всего DOM, виртуальный DOM минимизирует переработку, обновляя только измененные узлы.
+2. **Оптимизация**: Алгоритмы сравнения позволяют эффективно находить различия и избегать ненужных изменений.
+3. **Удобство разработки**: Разработчики могут писать код так, как будто работают с обычным DOM, благодаря более простому изменению состояния и реактивности.
+
+**Пример использования Virtual DOM в React**:
+
+Вот простой пример, демонстрирующий, как работает виртуальный DOM в React:
+
+```jsx
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Счетчик: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Увеличить</button>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+**Как работает Virtual DOM в этом примере**:
+
+1. **Первый рендер**: При первом рендере компонента `App` создается виртуальный DOM, который соответствует текущему состоянию приложения.
+2. **Изменение состояния**: Когда пользователь нажимает кнопку "Увеличить", вызывается функция `setCount`, которая обновляет состояние `count`.
+3. **Обновление Virtual DOM**: React создает новый виртуальный DOM на основе обновленного состояния.
+4. **Сравнение**: React сравнивает новый виртуальный DOM с предыдущей версией, чтобы определить, что изменилось.
+5. **Обновление реального DOM**: В реальный DOM вносятся только те изменения, которые необходимы, например, обновление текста счетчика.
+
+**Резюме**
+
+Virtual DOM — это мощный инструмент для оптимизации рендеринга в веб-приложениях. Он помогает разработчикам создавать более отзывчивые и производительные интерфейсы, избегая ненужных операций с реальным DOM. Использование виртуального DOM стало основным принципом работы таких библиотек, как React, значительно упрощая процесс разработки сложных интерфейсов. 
+
+
+#### Вопрос 78. Что такое компонентный подход?
+
+Компонентный подход — это метод организации кода в разработке веб-приложений, при котором интерфейс приложения разбивается на независимые, многоразовые и изолированные компоненты. Каждый компонент инкапсулирует свою логику, внешний вид и состояние, что позволяет легко управлять, переиспользовать и тестировать отдельные части приложения.
+
+**Основные характеристики компонентного подхода**:
+
+1. **Инкапсуляция**: Каждый компонент отвечает за свою логику и может использовать свои внутренние данные и стили, не влияя на другие компоненты.
+2. **Многоразовость**: Компоненты могут переиспользоваться в разных частях приложения или даже в других приложениях, что сокращает время разработки.
+3. **Изолированное состояние**: Компоненты могут хранить собственное состояние, которое влияет только на них, а не на всё приложение.
+4. **Упрощенное тестирование**: Изолированные компоненты проще тестировать, так как можно проверять их функциональность без учета остальной части приложения.
+
+**Примеры компонентного подхода**:
+
+Давайте рассмотрим примеры использования компонентного подхода в React и Vue.
+
+1. **Компоненты в React**
+
+В React компоненты могут быть функциональными или классовыми. Ниже приведен пример функционального компонента:
+
+```jsx
+import React, { useState } from 'react';
+
+// Компонент Button
+function Button({ onClick, label }) {
+  return <button onClick={onClick}>{label}</button>;
+}
+
+// Основной компонент App
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Счетчик: {count}</p>
+      <Button onClick={() => setCount(count + 1)} label="Увеличить" />
+    </div>
+  );
+}
+
+export default App;
+```
+
+В этом примере `Button` — это отдельный компонент, который принимает `onClick` и `label` как пропсы. Основной компонент `App` управляет состоянием и передает функции и переменные в дочерний компонент.
+
+2. **Компоненты в Vue**
+
+В Vue компоненты также являются основным строительным блоком. Вот аналогичный пример, используя Vue:
+
+```html
+<template>
+  <div>
+    <p>Счетчик: {{ count }}</p>
+    <Button @increment="increment" label="Увеличить" />
+  </div>
+</template>
+
+<script>
+import Button from './Button.vue';
+
+export default {
+  components: {
+    Button
+  },
+  data() {
+    return {
+      count: 0
+    };
+  },
+  methods: {
+    increment() {
+      this.count++;
+    }
+  }
+};
+</script>
+```
+
+И компонент `Button.vue` может выглядеть так:
+
+```html
+<template>
+  <button @click="$emit('increment')">{{ label }}</button>
+</template>
+
+<script>
+export default {
+  props: ['label']
+};
+</script>
+```
+
+В этом примере компонент `Button` также принимает свойство `label` и использует `$emit`, чтобы сообщить родительскому компоненту об изменении.
+
+**Преимущества компонентного подхода**:
+
+1. **Упрощенная разработка**: Разделение интерфейса на небольшие, управляемые компоненты позволяет команде разработчиков работать более эффективно.
+2. **Легкость модификации**: Изменения в одном компоненте обычно не влияют на другие, что упрощает поддержку приложения.
+3. **Тестируемость**: Компоненты легче тестировать индивидуально, что повышает надежность всего приложения.
+
+**Резюме**
+
+Компонентный подход — это мощный метод структурирования кода в веб-разработке, который войдет в практику при разработке сложных приложений. С помощью компонента можно создать масштабируемые и поддерживаемые архитектуры, что делает его важным для современных фреймворков, таких как React и Vue.
+
+
+#### Вопрос 79. Что такое JSX?
+
+**JSX (JavaScript XML)** — это синтаксический сахар, используемый в React, который позволяет писать HTML-подобный код прямо в JavaScript. Он делает код более читабельным и упрощает создание компонентов. JSX позволяет разработчикам описывать структуру интерфейса, используя знакомый синтаксис, который напоминает HTML.
+
+**Основные характеристики JSX**:
+
+1. **Синтаксис, похожий на HTML**: JSX позволяет писать компоненты с использованием HTML-подобного синтаксиса, что делает код более интуитивно понятным.
+2. **Инкапсуляция JavaScript**: Вы можете встраивать JavaScript-выражения в JSX, используя фигурные скобки `{}`.
+3. **Кросс-компиляция**: JSX не является валидным JavaScript, поэтому перед выполнением он должен быть скомпилирован (обычно с помощью Babel) в обычный JavaScript.
+
+### Примеры использования JSX
+
+1. **Простой компонент**
+
+Вот простой пример компонента на React, написанного с использованием JSX:
+
+```jsx
+import React from 'react';
+
+function Greeting() {
+  return <h1>Привет, мир!</h1>;
+}
+
+export default Greeting;
+```
+
+В этом примере компонент `Greeting` возвращает заголовок `<h1>`, который отобразится на веб-странице.
+
+2. **Встраивание JavaScript-выражений**
+
+JSX позволяет вставлять JavaScript-выражения прямо в разметку:
+
+```jsx
+import React from 'react';
+
+function UserGreeting(props) {
+  return <h1>Добро пожаловать, {props.name}!</h1>;
+}
+
+export default UserGreeting;
+```
+
+Если вы вызовете `UserGreeting` с пропсом `name`, например, `UserGreeting name="Алекс"`, на странице отобразится "Добро пожаловать, Алекс!".
+
+3. **Списки и циклы**
+
+Вы также можете использовать JSX для отображения списков и итераций:
+
+```jsx
+import React from 'react';
+
+const fruits = ['Яблоко', 'Банан', 'Апельсин'];
+
+function FruitList() {
+  return (
+    <ul>
+      {fruits.map((fruit, index) => (
+        <li key={index}>{fruit}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default FruitList;
+```
+
+В этом примере компонент `FruitList` создает список элементов, используя метод `map` для перебора массива `fruits`.
+
+4. **Атрибуты элементов**
+
+В JSX можно задавать атрибуты для элементов, аналогично HTML:
+
+```jsx
+import React from 'react';
+
+function ImageComponent() {
+  return (
+    <img 
+      src="https://example.com/image.jpg" 
+      alt="Пример изображения" 
+      width={300} 
+      height={200}
+    />
+  );
+}
+
+export default ImageComponent;
+```
+
+Здесь атрибуты `src`, `alt`, `width` и `height` устанавливаются так же, как в HTML.
+
+**Преимущества использования JSX**:
+
+1. **Улучшенная читаемость**: JSX делает код более понятным и простым для восприятия, особенно для разработчиков, знакомых с HTML.
+2. **Инкапсуляция логики и разметки**: Разработчики могут легко видеть, как выглядит пользовательский интерфейс вместе с логикой, что упрощает процесс разработки.
+3. **Поддержка JavaScript-выражений**: Позволяет динамически изменять содержимое интерфейса, основываясь на состоянии компонентов.
+
+**Резюме**
+
+JSX играет ключевую роль в разработке компонентов React, упрощая написание и чтение кода. Хотя он не является обязательным для использования React, многие разработчики предпочитают его, поскольку он облегчает создание и обслуживание интерактивных пользовательских интерфейсов. 
+
+
+#### Вопрос 80. Что такое состояние (state) и свойства (props)?
+
+В React состояние (state) и свойства (props) — это два основных механизма, используемых для управления данными и поведением компонентов. Они играют ключевую роль в разработке интерактивных пользовательских интерфейсов, но у них есть разные назначения и способы использования.
+
+1. **Свойства (Props)**
+
+**Props** (свойства) — это способ передачи данных от родительского компонента к дочернему. Это механизм, который позволяет компонентам получать данные и конфигурации от родителя. Props делают компоненты более гибкими и переиспользуемыми.
+
+**Основные характеристики props**:
+- **Неизменяемые**: Props только читаются в дочернем компоненте и не могут быть изменены. Это делает компоненты предсказуемыми.
+- **Передаются от родителя к ребенку**: Props позволяют родительскому компоненту контролировать данные, которые передаются дочернему компоненту.
+
+**Пример использования props**:
+
+```jsx
+import React from 'react';
+
+function Greeting(props) {
+  return <h1>Привет, {props.name}!</h1>;
+}
+
+function App() {
+  return <Greeting name="Алекс" />;
+}
+
+export default App;
+```
+
+В этом примере компонент `Greeting` получает свойство `name` от компонента `App` и отображает его.
+
+2. **Состояние (State)**
+
+**State** (состояние) — это объект, который хранит данные, влияющие на отображение компонента. В отличие от props, состояние может изменяться внутри компонента. Состояние допускает динамическое обновление, что делает компоненты интерактивными.
+
+**Основные характеристики состояния**:
+- **Изменяемое**: Состояние может изменяться с помощью метода `setState` (для классовых компонентов) или функции состояния (для функциональных компонентов, например, с использованием `useState`).
+- **Локально хранимое**: Каждое состояние принадлежит конкретному компоненту и не может быть изменено из других компонентов напрямую.
+
+**Пример использования state**:
+
+```jsx
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0); // Инициализация состояния
+
+  return (
+    <div>
+      <p>Счетчик: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Увеличить</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+В этом примере компонент `Counter` определяет состояние `count`, которое изначально равно 0. При нажатии на кнопку состояние обновляется, и интерфейс автоматически обновляется.
+
+**Основные отличия между Props и State**:
+
+1. **Изменяемость**:
+ - **Props**: Неизменяемы; передаются от родителя к ребенку и не могут быть изменены самим дочерним компонентом.
+ - **State**: Изменяемы; управляются внутри компонента и могут обновляться.
+
+2. **Уровень**:
+ - **Props**: Используются для передачи данных и функций вниз по дереву компонентов (от родителя к дочернему).
+ - **State**: Хранят локальные данные компонента и могут изменяться в ответ на события.
+
+3. **Роль**:
+ - **Props**: Обычно используются для конфигурации компонентов, что делает их более переиспользуемыми.
+ - **State**: Позволяют управлять динамическими изменениями данных и взаимодействиями с пользователем.
+
+**Резюме**
+
+Состояние и свойства являются основными концепциями в React, позволяющими управлять данными и взаимодействовать с пользовательским интерфейсом. Понимание этих понятий помогает разработчикам создавать более предсказуемые и реактивные приложения. 
+
+
+#### Вопрос 81. Что такое хуки (hooks) в React?
+
+**Хуки (hooks)** в React — это специальные функции, которые позволяют вам "подключаться" к состоянию и жизненному циклу React-компонентов без использования классов. Хуки были добавлены в React 16.8 и сделали возможным управление состоянием и эффектами в функциональных компонентах.
+
+**Основные хуки в React**:
+
+1. **useState**: Позволяет добавлять состояние в функциональные компоненты.
+2. **useEffect**: Позволяет управлять побочными эффектами, такими как запросы к API или подписки.
+3. **useContext**: Позволяет использовать контекст для передачи данных через дерево компонентов без необходимости передавать пропсы на каждом уровне.
+4. **useReducer**: Позволяет использовать редьюсеры для управления сложным состоянием.
+5. **useRef**: Создает изменяемые ссылки для доступа к DOM-элементам.
+
+**Примеры использования хуков**:
+
+1. **useState**
+
+```jsx
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0); // Инициализация состояния
+
+  return (
+    <div>
+      <p>Счетчик: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Увеличить</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+В этом примере `useState` используется для создания состояния счетчика. Функция `setCount` позволяет обновлять состояние.
+
+2. **useEffect**
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setSeconds(s => s + 1);
+    }, 1000);
+      
+    // Очистка эффекта
+    return () => clearInterval(intervalId);
+  }, []); // Пустой массив зависимостей означает, что эффект выполняется только при монтировании
+
+  return <p>Прошло {seconds} секунд</p>;
+}
+
+export default Timer;
+```
+
+В этом примере `useEffect` используется для установки таймера, который обновляет состояние каждую секунду. Функция очистки `clearInterval` вызывается при анмаунте компонента, чтобы избежать утечки памяти.
+
+3. **useContext**
+
+```jsx
+import React, { createContext, useContext } from 'react';
+
+// Создание контекста
+const ThemeContext = createContext('light');
+
+function ThemedComponent() {
+  const theme = useContext(ThemeContext);
+  return <div style={{ background: theme === 'dark' ? '#333' : '#FFF' }}>
+    Тема: {theme}
+  </div>;
+}
+
+function App() {
+  return (
+    <ThemeContext.Provider value="dark">
+      <ThemedComponent />
+    </ThemeContext.Provider>
+  );
+}
+
+export default App;
+```
+
+В этом примере создается контекст, который позволяет передавать значение темы через дерево компонентов без необходимости передавать его через пропсы.
+
+4. **useReducer**
+
+```jsx
+import React, { useReducer } from 'react';
+
+const initialState = { count: 0 };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <div>
+      <p>Счетчик: {state.count}</p>
+      <button onClick={() => dispatch({ type: 'increment' })}>Увеличить</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>Уменьшить</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+В этом примере `useReducer` используется для управления сложным состоянием с помощью редьюсера.
+
+5. **useRef**
+
+```jsx
+import React, { useRef } from 'react';
+
+function FocusInput() {
+  const inputRef = useRef(null);
+
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} type="text" />
+      <button onClick={focusInput}>Фокус на поле ввода</button>
+    </div>
+  );
+}
+
+export default FocusInput;
+```
+
+В этом примере `useRef` используется для создания ссылки на DOM-элемент, чтобы программно установить на него фокус.
+
+**Резюме**
+
+Хуки в React предоставляют мощные инструменты, позволяющие управлять состоянием и эффектами в функциональных компонентах. Они упрощают структуру компонентов и делают код более чистым и понятным. Использование хуков является современным подходом в разработке приложений на React. 
+
+
+#### Вопрос 82. Что такое жизненный цикл компонента? 
+
+**Жизненный цикл компонента** в React — это последовательность методов, которые вызываются в различные моменты времени, когда компонент создается, обновляется или удаляется. Понимание жизненного цикла компонента важно для управления состоянием и побочными эффектами, так как вы можете выполнять определенные действия в соответствующие моменты.
+
+**Основные этапы жизненного цикла компонента**:
+
+Жизненный цикл компонента можно разбить на три основные фазы:
+
+1. **Монтирование**: Когда компонент создается и добавляется в DOM.
+2. **Обновление**: Когда компонент обновляется из-за изменения состояния или получения новых свойств.
+3. **Размонтирование**: Когда компонент удаляется из DOM.
+
+**Методы жизненного цикла для классовых компонентов**:
+
+В классовых компонентах жизненный цикл управляется с помощью специальных методов:
+
+1. **componentDidMount**: Вызывается сразу после монтирования компонента. Обычно используется для выполнения AJAX-запросов или инициализации данных.
+2. **componentDidUpdate**: Вызывается после обновления компонента. Здесь вы можете сравнивать старые и новые пропсы или состояние для выполнения каких-либо побочных эффектов.
+3. **componentWillUnmount**: Вызывается перед размонтированием компонента. Здесь вы можете выполнять очистку, например, отменять запросы или удалять подписки.
+
+**Пример классового компонента с методами жизненного цикла**:
+
+```jsx
+import React, { Component } from 'react';
+
+class Timer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { seconds: 0 };
+  }
+
+  componentDidMount() {
+    this.intervalId = setInterval(() => {
+      this.setState(prevState => ({ seconds: prevState.seconds + 1 }));
+    }, 1000);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.seconds !== this.state.seconds) {
+      console.log(`Счетчик обновлен: ${this.state.seconds} секунд`);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
+
+  render() {
+    return <p>Прошло {this.state.seconds} секунд</p>;
+  }
+}
+
+export default Timer;
+```
+
+В этом примере компонент `Timer` обновляет состояние каждую секунду. Он использует методы жизненного цикла для установки интервала в `componentDidMount`, проверки изменений в `componentDidUpdate`, и очистки интервала в `componentWillUnmount`.
+
+**Хуки и жизненный цикл функциональных компонентов**
+
+В функциональных компонентах жизненный цикл управляется с помощью хуков `useEffect`. Хук `useEffect` позволяет вам управлять побочными эффектами и определять, когда они должны выполняться.
+
+**Пример функционального компонента с useEffect**:
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setSeconds(prevSeconds => prevSeconds + 1);
+    }, 1000);
+
+    // Функция очистки для componentWillUnmount
+    return () => clearInterval(intervalId);
+  }, []); // Пустой массив зависимостей: эффект выполняется только при монтировании
+
+  useEffect(() => {
+    console.log(`Счетчик обновлен: ${seconds} секунд`);
+  }, [seconds]); // Второй эффект выполняется при каждом изменении seconds
+
+  return <p>Прошло {seconds} секунд</p>;
+}
+
+export default Timer;
+```
+
+В этом примере `useEffect` используется для установки интервала и для отслеживания обновлений состояния. Первый вызов установивает интервал при монтировании, а второй — выполняет логирование при каждом обновлении `seconds`.
+
+**Резюме**
+
+Жизненный цикл компонента в React позволяет разработчикам управлять поведением своих компонентов на различных этапах. Понимание этих этапов и методов жизненного цикла способствует более эффективному управлению состоянием и побочными эффектами в приложениях React. 
+
+
+#### Вопрос 83. Как работает `useEffect`?
+
+`useEffect` — это хук в React, который позволяет управлять побочными эффектами в функциональных компонентах. Он выполняет код после рендеринга компонента и может использоваться для работы с такими вещами, как запросы к API, подписки на события, таймеры и очистка ресурсов.
+
+**Основные характеристики `useEffect`**:
+
+- **Запускается после рендеринга**: `useEffect` выполняется после каждого рендеринга компонента.
+- **Очистка эффекта**: `useEffect` может возвращать функцию очистки, которая выполняется перед удалением компонента или перед следующим вызовом эффекта.
+- **Зависимости**: Вы можете указать зависимости в массиве, чтобы контролировать, когда `useEffect` должен запускаться.
+
+**Сигнатура `useEffect`**
+
+```javascript
+useEffect(() => {
+  // Код эффекта
+  return () => {
+    // Код очистки (если требуется)
+  };
+}, [dependencies]);
+```
+
+1. Первый аргумент — это функция, которая будет вызываться после рендеринга.
+2. Второй аргумент (необязательный) — массив зависимостей, использование которого позволяет управлять частотой выполнения эффекта.
+
+**Примеры использования `useEffect`**:
+
+1. **Выполнение эффекта при монтировании и обновлении**
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setSeconds(prevSeconds => prevSeconds + 1);
+    }, 1000);
+
+    // Функция очистки для componentWillUnmount
+    return () => clearInterval(intervalId);
+  }, []); // Пустой массив означает, что эффект выполняется только при монтировании
+
+  return <p>Прошло {seconds} секунд</p>;
+}
+
+export default Timer;
+```
+
+В этом примере `useEffect` устанавливает интервал, который обновляет состояние каждую секунду. Поскольку передан пустой массив зависимостей, эффект сработает только при монтировании компонента. Функция очистки убирает интервал при размонтировании компонента.
+
+2. **Запрос данных с использованием `useEffect`**
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function DataFetcher() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('https://api.example.com/data');
+      const result = await response.json();
+      setData(result);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []); // Эффект сработает только при монтировании
+
+  if (loading) {
+    return <p>Загрузка...</p>;
+  }
+
+  return (
+    <div>
+      <h1>Полученные данные</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+}
+
+export default DataFetcher;
+```
+
+В этом примере `useEffect` выполняет запрос данных после первого рендера компонента. Данные сохраняются в состоянии, и во время загрузки показывается индикатор.
+
+3. **Отслеживание изменений состояния**
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log(`Счетчик обновлен: ${count}`);
+  }, [count]); // Эффект сработает каждый раз, когда count изменяется
+
+  return (
+    <div>
+      <p>Счетчик: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Увеличить</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+В этом примере `useEffect` отслеживает изменения состояния переменной `count`. Каждый раз, когда значение увеличивается, в консоль выводится сообщение.
+
+**Резюме**
+
+`useEffect` является одним из самых мощных и гибких инструментов в React для управления побочными эффектами. Он позволяет разработчикам эффективно справляться с асинхронными действиями и очисткой ресурсов, что делает функциональные компоненты более выразительными и функциональными. 
+
+
+#### Вопрос 84. Что такое Redux? Зачем он нужен? 
+
+**Redux** — это библиотека для управления состоянием приложений в JavaScript, которая часто используется с библиотекой React. Он предоставляет предсказуемый способ хранения и управления состоянием приложения, что особенно полезно в больших и сложных приложениях, где состояние может меняться в результате различных взаимодействий пользователя и асинхронных операций.
+
+**Зачем нужен Redux?**
+
+1. **Управление глобальным состоянием**: Redux позволяет централизовать состояние приложения, что облегчает доступ к данным из различных компонентов и управляет изменениями состояния.
+2. **Предсказуемые обновления состояния**: В Redux состояние обновляется только через "действия" и "редьюсеры", что делает процесс изменения состояния более предсказуемым и понятным.
+3. **Отладка**: Благодаря инструментариям для отладки, таким как Redux DevTools, можно легче отслеживать и контролировать изменения состояния, делать откаты и сохранять историю изменений.
+4. **Упрощение тестирования**: Функции, такие как редьюсеры, могут быть легко протестированы, так как они являются чистыми функциями.
+
+**Основные концепции Redux**:
+
+1. **Store**: Хранилище, которое содержит все состояние приложения. Оно хранит данные и управляет их изменениями.
+2. **Actions**: Простые объекты, которые описывают события, произошедшие в приложении (например, `ADD_TODO`).
+3. **Reducers**: Функции, которые используют текущее состояние и действие для вычисления нового состояния. Reducers чистые функции, которые должны возвращать новое состояние на основе полученного действия.
+
+**Пример использования Redux**:
+
+1. **Установка Redux**
+
+```bash
+npm install redux react-redux
+```
+
+2. **Создание Redux Store**
+
+```javascript
+// store.js
+import { createStore } from 'redux';
+
+// Начальное состояние
+const initialState = {
+  counter: 0,
+};
+
+// Редьюсер
+function counterReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { ...state, counter: state.counter + 1 };
+    case 'DECREMENT':
+      return { ...state, counter: state.counter - 1 };
+    default:
+      return state;
+  }
+}
+
+// Создание хранилища
+const store = createStore(counterReducer);
+
+export default store;
+```
+
+3. **Определение Action Creators**
+
+```javascript
+// actions.js
+export const increment = () => ({
+  type: 'INCREMENT',
+});
+
+export const decrement = () => ({
+  type: 'DECREMENT',
+});
+```
+
+4. **Создание компонента с использованием Redux**
+
+```jsx
+// Counter.js
+import React from 'react';
+import { connect } from 'react-redux';
+import { increment, decrement } from './actions';
+
+function Counter({ counter, increment, decrement }) {
+  return (
+    <div>
+      <h1>Счетчик: {counter}</h1>
+      <button onClick={increment}>Увеличить</button>
+      <button onClick={decrement}>Уменьшить</button>
+    </div>
+  );
+}
+
+// Подключение к глобальному состоянию
+const mapStateToProps = state => ({
+  counter: state.counter,
+});
+
+// Подключение Action Creators
+const mapDispatchToProps = {
+  increment,
+  decrement,
+};
+
+// Экспорт компонента
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+```
+
+5. **Подключение Store к приложению**
+
+```jsx
+// App.js
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './store';
+import Counter from './Counter';
+
+function App() {
+  return (
+    <Provider store={store}>
+      <Counter />
+    </Provider>
+  );
+}
+
+export default App;
+```
+
+**Подробное объяснение**
+
+- **Store**: В примере выше мы создаем Redux store с помощью `createStore`, который принимает редьюсер и управляет состоянием приложения.
+- **Actions**: Мы определяем действий `increment` и `decrement`, которые используются для обновления состояния. Эти действия отправляются в Redux-редьюсеры.
+- **Reducers**: `counterReducer` обрабатывает логику изменения состояния в зависимости от действия.
+- **Компоненты**: `Counter` подключается к Redux Store с использованием функции `connect`, которая связывает состояние и действия с компонентом.
+
+**Резюме**
+
+Redux является мощным инструментом для управления состоянием в приложениях, особенно когда они становятся большими и сложными. Он предоставляет четкую структуру для управления состоянием и предлагает инструменты для упрощения отладки и тестирования. 
+
+
+#### Вопрос 85. Что такое роутинг? Как реализовать в SPA? 
+
+**Роутинг** — это механизм, который позволяет изменять отображаемое содержимое веб-приложения в зависимости от URL-адреса. В контексте **одностраничных приложений (SPA)**, роутинг дает возможность динамически загружать и отображать новые компоненты или страницы без перезагрузки всей страницы, что улучшает взаимодействие с пользователем и производительность.
+
+**Зачем нужен роутинг?**
+
+1. **Улучшение пользовательского опыта**: Позволяет пользователям навигировать по приложению, как если бы они использовали несколько страниц, без необходимости перезагрузки страницы.
+2. **Настройка URL**: Позволяет использовать читабельные и SEO-дружественные URL.
+3. **Состояние приложения**: Позволяет сохранять состояние приложения при переходе между различными маршрутами.
+
+**Реализация роутинга в SPA**
+
+Для реализации роутинга в SPA на React часто используется библиотека **React Router**. Она предоставляет удобные компоненты и API для создания маршрутов и обработки навигации.
+
+**Установка React Router**
+
+```bash
+npm install react-router-dom
+```
+
+**Пример реализации роутинга с React Router**:
+
+1. **Создание компонентов страниц**
+
+```jsx
+// Home.js
+import React from 'react';
+
+function Home() {
+  return <h2>Главная страница</h2>;
+}
+
+export default Home;
+```
+
+```jsx
+// About.js
+import React from 'react';
+
+function About() {
+  return <h2>О нас</h2>;
+}
+
+export default About;
+```
+
+```jsx
+// NotFound.js
+import React from 'react';
+
+function NotFound() {
+  return <h2>Страница не найдена</h2>;
+}
+
+export default NotFound;
+```
+
+2. **Настройка роутинга в основном компоненте**
+
+```jsx
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import Home from './Home';
+import About from './About';
+import NotFound from './NotFound';
+
+function App() {
+  return (
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Главная</Link>
+            </li>
+            <li>
+              <Link to="/about">О нас</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/about" component={About} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+**Разбор примера**:
+
+1. **Router**: Внешний компонент `Router` (в данном случае `BrowserRouter`) оборачивает все приложение, позволяя использовать возможности роутинга.
+2. **Link**: Компонент `Link` используется для создания навигационных ссылок. Он заменяет стандартные теги `<a>`, предотвращая полную перезагрузку страницы.
+3. **Route**: Компонент `Route` определяет, какой компонент будет отображаться в зависимости от текущего URL. К примеру, `Route path="/" exact component={Home}` очищает и отображает компонент `Home` только по пути `/`.
+4. **Switch**: Компонент `Switch` рендерит только первый дочерний компонент `Route`, который совпадает с текущим URL. Если ни один из маршрутов не совпадает, отобразится компонент `NotFound`.
+
+**Резюме**
+
+Роутинг позволяет создавать SPA сбогатым пользовательским интерфейсом и удобно организованной навигацией. Используя библиотеку React Router, разработчики могут легко управлять маршрутизацией, улучшая удобство использования приложения. 
 
