@@ -1,126 +1,56 @@
 html {
 	text-size-adjust: 100%;
-	color: #0000000;
+	color: #000000;
 }
-
-body {/* body */
+body {
 	margin: 0px;
-	padding: 0px;
 	font-weight: 300;
 	background: #ffffff;
 }
-
-div {
-	display: block;
-}
-nav {
-    display: block;
-}
-* {
-	box-sizing: border-box;
-	outline-color: #000000;
-	outline-style: none;
-	outline-width: 0px;
-	overflow-wrap: break-word;	
-}
-
 a:link {
 text-decoration: none;
 }
-
 a:visited {
 text-decoration: none;
 }
-
 a:hover {
 text-decoration: underline;
 }
-
 a:active {
 text-decoration: underline;
 }
-
-
 p {
 	padding: 2px;
 }
 hr {
 	border: 1px solid #363333;
-	width: 30%;
+	width: 30vw;
 }
 .container {
-	padding-top: 0px;
-	word-break: break-word;
-	word-wrap: break-word;
-}
-.outer-box {
-	position: relative;
-	z-index: auto;
-    height:auto;
+	display: grid;
+	grid-template-columns: repeat(1, 100%);
 }
 .inner-box {
-	position: relative;
-	z-index: auto;
-    height:auto;
+	min-height: 100vh;
+    align-content: center;
+    text-align: center;
 }
-.cover {
-	min-height: 1000px;
-	height: 100vh;
-	align-items: center;
-	align-content: center;
-}
-.fly-box {
-	position: relative;
-	height: auto;
-	z-index: auto;
-	margin: auto;
-	width: 980px;
-	clear: left;
-}
-.elem-box {
-	padding-left: 20px;
-	padding-right: 20px;
-	height: auto;
-}
-.cover-box {
-	position: relative;
-	width: 980px;
-	height: auto;
-	padding-top: 30%;
-}
-.center-box {
-	position: relative;
-	width: 100%;
-	text-align: center;
-	height: auto;
-}
-.dark-f {
-	color: #363333;
+.logo {
+    width: min(60vw, 2048px);
 }
 .main-header {
 	font-size: 400%;
-	height: initial;
+	height: auto;
+	padding-top: 2vh;
 }
 .main-text {
 	font-size: 200%;
-	height: initial;
+	height: auto;
+	padding-top: 2vh;
 }
-.line-header {
-	font-size: 200%;
-	height: initial;
+nav {
+    display: block;
 }
-.line-text {
-	font-size: 140%;
-	margin-top: -10px;
-	margin-bottom: 20px;
-	padding-bottom: 20px;
-	height: initial;
-}
-.hand {
-	cursor: pointer;
-	cursor: hand;
-}
-
 #cards {
     display: table;
     margin: 0px;
@@ -138,13 +68,9 @@ hr {
     padding: 20px;
     min-height: 250px;
 }
-.card-text {
-    font-size: 100%;
-    height: initial;
-}
-
-.left {
-    text-align: left;
+.hand {
+	cursor: pointer;
+	cursor: hand;
 }
 @media (max-width: 767px) {
 	body {
@@ -158,10 +84,6 @@ hr {
 	}
 	.line-text {
 		font-size: 120%;
-	}
-	.fly-box, .cover-box, .center-box {
-		min-width: 500px;
-		width: 100%;
 	}
 }
 
