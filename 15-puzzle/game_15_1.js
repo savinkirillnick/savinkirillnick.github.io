@@ -20,8 +20,6 @@ export default class Game{
                 color: white;
                 font-size: 10vw;
                 cursor: pointer;
-                width: 20vw;
-                height: 20vw;
                 border: 2vw solid #3498db;
                 margin: .5vw;
             }
@@ -30,6 +28,21 @@ export default class Game{
                 background-color: transparent;
                 cursor: default;
                 border: 2vw solid transparent;
+            }
+            @media (orientation: landscape) {
+                .tile {
+                    border: 2vh solid #3498db;
+                    margin: .5vh;
+                    font-size: 10vh;
+                }
+            }
+            
+            @media (orientation: portrait) {
+                .tile {
+                    border: 2vw solid #3498db;
+                    margin: .5vw;
+                    font-size: 10vw;
+                }
             }
         `;
 
