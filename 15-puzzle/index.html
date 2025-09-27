@@ -92,7 +92,7 @@ body {
     </style>
 </head>
 <body>
-    <div id="myGame" class="fullscreen-game"><div id="game" class="game"><div class="congratulation-name"><img src="https://i.imgur.com/5JNhY2u.png"><br>Пятнашки</div><div class="congratulation-desc">Расположите костяшки так, чтобы числа шли подряд.</div><div id="run_button" class="congratulation-button">Играть</div></div></div>
+    <div id="myGame" class="fullscreen-game"><div id="game" class="game"><div class="congratulation-name"><img src="https://i.imgur.com/5JNhY2u.png"><br>15 puzzle</div><div class="congratulation-desc">Arrange the tiles so that the numbers are in a row.</div><div id="run_button" class="congratulation-button">Play</div></div></div>
     <script type="text/javascript">
         function loadScript(src) {
             return new Promise((resolve, reject) => {
@@ -105,7 +105,7 @@ body {
         }
 
         document.getElementById('run_button').addEventListener('click', async function() {
-            const { default: Game } = await import('./game_15.js');  // Асинхронный импорт
+            const { default: Game } = await import('./game_15_1.js');  // Асинхронный импорт
             const game = new Game();
             game.runGame(); // Запуск игры
         });
