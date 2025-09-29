@@ -116,22 +116,21 @@ export default class Game{
     // Конец игры. показываем сообщение с кнопкой перезапуска
     endGame() {
         document.getElementById("game").innerHTML = "";
-        document.getElementById("game").appendChild(this.container);
         
         let divName = document.createElement('div');
         divName.className = 'congratulation-name';
+        divName.innerText = "Congratulation!";
         document.getElementById("game").appendChild(divName);
-        divName.innerHTML = "Congratulation!";
         
         let divDesc = document.createElement('div');
         divDesc.className = 'congratulation-desc';
+        divDesc.innerText = "You've been arranged tiles in a row!";
         document.getElementById("game").appendChild(divDesc);
-        divDesc.innerHTML = "You've been arranged tiles in a row!";
 
         let divButton = document.createElement('div');
         divButton.className = 'congratulation-button';
+        divButton.innerText = "Play Again";
         document.getElementById("game").appendChild(divButton);
-        divButton.innerHTML = "Play Again";
         
         divButton.addEventListener('click', async function() {
             this.runGame(); // Запуск игры
@@ -166,7 +165,7 @@ export default class Game{
                 return false;
             }
         }
-        // Иначе последний элемент это 0
+        // Иначе все элементы на месте и последний элемент это 0
         return true;
     }
 
