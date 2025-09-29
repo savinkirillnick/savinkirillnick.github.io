@@ -131,11 +131,8 @@ export default class Game{
             let divButton = document.createElement('div');
             divButton.className = 'congratulation-button';
             divButton.innerText = "Play Again";
+            divButton.onclick = this.runGame;
             document.getElementById("game").appendChild(divButton);
-            
-            divButton.addEventListener('click', async function() {
-                this.runGame(); // Запуск игры
-            });
         }, 300);
     }
     
