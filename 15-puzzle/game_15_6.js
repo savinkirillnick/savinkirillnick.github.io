@@ -115,26 +115,28 @@ export default class Game{
 
     // Конец игры. показываем сообщение с кнопкой перезапуска
     endGame() {
-        document.getElementById("game").innerHTML = "";
-        
-        let divName = document.createElement('div');
-        divName.className = 'congratulation-name';
-        divName.innerText = "Congratulation!";
-        document.getElementById("game").appendChild(divName);
-        
-        let divDesc = document.createElement('div');
-        divDesc.className = 'congratulation-desc';
-        divDesc.innerText = "You've been arranged tiles in a row!";
-        document.getElementById("game").appendChild(divDesc);
-
-        let divButton = document.createElement('div');
-        divButton.className = 'congratulation-button';
-        divButton.innerText = "Play Again";
-        document.getElementById("game").appendChild(divButton);
-        
-        divButton.addEventListener('click', async function() {
-            this.runGame(); // Запуск игры
-        });
+        setTimeout(() => {
+            document.getElementById("game").innerHTML = "";
+            
+            let divName = document.createElement('div');
+            divName.className = 'congratulation-name';
+            divName.innerHTML = "⭐⭐⭐<br>Congratulation!";
+            document.getElementById("game").appendChild(divName);
+            
+            let divDesc = document.createElement('div');
+            divDesc.className = 'congratulation-desc';
+            divDesc.innerText = "You've been arranged tiles in a row!";
+            document.getElementById("game").appendChild(divDesc);
+    
+            let divButton = document.createElement('div');
+            divButton.className = 'congratulation-button';
+            divButton.innerText = "Play Again";
+            document.getElementById("game").appendChild(divButton);
+            
+            divButton.addEventListener('click', async function() {
+                this.runGame(); // Запуск игры
+            });
+        }, 300);
     }
     
     isPuzzleSolvable(tiles) {
