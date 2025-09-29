@@ -87,6 +87,8 @@ export default class Game{
         if (!dataValid.isSolvable) {
             [array[array.indexOf(14)], array[array.indexOf(15)]] = [15, 14];
         }
+
+        const solvable = this.isPuzzleSolvable(array);
     }
 
 // Функция перемещения плитки
@@ -106,6 +108,7 @@ export default class Game{
             this.tiles[tileIndex] = 0;
             this.renderTiles();
         }
+        const solved = this.isPuzzleSolved(this.tiles);
     }
 
     isPuzzleSolvable(tiles) {
@@ -158,27 +161,4 @@ export default class Game{
         return tiles[tiles.length - 1] === 0;
     }
 
-    // Функция для полной проверки расстановки
-    validatePuzzle(tiles) {
-        try {
-            const solvable = this.isPuzzleSolvable(tiles);
-            const solved = this.isPuzzleSolved(tiles);
-            
-            return {
-                isValid: true,
-                isSolvable: solvable,
-                isSolved: solved,
-                message: solved ? 'Пазл собран правильно!' : 
-                        solvable ? 'Пазл можно собрать' : 'Пазл невозможно собрать'
-            };
-        } catch (error) {
-            return {
-                isValid: false,
-                isSolvable: false,
-                isSolved: false,
-                message: error.message
-            };
-        }
-    }
-            
 }
