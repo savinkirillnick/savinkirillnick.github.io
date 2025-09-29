@@ -140,7 +140,7 @@ export default class Game{
     
     isPuzzleSolvable(tiles) {
         // 1. Находим номер строки пустой клетки (0) начиная снизу.
-        const emptyTileRow = 4 - Math.floor(tiles.indexOf(0) / 4);
+        const emptyTileRow = 1 + Math.floor(tiles.indexOf(0) / 4);
         
         // 2. Считаем количество инверсий (пар чисел, где большее стоит перед меньшим)
         let inversions = 0;
@@ -155,8 +155,6 @@ export default class Game{
         }
         
         // 3. Применяем правило: головоломка решаема, если сумма инверсий и строки пустой клетки четная
-        const isEvenRowFromBottom = (3 - emptyTileRow) % 2 === 0;
-        
         return ((emptyTileRow + inversions) % 2 === 0);
     }
 
