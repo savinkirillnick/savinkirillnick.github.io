@@ -83,12 +83,11 @@ export default class Game{
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
-        const dataValid = this.validatePuzzle(array);
-        if (!dataValid.isSolvable) {
+        const solvable = this.isPuzzleSolvable(array);
+        if (!solvable) {
             [array[array.indexOf(14)], array[array.indexOf(15)]] = [15, 14];
         }
 
-        const solvable = this.isPuzzleSolvable(array);
     }
 
 // Функция перемещения плитки
