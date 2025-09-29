@@ -8,7 +8,7 @@
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="0">
     <title>Game</title>
-    <script type="module" src="./game_15_5.js"></script>
+    <script type="module" src="./game_15_6.js"></script>
     <style type="text/css">
 body {
     margin: 0;
@@ -105,10 +105,134 @@ body {
         }
 
         document.getElementById('run_button').addEventListener('click', async function() {
-            const { default: Game } = await import('./game_15_5.js');  // Асинхронный импорт
+            const { default: Game } = await import('./game_15_6.js');  // Асинхронный импорт
             const game = new Game();
             game.runGame(); // Запуск игры
         });
     </script>
+	<script type="text/javascript">
+		function createMusicPlayer() {
+		    let tracks = [
+		        'https://savinkirillnick.github.io/music/track1.mp3',
+		        'https://savinkirillnick.github.io/music/track2.mp3',
+		        'https://savinkirillnick.github.io/music/track3.mp3',
+		        'https://savinkirillnick.github.io/music/track4.mp3',
+		        'https://savinkirillnick.github.io/music/track5.mp3',
+		        'https://savinkirillnick.github.io/music/track6.mp3',
+		        'https://savinkirillnick.github.io/music/track7.mp3',
+		        'https://savinkirillnick.github.io/music/track8.mp3',
+		        'https://savinkirillnick.github.io/music/track9.mp3',
+		        'https://savinkirillnick.github.io/music/track10.mp3',
+		        'https://savinkirillnick.github.io/music/track11.mp3',
+		        'https://savinkirillnick.github.io/music/track12.mp3'
+		    ];
+		    
+		    let currentTrackIndex = 0;
+		    let audio = null;
+		    let isPlaying = false;
+
+			// Перемешаем треки
+			tracks.sort(() => Math.random() - 0.5);
+			
+		    // Функция для воспроизведения текущего трека
+		    function playCurrentTrack() {
+		        // Останавливаем предыдущий трек, если он есть
+		        if (audio) {
+		            audio.pause();
+		            audio = null;
+		        }
+		        
+		        // Создаем новый аудио элемент
+		        audio = new Audio(tracks[currentTrackIndex]);
+		        audio.volume = 0.5;
+		        
+		        // Обработчик окончания трека
+		        audio.addEventListener('ended', playNextTrack);
+		        
+		        // Пытаемся воспроизвести
+		        audio.play().catch(error => {
+		            console.error('Ошибка воспроизведения:', error);
+		        });
+		        
+		        console.log('Сейчас играет:', tracks[currentTrackIndex]);
+		    }
+		    
+		    // Функция для перехода к следующему треку
+		    function playNextTrack() {
+		        currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+		        playCurrentTrack();
+		    }
+		    
+		    // Функция для перехода к предыдущему треку
+		    function playPreviousTrack() {
+		        currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+		        playCurrentTrack();
+		    }
+		    
+		    // Функция для запуска/паузы
+		    function togglePlayPause() {
+		        if (!audio) {
+		            playCurrentTrack();
+		            isPlaying = true;
+		            return;
+		        }
+		        
+		        if (audio.paused) {
+		            audio.play();
+		            isPlaying = true;
+		        } else {
+		            audio.pause();
+		            isPlaying = false;
+		        }
+		    }
+		    
+		    // Функция для остановки музыки
+		    function stopMusic() {
+		        if (audio) {
+		            audio.pause();
+		            audio.currentTime = 0;
+		            isPlaying = false;
+		        }
+		    }
+		    
+		    // Функция для изменения громкости
+		    function setVolume(volume) {
+		        if (audio) {
+		            audio.volume = Math.max(0, Math.min(1, volume));
+		        }
+		    }
+		    
+		    // Возвращаем публичные методы
+		    return {
+		        start: function() {
+		            if (!isPlaying) {
+		                playCurrentTrack();
+		                isPlaying = true;
+		            }
+		        },
+		        togglePlayPause,
+		        stop: stopMusic,
+		        next: playNextTrack,
+		        previous: playPreviousTrack,
+		        setVolume,
+		        getCurrentTrack: () => tracks[currentTrackIndex],
+		        isPlaying: () => isPlaying
+		    };
+		}
+		
+		// Создаем экземпляр плеера
+		const musicPlayer = createMusicPlayer();
+		
+		// Добавляем обработчик клика на всю страницу
+		document.addEventListener('click', function(event) {
+		    // Запускаем музыку только при первом клике
+		    if (!musicPlayer.isPlaying()) {
+		        musicPlayer.start();
+		        
+		        // Можно удалить обработчик после первого запуска
+		        document.removeEventListener('click', arguments.callee);
+		    }
+		});
+	</script>
 </body>
 </html>
