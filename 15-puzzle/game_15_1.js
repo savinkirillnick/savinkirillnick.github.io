@@ -109,8 +109,36 @@ export default class Game{
             this.renderTiles();
         }
         const solved = this.isPuzzleSolved(this.tiles);
+        if (solved){
+            this.endGame();
+        }
     }
 
+    endGame() {
+        
+        document.getElementById("game").innerHTML = "";
+        document.getElementById("game").appendChild(this.container);
+        
+        let divName = document.createElement('div');
+        divName.className = 'congratulation-name';
+        document.getElementById("game").appendChild(divName);
+        divName.innerHTML = "Congratulation!";
+        
+        let divDesc = document.createElement('div');
+        divDesc.className = 'congratulation-desc';
+        document.getElementById("game").appendChild(divDesc);
+        divDesc.innerHTML = "You've been arranged tiles in a row!";
+
+        let divButton = document.createElement('div');
+        divButton.className = 'congratulation-button';
+        document.getElementById("game").appendChild(divButton);
+        divButton.innerHTML = "Play Again";
+        
+        divButton.addEventListener('click', async function() {
+            this.runGame(); // Запуск игры
+        });
+    }
+    
     isPuzzleSolvable(tiles) {
         // Проверяем, что массив содержит ровно 16 элементов (15 чисел + пустая клетка)
         if (!Array.isArray(tiles) || tiles.length !== 16) {
