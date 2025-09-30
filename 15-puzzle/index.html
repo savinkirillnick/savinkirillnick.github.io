@@ -8,7 +8,6 @@
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="0">
     <title>Game</title>
-    <script type="module" src="./game_15_7.js"></script>
     <style type="text/css">
 body {
     margin: 0;
@@ -70,6 +69,32 @@ body {
     color: white;
     font-weight: bold;
 }
+
+.puzzle-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(4, 25%);
+}
+.tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #006699;
+    color: white;
+    font-size: 10vw;
+    cursor: pointer;
+    border: 2vw solid #3498db;
+    margin: .5vw;
+}
+
+.tile.empty {
+    background-color: transparent;
+    cursor: default;
+    border: 2vw solid transparent;
+}
+
 @media (orientation: landscape) {
     .game {
         height: 100vh; /* В ландшафтном режиме квадрат по высоте экрана */
@@ -77,6 +102,11 @@ body {
     }
     .fullscreen-game {
         flex-direction: column;
+    }
+    .tile {
+        border: 2vh solid #3498db;
+        margin: .5vh;
+        font-size: 10vh;
     }
 }
 
@@ -88,29 +118,175 @@ body {
     .fullscreen-game {
         flex-direction: row;
     }
+    .tile {
+        border: 2vw solid #3498db;
+        margin: .5vw;
+        font-size: 10vw;
+    }
 }
     </style>
 </head>
 <body>
-    <div id="myGame" class="fullscreen-game"><div id="game" class="game"><div class="congratulation-name"><img src="https://i.imgur.com/5JNhY2u.png"><br>15 puzzle</div><div class="congratulation-desc">Arrange the tiles so that the numbers are in a row.</div><div id="run_button" class="congratulation-button">Play</div></div></div>
     <script type="text/javascript">
-        function loadScript(src) {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = src;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.head.appendChild(script);
-            });
+
+        class Game{
+            constructor() {
+                this.size = 4;  // Размерность поля 4x4
+                this.runGame = this.runGame.bind(this);
+                this.endGame = this.endGame.bind(this);
+            }
+
+
+            // Функция для создания и перемешивания плиток
+            runGame() {
+                
+                //Создаем основной слой
+                this.container = document.createElement('div');
+                this.container.className = 'puzzle-container';
+
+                document.getElementById("game").innerHTML = "";
+                document.getElementById("game").appendChild(this.container);
+
+                this.tiles = [];
+                this.tiles = Array.from({ length: this.size * this.size }, (_, i) => i);
+                this.shuffle(this.tiles);
+                this.renderTiles();
+            }
+
+            // Функция рендеринга плиток
+            renderTiles() {
+                this.container.innerHTML = '';
+                this.tiles.forEach(tile => {
+                    const tileElement = document.createElement('div');
+                    tileElement.className = 'tile' + (tile === 0 ? ' empty' : '');
+                    tileElement.textContent = tile !== 0 ? tile : '';
+                    tileElement.addEventListener('click', () => this.moveTile(tile));
+                    this.container.appendChild(tileElement);
+                });
+            }
+
+            // Функция перемешивания плиток
+            shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                const solvable = this.isPuzzleSolvable(array);
+                if (!solvable) {
+                    [array[array.indexOf(14)], array[array.indexOf(15)]] = [15, 14];
+                }
+            }
+
+            // Функция перемещения плитки
+            moveTile(tile) {
+                const emptyIndex = this.tiles.indexOf(0);
+                const tileIndex = this.tiles.indexOf(tile);
+
+                const emptyRow = Math.floor(emptyIndex / this.size);
+                const emptyCol = emptyIndex % this.size;
+                const tileRow = Math.floor(tileIndex / this.size);
+                const tileCol = tileIndex % this.size;
+
+                const isAdjacent = (Math.abs(emptyRow - tileRow) + Math.abs(emptyCol - tileCol)) === 1;
+
+                if (isAdjacent) {
+                    this.tiles[emptyIndex] = tile;
+                    this.tiles[tileIndex] = 0;
+                    this.renderTiles();
+                }
+
+                const solved = this.isPuzzleSolved(this.tiles);
+                if (solved) {
+                    this.endGame();
+                }
+            }
+
+            endGame() {
+                setTimeout(() => {
+                    document.getElementById("game").innerHTML = "";
+                    
+                    let divName = document.createElement('div');
+                    divName.className = 'congratulation-name';
+                    document.getElementById("game").appendChild(divName);
+                    divName.innerHTML = "<br>⭐⭐⭐<br>Congratulation!";
+                    
+                    let divDesc = document.createElement('div');
+                    divDesc.className = 'congratulation-desc';
+                    document.getElementById("game").appendChild(divDesc);
+                    divDesc.innerText = "You've been arranged tiles in a row!";
+
+                    let divButton = document.createElement('div');
+                    divButton.className = 'congratulation-button';
+                    document.getElementById("game").appendChild(divButton);
+                    divButton.innerText = "Play Again";
+                    
+                    divButton.addEventListener('click', this.runGame);
+                }, 300);
+            }
+
+            isPuzzleSolvable(tiles) {
+
+                let inv = 0;
+                
+                // Первая часть: подсчет инверсий
+                for (let i = 0; i < 16; i++) {
+                    if (tiles[i]) {
+                        for (let j = 0; j < i; j++) {
+                            if (tiles[j] > tiles[i]) {
+                                inv++;
+                            }
+                        }
+                    }
+                }
+                
+                // Вторая часть: добавление позиции пустого элемента
+                for (let i = 0; i < 16; i++) {
+                    if (tiles[i] === 0) {
+                        inv += 1 + Math.floor(i / 4);
+                    }
+                }
+                
+                // Вывод результата
+                return (inv & 1) ? false : true;
+            }
+
+            // Альтернативная функция для проверки завершенного состояния
+            isPuzzleSolved(tiles) {
+                // Проверяем, что массив содержит правильную последовательность
+                for (let i = 0; i < tiles.length - 1; i++) {
+                    if (tiles[i] !== i + 1) {
+                        return false;
+                    }
+                }
+                // Последний элемент должен быть 0 (пустая клетка)
+                return tiles[tiles.length - 1] === 0;
+            }
+
         }
 
-        document.getElementById('run_button').addEventListener('click', async function() {
-            const { default: Game } = await import('./game_15_7.js');  // Асинхронный импорт
-            const game = new Game();
-            game.runGame(); // Запуск игры
-        });
     </script>
+    <div id="myGame" class="fullscreen-game">
+        <div id="game" class="game">
+            <div class="congratulation-name">
+                <img src="https://i.imgur.com/5JNhY2u.png"><br>
+                Fifteen puzzle
+            </div>
+            <div class="congratulation-desc">
+                Arrange the tiles so that the numbers are in a row.
+            </div>
+            <div id="run_button" class="congratulation-button" onclick="runGame()">
+                Play
+            </div>
+        </div>
+    </div>
 	<script type="text/javascript">
+
+        const game = new Game();
+
+        function runGame() {
+            game.runGame();
+        }
+
 		function createMusicPlayer() {
 		    let tracks = [
 		        'https://savinkirillnick.github.io/music/track1.mp3',
