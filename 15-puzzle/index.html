@@ -225,29 +225,41 @@ body {
             }
 
             isPuzzleSolvable(tiles) {
-
-                let inv = 0;
-                
-                // Первая часть: подсчет инверсий
-                for (let i = 0; i < 16; i++) {
-                    if (tiles[i]) {
-                        for (let j = 0; j < i; j++) {
-                            if (tiles[j] > tiles[i]) {
-                                inv++;
+                let count = 0;
+                let transpos = 0;
+                let a = new Array(16);
+                // Заполняем массив a змейкой (змейкообразный обход)
+                for (let i = 0; i < 4; i++) {
+                    if (i % 2 === 0) {
+                        // Четные строки: слева направо
+                        for (let j = 0; j < 4; j++) {
+                            const value = tiles[i][j];
+                            if (value > 0) {
+                                a[count] = value;
+                                count++;
+                            }
+                        }
+                    } else {
+                        // Нечетные строки: справа налево
+                        for (let j = 3; j >= 0; j--) {
+                            const value = tiles[i][j];
+                            if (value > 0) {
+                                a[count] = value;
+                                count++;
                             }
                         }
                     }
                 }
-                
-                // Вторая часть: добавление позиции пустого элемента
-                for (let i = 0; i < 16; i++) {
-                    if (tiles[i] === 0) {
-                        inv += 1 + Math.floor(i / 4);
+                // Подсчитываем количество инверсий
+                for (let i = 0; i < count - 1; i++) {
+                    for (let j = i + 1; j < count; j++) {
+                        if (a[i] > a[j]) {
+                            transpos++;
+                        }
                     }
                 }
-                
-                // Вывод результата
-                return (inv & 1) ? false : true;
+                // Пазл решаем, если количество инверсий нечетное
+                return transpos % 2 === 1;
             }
 
             // Альтернативная функция для проверки завершенного состояния
