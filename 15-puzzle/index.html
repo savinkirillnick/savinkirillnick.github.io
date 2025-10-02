@@ -23,6 +23,10 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
 }
+p {
+    margin: 10px;
+    padding: 0;
+}
 .fullscreen-game {
     position: fixed;
     top: 0;
@@ -42,6 +46,16 @@ body {
     width: 100vmin;
     height: 100vmin;
     color: white;
+}
+.menu-button {
+    top: 0px;
+    left: 0px;
+    text-align: left;
+    padding: 2vw;
+    position: absolute;
+}
+.menu {
+    color: #fff;
 }
 .congratulation-name {
     width: 100%;
@@ -69,7 +83,6 @@ body {
     color: white;
     font-weight: bold;
 }
-
 .puzzle-container {
     width: 100%;
     height: 100%;
@@ -88,13 +101,38 @@ body {
     border: 2vw solid #3498db;
     margin: .5vw;
 }
-
 .tile.empty {
     background-color: transparent;
     cursor: default;
     border: 2vw solid transparent;
 }
-
+.menu {
+    display: none;
+    position: absolute;
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 20px;
+    padding: 10px;
+    left: 64px;
+    top: 64px;
+}
+.menu-button {
+    display: none;
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#button, #moves {
+    display: flex;
+    font-size: 24px;
+    padding: 10px;
+}
+#button {
+    justify-content: start;
+}
+#moves {
+    justify-content: end;
+}
 @media (orientation: landscape) {
     .game {
         height: 100vh; /* В ландшафтном режиме квадрат по высоте экрана */
@@ -107,6 +145,27 @@ body {
         border: 2vh solid #3498db;
         margin: .5vh;
         font-size: 10vh;
+    }
+    .menu {
+        font-size: 5vh;
+    }
+    .menu-button {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: auto;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: flex-start;
+        z-index: 1000;
+    }
+    #button, #moves {
+        width: 48px;
+        height: 50%;
+        margin: 5px 0;
+    }
+    #moves {
+        justify-content: start;
     }
 }
 
@@ -123,6 +182,27 @@ body {
         margin: .5vw;
         font-size: 10vw;
     }
+    .menu {
+        font-size: 5vw;
+    }
+    .menu-button {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        z-index: 1000;
+    }
+    #button, #moves {
+        flex: 1;
+        margin: 0 5px;
+    }
+    #moves {
+        justify-content: end;
+    }
+
 }
     </style>
 </head>
@@ -134,12 +214,16 @@ body {
                 this.size = 4;  // Размерность поля 4x4
                 this.runGame = this.runGame.bind(this);
                 this.endGame = this.endGame.bind(this);
+                this.moves = 0;
             }
 
 
             // Функция для создания и перемешивания плиток
             runGame() {
-                
+                // Обнуляем счетчик ходов
+                this.moves = 0;
+                document.getElementById('moves').innerText = `↔️ ${this.moves}`;
+
                 //Создаем основной слой
                 this.container = document.createElement('div');
                 this.container.className = 'puzzle-container';
@@ -179,6 +263,8 @@ body {
 
             // Функция перемещения плитки
             moveTile(tile) {
+
+
                 const emptyIndex = this.tiles.indexOf(0);
                 const tileIndex = this.tiles.indexOf(tile);
 
@@ -193,6 +279,9 @@ body {
                     this.tiles[emptyIndex] = tile;
                     this.tiles[tileIndex] = 0;
                     this.renderTiles();
+                    
+                    this.moves += 1;
+                    document.getElementById('moves').innerText = `↔️ ${this.moves}`;
                 }
 
                 const solved = this.isPuzzleSolved(this.tiles);
@@ -205,10 +294,23 @@ body {
                 setTimeout(() => {
                     document.getElementById("game").innerHTML = "";
                     
+                    let stars = "";
+                    if (this.moves > 120) {
+                        stars = "⭐";
+                    } else if (this.moves > 90) {
+                        stars = "⭐⭐";
+                    } else if (this.moves > 60) {
+                        stars = "⭐⭐⭐";
+                    } else if (this.moves > 50) {
+                        stars = "⭐⭐⭐⭐";
+                    } else {
+                        stars = "⭐⭐⭐⭐⭐";
+                    }
+
                     let divName = document.createElement('div');
                     divName.className = 'congratulation-name';
                     document.getElementById("game").appendChild(divName);
-                    divName.innerHTML = "<br>⭐⭐⭐<br>Congratulation!";
+                    divName.innerHTML = "<br>"+stars+"<br>Congratulation!";
                     
                     let divDesc = document.createElement('div');
                     divDesc.className = 'congratulation-desc';
@@ -225,44 +327,26 @@ body {
             }
 
             isPuzzleSolvable(tiles) {
-                let count = 0;
-                let transpos = 0;
-                let a = new Array(16);
-                // Заполняем массив a змейкой (змейкообразный обход)
-                for (let i = 0; i < 4; i++) {
-                    if (i % 2 === 0) {
-                        // Четные строки: слева направо
-                        for (let j = 0; j < 4; j++) {
-                            const value = tiles[i][j];
-                            if (value > 0) {
-                                a[count] = value;
-                                count++;
-                            }
-                        }
-                    } else {
-                        // Нечетные строки: справа налево
-                        for (let j = 3; j >= 0; j--) {
-                            const value = tiles[i][j];
-                            if (value > 0) {
-                                a[count] = value;
-                                count++;
-                            }
+
+                // 1. Находим позицию пустой клетки (0)
+                const emptyTileRow = Math.floor(tiles.indexOf(0) / 4);
+                
+                // 2. Считаем количество инверсий (пар чисел, где большее стоит перед меньшим)
+                let inversions = 0;
+                
+                for (let i = 0; i < tiles.length - 1; i++) {
+                    for (let j = i + 1; j < tiles.length; j++) {
+                        // Игнорируем пустую клетку при подсчете инверсий
+                        if (tiles[i] !== 0 && tiles[j] !== 0 && tiles[i] > tiles[j]) {
+                            inversions++;
                         }
                     }
                 }
-                // Подсчитываем количество инверсий
-                for (let i = 0; i < count - 1; i++) {
-                    for (let j = i + 1; j < count; j++) {
-                        if (a[i] > a[j]) {
-                            transpos++;
-                        }
-                    }
-                }
-                // Пазл решаем, если количество инверсий нечетное
-                return transpos % 2 === 1;
+                
+                return ((emptyTileRow + inversions) % 2 !== 0)
             }
 
-            // Альтернативная функция для проверки завершенного состояния
+            // Функция для проверки завершенного состояния
             isPuzzleSolved(tiles) {
                 // Проверяем, что массив содержит правильную последовательность
                 for (let i = 0; i < tiles.length - 1; i++) {
@@ -291,11 +375,28 @@ body {
             </div>
         </div>
     </div>
+    <div class="menu-button" id="menuButton">
+        <div id="button" onclick="show_hide_menu(); return false;">⚙️</div>
+        <div id="moves">↔️ 0</div>
+    </div>
+    <div class="menu" id="menu">
+        <p onclick="runGame(); return false;">New Game</p>
+    </div>
 	<script type="text/javascript">
 
         const game = new Game();
 
+        function show_hide_menu(){
+            if (document.getElementById('menu').style.display == 'block') {
+                document.getElementById('menu').style.display = 'none';
+            } else {
+                document.getElementById('menu').style.display = 'block';
+            }
+        }
+
         function runGame() {
+            document.getElementById('menuButton').style.display = 'flex';
+            document.getElementById('menu').style.display = 'none';
             game.runGame();
         }
 
