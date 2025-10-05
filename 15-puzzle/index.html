@@ -7,7 +7,20 @@
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="0">
-    <title>Game</title>
+    <meta name="description" content="A puzzle game where you need to arrange tiles in a row from 1 to 15.">
+    <meta name="keywords" content="Fifteen, puzzle, game, javascript">
+    <meta name="author" content="Kirill Savin">
+    <meta property="og:title" content="Fifteen Puzzle" />
+    <meta property="og:description" content="A puzzle game where you need to arrange tiles in a row from 1 to 15." />
+    <meta property="og:image" content="https://i.imgur.com/5JNhY2u.png" />
+    <meta property="og:url" content="https://savinkirillnick.github.io/15-puzzle/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Fifteen Puzzle" />
+    <meta name="twitter:description" content="A puzzle game where you need to arrange tiles in a row from 1 to 15." />
+    <meta name="twitter:image" content="https://i.imgur.com/5JNhY2u.png" />
+    <link rel="icon" type="image/png" href="https://i.imgur.com/5JNhY2u.png">
+    <title>Fifteen Puzzle</title>
     <style type="text/css">
 body {
     margin: 0;
@@ -133,6 +146,13 @@ p {
 #moves {
     justify-content: end;
 }
+.small {
+    font-size: 8px;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-150%, -50%);
+}
 @media (orientation: landscape) {
     .game {
         height: 100vh; /* В ландшафтном режиме квадрат по высоте экрана */
@@ -234,6 +254,8 @@ p {
 
                 this.tiles = [];
                 this.tiles = Array.from({ length: this.size * this.size }, (_, i) => i);
+                this.tiles.push(0);
+                this.tiles.shift();
                 this.shuffle(this.tiles);
                 this.renderTiles();
             }
@@ -308,7 +330,6 @@ p {
                     const newIndex = newY * this.size + newX;
                     [array[empty], array[newIndex]] = [array[newIndex], array[empty]];
                 }
-                [array[array.indexOf(14)], array[array.indexOf(15)]] = [15, 14];
             }
 
             // Функция перемещения плитки
@@ -422,6 +443,9 @@ p {
             </div>
             <div id="run_button" class="congratulation-button" onclick="runGame()">
                 Play
+            </div>
+            <div class="small">
+                v. 1.2
             </div>
         </div>
     </div>
