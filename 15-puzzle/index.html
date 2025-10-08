@@ -64,34 +64,25 @@ p {
     top: 0px;
     left: 0px;
     text-align: left;
-    padding: 2vw;
     position: absolute;
 }
 .menu {
     color: #fff;
+    z-index: 1000;
 }
 .congratulation-name {
     width: 100%;
     height: auto;
-    font-size: clamp(1.5em, 8vw, 5em);
     text-align: center;
-    padding: 2vw;
 }
 .congratulation-desc {
     width: auto;
     height: auto;
-    font-size: clamp(1em, 5vw, 2.5em);
-    margin: 1vw;
-    padding: 2vw;
 }
 .congratulation-button {
     width: 50%;
     height: auto;
-    font-size: clamp(1em, 5vw, 2.5em);
-    padding: 3vw;
     background-color: blue;
-    border-radius: 10px;
-    margin: 1vw auto;
     text-align: center;
     color: white;
     font-weight: bold;
@@ -109,36 +100,25 @@ p {
     align-items: center;
     background-color: #006699;
     color: white;
-    font-size: 10vw;
     cursor: pointer;
-    border: 2vw solid #3498db;
-    margin: .5vw;
 }
 .tile.empty {
     background-color: transparent;
     cursor: default;
-    border: 2vw solid transparent;
 }
 .menu {
     display: none;
     position: absolute;
-    width: 200px;
-    background-color: rgba(0, 0, 0, 0.9);
-    border-radius: 20px;
-    padding: 10px;
-    left: 64px;
-    top: 64px;
+    background-color: rgba(17, 17, 17, 0.75);
 }
 .menu-button {
     display: none;
     color: white;
-    padding: 10px;
     box-sizing: border-box;
+    padding: 2vw;
 }
 #button, #moves {
     display: flex;
-    font-size: 24px;
-    padding: 10px;
 }
 #button {
     justify-content: start;
@@ -147,28 +127,62 @@ p {
     justify-content: end;
 }
 .small {
-    font-size: 1em;
     position: absolute;
     left: 50%;
     top: 100%;
     transform: translate(-50%, -150%);
     color: #666;
 }
+
+/* sizes */
+.small {
+    font-size: 3vw;
+}
+.menu {
+    width: 70vw;
+    border-radius: 5vw;
+    padding: 3vw;
+    left: 5vw;
+    top: 15vw;
+}
+.menu-button {
+    padding: 3vw;
+}
+#button, #moves {
+    font-size: 5vw;
+    padding: 3vw;
+}
+.tile {
+    font-size: 10vw;
+    border: 2vw solid #3498db;
+    margin: .5vw;
+}
+.tile.empty {
+    border: 2vw solid transparent;
+}
+.congratulation-button {
+    font-size: clamp(1em, 5vw, 2.5em);
+    padding: 3vw;
+    border-radius: 10px;
+    margin: 1vw auto;
+}
+.congratulation-desc {
+    font-size: clamp(1em, 5vw, 2.5em);
+    margin: 1vw;
+    padding: 2vw;
+}
+.congratulation-name {
+    font-size: clamp(1.5em, 8vw, 5em);
+    padding: 2vw;
+}
+
 @media (orientation: landscape) {
     .game {
-        height: 100vh; /* В ландшафтном режиме квадрат по высоте экрана */
-        width: 100vh;  /* В ландшафтном режиме квадрат по высоте экрана */
+        height: 100vh;
+        width: 100vh;
     }
     .fullscreen-game {
         flex-direction: column;
-    }
-    .tile {
-        border: 2vh solid #3498db;
-        margin: .5vh;
-        font-size: 10vh;
-    }
-    .menu {
-        font-size: 5vh;
     }
     .menu-button {
         position: fixed;
@@ -180,31 +194,65 @@ p {
         justify-content: flex-start;
         z-index: 1000;
     }
-    #button, #moves {
-        width: 48px;
-        height: 50%;
-        margin: 5px 0;
-    }
     #moves {
         justify-content: start;
+        align-items: end;
     }
+
+    /* Sizes */
+    .small {
+        font-size: 3vh;
+    }
+    .menu {
+        font-size: 5vh;
+        width: 70vh;
+        border-radius: 4vh;
+        padding: 3vh;
+        left: 5vh;
+        top: 15vh;
+    }
+    .menu-button {
+        padding: 3vh;
+    }
+    #button, #moves {
+        height: 50%;
+        font-size: 5vh;
+        margin: 2vh 0;
+        padding: 3vh;
+    }
+    .tile {
+        font-size: 10vh;
+        border: 2vh solid #3498db;
+        margin: .5vh;
+    }
+    .tile.empty {
+        border: 2vh solid transparent;
+    }
+    .congratulation-button {
+        font-size: 5vh;
+        padding: 3vh;
+        border-radius: 3vh;
+        margin: 1vh auto;
+    }
+    .congratulation-desc {
+        font-size: 5vh;
+        margin: 1vh;
+        padding: 2vh;
+    }
+    .congratulation-name {
+        font-size: 8vh;
+        padding: 2vh;
+    }
+
 }
 
 @media (orientation: portrait) {
     .game {
-        height: 100vw; /* В портретном режиме квадрат по ширине экрана */
-        width: 100vw;  /* В портретном режиме квадрат по ширине экрана */
+        height: 100vw;
+        width: 100vw;
     }
     .fullscreen-game {
         flex-direction: row;
-    }
-    .tile {
-        border: 2vw solid #3498db;
-        margin: .5vw;
-        font-size: 10vw;
-    }
-    .menu {
-        font-size: 5vw;
     }
     .menu-button {
         position: fixed;
@@ -218,10 +266,53 @@ p {
     }
     #button, #moves {
         flex: 1;
-        margin: 0 5px;
     }
     #moves {
         justify-content: end;
+    }
+
+    /* Sizes */
+    .small {
+        font-size: 3vw;
+    }
+    .menu {
+        font-size: 5vw;
+        width: 70vw;
+        border-radius: 4vw;
+        padding: 3vw;
+        left: 5vw;
+        top: 15vw;
+    }
+    .menu-button {
+        padding: 3vw;
+    }
+    #button, #moves {
+        font-size: 5vw;
+        margin: 0 2vw;
+        padding: 3vw;
+    }
+    .tile {
+        font-size: 10vw;
+        border: 2vw solid #3498db;
+        margin: .5vw;
+    }
+    .tile.empty {
+        border: 2vw solid transparent;
+    }
+    .congratulation-button {
+        font-size: 5vw;
+        padding: 3vw;
+        border-radius: 3vw;
+        margin: 1vw auto;
+    }
+    .congratulation-desc {
+        font-size: 5vw;
+        margin: 1vw;
+        padding: 2vw;
+    }
+    .congratulation-name {
+        font-size: 8vw;
+        padding: 2vw;
     }
 
 }
@@ -446,7 +537,7 @@ p {
                 Play
             </div>
             <div class="small">
-                v. 1.2
+                v. 1.3
             </div>
         </div>
     </div>
