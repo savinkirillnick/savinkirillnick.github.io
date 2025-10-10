@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="description" content="Move balls to set three or more balls in a row.">
+    <meta name="keywords" content="color, balls, puzzle, game, javascript">
+    <meta name="author" content="Kirill Savin">
+    <meta property="og:title" content="Colored Balls" />
+    <meta property="og:description" content="Move balls to set three or more balls in a row." />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="https://savinkirillnick.github.io/color-balls/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Colored Balls" />
+    <meta name="twitter:description" content="Move balls to set three or more balls in a row." />
+    <meta name="twitter:image" content="" />
+    <link rel="icon" type="image/png" href="">
+    <title>Colored Balls</title>
+    <style type="text/css">
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: sans-serif;
+    background-color: black;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+p {
+    margin: 10px;
+    padding: 0;
+}
+.fullscreen-game {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: black;
+}
+.game {
+    position: relative;
+    background-color: #222;
+    width: 100vmin;
+    height: 100vmin;
+    color: white;
+}
+.menu-button {
+    top: 0px;
+    left: 0px;
+    text-align: left;
+    position: absolute;
+}
+.menu {
+    color: #fff;
+    z-index: 1000;
+}
+.congratulation-name {
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+.congratulation-desc {
+    width: auto;
+    height: auto;
+}
+.congratulation-button {
+    width: 50%;
+    height: auto;
+    background-color: blue;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+.game-board {
+    position: relative; /* Добавлено для корректного позиционирования */
+    display: grid;
+    background-color: #222;
+}
+.menu {
+    display: none;
+    position: absolute;
+    background-color: rgba(17, 17, 17, 0.75);
+}
+.menu-button {
+    display: none;
+    color: white;
+    box-sizing: border-box;
+    padding: 2vw;
+}
+.controls, .score, .moves  {
+    display: flex;
+}
+.controls {
+    justify-content: start;
+}
+.score {
+    justify-content: start;
+}
+.moves {
+    justify-content: end;
+}
+.small {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, -150%);
+    color: #666;
+}
+.cell {
+    background-color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+.ball {
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+.next-ball {
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* sizes */
+.small {
+    font-size: 3vh;
+}
+.menu {
+    font-size: 5vh;
+    width: 70vh;
+    border-radius: 5vh;
+    padding: 3vh;
+    left: 5vh;
+    top: 15vh;
+}
+.menu-button {
+    padding: 3vh;
+}
+.controls, .score, .moves {
+    font-size: 5vh;
+    padding: 3vh;
+}
+.congratulation-button {
+    font-size: 5vh;
+    padding: 3vh;
+    border-radius: 2vh;
+    margin: 1vh auto;
+}
+.congratulation-desc {
+    font-size: 5vh;
+    margin: 1vh;
+    padding: 2vh;
+}
+.congratulation-name {
+    font-size: 8vh;
+    padding: 2vh;
+}
+.game-board {
+    grid-template-columns: repeat(7, 13vh);
+    grid-template-rows: repeat(7, 13vh);
+    gap: 1vh;
+    padding: 1.5vh;
+}
+.cell {
+    border-radius: 2vh;
+    width: 13vh;
+    height: 13vh;
+}
+.ball {
+    width: 10vh;
+    height: 10vh;
+}
+.next-ball {
+    width: 2.5vh;
+    height: 2.5vh;
+}
+.selected {
+    box-shadow: 0 0 0.5vh 0.5vh white;
+    z-index: 1000;
+}
+
+
+@media (orientation: landscape) {
+    .game {
+        height: 100vh;
+        width: 100vh;
+    }
+    .fullscreen-game {
+        flex-direction: column;
+    }
+    .menu-button {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: auto;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: flex-start;
+        z-index: 1000;
+    }
+    .score {
+        justify-content: start;
+        align-items: center;
+    }
+    .controls {
+        justify-content: start;
+    }
+    .moves {
+        justify-content: start;
+        align-items: end;
+    }
+
+  /* sizes */
+  .small {
+      font-size: 3vh;
+  }
+  .menu {
+      font-size: 5vh;
+      width: 70vh;
+      border-radius: 5vh;
+      padding: 3vh;
+      left: 5vh;
+      top: 15vh;
+  }
+  .menu-button {
+      padding: 3vh;
+  }
+  .controls, .score, .moves {
+        height: 33.3333%;
+        font-size: 5vh;
+        margin: 2vh 0;
+        padding: 3vh;
+  }
+  .congratulation-button {
+      font-size: 5vh;
+      padding: 3vh;
+      border-radius: 2vh;
+      margin: 1vh auto;
+  }
+  .congratulation-desc {
+      font-size: 5vh;
+      margin: 1vh;
+      padding: 2vh;
+  }
+  .congratulation-name {
+      font-size: 8vh;
+      padding: 2vh;
+  }
+  .game-board {
+      grid-template-columns: repeat(7, 13vh);
+      grid-template-rows: repeat(7, 13vh);
+      gap: 1vh;
+      padding: 1.5vh;
+  }
+  .cell {
+      border-radius: 2vh;
+      width: 13vh;
+      height: 13vh;
+  }
+  .ball {
+      width: 10vh;
+      height: 10vh;
+  }
+  .next-ball {
+      width: 2.5vh;
+      height: 2.5vh;
+  }
+  .selected {
+      box-shadow: 0 0 0.5vh 0.5vh white;
+  }
+}
+
+@media (orientation: portrait) {
+
+    .game {
+        height: 100vw;
+        width: 100vw;
+    }
+    .fullscreen-game {
+        flex-direction: row;
+    }
+    .menu-button {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        z-index: 1000;
+    }
+    .controls, .score, .moves {
+        flex: 1;
+    }
+    .score {
+      justify-content: center;
+    }
+    .moves {
+        justify-content: end;
+    }
+
+  /* sizes */
+  .small {
+      font-size: 3vw;
+  }
+  .menu {
+      font-size: 5vw;
+      width: 70vw;
+      border-radius: 5vw;
+      padding: 3vw;
+      left: 5vw;
+      top: 15vw;
+  }
+  .menu-button {
+      padding: 3vw;
+  }
+  .controls, .score, .moves {
+      font-size: 5vw;
+      margin: 0 2vw;
+      padding: 3vw;
+  }
+  .congratulation-button {
+      font-size: 5vw;
+      padding: 3vw;
+      border-radius: 2vw;
+      margin: 1vw auto;
+  }
+  .congratulation-desc {
+      font-size: 5vw;
+      margin: 1vw;
+      padding: 2vw;
+  }
+  .congratulation-name {
+      font-size: 8vw;
+      padding: 2vw;
+  }
+  .game-board {
+      grid-template-columns: repeat(7, 13vw);
+      grid-template-rows: repeat(7, 13vw);
+      gap: 1vw;
+      padding: 1.5vw;
+  }
+  .cell {
+      border-radius: 2vw;
+      width: 13vw;
+      height: 13vw;
+  }
+  .ball {
+      width: 10vw;
+      height: 10vw;
+  }
+  .next-ball {
+      width: 2.5vw;
+      height: 2.5vw;
+  }
+  .selected {
+      box-shadow: 0 0 0.5vw 0.5vw white;
+  }
+}
+    </style>
+</head>
+<body>
+
+    <div id="myGame" class="fullscreen-game">
+        <div id="main-menu" class="game">
+            <div class="congratulation-name">
+                Color Balls
+            </div>
+            <div class="congratulation-desc">
+                Arrange the balls for more than 3 in a row.
+            </div>
+            <div id="run_button" class="congratulation-button" onclick="runGame()">
+                Play
+            </div>
+            <div class="small">
+                v. 1.1
+            </div>
+        </div>
+        <div id="game" class="game" style="display: none;">
+            <div class="game-board" id="game-board"></div>
+        </div>
+    </div>
+    <div class="menu-button" id="menu-button">
+        <div class="controls" id="button" onclick="show_hide_menu(); return false;">⚙️</div>
+        <div class="score">⭐ <span id="score">0</span></div>
+        <div class="moves" id="moves">↔️ <span id="move-count">0</span></div>
+    </div>
+    <div class="menu" id="menu">
+        <p onclick="runGame(); return false;">New Game</p>
+    </div>
+    <div class="game-over" id="game-over">
+        <h2>Game Over!</h2>
+        <p>Your scores: <span id="final-score">0</span></p>
+    </div>
+
+    <script>
+        const BOARD_SIZE = 7;
+
+        const COLORS = [
+            '#FF0066', // Насыщенный красный
+            '#3366FF', // Насыщенный синий
+            '#FFCC00', // Насыщенный желтый
+            '#33CC33', // Насыщенный зеленый
+            '#9933FF', // Насыщенный фиолетовый
+            '#FF6600'  // Насыщенный оранжевый
+        ];
+
+        let gameBoard = [];
+        let selectedBall = null;
+        let score = 0;
+        let moveCount = 0;
+        let gameActive = true;
+        let nextBalls = [];
+
+        // Инициализация игры
+        function initGame() {
+
+            const boardElement = document.getElementById('game-board');
+            boardElement.innerHTML = '';
+            gameBoard = Array(BOARD_SIZE).fill().map(() => Array(BOARD_SIZE).fill(null));
+
+            // Создаем ячейки поля
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    cell.addEventListener('click', handleCellClick);
+                    boardElement.appendChild(cell);
+                }
+            }
+
+            score = 0;
+            moveCount = 0;
+            gameActive = true;
+            updateScore();
+            document.getElementById('game-over').style.display = 'none';
+
+            findNexBalls();
+            // Добавляем начальные шарики
+            addNewBalls();
+        }
+
+        function findNexBalls() {
+            nextBalls = [];
+            const emptyCells = [];
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    if (gameBoard[row][col] === null) {
+                        emptyCells.push({row, col});
+                    }
+                }
+            }
+
+            if (emptyCells.length < 1) {
+                endGame();
+                return;
+            }
+
+            // Выбираем 3 случайные пустые ячейки
+            for (let i = 0; i < 3; i++) {
+                if (emptyCells.length === 0) break;
+
+                const randomIndex = Math.floor(Math.random() * emptyCells.length);
+                const {row, col} = emptyCells.splice(randomIndex, 1)[0];
+
+                const colorIndex = Math.floor(Math.random() * COLORS.length);
+                nextBalls.push({row, col, colorIndex});
+            }
+        }
+
+        // Добавление новых шариков
+        function addNewBalls() {
+            if (!gameActive) return;
+
+            let emptyCells = 0;
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    if (gameBoard[row][col] === null) {
+                        emptyCells += 1;
+                    }
+                }
+            }
+
+            if (emptyCells < 3) {
+                endGame();
+                return;
+            }
+
+            // Ставим шарики из предыдущего набора
+            for (let i = 0; i < nextBalls.length; i++) {
+                const {row, col, colorIndex} = nextBalls[i];
+
+                if (gameBoard[row][col] === null) {
+                    // Очищаем ячейку от будущих шариков
+                    const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+                    // Очищаем ячейку перед добавлением нового шарика
+                    cell.innerHTML = '';
+
+                    gameBoard[row][col] = colorIndex;
+                    createBall(row, col, colorIndex);
+                }
+            }
+
+            findNexBalls();
+            createNextBall();
+
+            moveCount++;
+            document.getElementById('move-count').textContent = moveCount;
+
+setTimeout(() => {
+            // Проверяем совпадения перед увеличением счетчика ходов
+            if (!checkMatches()) {
+
+                // Проверяем, не заполнено ли все поле
+                if (isBoardFull()) {
+                    endGame();
+                }
+            }
+}, 200);
+        }
+
+        //Отображение на поле шариков из будущего хода
+        function createNextBall() {
+            for (let i = 0; i < nextBalls.length; i++) {
+                const {row, col, colorIndex} = nextBalls[i];
+                const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+                // Очищаем ячейку перед добавлением нового шарика
+                cell.innerHTML = '';
+                const ball = document.createElement('div');
+                ball.className = 'next-ball';
+                ball.style.backgroundColor = COLORS[colorIndex];
+                cell.appendChild(ball);
+            }
+        }
+
+        // Создание шарика
+        function createBall(row, col, colorIndex) {
+            const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+            // Очищаем ячейку перед добавлением нового шарика
+            cell.innerHTML = '';
+            const ball = document.createElement('div');
+            ball.className = 'ball';
+            ball.style.backgroundColor = COLORS[colorIndex];
+            cell.appendChild(ball);
+        }
+
+        // Обработка клика по ячейке
+        function handleCellClick(event) {
+            if (!gameActive) return;
+
+            const row = parseInt(event.currentTarget.dataset.row);
+            const col = parseInt(event.currentTarget.dataset.col);
+
+            // Если ячейка содержит шарик
+            if (gameBoard[row][col] !== null) {
+                // Снимаем выделение с предыдущего шарика
+                if (selectedBall) {
+                    document.querySelector('.selected')?.classList.remove('selected');
+                }
+
+                // Выделяем новый шарик
+                selectedBall = {row, col};
+                event.currentTarget.classList.add('selected');
+            }
+            // Если ячейка пустая и есть выделенный шарик
+            else if (selectedBall) {
+                // Проверяем, можно ли переместить шарик
+                const path = findPath(selectedBall.row, selectedBall.col, row, col);
+                if (path) {
+                    moveBall(selectedBall.row, selectedBall.col, row, col);
+                    document.querySelector('.selected')?.classList.remove('selected');
+                    selectedBall = null;
+                }
+            }
+        }
+
+        // Поиск пути перемещения (возвращает путь или null)
+        function findPath(fromRow, fromCol, toRow, toCol) {
+            // Используем алгоритм поиска в ширину для нахождения пути
+            const queue = [{row: fromRow, col: fromCol, path: []}];
+            const visited = new Set();
+            visited.add(`${fromRow},${fromCol}`);
+
+            const directions = [
+                {dr: -1, dc: 0}, // вверх
+                {dr: 1, dc: 0},  // вниз
+                {dr: 0, dc: -1}, // влево
+                {dr: 0, dc: 1}   // вправо
+            ];
+
+            while (queue.length > 0) {
+                const current = queue.shift();
+
+                if (current.row === toRow && current.col === toCol) {
+                    return current.path; // Возвращаем весь путь
+                }
+
+                for (const dir of directions) {
+                    const newRow = current.row + dir.dr;
+                    const newCol = current.col + dir.dc;
+                    const key = `${newRow},${newCol}`;
+
+                    if (newRow >= 0 && newRow < BOARD_SIZE &&
+                        newCol >= 0 && newCol < BOARD_SIZE &&
+                        !visited.has(key) &&
+                        (gameBoard[newRow][newCol] === null ||
+                        (newRow === fromRow && newCol === fromCol))) {
+
+                        visited.add(key);
+                        queue.push({
+                            row: newRow,
+                            col: newCol,
+                            path: [...current.path, {row: newRow, col: newCol}] // Сохраняем путь
+                        });
+                    }
+                }
+            }
+
+            return null; // Путь не найден
+        }
+
+        // Проверка возможности перемещения (обертка для совместимости)
+        function isValidMove(fromRow, fromCol, toRow, toCol) {
+            return findPath(fromRow, fromCol, toRow, toCol) !== null;
+        }
+
+        // Перемещение шарика по пути
+        function moveBall(fromRow, fromCol, toRow, toCol) {
+            const path = findPath(fromRow, fromCol, toRow, toCol);
+            if (!path) return;
+
+            const colorIndex = gameBoard[fromRow][fromCol];
+            gameBoard[fromRow][fromCol] = null;
+
+            // Получаем элементы DOM
+            const fromCell = document.querySelector(`.cell[data-row="${fromRow}"][data-col="${fromCol}"]`);
+            const ball = fromCell.querySelector('.ball');
+
+            // Создаем клон шарика для анимации
+            const movingBall = ball.cloneNode(true);
+            movingBall.classList.add('ball-moving');
+
+            // Позиционируем шарик для анимации
+            const boardRect = document.getElementById('game-board').getBoundingClientRect();
+
+            movingBall.style.position = 'absolute';
+            movingBall.style.width = `${ball.offsetWidth}px`;
+            movingBall.style.height = `${ball.offsetHeight}px`;
+
+            document.getElementById('game-board').appendChild(movingBall);
+
+            // Скрываем оригинальный шарик
+            ball.style.visibility = 'hidden';
+
+            // Функция для анимации перемещения по точкам пути
+            function animateAlongPath(pathPoints, currentIndex = 0) {
+                if (currentIndex >= pathPoints.length) {
+                    // Анимация завершена
+                    completeMove();
+                    return;
+                }
+
+                const point = pathPoints[currentIndex];
+                const cell = document.querySelector(`.cell[data-row="${point.row}"][data-col="${point.col}"]`);
+                const cellRect = cell.getBoundingClientRect();
+
+                // Плавное перемещение к следующей точке
+                movingBall.style.left = `${cellRect.left - boardRect.left}px`;
+                movingBall.style.top = `${cellRect.top - boardRect.top}px`;
+
+                // Рекурсивно вызываем для следующей точки с задержкой
+                setTimeout(() => {
+                    animateAlongPath(pathPoints, currentIndex + 1);
+                }, 50); // Задержка между перемещениями к следующим точкам
+            }
+
+            // Функция завершения перемещения
+            function completeMove() {
+                // Устанавливаем шарик в целевую ячейку
+                gameBoard[toRow][toCol] = colorIndex;
+
+                // Удаляем анимированный шарик
+                document.getElementById('game-board').removeChild(movingBall);
+
+                // Удаляем оригинальный шарик
+                fromCell.removeChild(ball);
+
+                // Создаем шарик в новой ячейке
+                createBall(toRow, toCol, colorIndex);
+
+                addNewBalls();
+            }
+
+            // Начинаем анимацию с начальной позиции
+            const fullPath = [{row: fromRow, col: fromCol}, ...path];
+            animateAlongPath(fullPath);
+        }
+
+        // Проверка совпадений (3+ шариков одного цвета)
+        function checkMatches() {
+            const matches = [];
+
+            // Проверка по горизонтали
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE - 2; col++) {
+                    if (gameBoard[row][col] !== null &&
+                        gameBoard[row][col] === gameBoard[row][col + 1] &&
+                        gameBoard[row][col] === gameBoard[row][col + 2]) {
+
+                        let length = 3;
+                        while (col + length < BOARD_SIZE &&
+                               gameBoard[row][col + length] === gameBoard[row][col]) {
+                            length++;
+                        }
+
+                        for (let i = 0; i < length; i++) {
+                            matches.push({row, col: col + i});
+                        }
+                    }
+                }
+            }
+
+            // Проверка по вертикали
+            for (let col = 0; col < BOARD_SIZE; col++) {
+                for (let row = 0; row < BOARD_SIZE - 2; row++) {
+                    if (gameBoard[row][col] !== null &&
+                        gameBoard[row][col] === gameBoard[row + 1][col] &&
+                        gameBoard[row][col] === gameBoard[row + 2][col]) {
+
+                        let length = 3;
+                        while (row + length < BOARD_SIZE &&
+                               gameBoard[row + length][col] === gameBoard[row][col]) {
+                            length++;
+                        }
+
+                        for (let i = 0; i < length; i++) {
+                            matches.push({row: row + i, col});
+                        }
+                    }
+                }
+            }
+
+            // Проверка по диагонали (сверху-слева направо-вниз)
+            for (let row = 0; row < BOARD_SIZE - 2; row++) {
+                for (let col = 0; col < BOARD_SIZE - 2; col++) {
+                    if (gameBoard[row][col] !== null &&
+                        gameBoard[row][col] === gameBoard[row + 1][col + 1] &&
+                        gameBoard[row][col] === gameBoard[row + 2][col + 2]) {
+
+                        let length = 3;
+                        while (row + length < BOARD_SIZE &&
+                            col + length < BOARD_SIZE &&
+                            gameBoard[row + length][col + length] === gameBoard[row][col]) {
+                            length++;
+                        }
+
+                        for (let i = 0; i < length; i++) {
+                            matches.push({row: row + i, col: col + i});
+                        }
+                    }
+                }
+            }
+
+            // Проверка по диагонали (сверху-справа налево-вниз)
+            for (let row = 0; row < BOARD_SIZE - 2; row++) {
+                for (let col = 2; col < BOARD_SIZE; col++) {
+                    if (gameBoard[row][col] !== null &&
+                        gameBoard[row][col] === gameBoard[row + 1][col - 1] &&
+                        gameBoard[row][col] === gameBoard[row + 2][col - 2]) {
+
+                        let length = 3;
+                        while (row + length < BOARD_SIZE &&
+                            col - length >= 0 &&
+                            gameBoard[row + length][col - length] === gameBoard[row][col]) {
+                            length++;
+                        }
+
+                        for (let i = 0; i < length; i++) {
+                            matches.push({row: row + i, col: col - i});
+                        }
+                    }
+                }
+            }
+
+            // Удаляем дубликаты
+            const uniqueMatches = matches.filter((match, index, self) =>
+                index === self.findIndex(m => m.row === match.row && m.col === match.col)
+            );
+
+            // Удаляем совпадающие шарики
+            if (uniqueMatches.length > 0) {
+                uniqueMatches.forEach(({row, col}) => {
+                    gameBoard[row][col] = null;
+                    const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+                    // Полностью очищаем ячейку
+                    cell.innerHTML = '';
+                });
+
+                // Добавляем очки
+                score += 30 + (uniqueMatches.length - 3) * 20;
+                updateScore();
+
+                return true; // Найдены совпадения
+            }
+
+            return false; // Совпадений не найдено
+        }
+
+        // Проверка, заполнено ли все поле
+        function isBoardFull() {
+            for (let row = 0; row < BOARD_SIZE; row++) {
+                for (let col = 0; col < BOARD_SIZE; col++) {
+                    if (gameBoard[row][col] === null) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Обновление счета
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
+
+        // Конец игры
+        function endGame() {
+            gameActive = false;
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('game-over').style.display = 'block';
+        }
+
+        // Перезапуск игры
+        function restartGame() {
+            initGame();
+        }
+
+        function runGame() {
+            document.getElementById('main-menu').style.display = 'none';
+            document.getElementById('game').style.display = 'block';
+            document.getElementById('menu-button').style.display = 'flex';
+            document.getElementById('menu').style.display = 'none';
+            initGame();
+        }
+
+        function show_hide_menu(){
+            if (document.getElementById('menu').style.display == 'block') {
+                document.getElementById('menu').style.display = 'none';
+            } else {
+                document.getElementById('menu').style.display = 'block';
+            }
+        }
+
+    </script>
+</body>
+</html>
