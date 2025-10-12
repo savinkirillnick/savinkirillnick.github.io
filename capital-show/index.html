@@ -19384,8 +19384,6 @@ p {
             runGame() {
                 // Обнуляем счетчик ходов
                 this.tries = 7;
-                // document.getElementById('tries').innerText = `${this.tries}`;
-                document.getElementById('menu').style.display = 'none';
 
                 document.getElementById('mainMenu').style.display = 'none';
                 document.getElementById('newGameButton').style.display = 'none';
@@ -19517,17 +19515,7 @@ p {
 
         const game = new Game();
 
-        function show_hide_menu(){
-            if (document.getElementById('menu').style.display == 'block') {
-                document.getElementById('menu').style.display = 'none';
-            } else {
-                document.getElementById('menu').style.display = 'block';
-            }
-        }
-
         function runGame() {
-            document.getElementById('menuButton').style.display = 'flex';
-            document.getElementById('menu').style.display = 'none';
             game.runGame();
         }
     </script>
