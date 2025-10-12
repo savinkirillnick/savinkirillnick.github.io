@@ -400,8 +400,8 @@ p {
     </div>
     <div class="menu-button" id="menu-button">
         <div class="controls" id="button" onclick="show_hide_menu(); return false;">⚙️</div>
-        <div class="score">⭐ <span id="score">0</span></div>
-        <div class="moves" id="moves">↔️ <span id="move-count">0</span></div>
+        <div class="score" id="score">⭐ 0</div>
+        <div class="moves" id="moves">↔️ 0</div>
     </div>
     <div class="menu" id="menu">
         <p onclick="runGame(); return false;">New Game</p>
@@ -525,7 +525,7 @@ p {
             createNextBall();
 
             moveCount++;
-            document.getElementById('move-count').textContent = moveCount;
+            document.getElementById('moves').textContent = `↔️ ${moveCount}`;
 
 setTimeout(() => {
             // Проверяем совпадения перед увеличением счетчика ходов
@@ -840,7 +840,7 @@ setTimeout(() => {
 
         // Обновление счета
         function updateScore() {
-            document.getElementById('score').textContent = score;
+            document.getElementById('score').textContent = `⭐ ${score}`;
         }
 
         // Конец игры
