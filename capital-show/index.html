@@ -7,6 +7,19 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <meta name="description" content="Называй буквы и угадывай слово с семи попыток.">
+    <meta name="keywords" content="Поле, чудес, угадай, слово, буквы, javascript">
+    <meta name="author" content="Kirill Savin">
+    <meta property="og:title" content="Угадай слово!" />
+    <meta property="og:description" content="Называй буквы и угадывай слово с семи попыток." />
+    <meta property="og:image" content="https://savinkirillnick.github.io/capital-show/logo.jpg" />
+    <meta property="og:url" content="https://savinkirillnick.github.io/capital-show/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Угадай слово!" />
+    <meta name="twitter:description" content="Называй буквы и угадывай слово с семи попыток." />
+    <meta name="twitter:image" content="https://savinkirillnick.github.io/capital-show/logo.jpg" />
+    <link rel="icon" type="image/png" href="https://savinkirillnick.github.io/capital-show/logo.jpg">
     <title>Угадай слово!</title>
     <style type="text/css">
 body {
@@ -133,7 +146,7 @@ p {
 }
 
 #task {
-    height: 10vw;
+    min-height: 10vw;
     font-size: 5vw;
     padding: 3vw;
 }
@@ -146,6 +159,25 @@ p {
     font-size: 3vw;
 }
 
+.endMenu {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(17, 17, 17, 0.75);
+    font-size: 3vw;
+    width: 70vw;
+    border-radius: 5vw;
+    padding: 3vw 0vw;
+    display: none;
+    color: white;
+}
+.logo {
+    border-radius: 50%;
+    padding: 3vw;
+    width: 33vw;
+    height: 33vw;
+}
 @media (orientation: landscape) {
     .game {
         height: 100vh; /* В ландшафтном режиме квадрат по высоте экрана */
@@ -206,9 +238,20 @@ p {
     }
 
     #task {
-        height: 10vh;
+        min-height: 10vh;
         font-size: 5vh;
         padding: 3vh;
+    }
+    .endMenu {
+        font-size: 3vh;
+        width: 70vh;
+        border-radius: 5vh;
+        padding: 3vh 0vh;
+    }
+    .logo {
+        padding: 3vh;
+        width: 33vh;
+        height: 33vh;
     }
 }
 
@@ -272,11 +315,21 @@ p {
     }
 
     #task {
-        height: 10vw;
+        min-height: 10vw;
         font-size: 5vw;
         padding: 3vw;
     }
-
+    .endMenu {
+        font-size: 3vw;
+        width: 70vw;
+        border-radius: 5vw;
+        padding: 3vw 0vw;
+    }
+    .logo {
+        padding: 3vw;
+        width: 33vw;
+        height: 33vw;
+    }
 }
 
     </style>
@@ -11746,7 +11799,7 @@ p {
   },
   {
     name: 'пилотка',
-    desc: ['Головной убор.', 'головной убор военного или гражданского стиля'],
+    desc: 'Головной убор, головной убор военного или гражданского стиля.',
     synonym: ['шапка', 'головной убор'],
     antonym: []
   },
@@ -11806,7 +11859,7 @@ p {
   },
   {
     name: 'писсуар',
-    desc: ['Мужской туалет.', 'туалетное устройство'],
+    desc: 'Мужской туалет, туалетное устройство.',
     synonym: ['туалет', 'унитаз'],
     antonym: []
   },
@@ -12504,7 +12557,7 @@ p {
   },
   {
     name: 'помадка',
-    desc: ['Конфета из сахара.', 'мягкая сладость'],
+    desc: 'Конфета из сахара, мягкая сладость.',
     synonym: ['сладость', 'конфета'],
     antonym: []
   },
@@ -13423,7 +13476,7 @@ p {
   },
   {
     name: 'пузырек',
-    desc: ['Маленький пузырь.', 'маленький герметичный сосуд'],
+    desc: 'Маленький пузырь, маленький герметичный сосуд.',
     synonym: ['пузырь', 'герметичный контейнер'],
     antonym: []
   },
@@ -13616,7 +13669,7 @@ p {
   },
   {
     name: 'радиола',
-    desc: ['Радио с встроенным усилителем.', 'радиоаппарат'],
+    desc: 'Радио с встроенным усилителем, радиоаппарат.',
     synonym: ['радио', 'музыкальный аппарат'],
     antonym: []
   },
@@ -14012,7 +14065,7 @@ p {
   },
   {
     name: 'ресепшн',
-    desc: ['Стойка регистрации в гостинице.', 'администрация отеля'],
+    desc: 'Стойка регистрации в гостинице, администрация отеля.',
     synonym: ['регистрация', 'приём гостей'],
     antonym: []
   },
@@ -14956,7 +15009,7 @@ p {
   },
   {
     name: 'семафор',
-    desc: ['Железнодорожный сигнальный механизм.', 'сигнализация'],
+    desc: 'Железнодорожный сигнальный механизм.',
     synonym: ['сигнализация', 'сигнальный механизм'],
     antonym: []
   },
@@ -15016,7 +15069,7 @@ p {
   },
   {
     name: 'сервант',
-    desc: ['Шкаф для посуды.', 'кухонная мебель'],
+    desc: 'Шкаф для посуды, кухонная мебель.',
     synonym: ['шкаф', 'кухонная мебель'],
     antonym: []
   },
@@ -15671,7 +15724,7 @@ p {
   },
   {
     name: 'солярий',
-    desc: ['Место для загара.', 'оборудование для загара'],
+    desc: 'Место для загара, оборудование для загара.',
     synonym: ['место для загара', 'загар-кабинет'],
     antonym: []
   },
@@ -15749,7 +15802,7 @@ p {
   },
   {
     name: 'соусник',
-    desc: ['Посуда для соусов.', 'емкость для соусов'],
+    desc: 'Посуда для соусов.',
     synonym: ['посуда', 'емкость'],
     antonym: []
   },
@@ -16134,7 +16187,7 @@ p {
   },
   {
     name: 'строчок',
-    desc: ['Ряд строчек.', 'строчка ткани'],
+    desc: 'Ряд строчек, строчка ткани.',
     synonym: ['строчка', 'шов'],
     antonym: []
   },
@@ -16218,7 +16271,7 @@ p {
   },
   {
     name: 'субтитр',
-    desc: ['Текст внизу экрана.', 'текстовая подпись'],
+    desc: 'Текст внизу экрана, текстовая подпись.',
     synonym: ['текстовая подсказка', 'подпись'],
     antonym: []
   },
@@ -16627,7 +16680,7 @@ p {
   },
   {
     name: 'темечко',
-    desc: ['Мягкое место на голове младенца.', 'место на голове'],
+    desc: 'Мягкое место на голове младенца.',
     synonym: ['мягкое место', 'младенческая анатомия'],
     antonym: []
   },
@@ -16903,7 +16956,7 @@ p {
   },
   {
     name: 'точилка',
-    desc: ['Устройство для заточки карандашей.', 'канцелярский инструмент'],
+    desc: 'Устройство для заточки карандашей, канцелярский инструмент.',
     synonym: ['канцелярский инструмент', 'заточка карандашей'],
     antonym: []
   },
@@ -19384,9 +19437,9 @@ p {
             runGame() {
                 // Обнуляем счетчик ходов
                 this.tries = 7;
-
+                
                 document.getElementById('mainMenu').style.display = 'none';
-                document.getElementById('newGameButton').style.display = 'none';
+                document.getElementById('endMenu').style.display = 'none';
                 document.getElementById('game').style.display = 'block';
 
                 // Размещаем элементы на поле
@@ -19456,14 +19509,16 @@ p {
                             }
                         });
                         if (this.correctGuesses.every((val) => val !== false)) {
-                            status.textContent = "Вы выиграли!";
-			    document.getElementById('newGameButton').style.display = 'block';
+                            const stars = (new Array(this.tries).fill('⭐')).join('');
+                            document.getElementById('win').innerHTML = `${stars}<br><br>Вы выиграли!<br><br>` ;
+			                document.getElementById('endMenu').style.display = 'block';
                         }
                     } else {
                         this.tries--;
                         if (this.tries === 0) {
-                            status.textContent = `Вы проиграли! Правильное слово: ${this.secretWord}`;
-			    document.getElementById('newGameButton').style.display = 'block';
+                            status.textContent = `Правильное слово: ${this.secretWord}`;
+                            document.getElementById('win').innerHTML = '<br>Вы проиграли!<br><br>' ;
+			                document.getElementById('endMenu').style.display = 'block';
                         } else {
                             status.textContent = `Попыток: ${this.tries}`;
                         }
@@ -19476,6 +19531,7 @@ p {
     <div id="myGame" class="fullscreen-game">
         <div id="mainMenu" class="game">
             <div class="congratulation-name">
+                <img src="https://savinkirillnick.github.io/capital-show/logo.jpg" class="logo">
                 <br>
                 Угадай слово!
             </div>
@@ -19486,7 +19542,7 @@ p {
                 Играть
             </div>
             <div class="small">
-                v. 1.1
+                v. 1.2
             </div>
         </div>
 
@@ -19504,9 +19560,12 @@ p {
                 <div id="task">Задание</div>
                 <div id="keyboard-container"></div>
                 <div id="status"></div>
-                <div id="newGameButton" class="congratulation-button" onclick="runGame()">
+            </div>
+        </div>
+        <div class="endMenu" id="endMenu">
+            <div class="congratulation-desc" id="win"></div> 
+            <div id="newGameButton" class="congratulation-button" onclick="runGame()">
                 Новая игра
-                </div>
             </div>
         </div>
     </div>
