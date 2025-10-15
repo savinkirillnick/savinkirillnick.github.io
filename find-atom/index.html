@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Найди пару!</title>
+    <style type="text/css">
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fafafa;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+p {
+    margin: 10px;
+    padding: 0;
+}
+.fullscreen-game {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: black;
+}
+.game {
+    position: relative;
+    background-color: #222;
+    width: 100vmin;
+    height: 100vmin;
+    color: white;
+}
+.container {
+    position: relative;
+    overflow: hidden;
+    display: none;
+    background-color: rgba(51, 51, 51, 0.7);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+#timer-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-color: blue;
+    transition: all linear 0.05s;
+}
+
+canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+.congratulation-button {
+    width: 50%;
+    height: auto;
+    font-size: 3vw;
+    padding: 3vw;
+    border-radius: 3vw;
+    margin: 1vw auto;
+    background-color: blue;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+.menu {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 50%;
+    height: auto;
+    font-size: 3vw;
+    border-radius: 3vw;
+    color: white;
+    transform: translate(-50%, -50%);
+    background-color: rgba(17, 17, 17, 0.9);
+    display: none;
+    padding: 5vw 2vw;
+}
+.score {
+    position: absolute;
+    left: 50%;
+    top: 0%;
+    transform: translate(-50%, 0%);
+    font-size: 3vw;
+    color: white;
+}
+.congratulation-name {
+    width: 100%;
+    height: auto;
+    font-size: 8vw;
+    padding: 2vw;
+    text-align: center;
+}
+.congratulation-desc {
+    width: auto;
+    height: auto;
+    font-size: 5vw;
+    margin: 1vw;
+    padding: 2vw;
+}
+.small {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, -150%);
+    color: #666;
+    font-size: 3vw;
+}
+
+@media (orientation: landscape) {
+.small {
+    font-size: 3vh;
+}
+.congratulation-name {
+    font-size: 8vh;
+    padding: 2vh;
+}
+.congratulation-desc {
+    font-size: 5vh;
+    margin: 1vh;
+    padding: 2vh;
+}
+
+.congratulation-button {
+    font-size: 3vh;
+    padding: 3vh;
+    border-radius: 3vh;
+    margin: 1vh auto;
+}
+.menu {
+    font-size: 3vh;
+    border-radius: 3vh;
+}
+.score {
+    font-size: 3vh;
+}
+
+}
+
+@media (orientation: portrait) {
+.small {
+    font-size: 3vw;
+}
+.congratulation-name {
+    font-size: 8vw;
+    padding: 2vw;
+}
+.congratulation-desc {
+    font-size: 5vw;
+    margin: 1vw;
+    padding: 2vw;
+}
+
+.congratulation-button {
+    font-size: 3vw;
+    padding: 3vw;
+    border-radius: 3vw;
+    margin: 1vw auto;
+}
+.menu {
+    font-size: 3vw;
+    border-radius: 3vw;
+}
+.score {
+    font-size: 3vw;
+}
+}
+
+
+    </style>
+</head>
+<body>
+<div id="myGame" class="fullscreen-game">
+    <div id="mainMenu" class="game">
+        <div class="congratulation-name">
+            
+            <br>
+            Найди парный элемент!
+        </div>
+        <div class="congratulation-desc">
+            Найди пары элементов за отведенное время.
+        </div>
+        <div id="run_button" class="congratulation-button" onclick="runGame()">
+            Играть
+        </div>
+        <div class="small">
+            v. 1.1
+        </div>
+    </div>
+    <div class="container" id="game-container">
+        <div id="timer-bar"></div>
+        <canvas id="gameCanvas"></canvas>
+        <div class="score" id="score">
+        0
+        </div>
+    </div>
+    <div class="menu" id="newGameButton">
+        <div id="finalScores"></div>
+            <div class="congratulation-button" onclick="runGame(); return false;">
+                Новая игра
+            </div>
+    </div>
+</div>
+<script type="text/javascript">
+// Список всех возможных символов
+// const symbolsList = '0123456789WERTYUPASDFGHJKLZXCVBNM$БГДЖИЛПФЦЧШЩЪЭЮЯ'.split('');
+const symbolsList = [
+'H', 'He', 'O', 'Zn', 'Mo', 'Ge', 'Te', 'W', 'Ir', 'Ni', 'N', 'Si', 'C', 'B', 'Se', 'S', 'Fe', 'Pt',
+'Sn', 'Cd', 'Pb', 'Kr', 'Xe', 'Ar', 'Zr', 'U', 'F', 'P', 'Cu', 'Ga', 'Au', 'Pu'
+];
+
+let scores = 0;
+let canvas = document.getElementById('gameCanvas');
+let ctx = canvas.getContext('2d');
+
+let timerBar = document.getElementById('timer-bar');
+
+// Начальное состояние игры
+let gameState = {
+    currentSymbols: [],
+    timeFull: 10,
+    timeLeft: 10,
+    gameOver: false,
+};
+
+const sizes = { w: window.innerWidth, h: window.innerHeight };
+let fieldSize = 0;
+
+if (sizes.w > sizes.h) {
+  fieldSize = sizes.h;
+} else {
+  fieldSize = sizes.w;
+}
+
+// Размер поля
+document.getElementById('gameCanvas').width = fieldSize;
+document.getElementById('gameCanvas').height = fieldSize;
+
+// Радиус окружности
+const circleRadius = Math.min(fieldSize * 0.8 / 2, fieldSize * 0.8 / 2);
+
+// Генерация случайных координат в пределах круга
+function randomPointInCircle() {
+    let angle = Math.random() * 2 * Math.PI;
+    let radius = Math.sqrt(Math.random()) * circleRadius;
+    return {
+        x: fieldSize / 2 + radius * Math.cos(angle),
+        y: fieldSize / 2 + radius * Math.sin(angle)
+    };
+}
+
+// Добавляем новую порцию символов
+function addNewSymbols(count = 5) {
+    const newSymbols = [];
+    if (gameState.currentSymbols.length > 35) {
+count = 1;
+}
+    for (let i = 0; i < count; i++) {
+        // Генерируем новый случайный символ
+        let symbol = symbolsList[Math.floor(Math.random() * symbolsList.length)];
+
+        if (!newSymbols.includes(symbol)) {
+            newSymbols.push(symbol);
+        }
+    }
+
+
+    // Выбираем один символ для дублирования
+    const duplicatedSymbol = newSymbols[Math.floor(Math.random() * newSymbols.length)];
+    newSymbols.push(duplicatedSymbol); // Дублируем символ
+
+    // Перемешиваем массив
+    shuffleArray(newSymbols);
+
+    // Назначаем координаты каждому символу
+    newSymbols.forEach((symbol) => {
+        const pos = randomPointInCircle();
+        gameState.currentSymbols.push({ text: symbol, x: pos.x, y: pos.y });
+    });
+}
+
+// Перемешаем массив случайным образом
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Обработчик кликов мыши
+canvas.addEventListener('click', function(event) {
+    if (gameState.gameOver || !gameState.currentSymbols.length) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    for (let i = 0; i < gameState.currentSymbols.length; i++) {
+        const symbol = gameState.currentSymbols[i];
+        const dist = Math.hypot(x - symbol.x, y - symbol.y);
+
+        if (dist <= fieldSize * 0.1) { // Проверяем попадание по области вокруг символа
+            const clickedSymbol = symbol.text;
+
+            // Убедимся, что именно этот символ встречается дважды
+            const filteredSymbols = gameState.currentSymbols.filter(s => s.text === clickedSymbol);
+
+            if (filteredSymbols.length >= 2) {
+                clearInterval(timerInterval);
+
+                // Удаляем все экземпляры выбранного символа
+                gameState.currentSymbols = gameState.currentSymbols.filter(s => s.text !== clickedSymbol);
+
+            		scores += 10 + (filteredSymbols.length - 1) * 10;
+            		document.getElementById('score').innerHTML = `${scores}`;
+
+                // Добавляем новые символы
+                addNewSymbols(filteredSymbols.length);
+                gameState.timeFull = Math.max(gameState.timeFull * 0.97, 3);
+                startTimer(gameState.timeFull); // Уменьшаем оставшееся время на 1% но не менее 3 сек
+                break;
+            } else {
+                startTimer(gameState.timeLeft - 1);
+            }
+
+        }
+    }
+});
+
+// Функция для расчета вектора нормали
+function normalizeVector(dx, dy) {
+    const len = Math.sqrt(dx * dx + dy * dy);
+    return { x: dx / len, y: dy / len };
+}
+
+// Корректировка положения символов
+function correct(symbols) {
+    // Динамическое вычисление минимальной дистанции
+    const numSymbols = symbols.length;
+    const MIN_DISTANCE_BETWEEN_SYMBOLS = fieldSize * 0.3 - Math.max(numSymbols - 5, 0) * fieldSize * 0.01;
+
+    for (let i = 0; i < symbols.length; i++) {
+        for (let j = i + 1; j < symbols.length; j++) {
+            const symA = symbols[i];
+            const symB = symbols[j];
+
+            // Расстояние между двумя символами
+            const dx = symB.x - symA.x;
+            const dy = symB.y - symA.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // Если символы пересекаются или находятся слишком близко
+            if (distance < MIN_DISTANCE_BETWEEN_SYMBOLS) {
+                // Рассчитываем вектор смещения
+                const normal = normalizeVector(dx, dy);
+
+                // Смещаем символы в разные стороны
+                symA.x -= normal.x * fieldSize * 0.01 / 60;
+                symA.y -= normal.y * fieldSize * 0.01 / 60;
+                symB.x += normal.x * fieldSize * 0.01 / 60;
+                symB.y += normal.y * fieldSize * 0.01 / 60;
+            }
+        }
+    }
+
+    // Проверка выхода за пределы круга
+    symbols.forEach(sym => {
+        const cx = fieldSize / 2;
+        const cy = fieldSize / 2;
+        const r = circleRadius;
+
+        // Если символ выходит за пределы круга
+        if ((sym.x - cx)**2 + (sym.y - cy)**2 > r*r) {
+            // Возвращаем символ обратно внутрь круга
+            const d = Math.sqrt((sym.x - cx)**2 + (sym.y - cy)**2);
+            sym.x = cx + (r/d)*(sym.x-cx);
+            sym.y = cy + (r/d)*(sym.y-cy);
+        }
+    });
+
+    return symbols;
+}
+
+// Отрисовка текущего состояния игры
+function draw() {
+    ctx.clearRect(0, 0, fieldSize, fieldSize);
+
+    // Контроль наложения и коррекция координат
+    gameState.currentSymbols = correct(gameState.currentSymbols);
+
+    // Показываем символы
+    gameState.currentSymbols.forEach((symbol) => {
+        ctx.font = `${calculateFontSize()}px Arial`;
+        ctx.fillStyle = '#0bf';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(symbol.text, symbol.x, symbol.y);
+    });
+
+    requestAnimationFrame(draw);
+}
+
+// Расчёт размера шрифта в зависимости от количества символов
+function calculateFontSize() {
+    return Math.max(fieldSize * 0.06, fieldSize * 0.15 - (4*gameState.currentSymbols.length)); // Уменьшается плавно от 10vw до 3vw
+}
+
+// Запуск таймера
+let timerInterval;
+function startTimer(time) {
+    gameState.timeLeft = time;
+    //timerBar.style.width = `100%`;
+    timerInterval = setInterval(() => {
+        gameState.timeLeft -= 0.1;
+        timerBar.style.width = `${gameState.timeLeft/gameState.timeFull * 100}%`;
+
+        if (gameState.timeLeft <= 0) {
+            clearInterval(timerInterval);
+            endGame();
+        }
+    }, 100);
+}
+
+// Завершение игры
+function endGame() {
+    gameState.gameOver = true;
+    document.getElementById('finalScores').innerHTML = `<center>Игра окончена!<br>Вы набрали ${scores} очков.</center>`;
+    document.getElementById('newGameButton').style.display = 'block';
+}
+
+function runGame() {
+
+gameState = {
+    currentSymbols: [],
+    timeFull: 10,
+    timeLeft: 10,
+    gameOver: false,
+};
+
+document.getElementById('game-container').style.display = 'block';
+document.getElementById('newGameButton').style.display = 'none';
+document.getElementById('mainMenu').style.display = 'none';
+    // Инициализация игры
+    addNewSymbols(5);
+    startTimer(10);
+    draw();
+}
+</script>
+</body>
+</html>
