@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Memory Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fafafa;
+        }
+        
+        .game-container {
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Кнопка перезагрузки */
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: white;
+            background-color: #ffa500;
+            box-shadow: 0 2px 5px rgba(0,0,0,.2);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr); /* 8 столбцов */
+            gap: 10px;
+        }
+        
+        .card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .card > div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+            backface-visibility: hidden;
+        }
+        
+        .front-face {
+            z-index: 1;
+            background-color: #dfe4ea;
+        }
+        
+        .back-face {
+            z-index: 2;
+            background-color: #bdc3c7;
+            transform: rotateY(-180deg);
+        }
+        
+        .card.flipped .front-face {
+            transform: rotateY(180deg);
+        }
+        
+        .card.flipped .back-face {
+            transform: rotateY(0deg);
+        }
+        
+        .matched-card,
+        .disabled-card {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div class="card-grid"></div>
+</div>
+<script type="text/javascript">
+
+// Массив уникальных элементов (элементы таблицы Менделеева)
+const symbols = ['H', 'He', 'B', 'C', 'N', 'O', 'F', 'Si', 'P', 'S', 'V', 'Cr', 'Fe', 'Cu',
+                 'Ni', 'Zn', 'Ga', 'Ge', 'Zr', 'Mo', 'Cd', 'Sn', 'Te', 'W', 'Os', 'Ir',
+                 'Pt', 'Au', 'Hg', 'U', 'Ar', 'Pu'];
+
+// Генерируем цвета для каждого элемента
+const colors = [];
+for (let i = 0; i < symbols.length; i++) {
+    // Используем случайные HEX-коды цветов
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    colors.push(randomColor);
+}
+
+// Дублируем элементы и перемешиваем массив
+const shuffledCards = [...symbols.map((sym, idx) => ({ symbol: sym, color: colors[idx] })), 
+                       ...symbols.map((sym, idx) => ({ symbol: sym, color: colors[idx] }))]
+                   .sort(() => Math.random() - 0.5);
+
+// Флаги для первой и второй выбранной карты
+let firstCard = null;
+let secondCard = null;
+let firstData = null;
+let secondData = null;
+
+// Переменная состояния блокировки интерфейса
+let gameBlocked = false;
+
+// Проверка совпадения двух открытых карт
+function checkMatch() {
+    const isMatched = firstData.symbol === secondData.symbol;
+
+    gameBlocked = true; // Блокируем интерфейс на время проверки
+
+    setTimeout(() => {
+        if (isMatched) { // Совпадение найдено
+            firstCard.classList.add('matched-card');
+            secondCard.classList.add('matched-card');
+        } else { // Не нашли совпадение
+            firstCard.classList.remove('flipped');
+            secondCard.classList.remove('flipped');
+
+            firstCard.querySelector('.front-face').innerText = '?'; // Возвращаем знак вопроса
+            secondCard.querySelector('.front-face').innerText = '?';
+        }
+
+        resetSelectedCards(); // Сбрасываем выбор
+        gameBlocked = false; // Разблокируем интерфейс после завершения анимации
+    }, 500); // Задержка перед возвратом закрытых карт
+}
+
+// Функция сброса выбора
+function resetSelectedCards() {
+    firstCard = null;
+    secondCard = null;
+    firstData = null;
+    secondData = null;
+}
+
+// Основная функция flipCard
+function flipCard(cardElement, cardData) {
+
+    if (gameBlocked || firstCard === cardElement || cardElement.classList.contains('matched-card')) return;
+
+    cardElement.classList.add('flipped');
+    cardElement.querySelector('.front-face').innerText = '';
+    cardElement.querySelector('.back-face').style.backgroundColor = cardData.color;
+    cardElement.querySelector('.back-face').innerText = cardData.symbol;
+
+    if (!firstCard) {
+        firstCard = cardElement;
+        firstData = cardData;
+    } else {
+        secondCard = cardElement;
+        secondData = cardData;
+        checkMatch();
+    }
+}
+
+// Создаем игровое поле
+const cardGrid = document.querySelector('.card-grid');
+
+for (let i = 0; i < shuffledCards.length; i++) {
+    const cardDiv = document.createElement('div');
+    cardDiv.setAttribute('class', 'card');
+    cardDiv.onclick = function() {
+        flipCard(this, shuffledCards[i]);
+    };
+
+    // Внутренняя разметка карточки
+    const frontFace = document.createElement('div');
+    frontFace.className = 'front-face';
+    frontFace.textContent = '?';
+
+    const backFace = document.createElement('div');
+    backFace.className = 'back-face';
+
+    cardDiv.appendChild(frontFace);
+    cardDiv.appendChild(backFace);
+
+    cardGrid.appendChild(cardDiv);
+}
+
+</script>
+</body>
+</html>
