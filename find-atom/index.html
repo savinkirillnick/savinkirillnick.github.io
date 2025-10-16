@@ -7,6 +7,19 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <meta name="description" content="Найди похожие атомы.">
+    <meta name="keywords" content="поиск, пара, похожие, javascript">
+    <meta name="author" content="Kirill Savin">
+    <meta property="og:title" content="Найди пару!" />
+    <meta property="og:description" content="Найди похожие атомы." />
+    <meta property="og:image" content="https://savinkirillnick.github.io/find-atom/logo.png" />
+    <meta property="og:url" content="https://savinkirillnick.github.io/find-atom/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Найди пару!" />
+    <meta name="twitter:description" content="Найди похожие атомы." />
+    <meta name="twitter:image" content="https://savinkirillnick.github.io/find-atom/logo.png" />
+    <link rel="icon" type="image/png" href="https://savinkirillnick.github.io/find-atom/logo.png">
     <title>Найди пару!</title>
     <style type="text/css">
 * {
@@ -16,7 +29,7 @@
 }
 
 body {
-    background-color: #fafafa;
+    background-color: #000;
     display: flex;
     margin: 0;
     padding: 0;
@@ -133,74 +146,92 @@ canvas {
     color: #666;
     font-size: 3vw;
 }
-
+.logo {
+    border-radius: 50%;
+    padding: 3vw;
+    width: 33vw;
+    height: 33vw;
+}
 @media (orientation: landscape) {
-.small {
-    font-size: 3vh;
-}
-.congratulation-name {
-    font-size: 8vh;
-    padding: 2vh;
-}
-.congratulation-desc {
-    font-size: 5vh;
-    margin: 1vh;
-    padding: 2vh;
-}
+    .fullscreen-game {
+        flex-direction: column;
+    }
+    .small {
+        font-size: 3vh;
+    }
+    .congratulation-name {
+        font-size: 8vh;
+        padding: 2vh;
+    }
+    .congratulation-desc {
+        font-size: 5vh;
+        margin: 1vh;
+        padding: 2vh;
+    }
 
-.congratulation-button {
-    font-size: 3vh;
-    padding: 3vh;
-    border-radius: 3vh;
-    margin: 1vh auto;
-}
-.menu {
-    font-size: 3vh;
-    border-radius: 3vh;
-}
-.score {
-    font-size: 3vh;
-}
-
+    .congratulation-button {
+        font-size: 3vh;
+        padding: 3vh;
+        border-radius: 3vh;
+        margin: 1vh auto;
+    }
+    .menu {
+        font-size: 3vh;
+        border-radius: 3vh;
+    }
+    .score {
+        font-size: 3vh;
+    }
+    .logo {
+        padding: 3vh;
+        width: 33vh;
+        height: 33vh;
+    }
 }
 
 @media (orientation: portrait) {
-.small {
-    font-size: 3vw;
-}
-.congratulation-name {
-    font-size: 8vw;
-    padding: 2vw;
-}
-.congratulation-desc {
-    font-size: 5vw;
-    margin: 1vw;
-    padding: 2vw;
-}
+    .fullscreen-game {
+        flex-direction: row;
+    }
+    .small {
+        font-size: 3vw;
+    }
+    .congratulation-name {
+        font-size: 8vw;
+        padding: 2vw;
+    }
+    .congratulation-desc {
+        font-size: 5vw;
+        margin: 1vw;
+        padding: 2vw;
+    }
 
-.congratulation-button {
-    font-size: 3vw;
-    padding: 3vw;
-    border-radius: 3vw;
-    margin: 1vw auto;
+    .congratulation-button {
+        font-size: 3vw;
+        padding: 3vw;
+        border-radius: 3vw;
+        margin: 1vw auto;
+    }
+    .menu {
+        font-size: 3vw;
+        border-radius: 3vw;
+    }
+    .score {
+        font-size: 3vw;
+    }
+    .logo {
+        padding: 3vw;
+        width: 33vw;
+        height: 33vw;
+    }
 }
-.menu {
-    font-size: 3vw;
-    border-radius: 3vw;
-}
-.score {
-    font-size: 3vw;
-}
-}
-
-
     </style>
 </head>
 <body>
 <div id="myGame" class="fullscreen-game">
     <div id="mainMenu" class="game">
         <div class="congratulation-name">
-            
+            <img src="https://savinkirillnick.github.io/find-atom/logo.png" class="logo">
             <br>
             Найди парный элемент!
         </div>
@@ -280,8 +311,8 @@ function randomPointInCircle() {
 function addNewSymbols(count = 5) {
     const newSymbols = [];
     if (gameState.currentSymbols.length > 35) {
-count = 1;
-}
+        count = 1;
+    }
     for (let i = 0; i < count; i++) {
         // Генерируем новый случайный символ
         let symbol = symbolsList[Math.floor(Math.random() * symbolsList.length)];
@@ -291,27 +322,21 @@ count = 1;
         }
     }
 
-
-    // Выбираем один символ для дублирования
-    const duplicatedSymbol = newSymbols[Math.floor(Math.random() * newSymbols.length)];
-    newSymbols.push(duplicatedSymbol); // Дублируем символ
-
-    // Перемешиваем массив
-    shuffleArray(newSymbols);
+    if (gameState.currentSymbols.length > 1) {
+        // Выбираем один символ для дублирования
+        const duplicatedSymbol = gameState.currentSymbols[Math.floor(Math.random() * gameState.currentSymbols.length)].text;
+        newSymbols.push(duplicatedSymbol); // Дублируем символ
+    } else {
+        // Выбираем один символ для дублирования
+        const duplicatedSymbol = newSymbols[Math.floor(Math.random() * newSymbols.length)];
+        newSymbols.push(duplicatedSymbol); // Дублируем символ
+    }
 
     // Назначаем координаты каждому символу
     newSymbols.forEach((symbol) => {
         const pos = randomPointInCircle();
         gameState.currentSymbols.push({ text: symbol, x: pos.x, y: pos.y });
     });
-}
-
-// Перемешаем массив случайным образом
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
 }
 
 // Обработчик кликов мыши
@@ -338,18 +363,17 @@ canvas.addEventListener('click', function(event) {
                 // Удаляем все экземпляры выбранного символа
                 gameState.currentSymbols = gameState.currentSymbols.filter(s => s.text !== clickedSymbol);
 
-            		scores += 10 + (filteredSymbols.length - 1) * 10;
-            		document.getElementById('score').innerHTML = `${scores}`;
+                scores += 10 + (filteredSymbols.length - 1) * 10;
+                document.getElementById('score').innerHTML = `${scores}`;
 
                 // Добавляем новые символы
                 addNewSymbols(filteredSymbols.length);
-                gameState.timeFull = Math.max(gameState.timeFull * 0.97, 3);
+                gameState.timeFull = Math.max(gameState.timeFull * 0.99, 3);
                 startTimer(gameState.timeFull); // Уменьшаем оставшееся время на 1% но не менее 3 сек
                 break;
             } else {
                 startTimer(gameState.timeLeft - 1);
             }
-
         }
     }
 });
@@ -364,7 +388,7 @@ function normalizeVector(dx, dy) {
 function correct(symbols) {
     // Динамическое вычисление минимальной дистанции
     const numSymbols = symbols.length;
-    const MIN_DISTANCE_BETWEEN_SYMBOLS = fieldSize * 0.3 - Math.max(numSymbols - 5, 0) * fieldSize * 0.01;
+    const MIN_DISTANCE_BETWEEN_SYMBOLS = Math.max(fieldSize * 0.15, fieldSize * 0.3 - Math.max(numSymbols - 5, 0) * fieldSize * 0.01);
 
     for (let i = 0; i < symbols.length; i++) {
         for (let j = i + 1; j < symbols.length; j++) {
@@ -429,17 +453,16 @@ function draw() {
 
 // Расчёт размера шрифта в зависимости от количества символов
 function calculateFontSize() {
-    return Math.max(fieldSize * 0.06, fieldSize * 0.15 - (4*gameState.currentSymbols.length)); // Уменьшается плавно от 10vw до 3vw
+    return Math.max(fieldSize * 0.06, fieldSize * (0.15 - 0.003 * gameState.currentSymbols.length)); // Уменьшается плавно от 10vw до 3vw
 }
 
 // Запуск таймера
 let timerInterval;
 function startTimer(time) {
     gameState.timeLeft = time;
-    //timerBar.style.width = `100%`;
     timerInterval = setInterval(() => {
         gameState.timeLeft -= 0.1;
-        timerBar.style.width = `${gameState.timeLeft/gameState.timeFull * 100}%`;
+        timerBar.style.width = `${gameState.timeLeft / gameState.timeFull * 100}%`;
 
         if (gameState.timeLeft <= 0) {
             clearInterval(timerInterval);
@@ -457,16 +480,17 @@ function endGame() {
 
 function runGame() {
 
-gameState = {
-    currentSymbols: [],
-    timeFull: 10,
-    timeLeft: 10,
-    gameOver: false,
-};
+    scores = 0;
+    gameState = {
+        currentSymbols: [],
+        timeFull: 10,
+        timeLeft: 10,
+        gameOver: false,
+    };
 
-document.getElementById('game-container').style.display = 'block';
-document.getElementById('newGameButton').style.display = 'none';
-document.getElementById('mainMenu').style.display = 'none';
+    document.getElementById('game-container').style.display = 'block';
+    document.getElementById('newGameButton').style.display = 'none';
+    document.getElementById('mainMenu').style.display = 'none';
     // Инициализация игры
     addNewSymbols(5);
     startTimer(10);
