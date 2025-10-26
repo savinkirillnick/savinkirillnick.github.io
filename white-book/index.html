@@ -2,6 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="description" content="Каталог Магических Ритуалов.">
+    <meta name="keywords" content="ритуалы, обряды, магия, белая магия, защита от сглаза, javascript">
+    <meta name="author" content="Kirill Savin">
+    <meta property="og:title" content="Каталог Магических Ритуалов." />
+    <meta property="og:description" content="Сборник магических ритуалов и заговоров на защиту." />
+    <meta property="og:image" content="https://savinkirillnick.github.io/white-book/white-book.jpg" />
+    <meta property="og:url" content="https://savinkirillnick.github.io/white-book/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Каталог Магических Ритуалов." />
+    <meta name="twitter:description" content="Сборник магических ритуалов и заговоров на защиту." />
+    <meta name="twitter:image" content="https://savinkirillnick.github.io/white-book/white-book.jpg" />
+    <link rel="icon" type="image/png" href="https://savinkirillnick.github.io/white-book/white-book.jpg">
     <title>Каталог Магических Ритуалов</title>
     <style>
         body {
@@ -10,43 +28,52 @@
             color: #333;
             text-align: center;
         }
-        
+        p {
+            padding: 10px;
+        }
         .screen {
             display: none;
             position: relative;
+            max-width: 600px;
+            left: 50%;
+            transform: translate(-50%, 0%);
         }
         
         .screen.active {
             display: block;
         }
         
-        .buttons-container button {
-            display: block;
-            margin: 5px auto;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .buttons-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 0 5%;
+        }
+        
+        .button {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 10%;
             cursor: pointer;
-            transition: all 0.3s ease-in-out;
         }
-        
-        .buttons-container button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .thumb {
+            width: 70%;
+            max-width: 220px;
+            padding: 10px;
+            border-radius: 20%;
         }
-        
         .controls button {
             margin: 5px;
-            padding: 10px 20px;
-            /*border-radius: 5px;*/
+            padding: 3vw;
             background: transparent;
             border: 0;
+            font-size: min(20pt, 5vw);
             cursor: pointer;
             transition: all 0.3s ease-in-out;
         }
         
         .controls button:hover {
             transform: scale(1.05);
-            /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
         }
         
         .ritual-info {
@@ -160,7 +187,7 @@ let currentSpellIndex = 0;
 
 // Отображение кнопок категорий вертикально
 document.querySelector('.buttons-container').innerHTML = `
-    ${catalog.map((cat, index) => `<button onclick="selectCategory(${index})">${cat}</button>`).join('')}
+    ${catalog.map((cat, index) => `<div class="button" onclick="selectCategory(${index})"><img src="https://savinkirillnick.github.io/white-book/cat_${index}.jpg" class="thumb"><br><p>${cat}</p></div>`).join('')}
 `;
 
 // Выбор категории
