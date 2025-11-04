@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="description" content="Библия.">
+    <meta name="keywords" content="библия, javascript">
+    <meta name="author" content="Kirill Savin">
+    <meta property="og:title" content="Библия." />
+    <meta property="og:description" content="Библия." />
+    <meta property="og:image" content="https://savinkirillnick.github.io/bible/logo.jpg" />
+    <meta property="og:url" content="https://savinkirillnick.github.io/bible/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Библия." />
+    <meta name="twitter:description" content="Библия." />
+    <meta name="twitter:image" content="https://savinkirillnick.github.io/bible/logo.jpg" />
+    <link rel="icon" type="image/png" href="https://savinkirillnick.github.io/bible/logo.jpg">
+    <title>Библия на русском</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            text-align: center;
+        }
+        p {
+            padding: 5px;
+        }
+        .screen {
+            position: relative;
+            max-width: 600px;
+            left: 50%;
+            transform: translate(-50%, 0%);
+        }
+        .num {
+            font-size: 0.8em;
+            color: #888;
+            white-space: nowrap;
+        }
+        .content {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .controls button {
+            margin: 5px;
+            padding: 3vw;
+            background: transparent;
+            border: 0;
+            font-size: min(20pt, 5vw);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+    <script src="main.js"></script>
+</head>
+<body>
+
+<div class="screen">
+    <div class="controls top-controls">
+        <button onclick="previousChapter()">◀️</button>
+        <button onclick="nextChapter()">▶️</button>
+    </div>
+    <div class="content" id="content">
+
+    </div>
+    <div class="controls bottom-controls">
+        <button onclick="previousChapter()">◀️</button>
+        <button onclick="nextChapter()">▶️</button>
+    </div>
+</div>
+<script type="text/javascript">
+
+// Создаем экземпляр книги
+const bible = new Book();
+
+// Использование с async/await
+async function displayChapter() {
+  try {
+    const text = await bible.showText('syno', 'byt', '1');
+    document.getElementById('content').innerHTML = text;
+    
+    // Получаем информацию о книге
+    const info = bible.getBookInfo();
+    console.log('Информация о книге:', info);
+    
+    // Получаем список глав
+    const chapters = await bible.getChaptersList();
+    console.log('Доступные главы:', chapters);
+    
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+}
+
+// Смена перевода
+async function changeTranslation(newTranslation) {
+  const text = await bible.showText(newTranslation, bible.book, bible.chapter);
+  document.getElementById('content').innerHTML = text;
+}
+
+// Смена книги
+async function changeBook(newBook) {
+  const text = await bible.showText(bible.translate, newBook, '1');
+  document.getElementById('content').innerHTML = text;
+}
+
+// Смена главы
+async function changeChapter(newChapter) {
+  const text = await bible.showText(bible.translate, bible.book, newChapter);
+  document.getElementById('content').innerHTML = text;
+}
+
+function nextChapter() {
+    try {
+        const info = bible.getBookInfo();
+        let chapter = info.chapter;
+        const totalChapters = info.totalChapters;
+
+        chapter++; // Переходим к следующему
+        if (chapter >= totalChapters) {
+            chapter = 0; // Переносимся на начало категории
+        }
+        changeChapter(chapter); // Редерим текущий
+    } catch (error) {
+        console.error('Ошибка:', error);
+    }
+}
+
+function previousChapter() {
+    try {
+        const info = bible.getBookInfo();
+        let chapter = info.chapter;
+        const totalChapters = info.totalChapters;
+
+        chapter--; // Переходим к следующему
+        if (chapter < 0) {
+            chapter = totalChapters - 1; // Переносимся на начало категории
+        }
+        changeChapter(chapter); // Редерим текущий
+    } catch (error) {
+        console.error('Ошибка:', error);
+    }
+}
+
+</script>
+</body>
+</html>
