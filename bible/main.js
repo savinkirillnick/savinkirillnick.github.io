@@ -99,7 +99,7 @@ class Book {
     output += `<h3>Глава ${chapter}</h3>`;
     
     verses.forEach(verse => {
-      output += `<p><span class="num">${verse.num}.</span> ${verse.verse}</p>`;
+      output += `<p><span class="num">${verse.num}</span> ${verse.verse}</p>`;
     });
     
     return output;
@@ -144,4 +144,5 @@ class Book {
       this.currentData = null;
     }
   }
+
 }
