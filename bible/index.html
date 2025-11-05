@@ -90,7 +90,7 @@ const bible = new Book();
 // Использование с async/await
 async function displayChapter() {
   try {
-    const text = await bible.showText('syno', 'byt', '1');
+    const text = await bible.showText('syno', 'byt', 0);
     document.getElementById('content').innerHTML = text;
     
     // Получаем информацию о книге
@@ -124,36 +124,19 @@ async function changeChapter(newChapter) {
   document.getElementById('content').innerHTML = text;
 }
 
-function nextChapter() {
-    try {
-        const info = bible.getBookInfo();
-        let chapter = info.chapter;
-        const totalChapters = info.totalChapters;
-
-        chapter++; // Переходим к следующему
-        if (chapter >= totalChapters) {
-            chapter = 0; // Переносимся на начало категории
-        }
-        changeChapter(chapter); // Редерим текущий
-    } catch (error) {
-        console.error('Ошибка:', error);
-    }
+// Навигация по главам
+async function nextChapter() {
+  const text = await bible.nextChapter();
+  if (text) {
+    document.getElementById('content').innerHTML = text;
+  }
 }
 
-function previousChapter() {
-    try {
-        const info = bible.getBookInfo();
-        let chapter = info.chapter;
-        const totalChapters = info.totalChapters;
-
-        chapter--; // Переходим к следующему
-        if (chapter < 0) {
-            chapter = totalChapters - 1; // Переносимся на начало категории
-        }
-        changeChapter(chapter); // Редерим текущий
-    } catch (error) {
-        console.error('Ошибка:', error);
-    }
+async function previousChapter() {
+  const text = await bible.previousChapter();
+  if (text) {
+    document.getElementById('content').innerHTML = text;
+  }
 }
 
 displayChapter();
