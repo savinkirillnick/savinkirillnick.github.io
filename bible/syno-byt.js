@@ -1,4 +1,4 @@
-const byt = {treat: 'Ветхий завет', title: 'Бытие', chapters: [
+export const byt = {treat: 'Ветхий завет', title: 'Бытие', chapters: [
 
 { chapter: '1', verses: [
 
@@ -1794,3 +1794,4 @@ const byt = {treat: 'Ветхий завет', title: 'Бытие', chapters: [
 {num: 26, verse: 'И умер Иосиф ста десяти лет. И набальзамировали его и положили в ковчег в Египте.'},
 ]},
 ]};
+
