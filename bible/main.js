@@ -2,7 +2,7 @@ class Book {
   constructor() {
     this.translate = 'syno'; // текущий перевод
     this.book = 'byt'; // текущая книга
-    this.chapter = '1'; // текущая глава
+    this.chapterIndex = 0; // текущий индекс главы
     this.loadedBooks = new Map(); // кэш загруженных книг
     this.currentData = null; // текущие данные книги
   }
@@ -26,8 +26,8 @@ class Book {
   }
 
   // Установить главу
-  setChapter(chapter) {
-    this.chapter = chapter;
+  setChapterIndex(chapterIndex) {
+    this.chapterIndex = Math.max(0, chapterIndex);
     return this;
   }
 
@@ -69,9 +69,9 @@ class Book {
   }
 
   // Показать текст главы
-  async showText(translate = this.translate, book = this.book, chapter = this.chapter) {
+  async showText(translate = this.translate, book = this.book, chapterIndex = this.chapterIndex) {
     // Обновляем параметры
-    this.setTranslate(translate).setBook(book).setChapter(chapter);
+    this.setTranslate(translate).setBook(book).setChapterIndex(chapterIndex);
     
     // Загружаем данные если нужно
     if (!this.currentData || 
@@ -79,8 +79,13 @@ class Book {
       await this.loadBookData(translate, book);
     }
 
-    // Находим нужную главу
-    const chapterData = this.currentData.chapters.find(ch => ch.chapter === chapter);
+    // Проверяем валидность индекса
+    if (chapterIndex < 0 || chapterIndex >= this.currentData.chapters.length) {
+      throw new Error(`Глава с индексом ${chapterIndex} не найдена в книге ${book}. Доступно глав: ${this.currentData.chapters.length}`);
+    }
+
+    // Получаем главу по индексу
+    const chapterData = this.currentData.chapters[chapterIndex];
     
     if (!chapterData) {
       throw new Error(`Глава ${chapter} не найдена в книге ${book}`);
@@ -97,21 +102,61 @@ class Book {
     
     let output = `<h2>${treat} - ${title}</h2>`;
     output += `<h3>Глава ${chapter}</h3>`;
-    
+    output += `<p>`;
     verses.forEach(verse => {
-      output += `<p><span class="num">${verse.num}</span> ${verse.verse}</p>`;
+      if (verse.num === 0) {
+        output += `</p><p>`
+      }
+      output += `<span class="num">${verse.num}</span> ${verse.verse}`;
     });
-    
+    output += `</p>`;
     return output;
+  }
+
+  // Получить текущую главу (объект)
+  getCurrentChapter() {
+    if (!this.currentData || !this.currentData.chapters[this.chapterIndex]) {
+      return null;
+    }
+    return this.currentData.chapters[this.chapterIndex];
+  }
+
+  // Получить номер текущей главы
+  getCurrentChapterNumber() {
+    const chapter = this.getCurrentChapter();
+    return chapter ? chapter.chapter : null;
   }
 
   // Получить список доступных глав
   async getChaptersList(translate = this.translate, book = this.book) {
     await this.loadBookData(translate, book);
-    return this.currentData.chapters.map(ch => ({
+    return this.currentData.chapters.map((ch, index) => ({
+      index: index,
       number: ch.chapter,
       title: `Глава ${ch.chapter}`
     }));
+  }
+
+// Перейти к следующей главе
+  async nextChapter() {
+    if (!this.currentData) return null;
+    
+    if (this.chapterIndex < this.currentData.chapters.length - 1) {
+      this.chapterIndex++;
+      return this.showText(this.translate, this.book, this.chapterIndex);
+    }
+    return null;
+  }
+
+  // Перейти к предыдущей главе
+  async previousChapter() {
+    if (!this.currentData) return null;
+    
+    if (this.chapterIndex > 0) {
+      this.chapterIndex--;
+      return this.showText(this.translate, this.book, this.chapterIndex);
+    }
+    return null;
   }
 
   // Получить информацию о текущей книге
@@ -123,7 +168,8 @@ class Book {
       title: this.currentData.title,
       translate: this.translate,
       book: this.book,
-      chapter: this.chapter,
+      chapterIndex: this.chapterIndex,
+      chapterNumber: this.getCurrentChapterNumber(),
       totalChapters: this.currentData.chapters.length
     };
   }
@@ -144,5 +190,4 @@ class Book {
       this.currentData = null;
     }
   }
-
 }
