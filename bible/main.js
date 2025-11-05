@@ -108,7 +108,7 @@ class Book {
         output += `</p><p>`
         output += `${verse.verse}`;
       } else {
-        output += `<span class="num">${verse.num}</span>${verse.verse} `;
+        output += `<span class="num">${verse.num}</span> ${verse.verse} `;
       }
     });
     output += `</p>`;
@@ -193,5 +193,6 @@ class Book {
     }
   }
 }
+
 
 
