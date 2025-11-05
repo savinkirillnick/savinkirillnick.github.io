@@ -106,8 +106,10 @@ class Book {
     verses.forEach(verse => {
       if (verse.num === 0) {
         output += `</p><p>`
+        output += `${verse.verse}`;
+      } else {
+        output += `<span class="num">${verse.num}</span> ${verse.verse}`;
       }
-      output += `<span class="num">${verse.num}</span> ${verse.verse}`;
     });
     output += `</p>`;
     return output;
@@ -191,3 +193,4 @@ class Book {
     }
   }
 }
+
