@@ -79,6 +79,7 @@
         }
         .link {
             color: #06d;
+            cursor: pointer;
         }
         .gray {
             color: #666;
@@ -220,7 +221,6 @@ books: [
 ]},
 ];
 
-// Показать меню книг
 function showBookMenu() {
     document.getElementById('content').style.display = "none";
     document.getElementById('books-menu').style.display = "grid";
@@ -285,6 +285,9 @@ async function changeTranslation(newTranslation) {
 
 // Смена книги
 async function changeBook(newBook) {
+    
+    document.getElementById('content').style.display = "block";
+    document.getElementById('books-menu').style.display = "none";
   const text = await bible.showText(bible.translate, newBook, '1');
   document.getElementById('content').innerHTML = text;
 }
@@ -308,6 +311,10 @@ async function previousChapter() {
   if (text) {
     document.getElementById('content').innerHTML = text;
   }
+}
+
+async function showBookMenu() {
+    
 }
 
 displayChapter();
