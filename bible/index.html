@@ -288,7 +288,7 @@ async function changeBook(newBook) {
     
     document.getElementById('content').style.display = "block";
     document.getElementById('books-menu').style.display = "none";
-  const text = await bible.showText(bible.translate, newBook, '1');
+  const text = await bible.showText(bible.translate, newBook, 0);
   document.getElementById('content').innerHTML = text;
 }
 
