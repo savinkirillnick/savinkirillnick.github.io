@@ -29,7 +29,7 @@
             text-align: center;
         }
         p {
-            text-indent: 15px;
+            text-indent: 30px;
             padding: 0 5px;
             line-height: 1.2;
             margin: 0;
@@ -67,6 +67,22 @@
             cursor: pointer;
             transition: all 0.3s ease-in-out;
         }
+        .menu {
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .menu-item {
+            text-align: left;
+            padding: 5px;
+            margin: 0;
+        }
+        .link {
+            color: #06d;
+        }
+        .gray {
+            color: #666;
+        }
     </style>
     <script src="main.js"></script>
 </head>
@@ -75,17 +91,169 @@
 <div class="screen">
     <div class="controls top-controls">
         <button onclick="previousChapter()">◀️</button>
+        <button onclick="showBookMenu()">📕</button>
+        <button onclick="showChapterMenu()">📃</button>
+        <!-- <button onclick="showTranslateMenu()">⚙️</button> -->
         <button onclick="nextChapter()">▶️</button>
     </div>
-    <div class="content" id="content">
-
-    </div>
+    <div class="content" id="content"></div>
+    <div class="content menu" id="books-menu"></div>
     <div class="controls bottom-controls">
         <button onclick="previousChapter(); window.scrollTo(0, 0);">◀️</button>
+        <button onclick="window.scrollTo(0, 0);">⬆️</button>
         <button onclick="nextChapter(); window.scrollTo(0, 0);">▶️</button>
     </div>
 </div>
 <script type="text/javascript">
+
+//Список книг
+const lib = [
+{ name: 'Ветхий Завет',
+groups: [
+{ name: 'Пятикнижие Моисеево',
+books: [
+{ title: 'Бытие', link: 'byt'},
+{ title: 'Исход', link: 'ish'},
+{ title: 'Левит', link: 'lev'},
+{ title: 'Числа', link: 'chis'},
+{ title: 'Второзаконие', link: 'vtor'},
+]},
+{name: 'Исторические',
+books: [
+{ title: 'Иисуса Навина', link: 'nav'},
+{ title: 'Судей Израилевых', link: 'sud'},
+{ title: 'Руфь', link: 'ruf'},
+{ title: '1-я Царств', link: 'tsar1'},
+{ title: '2-я Царств', link: 'tsar2'},
+{ title: '3-я Царств', link: 'tsar3'},
+{ title: '4-я Царств', link: 'tsar4'},
+{ title: '1-я Паралипоменон', link: 'par1'},
+{ title: '2-я Паралипоменон', link: 'par2'},
+{ title: '1-я Ездры', link: 'ezdr1'},
+{ title: '2-я Ездры', link: 'ezdr2'},
+{ title: 'Неемии', link: 'neem'},
+{ title: 'Товит', link: 'tov'},
+{ title: 'Иудифь', link: 'iudif'},
+{ title: 'Есфирь', link: 'esf'},
+{ title: '1-я Маккавейская', link: 'mak1'},
+{ title: '2-я Маккавейская', link: 'mak2'},
+{ title: '3-я Маккавейская', link: 'mak3'},
+]},
+{name: 'Учительские',
+books: [
+{ title: 'Иова', link: 'iov'},
+{ title: 'Псалтирь', link: 'ps'},
+{ title: 'Притчей Соломоновых', link: 'prit'},
+{ title: 'Екклезиаста', link: 'ekkl'},
+{ title: 'Песни Песней Соломона', link: 'pesn'},
+{ title: 'Премудрости Соломона', link: 'prem'},
+{ title: 'Премудрости Иисуса, сына Сирахова', link: 'sir'},
+]},
+{name: 'Пророческие',
+books: [
+{ title: 'Исаии', link: 'isa'},
+{ title: 'Иеремии', link: 'ier'},
+{ title: 'Плач Иеремии', link: 'plch'},
+{ title: 'Послание Иеремии', link: 'posi'},
+{ title: 'Варуха', link: 'varh'},
+{ title: 'Иезекииля', link: 'iez'},
+{ title: 'Даниила', link: 'dan'},
+{ title: 'Осии', link: 'os'},
+{ title: 'Иоиля', link: 'ioil'},
+{ title: 'Амоса', link: 'am'},
+{ title: 'Авдия', link: 'avd'},
+{ title: 'Ионы', link: 'ion'},
+{ title: 'Михея', link: 'mih'},
+{ title: 'Наума', link: 'naum'},
+{ title: 'Аввакума', link: 'avv'},
+{ title: 'Софонии', link: 'sof'},
+{ title: 'Аггея', link: 'ag'},
+{ title: 'Захари', link: 'zah'},
+{ title: 'Малахии', link: 'mal'},
+{ title: '3-я Ездры', link: 'ezdr3'},
+]},
+]},
+{ name: 'Новый Завет',
+groups: [
+{ name: 'Евангелие',
+books: [
+{ title: 'От Матфея', link: 'mf'},
+{ title: 'От Марка', link: 'mk'},
+{ title: 'От Луки', link: 'lk'},
+{ title: 'От Иоанна', link: 'ion'},
+]},
+{name: 'Деяния',
+books: [
+{ title: 'Деяния святых Апостолов', link: 'dean'},
+]},
+{name: 'Соборные послания',
+books: [
+{ title: 'Иакова', link: 'iak'},
+{ title: '1-е Петра', link: 'pet1'},
+{ title: '2-е Петра', link: 'pet2'},
+{ title: '1-е Иоанна', link: 'ion1'},
+{ title: '2-е Иоанна', link: 'ion2'},
+{ title: '3-е Иоанна', link: 'ion3'},
+{ title: 'Иуды', link: 'iud'},
+]},
+{name: 'Послания св. Апостола Петра',
+books: [
+{ title: 'К римлянам', link: 'rim'},
+{ title: 'К коринфянам 1-е', link: 'kor1'},
+{ title: 'К коринфянам 2-е', link: 'kor2'},
+{ title: 'К галатам', link: 'gal'},
+{ title: 'К ефесянам', link: 'ef'},
+{ title: 'К филиппийцам', link: 'flp'},
+{ title: 'К колоссянам', link: 'kol'},
+{ title: 'К фессалоникийцам 1-е', link: 'fes1'},
+{ title: 'К фессалоникийцам 2-е', link: 'fes2'},
+{ title: 'К Тимофею 1-е', link: 'tim1'},
+{ title: 'К Тимофею 2-е', link: 'tim2'},
+{ title: 'К Титу', link: 'tit'},
+{ title: 'К Филимону', link: 'flm'},
+{ title: 'К евреям', link: 'evr'},
+]},
+{name: 'Пророческая',
+books: [
+{ title: 'Откровение Иоанна Богослова (Апокалипсис)', link: 'otkr'},
+]},
+]},
+];
+
+// Показать меню книг
+function showBookMenu() {
+    document.getElementById('content').style.display = "none";
+    document.getElementById('books-menu').style.display = "grid";
+}
+
+// Генерация меню
+function generateBooksMenu(lib) {
+    let html = '';
+    
+    lib.forEach(section => {
+        html += '<div>';
+        
+        // Заголовок раздела
+        html += `<div class="menu-item"><b>${section.name}</b></div>`;
+        
+        // Группы книг
+        section.groups.forEach(group => {
+            // Название группы
+            html += `<div class="menu-item gray">${group.name}</div>`;
+            
+            // Книги в группе
+            group.books.forEach(book => {
+                html += `<div class="menu-item link" onclick="changeBook('${book.link}')">${book.title}</div>`;
+            });
+        });
+        
+        html += '</div>';
+    });
+    
+    return html;
+}
+
+document.getElementById('books-menu').innerHTML = generateBooksMenu(lib);
 
 // Создаем экземпляр книги
 const bible = new Book();
