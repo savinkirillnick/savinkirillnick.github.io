@@ -135,7 +135,7 @@ class Book {
 
   mark(book, chapter, verse, item) {
     if (item.style.backgroundColor === this.markColor) {
-      item.style.backgroundColor = "none";
+      item.style.backgroundColor = "unset";
       let index = -1;
       try {
         index = this.marks[book][chapter].indexOf(verse);
@@ -263,6 +263,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
