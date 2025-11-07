@@ -136,19 +136,24 @@ class Book {
   mark(book, chapter, verse, item) {
     if (item.style.backgroundColor === "gold") {
       item.style.backgroundColor = "none";
-      const index = this.marks[book][chapter].indexOf(verse);
+      let index !== -1;
+      try {
+        index = this.marks[book][chapter].indexOf(verse);
+      } catch(error) {
+        console.log(error);
+      }
       if (index !== -1) {
         this.marks[book][chapter].splice(index, 1);
       }
     } else {
       item.style.backgroundColor = "yellow";
-        if (!marks) {
+        if (!this.marks) {
           this.marks = {};
         }
-        if (!marks[book]) {
+        if (!this.marks[book]) {
           this.marks[book] = {};
         }
-        if (!marks[book][chapter]) {
+        if (!this.marks[book][chapter]) {
           this.marks[book][chapter] = [];
         }
         this.marks[book][chapter].push(verse);
@@ -258,6 +263,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
