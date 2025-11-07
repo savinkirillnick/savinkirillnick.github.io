@@ -7,6 +7,7 @@ class Book {
     this.loadedBooks = new Map(); // кэш загруженных книг
     this.currentData = null; // текущие данные книги
     this.marks = JSON.parse(this.getCookie(`bible-${this.translate}-${this.book}`)); // Закладки
+    this.color = 'gold';
   }
 
   // Установить перевод
@@ -107,20 +108,19 @@ class Book {
     output += `<p>`;
     let v = 0;
     verses.forEach(verse => {
-      let index = -1;
-      
-      // проверяем, есть ли данный стих в маркировках
-      try {
-         index = this.marks[book][chapter].indexOf(verse);
-      } catch (error) {
-          console.log(error);
-      }
-      let styler = "";
-      let color = 'none';
+        let index = -1;
+
+        // проверяем, есть ли данный стих в маркировках
+        try {
+           index = this.marks[book][chapter].indexOf(verse);
+        } catch (error) {
+            console.log(error);
+        }
+        let styler = "";
       if (index !== -1) {
-        color = 'gold';
-        styler = `style="background-color: ${color};" `;
+        styler = `style="background-color: ${this.markColor};" `;
       }
+
       if (verse.num === 0) {
         output += `</p><p>`
         output += `<span ${styler}onclick="mark(book='${this.book}', chapter=${this.chapterIndex}, verse=${v}, item=this);">${verse.verse}</span> `;
@@ -134,7 +134,7 @@ class Book {
   }
 
   mark(book, chapter, verse, item) {
-    if (item.style.backgroundColor === "gold") {
+    if (item.style.backgroundColor === this.markColor) {
       item.style.backgroundColor = "none";
       let index = -1;
       try {
@@ -146,7 +146,7 @@ class Book {
         this.marks[book][chapter].splice(index, 1);
       }
     } else {
-      item.style.backgroundColor = "yellow";
+      item.style.backgroundColor = this.markColor;
         if (!this.marks) {
           this.marks = {};
         }
@@ -159,7 +159,7 @@ class Book {
         this.marks[book][chapter].push(verse);
     }
     this.setCookie(`bible-${this.translate}-${this.book}`,3650, JSON.stringify(this.marks));
-}
+  }
   
   // Получить текущую главу (объект)
   getCurrentChapter() {
@@ -263,6 +263,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
