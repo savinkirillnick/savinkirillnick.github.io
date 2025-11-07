@@ -119,7 +119,7 @@ class Book {
         output += `</p><p>`
         output += `<span style="background-color: '${color}';" onclick="mark(book='${this.book}', chapter='${this.chapterIndex}', verse='${verse.verse}', id=this);">${verse.verse}</span> `;
       } else {
-        output += `<span style="background-color: '${color}';" onclick="mark(book='${this.book}', chapter='${this.chapterIndex}', verse='${verse.verse}', id=this);"><span class="num">${verse.num}</span>${verse.verse}</span> `;
+        output += `<span style="background-color: '${color}';" onclick="mark(book='${this.book}', chapter='${this.chapterIndex}', verse='${verse.verse}', id=this);"><span class="num">${verse.num}</span> ${verse.verse}</span> `;
       }
     });
     output += `</p>`;
@@ -251,3 +251,4 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
