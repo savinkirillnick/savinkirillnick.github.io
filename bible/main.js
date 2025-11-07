@@ -5,6 +5,7 @@ class Book {
     this.chapterIndex = 0; // текущий индекс главы
     this.loadedBooks = new Map(); // кэш загруженных книг
     this.currentData = null; // текущие данные книги
+    this.marks = JSON.parse(this.getCookie(`bible-${this.translate}-${this.book}`)); // Закладки
   }
 
   // Установить перевод
@@ -104,17 +105,50 @@ class Book {
     output += `<h3>Глава ${chapter}</h3>`;
     output += `<p>`;
     verses.forEach(verse => {
+        let index = -1;
+        try {
+           index = this.marks[book][chapter].indexOf(verse);
+        } catch (error) {
+            console.log(error);
+        }
+        let color = 'none';
+      if (index !== -1) {
+        color = 'yellow';
+      }
       if (verse.num === 0) {
         output += `</p><p>`
-        output += `${verse.verse}`;
+        output += `<span style="background-color: '${color}';" onclick="mark(book='${this.book}', chapter='${this.chapterIndex}', verse='${verse.verse}', id=this);">${verse.verse}</span> `;
       } else {
-        output += `<span class="num">${verse.num}</span> ${verse.verse} `;
+        output += `<span style="background-color: '${color}';" onclick="mark(book='${this.book}', chapter='${this.chapterIndex}', verse='${verse.verse}', id=this);"><span class="num">${verse.num}</span>${verse.verse}</span> `;
       }
     });
     output += `</p>`;
     return output;
   }
 
+  mark(book, chapter, verse, id) {
+    if (id.style.backgroundColor === "yellow") {
+      id.style.backgroundColor = "none";
+      const index = this.marks[book][chapter].indexOf(verse);
+      if (index !== -1) {
+        this.marks[book][chapter].splice(index, 1);
+      }
+    } else {
+      id.style.backgroundColor = "yellow";
+        if (!marks) {
+          this.marks = {};
+        }
+        if (!marks[book]) {
+          this.marks[book] = {};
+        }
+        if (!marks[book][chapter]) {
+          this.marks[book][chapter] = [];
+        }
+        this.marks[book][chapter].push(verse);
+    }
+    this.setCookie(`bible-${this.translate}-${this.book}`,3650, JSON.stringify(this.marks));
+}
+  
   // Получить текущую главу (объект)
   getCurrentChapter() {
     if (!this.currentData || !this.currentData.chapters[this.chapterIndex]) {
@@ -192,7 +226,28 @@ class Book {
       this.currentData = null;
     }
   }
+
+  //Cookie functions
+  setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+  }
+  getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  }
+  eraseCookie(name) {   
+    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  }
 }
-
-
-
