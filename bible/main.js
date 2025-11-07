@@ -158,7 +158,7 @@ class Book {
         }
         this.marks[book][chapter].push(verse);
     }
-    this.setCookie(`bible-${this.translate}-${this.book}`,3650, JSON.stringify(this.marks));
+    this.setCookie(`bible-${this.translate}-${this.book}`, JSON.stringify(this.marks),3653);
   }
   
   // Получить текущую главу (объект)
@@ -263,6 +263,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
