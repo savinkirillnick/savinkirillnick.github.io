@@ -1,5 +1,6 @@
 class Book {
   constructor() {
+    this.mark = this.mark.bind(this);
     this.translate = 'syno'; // текущий перевод
     this.book = 'byt'; // текущая книга
     this.chapterIndex = 0; // текущий индекс главы
@@ -126,15 +127,15 @@ class Book {
     return output;
   }
 
-  mark(book, chapter, verse, id) {
-    if (id.style.backgroundColor === "yellow") {
-      id.style.backgroundColor = "none";
+  mark(book, chapter, verse, item) {
+    if (item.style.backgroundColor === "yellow") {
+      item.style.backgroundColor = "none";
       const index = this.marks[book][chapter].indexOf(verse);
       if (index !== -1) {
         this.marks[book][chapter].splice(index, 1);
       }
     } else {
-      id.style.backgroundColor = "yellow";
+      item.style.backgroundColor = "yellow";
         if (!marks) {
           this.marks = {};
         }
@@ -251,4 +252,5 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
