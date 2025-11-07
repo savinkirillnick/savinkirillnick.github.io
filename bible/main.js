@@ -134,7 +134,7 @@ class Book {
   }
 
   mark(book, chapter, verse, item) {
-    if (item.style.backgroundColor === "yellow") {
+    if (item.style.backgroundColor === "gold") {
       item.style.backgroundColor = "none";
       const index = this.marks[book][chapter].indexOf(verse);
       if (index !== -1) {
@@ -258,6 +258,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
