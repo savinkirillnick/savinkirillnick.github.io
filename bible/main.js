@@ -115,16 +115,17 @@ class Book {
       } catch (error) {
           console.log(error);
       }
-
+      let styler = "";
       let color = 'none';
       if (index !== -1) {
         color = 'gold';
+        styler = `style="background-color: ${color};" `;
       }
       if (verse.num === 0) {
         output += `</p><p>`
-        output += `<span style="background-color: ${color};" onclick="mark(book='${this.book}', chapter=${this.chapterIndex}, verse=${v}, item=this);">${verse.verse}</span> `;
+        output += `<span ${styler}onclick="mark(book='${this.book}', chapter=${this.chapterIndex}, verse=${v}, item=this);">${verse.verse}</span> `;
       } else {
-        output += `<span style="background-color: ${color};" onclick="mark(book='${this.book}', chapter=${this.chapterIndex}, verse=${v}, item=this);"><span class="num">${verse.num}</span> ${verse.verse}</span> `;
+        output += `<span ${styler}onclick="mark(book='${this.book}', chapter=${this.chapterIndex}, verse=${v}, item=this);"><span class="num">${verse.num}</span> ${verse.verse}</span> `;
       }
       v += 1;
     });
@@ -257,6 +258,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
