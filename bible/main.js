@@ -105,23 +105,28 @@ class Book {
     let output = `<h2>${treat} - ${title}</h2>`;
     output += `<h3>Глава ${chapter}</h3>`;
     output += `<p>`;
+    let v = 0;
     verses.forEach(verse => {
-        let index = -1;
-        try {
-           index = this.marks[book][chapter].indexOf(verse);
-        } catch (error) {
-            console.log(error);
-        }
-        let color = 'none';
+      let index = -1;
+      
+      // проверяем, есть ли данный стих в маркировках
+      try {
+         index = this.marks[book][chapter].indexOf(verse);
+      } catch (error) {
+          console.log(error);
+      }
+
+      let color = 'none';
       if (index !== -1) {
         color = 'yellow';
       }
       if (verse.num === 0) {
         output += `</p><p>`
-        output += `<span style="background-color: '${color}';" onclick="mark(book='${this.book}', chapter='${this.chapterIndex}', verse='${verse.verse}', id=this);">${verse.verse}</span> `;
+        output += `<span style="background-color: ${color};" onclick="this.mark(book='${this.book}', chapter=${this.chapterIndex}, verse=${v}, item=this);">${verse.verse}</span> `;
       } else {
-        output += `<span style="background-color: '${color}';" onclick="mark(book='${this.book}', chapter='${this.chapterIndex}', verse='${verse.verse}', id=this);"><span class="num">${verse.num}</span> ${verse.verse}</span> `;
+        output += `<span style="background-color: ${color};" onclick="this.mark(book='${this.book}', chapter=${this.chapterIndex}, verse=${v}, item=this);"><span class="num">${verse.num}</span> ${verse.verse}</span> `;
       }
+      v += 1;
     });
     output += `</p>`;
     return output;
@@ -252,5 +257,6 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
