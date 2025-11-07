@@ -112,7 +112,7 @@ class Book {
 
         // проверяем, есть ли данный стих в маркировках
         try {
-           index = this.marks[book][chapter].indexOf(verse);
+           index = this.marks[this.book][this.chapterIndex].indexOf(verse);
         } catch (error) {
             console.log(error);
         }
@@ -263,6 +263,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
