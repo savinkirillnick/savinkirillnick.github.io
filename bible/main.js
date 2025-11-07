@@ -7,7 +7,7 @@ class Book {
     this.loadedBooks = new Map(); // кэш загруженных книг
     this.currentData = null; // текущие данные книги
     this.marks = JSON.parse(this.getCookie(`bible-${this.translate}-${this.book}`)); // Закладки
-    this.color = 'gold';
+    this.markColor = 'gold';
   }
 
   // Установить перевод
@@ -263,6 +263,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
