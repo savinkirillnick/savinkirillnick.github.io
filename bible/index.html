@@ -312,7 +312,11 @@ async function previousChapter() {
     document.getElementById('content').innerHTML = text;
   }
 }
-    
+
+function mark(book, chapter, verse, item) {
+  bible.mark(book, chapter, verse, item);
+}
+
 displayChapter();
 </script>
 </body>
