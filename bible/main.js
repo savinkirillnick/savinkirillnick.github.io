@@ -118,7 +118,7 @@ class Book {
 
       let color = 'none';
       if (index !== -1) {
-        color = 'yellow';
+        color = 'gold';
       }
       if (verse.num === 0) {
         output += `</p><p>`
@@ -257,6 +257,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
