@@ -17,7 +17,7 @@ class Book {
   // Получаем последнюю просмотренную книгу
   lastSeen() {
     const lastBookData =  JSON.parse(this.getCookie('bible-last-book'));
-    let { translate, book, chapterIndex } = {'syno', 'byt', 0}
+    let { translate, book, chapterIndex } = {'syno', 'byt', 0};
     try {
       { translate, book, chapterIndex } = lastBookData;
     } catch(error) {
@@ -289,6 +289,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
