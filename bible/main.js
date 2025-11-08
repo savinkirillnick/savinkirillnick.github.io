@@ -7,7 +7,7 @@ class Book {
     this.translate = translate; // текущий перевод
     this.book = book; // текущая книга
     this.chapterIndex = chapterIndex; // текущий индекс главы
-    
+    console.log(translate, book, chapterIndex);
     this.loadedBooks = new Map(); // кэш загруженных книг
     this.currentData = null; // текущие данные книги
     this.marks = JSON.parse(this.getCookie(`bible-${this.translate}-${this.book}`)); // Закладки
@@ -19,7 +19,6 @@ class Book {
     let translate = 'syno';
     let book = 'byt';
     let chapterIndex = 0;
-    
     try {
       const lastBookData = JSON.parse(this.getCookie('bible-last-book'));
       if (lastBookData) {
@@ -30,7 +29,6 @@ class Book {
     } catch(error) {
       console.log('Ошибка при чтении последней книги:', error);
     }
-
     return {
       translate: translate,
       book: book,
@@ -296,6 +294,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
