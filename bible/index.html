@@ -74,7 +74,7 @@
         }
         .chapters {
             display: none;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 10px;
             min-height: 50px;
             position: absolute;
@@ -97,6 +97,17 @@
         .gray {
             color: #666;
         }
+        @media (orientation: landscape) {
+            .chapters {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+        @media (orientation: portrait) {
+            .chapters {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
     </style>
     <script src="main.js"></script>
 </head>
