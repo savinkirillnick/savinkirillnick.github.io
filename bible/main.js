@@ -1,15 +1,40 @@
 class Book {
   constructor() {
     this.mark = this.mark.bind(this);
-    this.translate = 'syno'; // текущий перевод
-    this.book = 'byt'; // текущая книга
-    this.chapterIndex = 0; // текущий индекс главы
+    
+    //Загружаем последнюю просмотренную книгу
+    const { translate, book, chapterIndex } = this.lastSeen();
+    this.translate = translate; // текущий перевод
+    this.book = book; // текущая книга
+    this.chapterIndex = chapterIndex; // текущий индекс главы
+    
     this.loadedBooks = new Map(); // кэш загруженных книг
     this.currentData = null; // текущие данные книги
     this.marks = JSON.parse(this.getCookie(`bible-${this.translate}-${this.book}`)); // Закладки
     this.markColor = 'gold';
   }
 
+  // Получаем последнюю просмотренную книгу
+  lastSeen() {
+    const lastBookData =  JSON.parse(this.getCookie('bible-last-book'));
+
+    try {
+        return {
+            translate: lastBookData.translate,
+            book: lastBookData.book,
+            chapterIndex: lastBookData.chapterIndex
+        };
+    } catch(error) {
+        console.log(error);
+    }
+
+    return {
+      translate: 'syno',
+      book: 'byt',
+      chapterIndex: 0
+    };
+  }
+  
   // Установить перевод
   setTranslate(translate) {
     if (this.translate !== translate) {
@@ -73,6 +98,11 @@ class Book {
 
   // Показать текст главы
   async showText(translate = this.translate, book = this.book, chapterIndex = this.chapterIndex) {
+
+    // сохраняем просмотренную книгу в память
+    const data = JSON.stringify({translate: translate, book: book, chapterIndex: chapterIndex});
+    this.setCookie('bible-last-book',data,3653);
+    
     // Обновляем параметры
     this.setTranslate(translate).setBook(book).setChapterIndex(chapterIndex);
     
@@ -239,7 +269,7 @@ class Book {
     }
   }
 
-  //Cookie functions
+  // Работа с Cookie
   setCookie(name,value,days) {
     var expires = "";
     if (days) {
@@ -263,6 +293,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
