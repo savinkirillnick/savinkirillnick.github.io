@@ -72,8 +72,18 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
+        .chapters {
+            display: none;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
         .menu-item {
             text-align: left;
+            padding: 5px;
+            margin: 0;
+        }
+        .chapters-item {
+            text-align: center;
             padding: 5px;
             margin: 0;
         }
@@ -99,6 +109,7 @@
     </div>
     <div class="content" id="content"></div>
     <div class="content menu" id="books-menu"></div>
+    <div class="content chapters" id="chapters-menu"></div>
     <div class="content">
     <center>Библия 2025<br>Если у вас есть вопросы, пишите их в телеграм <a href="https://t.me/savinkirillnick">@savinkirillnick</a></center>
     </div>
@@ -225,8 +236,14 @@ books: [
 ];
 
 function showBookMenu() {
-    document.getElementById('content').style.display = "none";
-    document.getElementById('books-menu').style.display = "grid";
+    document.getElementById('chapters-menu').style.display = "none";
+    if (document.getElementById('content').style.display === "none") {
+        document.getElementById('content').style.display = "block";
+        document.getElementById('books-menu').style.display = "none";
+    } else {
+        document.getElementById('content').style.display = "none";
+        document.getElementById('books-menu').style.display = "grid";
+    }
 }
 
 // Генерация меню
