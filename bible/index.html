@@ -27,7 +27,7 @@
             background-color: #fafafa;
             color: #333;
             text-align: center;
-            font-size: max(12pt, 3vw);
+            font-size: min(12pt, 3vw);
         }
         p {
             text-indent: 30px;
@@ -300,10 +300,10 @@ function generateBooksMenu(lib) {
 
 document.getElementById('books-menu').innerHTML = generateBooksMenu(lib);
 
-async function showChapterMenu() {
+function showChapterMenu() {
     document.getElementById('content').style.display = "block";
     document.getElementById('books-menu').style.display = "none";
-    const chapters = await bible.getChaptersList();
+    const chapters = bible.getChaptersList();
     document.getElementById('chapters-menu').innerHTML = generateChaptersMenu(chapters);
     if (document.getElementById('chapters-menu').style.display === "none") {
         document.getElementById('chapters-menu').style.display = "grid";
