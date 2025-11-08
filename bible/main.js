@@ -135,7 +135,11 @@ class Book {
     const { chapter, verses } = chapterData;
     
     let output = `<span class="gray">${treat}</span><h2>${title}</h2>`;
-    output += `<h3>Глава ${chapter}</h3>`;
+    if (chapter === "0") {
+      output += `<h3>Предисловие</h3>`;
+    } else {
+      output += `<h3>Глава ${chapter}</h3>`;
+    }
     output += `<p>`;
     let v = 0;
     verses.forEach(verse => {
@@ -294,6 +298,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
