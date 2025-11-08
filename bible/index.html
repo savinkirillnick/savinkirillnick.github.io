@@ -110,7 +110,7 @@
                 grid-template-columns: repeat(5, 1fr);
             }
         }
-        @media (width <= 480px) {
+        @media (width <= 540px) {
             p {
                 padding: 0 1vw;
             }
@@ -303,16 +303,20 @@ function generateBooksMenu(lib) {
 
 document.getElementById('books-menu').innerHTML = generateBooksMenu(lib);
 
-function showChapterMenu() {
+async function showChapterMenu() {
+  try {
     document.getElementById('content').style.display = "block";
     document.getElementById('books-menu').style.display = "none";
-    const chapters = bible.getChaptersList();
+    const chapters = await bible.getChaptersList();
     document.getElementById('chapters-menu').innerHTML = generateChaptersMenu(chapters);
     if (document.getElementById('chapters-menu').style.display === "none") {
         document.getElementById('chapters-menu').style.display = "grid";
     } else {
         document.getElementById('chapters-menu').style.display = "none";
     }
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
 }
 
 function generateChaptersMenu(chapters) {
