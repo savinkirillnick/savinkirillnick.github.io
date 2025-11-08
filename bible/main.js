@@ -16,12 +16,19 @@ class Book {
 
   // Получаем последнюю просмотренную книгу
   lastSeen() {
-    const lastBookData =  JSON.parse(this.getCookie('bible-last-book'));
-    let { translate, book, chapterIndex } = {'syno', 'byt', 0};
+    let translate = 'syno';
+    let book = 'byt';
+    let chapterIndex = 0;
+    
     try {
-      { translate, book, chapterIndex } = lastBookData;
+      const lastBookData = JSON.parse(this.getCookie('bible-last-book'));
+      if (lastBookData) {
+        translate = lastBookData.translate || translate;
+        book = lastBookData.book || book;
+        chapterIndex = lastBookData.chapterIndex || chapterIndex;
+      }
     } catch(error) {
-      console.log(error);
+      console.log('Ошибка при чтении последней книги:', error);
     }
 
     return {
@@ -289,6 +296,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
