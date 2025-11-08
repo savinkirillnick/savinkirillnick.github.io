@@ -278,6 +278,27 @@ function generateBooksMenu(lib) {
 
 document.getElementById('books-menu').innerHTML = generateBooksMenu(lib);
 
+
+function showChapterMenu() {
+    document.getElementById('content').style.display = "block";
+    document.getElementById('books-menu').style.display = "none";
+    document.getElementById('chapters-menu').innerHTML = generateChaptersMenu();
+    if (document.getElementById('chapters-menu').style.display === "none") {
+        document.getElementById('chapters-menu').style.display = "grid";
+    } else {
+        document.getElementById('chapters-menu').style.display = "none";
+    }
+}
+
+async function generateChaptersMenu() {
+    let html = '';
+    const chapters = await bible.getChaptersList();
+    chapters.forEach(item => {
+        html += `<div class="chapters-item link" onclick=changeChapter('${item.index}')">${item.number}</div>`;
+    }
+    return html;
+}
+  
 // Создаем экземпляр книги
 const bible = new Book();
 
