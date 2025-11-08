@@ -278,11 +278,11 @@ function generateBooksMenu(lib) {
 
 document.getElementById('books-menu').innerHTML = generateBooksMenu(lib);
 
-
-function showChapterMenu() {
+async function showChapterMenu() {
     document.getElementById('content').style.display = "block";
     document.getElementById('books-menu').style.display = "none";
-    document.getElementById('chapters-menu').innerHTML = generateChaptersMenu();
+    const chapters = await bible.getChaptersList();
+    document.getElementById('chapters-menu').innerHTML = generateChaptersMenu(chapters);
     if (document.getElementById('chapters-menu').style.display === "none") {
         document.getElementById('chapters-menu').style.display = "grid";
     } else {
@@ -290,11 +290,10 @@ function showChapterMenu() {
     }
 }
 
-async function generateChaptersMenu() {
+function generateChaptersMenu(chapters) {
     let html = '';
-    const chapters = await bible.getChaptersList();
     chapters.forEach(item => {
-        html += `<div class="chapters-item link" onclick=changeChapter('${item.index}')">${item.number}</div>`;
+        html += `<div class="chapters-item link" onclick="changeChapter('${item.index}')">${item.number}</div>`;
     });
     return html;
 }
