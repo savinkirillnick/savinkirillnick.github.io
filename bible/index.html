@@ -307,13 +307,14 @@ async function showChapterMenu() {
   try {
     document.getElementById('content').style.display = "block";
     document.getElementById('books-menu').style.display = "none";
-    const chapters = await bible.getChaptersList();
-    document.getElementById('chapters-menu').innerHTML = generateChaptersMenu(chapters);
     if (document.getElementById('chapters-menu').style.display === "none") {
         document.getElementById('chapters-menu').style.display = "grid";
     } else {
         document.getElementById('chapters-menu').style.display = "none";
     }
+    const chapters = await bible.getChaptersList();
+    document.getElementById('chapters-menu').innerHTML = generateChaptersMenu(chapters);
+
   } catch (error) {
     console.error('Ошибка:', error);
   }
@@ -357,7 +358,6 @@ async function changeTranslation(newTranslation) {
 
 // Смена книги
 async function changeBook(newBook) {
-    
     document.getElementById('content').style.display = "block";
     document.getElementById('books-menu').style.display = "none";
   const text = await bible.showText(bible.translate, newBook, 0);
