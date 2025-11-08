@@ -20,9 +20,9 @@ class Book {
 
     try {
         return {
-            translate: lastBookData.translate,
-            book: lastBookData.book,
-            chapterIndex: lastBookData.chapterIndex
+            translate: lastBookData['translate'],
+            book: lastBookData['book'],
+            chapterIndex: lastBookData['chapterIndex']
         };
     } catch(error) {
         console.log(error);
@@ -293,6 +293,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
