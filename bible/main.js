@@ -103,7 +103,7 @@ class Book {
     const { title, treat } = this.currentData;
     const { chapter, verses } = chapterData;
     
-    let output = `<h2>${treat} - ${title}</h2>`;
+    let output = `<span class="gray">${treat}</span><h2>${title}</h2>`;
     output += `<h3>Глава ${chapter}</h3>`;
     output += `<p>`;
     let v = 0;
@@ -263,6 +263,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
