@@ -261,7 +261,7 @@ const bible = new Book();
 // Использование с async/await
 async function displayChapter() {
   try {
-    const text = await bible.showText('syno', 'byt', 0);
+    const text = await bible.showText();
     document.getElementById('content').innerHTML = text;
     
     // Получаем информацию о книге
