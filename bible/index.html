@@ -295,7 +295,7 @@ async function generateChaptersMenu() {
     const chapters = await bible.getChaptersList();
     chapters.forEach(item => {
         html += `<div class="chapters-item link" onclick=changeChapter('${item.index}')">${item.number}</div>`;
-    }
+    });
     return html;
 }
   
