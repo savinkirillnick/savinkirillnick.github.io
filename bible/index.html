@@ -350,6 +350,7 @@ async function changeBook(newBook) {
 
 // Смена главы
 async function changeChapter(newChapter) {
+  document.getElementById('chapters-menu').style.display = "none";
   const text = await bible.showText(bible.translate, bible.book, newChapter);
   document.getElementById('content').innerHTML = text;
 }
