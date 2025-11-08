@@ -17,25 +17,17 @@ class Book {
   // Получаем последнюю просмотренную книгу
   lastSeen() {
     const lastBookData =  JSON.parse(this.getCookie('bible-last-book'));
-    console.log({
-      translate: lastBookData['translate'],
-      book: lastBookData['book'],
-      chapterIndex: lastBookData['chapterIndex']
-    });
+    let { translate, book, chapterIndex } = {'syno', 'byt', 0}
     try {
-        return {
-            translate: lastBookData['translate'],
-            book: lastBookData['book'],
-            chapterIndex: lastBookData['chapterIndex']
-        };
+      { translate, book, chapterIndex } = lastBookData;
     } catch(error) {
-        console.log(error);
+      console.log(error);
     }
 
     return {
-      translate: 'syno',
-      book: 'byt',
-      chapterIndex: 0
+      translate: translate,
+      book: book,
+      chapterIndex: chapterIndex
     };
   }
   
@@ -80,7 +72,7 @@ class Book {
 
     try {
       // Динамически импортируем файл
-      const module = await import(`./${translate}-${book}.js`);
+      const module = await import(`./${cacheKey}.js`);
       
       // Получаем данные из модуля (предполагаем, что экспорт имеет имя книги)
       const bookData = module[book];
@@ -95,7 +87,7 @@ class Book {
       
       return bookData;
     } catch (error) {
-      console.error(`Ошибка загрузки книги ${translate}-${book}:`, error);
+      console.error(`Ошибка загрузки книги ${cacheKey}:`, error);
       throw error;
     }
   }
@@ -297,6 +289,7 @@ class Book {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
+
 
 
 
