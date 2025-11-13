@@ -331,6 +331,7 @@ async function displayChapter() {
     
     // Получаем список глав
     const chapters = await bible.getChaptersList();
+    document.getElementById('chapters-menu').innerHTML = generateChaptersMenu(chapters);
     console.log('Доступные главы:', chapters);
     
   } catch (error) {
