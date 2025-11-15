@@ -60,6 +60,19 @@ class Book {
     return this;
   }
 
+  // Получить индекс главы по ее номеру
+  getChapterIndex(chapterNumber) {
+    let chapterIndex = 0;
+    if (this.currentData) {
+      this.currentData.chapters.forEach((chapter, index) => {
+        if (chapterNumber === chapter.chapter) {
+          chapterIndex = index;
+        }
+      });
+    }
+    return chapterIndex;
+  }
+  
   // Получить ключ для кэша
   getCacheKey(translate, book) {
     return `${translate}-${book}`;
@@ -496,4 +509,5 @@ class Lib {
     };
   }
 }
+
 
