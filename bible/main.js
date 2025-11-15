@@ -301,24 +301,199 @@ class Book {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+class Lib {
+  constructor(){
+    this.lib = [
+      { name: 'Ветхий Завет',
+      groups: [
+      { name: 'Пятикнижие Моисеево',
+      books: [
+      { title: 'Бытие', link: 'byt'},
+      { title: 'Исход', link: 'ish'},
+      { title: 'Левит', link: 'lev'},
+      { title: 'Числа', link: 'chis'},
+      { title: 'Второзаконие', link: 'vtor'},
+      ]},
+      {name: 'Исторические',
+      books: [
+      { title: 'Иисуса Навина', link: 'nav'},
+      { title: 'Судей Израилевых', link: 'sud'},
+      { title: 'Руфь', link: 'ruf'},
+      { title: '1-я Царств', link: 'tsar1'},
+      { title: '2-я Царств', link: 'tsar2'},
+      { title: '3-я Царств', link: 'tsar3'},
+      { title: '4-я Царств', link: 'tsar4'},
+      { title: '1-я Паралипо&shy;менон', link: 'par1'},
+      { title: '2-я Паралипо&shy;менон', link: 'par2'},
+      { title: '1-я Ездры', link: 'ezdr1'},
+      { title: '2-я Ездры', link: 'ezdr2'},
+      { title: 'Неемии', link: 'neem'},
+      { title: 'Товит', link: 'tov'},
+      { title: 'Иудифь', link: 'iudif'},
+      { title: 'Есфирь', link: 'esf'},
+      { title: '1-я Макка&shy;вей&shy;ская', link: 'mak1'},
+      { title: '2-я Макка&shy;вей&shy;ская', link: 'mak2'},
+      { title: '3-я Макка&shy;вей&shy;ская', link: 'mak3'},
+      ]},
+      {name: 'Учительские',
+      books: [
+      { title: 'Иова', link: 'iov'},
+      { title: 'Псалтирь', link: 'ps'},
+      { title: 'Притчей Соломоновых', link: 'prit'},
+      { title: 'Екклезиаста', link: 'ekkl'},
+      { title: 'Песни Песней Соломона', link: 'pesn'},
+      { title: 'Премудрости Соломона', link: 'prem'},
+      { title: 'Премудрости Иисуса, сына Сирахова', link: 'sir'},
+      ]},
+      {name: 'Пророческие',
+      books: [
+      { title: 'Исаии', link: 'isa'},
+      { title: 'Иеремии', link: 'ier'},
+      { title: 'Плач Иеремии', link: 'plch'},
+      { title: 'Послание Иеремии', link: 'posi'},
+      { title: 'Варуха', link: 'varh'},
+      { title: 'Иезекииля', link: 'iez'},
+      { title: 'Даниила', link: 'dan'},
+      { title: 'Осии', link: 'os'},
+      { title: 'Иоиля', link: 'ioil'},
+      { title: 'Амоса', link: 'am'},
+      { title: 'Авдия', link: 'avd'},
+      { title: 'Ионы', link: 'io'},
+      { title: 'Михея', link: 'mih'},
+      { title: 'Наума', link: 'naum'},
+      { title: 'Аввакума', link: 'avv'},
+      { title: 'Софонии', link: 'sof'},
+      { title: 'Аггея', link: 'ag'},
+      { title: 'Захари', link: 'zah'},
+      { title: 'Малахии', link: 'mal'},
+      { title: '3-я Ездры', link: 'ezdr3'},
+      ]},
+      ]},
+      { name: 'Новый Завет',
+      groups: [
+      { name: 'Евангелие',
+      books: [
+      { title: 'От Матфея', link: 'mf'},
+      { title: 'От Марка', link: 'mk'},
+      { title: 'От Луки', link: 'lk'},
+      { title: 'От Иоанна', link: 'ion'},
+      ]},
+      {name: 'Деяния',
+      books: [
+      { title: 'Деяния святых Апостолов', link: 'dean'},
+      ]},
+      {name: 'Соборные послания',
+      books: [
+      { title: 'Иакова', link: 'iak'},
+      { title: '1-е Петра', link: 'pet1'},
+      { title: '2-е Петра', link: 'pet2'},
+      { title: '1-е Иоанна', link: 'ion1'},
+      { title: '2-е Иоанна', link: 'ion2'},
+      { title: '3-е Иоанна', link: 'ion3'},
+      { title: 'Иуды', link: 'iud'},
+      ]},
+      {name: 'Послания св. Апостола Петра',
+      books: [
+      { title: 'К римлянам', link: 'rim'},
+      { title: 'К коринфянам 1-е', link: 'kor1'},
+      { title: 'К коринфянам 2-е', link: 'kor2'},
+      { title: 'К галатам', link: 'gal'},
+      { title: 'К ефесянам', link: 'ef'},
+      { title: 'К филиппий&shy;цам', link: 'flp'},
+      { title: 'К колоссянам', link: 'kol'},
+      { title: 'К фессало&shy;ни&shy;кий&shy;цам 1-е', link: 'fes1'},
+      { title: 'К фессало&shy;ни&shy;кий&shy;цам 2-е', link: 'fes2'},
+      { title: 'К Тимофею 1-е', link: 'tim1'},
+      { title: 'К Тимофею 2-е', link: 'tim2'},
+      { title: 'К Титу', link: 'tit'},
+      { title: 'К Филимону', link: 'flm'},
+      { title: 'К евреям', link: 'evr'},
+      ]},
+      {name: 'Пророческая',
+      books: [
+      { title: 'Откровение Иоанна Богослова (Апокалипсис)', link: 'otkr'},
+      ]},
+      ]},
+    ];
+    this.short = {
+      byt: {s:'Быт', full:'Бытие'},
+      ish: {s:'Исх', full:'Исход'},
+      lev: {s:'Лев', full:'Левит'},
+      chis: {s:'Чис', full:'Числа'},
+      vtor: {s:'Втор', full:'Второзаконие'},
+      nav: {s:'Нав', full:'Иисус Навин'},
+      sud: {s:'Суд', full:'Книга Судей'},
+      ruf: {s:'Руф', full:'Руфь'},
+      tsar1: {s:'1Цар', full:'1-я Царств'},
+      tsar2: {s:'2Цар', full:'2-я Царств'},
+      tsar3: {s:'3Цар', full:'3-я Царств'},
+      tsar4: {s:'4Цар', full:'4-я Царств'},
+      par1: {s:'1Пар', full:'1-я Паралипоменон'},
+      par2: {s:'2Пар', full:'2-я Паралипоменон'},
+      ezdr1: {s:'1Ездр', full:'1-я Ездры'},
+      ezdr2: {s:'2Ездр', full:'2-я Ездры'},
+      neem: {s:'Неем', full:'Неемия'},
+      tov: {s:'Тов', full:'Товит'},
+      iudif: {s:'Иудиф', full:'Иудифь'},
+      esf: {s:'Есф', full:'Есфирь'},
+      mak1: {s:'1Мак', full:'1-я Маккавейская'},
+      mak2: {s:'2Мак', full:'2-я Маккавейская'},
+      mak3: {s:'3Мак', full:'3-я Маккавейская'},
+      iov: {s:'Иов', full:'Иов'},
+      ps: {s:'Пс', full:'Псалтирь'},
+      prit: {s:'Притч', full:'Притчи'},
+      ekkl: {s:'Еккл', full:'Екклесиаст'},
+      pesn: {s:'Песн', full:'Песнь Песней'},
+      prem: {s:'Прем', full:'Премудрость Соломона'},
+      sir: {s:'Сир', full:'Сирах'},
+      isa: {s:'Ис', full:'Исаия'},
+      ier: {s:'Иер', full:'Иеремия'},
+      plch: {s:'Плч', full:'Плач Иеремии'},
+      posi: {s:'ПослИер', full:'Послание Иеремии'},
+      varh: {s:'Вар', full:'Варух'},
+      iez: {s:'Иез', full:'Иезекииль'},
+      dan: {s:'Дан', full:'Даниил'},
+      os: {s:'Ос', full:'Осия'},
+      ioil: {s:'Иоил', full:'Иоиль'},
+      am: {s:'Ам', full:'Амос'},
+      avd: {s:'Авд', full:'Авдий'},
+      io: {s:'Ион', full:'Иона'},
+      mih: {s:'Мих', full:'Михей'},
+      naum: {s:'Наум', full:'Наум'},
+      avv: {s:'Авв', full:'Аввакум'},
+      sof: {s:'Соф', full:'Софония'},
+      ag: {s:'Аг', full:'Аггей'},
+      zah: {s:'Зах', full:'Захария'},
+      mal: {s:'Мал', full:'Малахия'},
+      ezdr3: {s:'3Ездр', full:'3-я Ездры'},
+      mf: {s:'Мф', full:'От Матфея'},
+      mk: {s:'Мк', full:'От Марка'},
+      lk: {s:'Лк', full:'От Луки'},
+      ion: {s:'Ин', full:'От Иоанна'},
+      dean: {s:'Деян', full:'Деяния'},
+      iak: {s:'Иак', full:'Иакова'},
+      pet1: {s:'1Пет', full:'1-е Петра'},
+      pet2: {s:'2Пет', full:'2-е Петра'},
+      ion1: {s:'1Ин', full:'1-е Иоанна'},
+      ion2: {s:'2Ин', full:'2-е Иоанна'},
+      ion3: {s:'3Ин', full:'3-е Иоанна'},
+      iud: {s:'Иуд', full:'Иуды'},
+      rim: {s:'Рим', full:'Римлянам'},
+      kor1: {s:'1Кор', full:'1-е Коринфянам'},
+      kor2: {s:'2Кор', full:'2-е Коринфянам'},
+      gal: {s:'Гал', full:'Галатам'},
+      ef: {s:'Еф', full:'к Ефесянам'},
+      flp: {s:'Флп', full:'Филиппийцам'},
+      kol: {s:'Кол', full:'Колоссянам'},
+      fes1: {s:'1Фес', full:'1-е Фессалоникийцам'},
+      fes2: {s:'2Фес', full:'2-е Фессалоникийцам'},
+      tim1: {s:'1Тим', full:'1-е Тимофею'},
+      tim2: {s:'2Тим', full:'2-е Тимофею'},
+      tit: {s:'Тит', full:'Титу'},
+      flm: {s:'Флм', full:'Филимону'},
+      evr: {s:'Евр', full:'Евреям'},
+      otkr: {s:'Откр', full:'Откровение'},
+    };
+  }
+}
 
