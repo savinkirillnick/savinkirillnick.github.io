@@ -297,21 +297,21 @@ function mark(book, chapter, verse, item) {
   bible.mark(book, chapter, verse, item);
 }
 
-function formatDate(dateStr) {
+function formatDateToNormal(dateStr) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateStr);
     return date.toLocaleDateString('ru-RU', options);
 }
     
-function showLastBook() {
+async function showLastBook() {
   // Показываем последнюю книгу на главной
   const last_book = bible.lastSeen();
   let text = "";
   if (last_book.book === 'byt' && last_book.chapterIndex === 0) {
     text += `<p>Начните чтение библии с книги «Бытие».</p>`;
-    text += `<p><button onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</button></p>`;
+    text += `<p><span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span></p>`;
   } else {
-    let chapterNumber = bible.getCurrentChapterNumber();
+    let chapterNumber = await bible.getCurrentChapterNumber();
     let chapterIndex = bible.chapterIndex;
     if (chapterNumber === '0') {
         chapterNumber = 'Предисловие';
@@ -319,7 +319,7 @@ function showLastBook() {
         chapterNumber = `глава ${chapterNumber}`;
     }
     text += `<p>Последний раз вы читали «${lib.short[last_book.book].full}», ${chapterNumber}.</p>`;
-    text += `<p><button onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</button></p>`;
+    text += `<p><span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</span></p>`;
   }
 document.getElementById('last-book').innerHTML = text;
 }
@@ -337,7 +337,7 @@ function showVerseOfTheDay() {
 
   text += `<p>${verseofday[index].verse}</p>`;
   const b = verseofday[index].code.split(":");
-  text += `<p><button onclick="changeBook('${b[0]}'); changeChapter('${b[1]}'); window.scrollTo(0, 0);">${verseofday[index].book}:${b[1]}:${b[2]}</button></p>`;
+  text += `<p><span class="link" onclick="changeBook('${b[0]}'); changeChapter('${b[1]}'); window.scrollTo(0, 0);">${verseofday[index].book}:${b[1]}:${b[2]}</span></p>`;
   
   document.getElementById('verse-of-day').innerHTML = text;
 }
@@ -348,7 +348,7 @@ function churchCalendar() {
     const thisYear = today.getFullYear();
     const calendarData = getChurchCalendar(thisYear);
     const nearestEvents = findNearestHolidayAndFast(today, calendarData);
-    let text = "";
+    let text = "<h3>Церковные праздники</h3>";
     console.log(`Сегодня: ${formatDate(today)}`);
 
     // Проверка, есть ли сегодня праздник
@@ -359,12 +359,12 @@ function churchCalendar() {
 
     // Текущий пост
     if (nearestEvents.currentFast) {
-        text += `<p>Сейчас идет пост: ${nearestEvents.currentFast.name}, продлится до ${formatDate(nearestEvents.currentFast.endDate)}.</p>`;
+        text += `<p>Сейчас идет пост: ${nearestEvents.currentFast.name}, продлится до ${formatDateToNormal(nearestEvents.currentFast.endDate)}.</p>`;
     }
 
     // Ближайший грядущий праздник
     if (nearestEvents.nextHoliday) {
-        text += `<p>Следующий праздник: ${nearestEvents.nextHoliday.name}, состоится ${formatDate(nearestEvents.nextHoliday.date)}.</p>`;
+        text += `<p>Следующий праздник: ${nearestEvents.nextHoliday.name}, состоится ${formatDateToNormal(nearestEvents.nextHoliday.date)}.</p>`;
     } else {
         text += "<p>Больше празднику в этом году не ожидается.</p>";
     }
