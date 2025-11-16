@@ -303,17 +303,18 @@ function formatDateToNormal(dateStr) {
     return date.toLocaleDateString('ru-RU', options);
 }
     
-async function showLastBook() {
+function showLastBook() {
   // Показываем последнюю книгу на главной
   const last_book = bible.lastSeen();
+  const info = bible.getBookInfo();
   let text = "";
   if (last_book.book === 'byt' && last_book.chapterIndex === 0) {
     text += `<p>Начните чтение библии с книги «Бытие».</p>`;
     text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span>`;
   } else {
-    let chapterNumber = await bible.getCurrentChapterNumber();
-    let chapterIndex = bible.chapterIndex;
-    if (chapterNumber === '0') {
+
+    let chapterNumber = info.chapterNumber;
+    if (info.chapterNumber === '0') {
         chapterNumber = 'Предисловие';
     } else {
         chapterNumber = `глава ${chapterNumber}`;
