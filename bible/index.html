@@ -233,9 +233,9 @@ function formatDateToNormal(dateStr) {
   return date.toLocaleDateString('ru-RU', options);
 }
     
-async function showLastBook(info) {
+function showLastBook(info) {
   // Показываем последнюю книгу на главной
-  const last_book = await bible.lastSeen();
+  const last_book = bible.lastSeen();
   let text = "";
   if (last_book.book === 'byt' && last_book.chapterIndex === 0) {
     text += `<p>Начните чтение библии с книги «Бытие».</p>`;
@@ -267,7 +267,7 @@ function showVerseOfTheDay() {
 
   text += `<p>${verseofday[index].verse}</p>`;
   const b = verseofday[index].code.split(":");
-  text += `<span class="gray">${verseofday[index].book}:${b[1]}:${b[2]}</span>`;
+  text += `<p><span class="gray">${verseofday[index].book}:${b[1]}:${b[2]}</span></p>`;
   
   return text;
 }
@@ -290,12 +290,12 @@ function churchCalendar() {
 
   // Текущий пост
   if (nearestEvents.currentFast) {
-    text += `<p>Сейчас идет пост: ${nearestEvents.currentFast.name}, продлится до ${formatDateToNormal(nearestEvents.currentFast.endDate)}.</p>`;
+    text += `<p>Сейчас идет пост: ${nearestEvents.currentFast.name}, продлится до ${formatDateToNormal(nearestEvents.currentFast.endDate)}</p>`;
   }
 
   // Ближайший грядущий праздник
   if (nearestEvents.nextHoliday) {
-    text += `<p>Следующий праздник: ${nearestEvents.nextHoliday.name}, состоится ${formatDateToNormal(nearestEvents.nextHoliday.date)}.</p>`;
+    text += `<p>Следующий праздник: ${nearestEvents.nextHoliday.name}, состоится ${formatDateToNormal(nearestEvents.nextHoliday.date)}</p>`;
   } else {
     text += "<p>Больше празднику в этом году не ожидается.</p>";
   }
