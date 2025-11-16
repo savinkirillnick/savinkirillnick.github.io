@@ -236,7 +236,7 @@ function formatDateToNormal(dateStr) {
 function showLastBook(info) {
   // Показываем последнюю книгу на главной
   const last_book = bible.lastSeen();
-  let text = "";
+  let text = "<h3>Добро пожаловать!</h3>";
   if (last_book.book === 'byt' && last_book.chapterIndex === 0) {
     text += `<p>Начните чтение библии с книги «Бытие».</p>`;
     text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span>`;
