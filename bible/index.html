@@ -130,7 +130,6 @@
     <div class="content" id="last-book"></div>
     <div class="content" id="calendar"></div>
     <div class="content" id="verse-of-day"></div>
-    <!-- <div class="content" id="plan-of-read"></div> -->
     <div class="content menu" id="books-menu"></div>
     <div class="content chapters" id="chapters-menu"></div>
     <div class="controls bottom-controls">
@@ -148,59 +147,53 @@
 const lib = new Lib();
 
 function showMainPage() {
-    
-    showLastBook();
-    showVerseOfTheDay();
-    
-    document.getElementById('content').style.display = "none";
-    document.getElementById('books-menu').style.display = "none";
-    document.getElementById('chapters-menu').style.display = "none";
-    document.getElementById('last-book').style.display = "block";
-    document.getElementById('calendar').style.display = "block";
-    document.getElementById('verse-of-day').style.display = "block";
-    // document.getElementById('plan-of-read').style.display = "block";
+  document.getElementById('content').style.display = "none";
+  document.getElementById('books-menu').style.display = "none";
+  document.getElementById('chapters-menu').style.display = "none";
+  document.getElementById('last-book').style.display = "block";
+  document.getElementById('calendar').style.display = "block";
+  document.getElementById('verse-of-day').style.display = "block";
 }
 
 function showBookMenu() {
-    document.getElementById('last-book').style.display = "none";
-    document.getElementById('calendar').style.display = "none";
-    document.getElementById('verse-of-day').style.display = "none";
-    // document.getElementById('plan-of-read').style.display = "none";
-    document.getElementById('chapters-menu').style.display = "none";
-    if (document.getElementById('content').style.display === "none") {
-        document.getElementById('content').style.display = "block";
-        document.getElementById('books-menu').style.display = "none";
-    } else {
-        document.getElementById('content').style.display = "none";
-        document.getElementById('books-menu').style.display = "grid";
-    }
+  document.getElementById('last-book').style.display = "none";
+  document.getElementById('calendar').style.display = "none";
+  document.getElementById('verse-of-day').style.display = "none";
+  document.getElementById('chapters-menu').style.display = "none";
+  if (document.getElementById('content').style.display === "none") {
+    document.getElementById('content').style.display = "block";
+    document.getElementById('books-menu').style.display = "none";
+  } else {
+    document.getElementById('content').style.display = "none";
+    document.getElementById('books-menu').style.display = "grid";
+  }
 }
 
 // Генерация меню
 function generateBooksMenu(lib) {
-    let html = '';
+  let html = '';
+  
+  lib.forEach(section => {
+    html += '<div>';
     
-    lib.forEach(section => {
-        html += '<div>';
-        
-        // Заголовок раздела
-        html += `<div class="menu-item"><b>${section.name}</b></div>`;
-        
-        // Группы книг
-        section.groups.forEach(group => {
-            // Название группы
-            html += `<div class="menu-item gray">${group.name}</div>`;
-            
-            // Книги в группе
-            group.books.forEach(book => {
-                html += `<div class="menu-item link" onclick="changeBook('${book.link}'); window.scrollTo(0, 0);">${book.title}</div>`;
-            });
-        });
-        
-        html += '</div>';
+    // Заголовок раздела
+    html += `<div class="menu-item"><b>${section.name}</b></div>`;
+    
+    // Группы книг
+    section.groups.forEach(group => {
+      // Название группы
+      html += `<div class="menu-item gray">${group.name}</div>`;
+      
+      // Книги в группе
+      group.books.forEach(book => {
+        html += `<div class="menu-item link" onclick="changeBook('${book.link}'); window.scrollTo(0, 0);">${book.title}</div>`;
+      });
     });
     
-    return html;
+    html += '</div>';
+  });
+  
+  return html;
 }
 
 document.getElementById('books-menu').innerHTML = generateBooksMenu(lib.lib);
@@ -209,7 +202,6 @@ async function showChapterMenu() {
   document.getElementById('last-book').style.display = "none";
   document.getElementById('calendar').style.display = "none";
   document.getElementById('verse-of-day').style.display = "none";
-  // document.getElementById('plan-of-read').style.display = "none";
   try {
     document.getElementById('content').style.display = "block";
     document.getElementById('books-menu').style.display = "none";
@@ -227,30 +219,111 @@ async function showChapterMenu() {
 }
 
 function generateChaptersMenu(chapters) {
-    let html = '';
-    chapters.forEach(item => {
-        html += `<div class="chapters-item link" onclick="changeChapter('${item.index}'); window.scrollTo(0, 0);">${item.number}</div>`;
-    });
-    return html;
+  let html = '';
+  chapters.forEach(item => {
+    html += `<div class="chapters-item link" onclick="changeChapter('${item.index}'); window.scrollTo(0, 0);">${item.number}</div>`;
+  });
+  return html;
 }
+
+
+function formatDateToNormal(dateStr) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('ru-RU', options);
+}
+    
+async function showLastBook(info) {
+  // Показываем последнюю книгу на главной
+  const last_book = await bible.lastSeen();
+  let text = "";
+  if (last_book.book === 'byt' && last_book.chapterIndex === 0) {
+    text += `<p>Начните чтение библии с книги «Бытие».</p>`;
+    text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span>`;
+  } else {
+
+    let chapterNumber = info.chapterNumber;
+    if (info.chapterNumber === '0') {
+      chapterNumber = 'Предисловие';
+    } else {
+      chapterNumber = `глава ${chapterNumber}`;
+    }
+    text += `<p>Последний раз вы читали «${lib.short[last_book.book].full}», ${chapterNumber}.</p>`;
+    text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</span>`;
+  }
+  return text;
+}
+
+function showVerseOfTheDay() {
+  // Показываем стих дня
+  let text = "<h3>Стих дня</h3>";
+    
+  // Получение сегодняшнего числа года
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    
+  // Индекс выбираемого стиха
+  const index = dayOfYear % verseofday.length;
+
+  text += `<p>${verseofday[index].verse}</p>`;
+  const b = verseofday[index].code.split(":");
+  text += `<span class="gray">${verseofday[index].book}:${b[1]}:${b[2]}</span>`;
   
+  return text;
+}
+
+function churchCalendar() {
+  // Функция календаря
+
+  const today = new Date(); // Сегодняшняя дата
+  const thisYear = today.getFullYear();
+  const calendarData = getChurchCalendar(thisYear);
+  const nearestEvents = findNearestHolidayAndFast(today, calendarData);
+  let text = "<h3>Церковные праздники</h3>";
+  console.log(`Сегодня: ${formatDate(today)}`);
+
+  // Проверка, есть ли сегодня праздник
+  const todaysHoliday = calendarData.holidays.find(holiday => formatDate(new Date(holiday.date)) === formatDate(today));
+  if (todaysHoliday) {
+    text += `<p>Сегодня праздник: ${todaysHoliday.name}</p>`;
+  }
+
+  // Текущий пост
+  if (nearestEvents.currentFast) {
+    text += `<p>Сейчас идет пост: ${nearestEvents.currentFast.name}, продлится до ${formatDateToNormal(nearestEvents.currentFast.endDate)}.</p>`;
+  }
+
+  // Ближайший грядущий праздник
+  if (nearestEvents.nextHoliday) {
+    text += `<p>Следующий праздник: ${nearestEvents.nextHoliday.name}, состоится ${formatDateToNormal(nearestEvents.nextHoliday.date)}.</p>`;
+  } else {
+    text += "<p>Больше празднику в этом году не ожидается.</p>";
+  }
+
+  return text;
+}
+
 // Создаем экземпляр книги
 const bible = new Book();
 
 // Использование с async/await
-async function displayChapter() {
+async function loadChapter() {
   try {
     const text = await bible.showText();
     document.getElementById('content').innerHTML = text;
     
     // Получаем информацию о книге
     const info = bible.getBookInfo();
+    document.getElementById('last-book').innerHTML = showLastBook(info);
     console.log('Информация о книге:', info);
     
     // Получаем список глав
     const chapters = await bible.getChaptersList();
     document.getElementById('chapters-menu').innerHTML = generateChaptersMenu(chapters);
     console.log('Доступные главы:', chapters);
+
+    document.getElementById('verse-of-day').innerHTML = showVerseOfTheDay();
+    document.getElementById('calendar').innerHTML = churchCalendar();
     
   } catch (error) {
     console.error('Ошибка:', error);
@@ -297,84 +370,7 @@ function mark(book, chapter, verse, item) {
   bible.mark(book, chapter, verse, item);
 }
 
-function formatDateToNormal(dateStr) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('ru-RU', options);
-}
-    
-async function showLastBook() {
-  // Показываем последнюю книгу на главной
-  const last_book = bible.lastSeen();
-  let text = "";
-  if (last_book.book === 'byt' && last_book.chapterIndex === 0) {
-    text += `<p>Начните чтение библии с книги «Бытие».</p>`;
-    text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span>`;
-  } else {
-    let chapterText = "";
-    const chapterNumber = await bible.getCurrentChapterNumber();
-    if (chapterNumber === '0') {
-        chapterText = 'Предисловие';
-    } else {
-        chapterText = `глава ${chapterNumber}`;
-    }
-    text += `<p>Последний раз вы читали «${lib.short[last_book.book].full}», ${chapterText}.</p>`;
-    text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</span>`;
-  }
-document.getElementById('last-book').innerHTML = text;
-}
-
-function showVerseOfTheDay() {
-  // Показываем стих дня
-  let text = "<h3>Стих дня</h3>";
-    
-  // Получение сегодняшнего числа года
-  const today = new Date();
-  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-    
-  // Индекс выбираемого стиха
-  const index = dayOfYear % verseofday.length;
-
-  text += `<p>${verseofday[index].verse}</p>`;
-  const b = verseofday[index].code.split(":");
-  text += `<span class="gray">${verseofday[index].book}:${b[1]}:${b[2]}</span>`;
-  
-  document.getElementById('verse-of-day').innerHTML = text;
-}
-
-// Функция календаря
-function churchCalendar() {
-    const today = new Date(); // Сегодняшняя дата
-    const thisYear = today.getFullYear();
-    const calendarData = getChurchCalendar(thisYear);
-    const nearestEvents = findNearestHolidayAndFast(today, calendarData);
-    let text = "<h3>Церковные праздники</h3>";
-    console.log(`Сегодня: ${formatDate(today)}`);
-
-    // Проверка, есть ли сегодня праздник
-    const todaysHoliday = calendarData.holidays.find(holiday => formatDate(new Date(holiday.date)) === formatDate(today));
-    if (todaysHoliday) {
-        text += `<p>Сегодня праздник: ${todaysHoliday.name}</p>`;
-    }
-
-    // Текущий пост
-    if (nearestEvents.currentFast) {
-        text += `<p>Сейчас идет пост: ${nearestEvents.currentFast.name}, продлится до ${formatDateToNormal(nearestEvents.currentFast.endDate)}.</p>`;
-    }
-
-    // Ближайший грядущий праздник
-    if (nearestEvents.nextHoliday) {
-        text += `<p>Следующий праздник: ${nearestEvents.nextHoliday.name}, состоится ${formatDateToNormal(nearestEvents.nextHoliday.date)}.</p>`;
-    } else {
-        text += "<p>Больше празднику в этом году не ожидается.</p>";
-    }
-
-    document.getElementById('calendar').innerHTML = text;
-}
-
-displayChapter();
-churchCalendar();
-showVerseOfTheDay();
+loadChapter();
 showMainPage();    
 </script>
 </body>
