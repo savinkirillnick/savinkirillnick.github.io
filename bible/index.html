@@ -112,18 +112,25 @@
         }
     </style>
     <script src="main.js"></script>
+    <script src="verseofday.js"></script>
+    <script src="holidays.js"></script>
 </head>
 <body>
 
 <div class="screen">
     <div class="controls top-controls">
         <button onclick="previousChapter()">◀️</button>
+        <button onclick="showMainPage()">🏠</button>
         <button onclick="showBookMenu()">📕</button>
         <button onclick="showChapterMenu()">📃</button>
         <!-- <button onclick="showTranslateMenu()">⚙️</button> -->
         <button onclick="nextChapter()">▶️</button>
     </div>
     <div class="content" id="content"></div>
+    <div class="content" id="last-book"></div>
+    <div class="content" id="calendar"></div>
+    <div class="content" id="verse-of-day"></div>
+    <div class="content" id="plan-of-read"></div>
     <div class="content menu" id="books-menu"></div>
     <div class="content chapters" id="chapters-menu"></div>
     <div class="controls bottom-controls">
@@ -132,126 +139,33 @@
         <button onclick="nextChapter(); window.scrollTo(0, 0);">▶️</button>
     </div>
     <div class="content">
-    <center>Библия 2025<br>Если у вас есть вопросы или предложения, напишите мне в телеграм <a href="https://t.me/savinkirillnick">@savinkirillnick</a></center>
+    <center>Библия 2025<br>Если у вас есть вопросы или предложения, напишите мне в телеграм <a class="link" href="https://t.me/savinkirillnick">@savinkirillnick</a></center>
     </div>
 </div>
 <script type="text/javascript">
 
 //Список книг
-const lib = [
-{ name: 'Ветхий Завет',
-groups: [
-{ name: 'Пятикнижие Моисеево',
-books: [
-{ title: 'Бытие', link: 'byt'},
-{ title: 'Исход', link: 'ish'},
-{ title: 'Левит', link: 'lev'},
-{ title: 'Числа', link: 'chis'},
-{ title: 'Второзаконие', link: 'vtor'},
-]},
-{name: 'Исторические',
-books: [
-{ title: 'Иисуса Навина', link: 'nav'},
-{ title: 'Судей Израилевых', link: 'sud'},
-{ title: 'Руфь', link: 'ruf'},
-{ title: '1-я Царств', link: 'tsar1'},
-{ title: '2-я Царств', link: 'tsar2'},
-{ title: '3-я Царств', link: 'tsar3'},
-{ title: '4-я Царств', link: 'tsar4'},
-{ title: '1-я Паралипо&shy;менон', link: 'par1'},
-{ title: '2-я Паралипо&shy;менон', link: 'par2'},
-{ title: '1-я Ездры', link: 'ezdr1'},
-{ title: '2-я Ездры', link: 'ezdr2'},
-{ title: 'Неемии', link: 'neem'},
-{ title: 'Товит', link: 'tov'},
-{ title: 'Иудифь', link: 'iudif'},
-{ title: 'Есфирь', link: 'esf'},
-{ title: '1-я Макка&shy;вей&shy;ская', link: 'mak1'},
-{ title: '2-я Макка&shy;вей&shy;ская', link: 'mak2'},
-{ title: '3-я Макка&shy;вей&shy;ская', link: 'mak3'},
-]},
-{name: 'Учительские',
-books: [
-{ title: 'Иова', link: 'iov'},
-{ title: 'Псалтирь', link: 'ps'},
-{ title: 'Притчей Соломоновых', link: 'prit'},
-{ title: 'Екклезиаста', link: 'ekkl'},
-{ title: 'Песни Песней Соломона', link: 'pesn'},
-{ title: 'Премудрости Соломона', link: 'prem'},
-{ title: 'Премудрости Иисуса, сына Сирахова', link: 'sir'},
-]},
-{name: 'Пророческие',
-books: [
-{ title: 'Исаии', link: 'isa'},
-{ title: 'Иеремии', link: 'ier'},
-{ title: 'Плач Иеремии', link: 'plch'},
-{ title: 'Послание Иеремии', link: 'posi'},
-{ title: 'Варуха', link: 'varh'},
-{ title: 'Иезекииля', link: 'iez'},
-{ title: 'Даниила', link: 'dan'},
-{ title: 'Осии', link: 'os'},
-{ title: 'Иоиля', link: 'ioil'},
-{ title: 'Амоса', link: 'am'},
-{ title: 'Авдия', link: 'avd'},
-{ title: 'Ионы', link: 'io'},
-{ title: 'Михея', link: 'mih'},
-{ title: 'Наума', link: 'naum'},
-{ title: 'Аввакума', link: 'avv'},
-{ title: 'Софонии', link: 'sof'},
-{ title: 'Аггея', link: 'ag'},
-{ title: 'Захари', link: 'zah'},
-{ title: 'Малахии', link: 'mal'},
-{ title: '3-я Ездры', link: 'ezdr3'},
-]},
-]},
-{ name: 'Новый Завет',
-groups: [
-{ name: 'Евангелие',
-books: [
-{ title: 'От Матфея', link: 'mf'},
-{ title: 'От Марка', link: 'mk'},
-{ title: 'От Луки', link: 'lk'},
-{ title: 'От Иоанна', link: 'ion'},
-]},
-{name: 'Деяния',
-books: [
-{ title: 'Деяния святых Апостолов', link: 'dean'},
-]},
-{name: 'Соборные послания',
-books: [
-{ title: 'Иакова', link: 'iak'},
-{ title: '1-е Петра', link: 'pet1'},
-{ title: '2-е Петра', link: 'pet2'},
-{ title: '1-е Иоанна', link: 'ion1'},
-{ title: '2-е Иоанна', link: 'ion2'},
-{ title: '3-е Иоанна', link: 'ion3'},
-{ title: 'Иуды', link: 'iud'},
-]},
-{name: 'Послания св. Апостола Петра',
-books: [
-{ title: 'К римлянам', link: 'rim'},
-{ title: 'К коринфянам 1-е', link: 'kor1'},
-{ title: 'К коринфянам 2-е', link: 'kor2'},
-{ title: 'К галатам', link: 'gal'},
-{ title: 'К ефесянам', link: 'ef'},
-{ title: 'К филиппий&shy;цам', link: 'flp'},
-{ title: 'К колоссянам', link: 'kol'},
-{ title: 'К фессало&shy;ни&shy;кий&shy;цам 1-е', link: 'fes1'},
-{ title: 'К фессало&shy;ни&shy;кий&shy;цам 2-е', link: 'fes2'},
-{ title: 'К Тимофею 1-е', link: 'tim1'},
-{ title: 'К Тимофею 2-е', link: 'tim2'},
-{ title: 'К Титу', link: 'tit'},
-{ title: 'К Филимону', link: 'flm'},
-{ title: 'К евреям', link: 'evr'},
-]},
-{name: 'Пророческая',
-books: [
-{ title: 'Откровение Иоанна Богослова (Апокалипсис)', link: 'otkr'},
-]},
-]},
-];
+const lib = new Lib();
+
+function showMainPage() {
+    
+    showLastBook();
+    showVerseOfTheDay();
+    
+    document.getElementById('content').style.display = "none";
+    document.getElementById('books-menu').style.display = "none";
+    document.getElementById('chapters-menu').style.display = "none";
+    document.getElementById('last-book').style.display = "block";
+    document.getElementById('calendar').style.display = "block";
+    document.getElementById('verse-of-day').style.display = "block";
+    document.getElementById('plan-of-read').style.display = "block";
+}
 
 function showBookMenu() {
+    document.getElementById('last-book').style.display = "none";
+    document.getElementById('calendar').style.display = "none";
+    document.getElementById('verse-of-day').style.display = "none";
+    document.getElementById('plan-of-read').style.display = "none";
     document.getElementById('chapters-menu').style.display = "none";
     if (document.getElementById('content').style.display === "none") {
         document.getElementById('content').style.display = "block";
@@ -279,7 +193,7 @@ function generateBooksMenu(lib) {
             
             // Книги в группе
             group.books.forEach(book => {
-                html += `<div class="menu-item link" onclick="changeBook('${book.link}')">${book.title}</div>`;
+                html += `<div class="menu-item link" onclick="changeBook('${book.link}'); window.scrollTo(0, 0);">${book.title}</div>`;
             });
         });
         
@@ -289,9 +203,13 @@ function generateBooksMenu(lib) {
     return html;
 }
 
-document.getElementById('books-menu').innerHTML = generateBooksMenu(lib);
+document.getElementById('books-menu').innerHTML = generateBooksMenu(lib.lib);
 
 async function showChapterMenu() {
+  document.getElementById('last-book').style.display = "none";
+  document.getElementById('calendar').style.display = "none";
+  document.getElementById('verse-of-day').style.display = "none";
+  document.getElementById('plan-of-read').style.display = "none";
   try {
     document.getElementById('content').style.display = "block";
     document.getElementById('books-menu').style.display = "none";
@@ -311,7 +229,7 @@ async function showChapterMenu() {
 function generateChaptersMenu(chapters) {
     let html = '';
     chapters.forEach(item => {
-        html += `<div class="chapters-item link" onclick="changeChapter('${item.index}')">${item.number}</div>`;
+        html += `<div class="chapters-item link" onclick="changeChapter('${item.index}'); window.scrollTo(0, 0);">${item.number}</div>`;
     });
     return html;
 }
@@ -379,6 +297,82 @@ function mark(book, chapter, verse, item) {
   bible.mark(book, chapter, verse, item);
 }
 
+function showLastBook() {
+  // Показываем последнюю книгу на главной
+  const last_book = bible.lastSeen();
+  let text = "";
+  if (last_book.book === 'byt' && last_book.chapterIndex === 0) {
+    text += "<p>"
+    text += `Начните чтение библии с книги «Бытие».`;
+    text += "</p>";
+    text += `<p><button onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</button></p>`;
+  } else {
+    let chapterNumber = bible.getCurrentChapterNumber();
+    let chapterIndex = bible.chapterIndex;
+    if (chapterNumber === '0') {
+        chapterNumber = 'Предисловие';
+    } else {
+        chapterNumber = `глава ${chapterNumber}`;
+    }
+    text += `Последний раз вы читали «${lib.short[last_book.book].full}», ${chapterNumber}.`;
+    text += "</p>";
+    text += `<p><button onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</button></p>`;
+  }
+document.getElementById('last-book').innerHTML = text;
+}
+
+function showVerseOfTheDay() {
+  // Показываем стих дня
+  let text = "<h2>Стих дня</h2>";
+    
+  // Получение сегодняшнего числа года
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    
+  // Индекс выбираемого стиха
+  const index = dayOfYear % verseofday.length;
+
+  text += `<p>${verseofday[index].verse}</p>`;
+  text += `<p>${verseofday[index].verse}</p>`;
+  const b = verseofday[index].code.split(":");
+  text += `<p><button onclick="changeBook('${b[0]}'); changeChapter('${b[1]}'); window.scrollTo(0, 0);">${verseofday[index].book}:${b[1]}:${b[2]}</button></p>`;
+  
+  document.getElementById('verse-of-day').innerHTML = text;
+}
+
+// Функция календаря
+function churchCalendar() {
+    const today = new Date(); // Сегодняшняя дата
+    const thisYear = today.getFullYear();
+    const calendarData = getChurchCalendar(thisYear);
+    const nearestEvents = findNearestHolidayAndFast(today, calendarData);
+    let text = "";
+    console.log(`Сегодня: ${formatDate(today)}`);
+
+    // Проверка, есть ли сегодня праздник
+    const todaysHoliday = calendarData.holidays.find(holiday => formatDate(new Date(holiday.date)) === formatDate(today));
+    if (todaysHoliday) {
+        text += `<p>Сегодня праздник: ${todaysHoliday.name}</p>`;
+    }
+
+    // Текущий пост
+    if (nearestEvents.currentFast) {
+        text += `<p>Сейчас идет пост: ${nearestEvents.currentFast.name}, продлится до ${nearestEvents.currentFast.endDate}.</p>`;
+    }
+
+    // Ближайший грядущий праздник
+    if (nearestEvents.nextHoliday) {
+        text += `<p>Следующий праздник: ${nearestEvents.nextHoliday.name}, состоится ${nearestEvents.nextHoliday.date}.</p>`;
+    } else {
+        text += "<p>Больше празднику в этом году не ожидается.</p>";
+    }
+
+    document.getElementById('calendar').innerHTML = text;
+}
+
+churchCalendar();
+showVerseOfTheDay();
+showMainPage();    
 displayChapter();
 </script>
 </body>
