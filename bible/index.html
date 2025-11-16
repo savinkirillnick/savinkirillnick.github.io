@@ -309,7 +309,7 @@ async function showLastBook() {
   let text = "";
   if (last_book.book === 'byt' && last_book.chapterIndex === 0) {
     text += `<p>Начните чтение библии с книги «Бытие».</p>`;
-    text += `<p><span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span></p>`;
+    text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span>`;
   } else {
     let chapterNumber = await bible.getCurrentChapterNumber();
     let chapterIndex = bible.chapterIndex;
@@ -319,7 +319,7 @@ async function showLastBook() {
         chapterNumber = `глава ${chapterNumber}`;
     }
     text += `<p>Последний раз вы читали «${lib.short[last_book.book].full}», ${chapterNumber}.</p>`;
-    text += `<p><span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</span></p>`;
+    text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</span>`;
   }
 document.getElementById('last-book').innerHTML = text;
 }
@@ -337,7 +337,7 @@ function showVerseOfTheDay() {
 
   text += `<p>${verseofday[index].verse}</p>`;
   const b = verseofday[index].code.split(":");
-  text += `<p><span class="gray">${verseofday[index].book}:${b[1]}:${b[2]}</span></p>`;
+  text += `<span class="gray">${verseofday[index].book}:${b[1]}:${b[2]}</span>`;
   
   document.getElementById('verse-of-day').innerHTML = text;
 }
