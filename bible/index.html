@@ -303,23 +303,22 @@ function formatDateToNormal(dateStr) {
     return date.toLocaleDateString('ru-RU', options);
 }
     
-function showLastBook() {
+async function showLastBook() {
   // Показываем последнюю книгу на главной
   const last_book = bible.lastSeen();
-  const info = bible.getBookInfo();
   let text = "";
   if (last_book.book === 'byt' && last_book.chapterIndex === 0) {
     text += `<p>Начните чтение библии с книги «Бытие».</p>`;
     text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span>`;
   } else {
-
-    let chapterNumber = info.chapterNumber;
-    if (info.chapterNumber === '0') {
-        chapterNumber = 'Предисловие';
+    let chapterText = "";
+    const chapterNumber = await bible.getCurrentChapterNumber();
+    if (chapterNumber === '0') {
+        chapterText = 'Предисловие';
     } else {
-        chapterNumber = `глава ${chapterNumber}`;
+        chapterText = `глава ${chapterNumber}`;
     }
-    text += `<p>Последний раз вы читали «${lib.short[last_book.book].full}», ${chapterNumber}.</p>`;
+    text += `<p>Последний раз вы читали «${lib.short[last_book.book].full}», ${chapterText}.</p>`;
     text += `<span class="link" onclick="changeBook('${last_book.book}'); changeChapter('${last_book.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</span>`;
   }
 document.getElementById('last-book').innerHTML = text;
