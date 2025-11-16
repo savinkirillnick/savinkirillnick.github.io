@@ -337,7 +337,7 @@ function showVerseOfTheDay() {
 
   text += `<p>${verseofday[index].verse}</p>`;
   const b = verseofday[index].code.split(":");
-  text += `<p><span class="link" onclick="changeBook('${b[0]}'); changeChapter('${b[1]}'); window.scrollTo(0, 0);">${verseofday[index].book}:${b[1]}:${b[2]}</span></p>`;
+  text += `<p><span class="gray">${verseofday[index].book}:${b[1]}:${b[2]}</span></p>`;
   
   document.getElementById('verse-of-day').innerHTML = text;
 }
