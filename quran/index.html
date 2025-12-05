@@ -1,1 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Основной фавикон -->
+    <link rel="icon" href="https://savinkirillnick.github.io/quran/favicon.png">
 
+    <!-- Icons for different sizes on iOS devices -->
+    <link rel="apple-touch-icon" sizes="57x57" href="https://savinkirillnick.github.io/quran/icons/icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://savinkirillnick.github.io/quran/icons/icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://savinkirillnick.github.io/quran/icons/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://savinkirillnick.github.io/quran/icons/icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://savinkirillnick.github.io/quran/icons/icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://savinkirillnick.github.io/quran/icons/icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://savinkirillnick.github.io/quran/icons/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://savinkirillnick.github.io/quran/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://savinkirillnick.github.io/quran/icons/icon-180x180.png">
+
+    <!-- Дополнительные метаданные для iOS приложений -->
+    <meta name="apple-mobile-web-app-capable" content="yes"> <!-- Включает полноэкранный режим на устройстве -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> <!-- Статусбар прозрачный черный -->
+    <meta name="theme-color" content="#ffffff"> <!-- Цвет фона окна браузера -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="description" content="Коран на русском.">
+    <meta name="keywords" content="коран, javascript">
+    <meta name="author" content="Kirill Savin">
+    <meta property="og:title" content="Коран" />
+    <meta property="og:description" content="Коран на русском." />
+    <meta property="og:image" content="https://savinkirillnick.github.io/quran/logo.png" />
+    <meta property="og:url" content="https://savinkirillnick.github.io/quran/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Коран" />
+    <meta name="twitter:description" content="Коран на русском." />
+    <meta name="twitter:image" content="https://savinkirillnick.github.io/quran/logo.png" />
+    <title>Коран</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            text-align: center;
+            font-size: 12pt;
+        }
+        p {
+            text-indent: 30px;
+            padding: 0 5px;
+            line-height: 1.4;
+            margin: 0;
+        }
+        i {
+            color: #666;
+        }
+        .screen {
+            position: relative;
+            max-width: 600px;
+            left: 50%;
+            transform: translate(-50%, 0%);
+        }
+        .num {
+            font-size: 0.6em;
+            color: #666;
+            vertical-align: text-top;
+        }
+        .content {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .controls button {
+            margin: 5px;
+            padding: min(20px, 3vw);
+            background: transparent;
+            border: 0;
+            font-size: min(20pt, 5vw);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        .menu {
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .chapters {
+            display: none;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            min-height: 50px;
+            position: absolute;
+            top: calc(6vw + 10px + min(20pt, 5vw));
+            left: 50%;
+            transform: translate(-50%, 0%);
+        }
+        .menu-item {
+            text-align: left;
+            padding: 5px;
+            margin: 0;
+        }
+        .chapters-item {
+            text-align: center;
+            padding: 5px;
+            margin: 0;
+        }
+        .link {
+            color: #06d;
+            cursor: pointer;
+        }
+        .gray {
+            color: #666;
+        }
+        @media (orientation: landscape) {
+            .chapters {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+        @media (orientation: portrait) {
+            .chapters {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+    <script src="main.js"></script>
+</head>
+<body>
+
+<div class="screen">
+    <div class="controls top-controls">
+        <button onclick="previousChapter()">◀️</button>
+        <button onclick="showMainPage()">🏠</button>
+        <button onclick="showSurahMenu()">📕</button>
+        <button onclick="showChapterMenu()">📃</button>
+        <!-- <button onclick="showTranslateMenu()">⚙️</button> -->
+        <button onclick="nextChapter()">▶️</button>
+    </div>
+    <div class="content" id="content"></div>
+    <div class="content" id="last-surah"></div>
+    <div class="content" id="ayat-of-day"></div>
+    <div class="content menu" id="surahs-menu"></div>
+    <div class="content chapters" id="chapters-menu"></div>
+    <div class="controls bottom-controls">
+        <button onclick="previousChapter(); window.scrollTo(0, 0);">◀️</button>
+        <button onclick="window.scrollTo(0, 0);">⬆️</button>
+        <button onclick="nextChapter(); window.scrollTo(0, 0);">▶️</button>
+    </div>
+    <div class="content">
+    <center>Коран 2025<br>Если у вас есть вопросы или предложения, напишите мне в телеграм <a class="link" href="https://t.me/savinkirillnick">@savinkirillnick</a></center>
+    </div>
+</div>
+<script type="text/javascript">
+
+//Список книг
+const lib = new Lib();
+
+function showMainPage() {
+  document.getElementById('content').style.display = "none";
+  document.getElementById('surahs-menu').style.display = "none";
+  document.getElementById('chapters-menu').style.display = "none";
+  document.getElementById('last-surah').style.display = "block";
+  document.getElementById('ayat-of-day').style.display = "block";
+}
+
+function showSurahMenu() {
+  document.getElementById('last-surah').style.display = "none";
+  document.getElementById('ayat-of-day').style.display = "none";
+  document.getElementById('chapters-menu').style.display = "none";
+  if (document.getElementById('content').style.display === "none") {
+    document.getElementById('content').style.display = "block";
+    document.getElementById('surahs-menu').style.display = "none";
+  } else {
+    document.getElementById('content').style.display = "none";
+    document.getElementById('surahs-menu').style.display = "grid";
+  }
+}
+
+// Генерация меню
+function generateSurahsMenu(lib) {
+  let html = '';
+  
+  lib.forEach(surah => {
+        html += `<div class="menu-item link" onclick="changeSurah('${surah.link}'); window.scrollTo(0, 0);">${surah.title}</div>`;
+      });
+  
+  return html;
+}
+
+document.getElementById('surahs-menu').innerHTML = generateSurahsMenu(lib.lib);
+
+async function showChapterMenu() {
+  document.getElementById('last-surah').style.display = "none";
+  document.getElementById('ayat-of-day').style.display = "none";
+  try {
+    document.getElementById('content').style.display = "block";
+    document.getElementById('surahs-menu').style.display = "none";
+    if (document.getElementById('chapters-menu').style.display === "none") {
+        document.getElementById('chapters-menu').style.display = "grid";
+    } else {
+        document.getElementById('chapters-menu').style.display = "none";
+    }
+    const chapters = await quran.getChaptersList();
+    document.getElementById('chapters-menu').innerHTML = generateChaptersMenu(chapters);
+
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+}
+
+function generateChaptersMenu(chapters) {
+  let html = '';
+  chapters.forEach(item => {
+    html += `<div class="chapters-item link" onclick="changeChapter('${item.index}'); window.scrollTo(0, 0);">${item.number}</div>`;
+  });
+  return html;
+}
+
+function formatDateToNormal(dateStr) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('ru-RU', options);
+}
+    
+function showLastSurah(info) {
+  // Показываем последнюю книгу на главной
+  const last_surah = quran.lastSeen();
+  let text = "<h3>Добро пожаловать!</h3>";
+  if (last_surah.surah === 'byt' && last_surah.chapterIndex === 0) {
+    text += `<p>Начните чтение библии с книги «Бытие».</p>`;
+    text += `<span class="link" onclick="changeSurah('${last_surah.surah}'); changeChapter('${last_surah.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span>`;
+  } else {
+
+    let chapterNumber = info.chapterNumber;
+    if (info.chapterNumber === '0') {
+      chapterNumber = 'Предисловие';
+    } else {
+      chapterNumber = `глава ${chapterNumber}`;
+    }
+    text += `<p>Последний раз вы читали «${lib.short[last_surah.surah].full}», ${chapterNumber}.</p>`;
+    text += `<span class="link" onclick="changeSurah('${last_surah.surah}'); changeChapter('${last_surah.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</span>`;
+  }
+  return text;
+}
+
+function showAyatOfTheDay() {
+  // Показываем стих дня
+  let text = "<h3>Стих дня</h3>";
+    
+  // Получение сегодняшнего числа года
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    
+  // Индекс выбираемого стиха
+  const index = dayOfYear % ayatofday.length;
+
+  text += `<p>${ayatofday[index].ayat}</p>`;
+  text += `<p><span class="gray">${ayatofday[index].code}</span></p>`;
+  
+  return text;
+}
+
+// Создаем экземпляр книги
+const quran = new Surah();
+
+// Использование с async/await
+async function loadChapter() {
+  try {
+    const text = await quran.showText();
+    document.getElementById('content').innerHTML = text;
+    
+    // Получаем информацию о книге
+    const info = quran.getSurahInfo();
+    document.getElementById('last-surah').innerHTML = showLastSurah(info);
+    console.log('Информация о книге:', info);
+    
+    // Получаем список глав
+    const chapters = await quran.getChaptersList();
+    document.getElementById('chapters-menu').innerHTML = generateChaptersMenu(chapters);
+    console.log('Доступные главы:', chapters);
+
+    document.getElementById('ayat-of-day').innerHTML = showAyatOfTheDay();
+    
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+}
+
+// Смена перевода
+async function changeTranslation(newTranslation) {
+  const text = await quran.showText(newTranslation, quran.surah, quran.chapter);
+  document.getElementById('content').innerHTML = text;
+}
+
+// Смена книги
+async function changeSurah(newSurah) {
+    document.getElementById('content').style.display = "block";
+    document.getElementById('surahs-menu').style.display = "none";
+  const text = await quran.showText(quran.translate, newSurah, 0);
+  document.getElementById('content').innerHTML = text;
+}
+
+// Смена главы
+async function changeChapter(newChapter) {
+  document.getElementById('chapters-menu').style.display = "none";
+  const text = await quran.showText(quran.translate, quran.surah, newChapter);
+  document.getElementById('content').innerHTML = text;
+}
+
+// Навигация по главам
+async function nextChapter() {
+  const text = await quran.nextChapter();
+  if (text) {
+    document.getElementById('content').innerHTML = text;
+  }
+}
+
+async function previousChapter() {
+  const text = await quran.previousChapter();
+  if (text) {
+    document.getElementById('content').innerHTML = text;
+  }
+}
+
+function mark(surah, chapter, ayat, item) {
+  quran.mark(surah, chapter, ayat, item);
+}
+
+loadChapter();
+showMainPage();    
+</script>
+</body>
+</html>
