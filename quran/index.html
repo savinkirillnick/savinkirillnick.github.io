@@ -186,7 +186,7 @@ function showSurahMenu() {
 function generateSurahsMenu(lib) {
   let html = '';
   
-  lib.forEach(surah => {
+  lib.surah.forEach(surah => {
         html += `<div class="menu-item link" onclick="changeSurah('${surah.link}'); window.scrollTo(0, 0);">${surah.title}</div>`;
       });
   
@@ -238,11 +238,7 @@ function showLastSurah(info) {
   } else {
 
     let chapterNumber = info.chapterNumber;
-    if (info.chapterNumber === '0') {
-      chapterNumber = 'Предисловие';
-    } else {
-      chapterNumber = `глава ${chapterNumber}`;
-    }
+    chapterNumber = `${chapterNumber}`;
     text += `<p>Последний раз вы читали «${lib.short[last_surah.surah].full}», ${chapterNumber}.</p>`;
     text += `<span class="link" onclick="changeSurah('${last_surah.surah}'); changeChapter('${last_surah.chapterIndex}'); window.scrollTo(0, 0);">Продолжить</span>`;
   }
