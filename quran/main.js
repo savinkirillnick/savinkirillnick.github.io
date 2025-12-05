@@ -144,10 +144,10 @@ class Surah {
 
   // Форматировать вывод аятов
   formatChapterOutput(chapterData) {
-    const { title, treat } = this.currentData;
+    const title = this.currentData;
     const { chapter, ayats } = chapterData;
     
-    let output = `<span class="gray">${treat}</span><h2>${title}</h2>`;
+    let output = `<h2>${title}</h2>`;
     output += `<h3>Аяты ${chapter}</h3>`;
     output += `<p>`;
     let v = 0;
@@ -435,6 +435,7 @@ class Lib {
         }
     }
 }
+
 
 
 
