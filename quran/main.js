@@ -149,7 +149,6 @@ class Surah {
     
     let output = `<h2>${title}</h2>`;
     output += `<h3>Аяты ${chapter}</h3>`;
-    output += `<p>`;
     let v = 0;
     ayats.forEach(ayat => {
         let index = -1;
@@ -166,14 +165,12 @@ class Surah {
       }
 
       if (ayat.num === 0) {
-        output += `</p><p>`
-        output += `<span ${styler}onclick="mark(surah='${this.surah}', chapter=${this.chapterIndex}, ayat=${v}, item=this);">${ayat.ayat}</span> `;
+        output += `<p><span ${styler}onclick="mark(surah='${this.surah}', chapter=${this.chapterIndex}, ayat=${v}, item=this);">${ayat.ayat}</span></p>`;
       } else {
-        output += `<span ${styler}onclick="mark(surah='${this.surah}', chapter=${this.chapterIndex}, ayat=${v}, item=this);"><span class="num">${ayat.num}</span> ${ayat.ayat}</span> `;
+        output += `<p><span ${styler}onclick="mark(surah='${this.surah}', chapter=${this.chapterIndex}, ayat=${v}, item=this);"><span class="num">${ayat.num}</span> ${ayat.ayat}</span></p>`;
       }
       v += 1;
     });
-    output += `</p>`;
     return output;
   }
 
@@ -551,6 +548,7 @@ class Lib {
         };
     }
 }
+
 
 
 
