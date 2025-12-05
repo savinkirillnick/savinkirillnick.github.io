@@ -8,8 +8,8 @@ class Surah {
     this.surah = surah; // текущая книга
     this.chapterIndex = chapterIndex; // текущий индекс раздела
     console.log(translate, surah, chapterIndex);
-    this.loadedSurah = new Map(); // кэш загруженных книг
-    this.currentData = null; // текущие данные книги
+    this.loadedSurahs = new Map(); // кэш загруженных сур
+    this.currentData = null; // текущие данные суры
     this.marks = JSON.parse(this.getCookie(`quran-${this.translate}-${this.surah}`)); // Закладки
     this.markColor = 'gold';
   }
@@ -435,5 +435,6 @@ class Lib {
         }
     }
 }
+
 
 
