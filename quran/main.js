@@ -75,7 +75,7 @@ class Surah {
 
   // Получить ключ для кэша
   getCacheKey(translate, surah) {
-    return `${translate}/${surah}`;
+    return `books/${translate}/${surah}`;
   }
 
   // Загрузить данные книги
@@ -435,4 +435,5 @@ class Lib {
         }
     }
 }
+
 
