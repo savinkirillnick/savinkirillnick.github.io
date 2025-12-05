@@ -130,6 +130,7 @@
         }
     </style>
     <script src="main.js"></script>
+    <script src="ayatofday.js"></script>
 </head>
 <body>
 
@@ -233,7 +234,7 @@ function showLastSurah(info) {
   const last_surah = quran.lastSeen();
   let text = "<h3>Добро пожаловать!</h3>";
   if (last_surah.surah === 'byt' && last_surah.chapterIndex === 0) {
-    text += `<p>Начните чтение библии с книги «Бытие».</p>`;
+    text += `<p>Начните чтение библии с суры «Открывающая Коран».</p>`;
     text += `<span class="link" onclick="changeSurah('${last_surah.surah}'); changeChapter('${last_surah.chapterIndex}'); window.scrollTo(0, 0);">Начать читать</span>`;
   } else {
 
