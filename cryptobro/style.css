@@ -1,0 +1,333 @@
+body{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background-color: white;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	font-family: sans-serif;
+	background-color: black;
+	user-select: none;
+}
+
+.container{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	clip: rect(auto, auto, auto, auto);
+	pointer-events: none;
+	background-color: black;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 0%;
+	background-image: url(https://i.imgur.com/mMjUlww.jpg);
+}
+
+.progress{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: clamp(1em, 5vw, 2em);
+	background-color: blue;
+	background: linear-gradient(45deg, yellow, red, blue);
+}
+
+.animate{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: clamp(1em, 5vw, 2em);
+	background-color: black;
+}
+.main {
+	width: 100%;
+	height: auto;
+	color: white;
+	background-color: black;
+	display: grid;
+	grid-auto-flow: row;
+}
+.menu {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #333;
+	color: white;
+	display: flex;
+	justify-content: space-around;
+	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+	padding: 1vw 0;
+}
+
+.menu_card {
+	width: 16.666%;
+	height: auto;
+	position: relative;
+	font-size: clamp(0.5em, 3vw, 1em);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center;
+}
+
+.linebox {
+	width: 100%;
+	height: auto;
+	position: relative;
+	display: grid;
+	grid-auto-flow: column;
+}
+.user {
+	height: auto;
+	width: 70%;
+	margin: 2vw;
+	padding: 1vw;
+}
+.userline {
+	height: min(8vw, 38px);
+	width: 100%;
+	display: flex;
+}
+.username {
+	height: min(8vw, 38px);
+	width: auto;
+	font-size: clamp(0.7em, 3vw, 1.5em);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	float: left;
+}
+.userlevel {
+	height: min(8vw, 38px);
+	width: auto;
+	font-size: clamp(0.7em, 3vw, 1.5em);
+	float: right;
+	white-space: nowrap;
+}
+.keys {
+	background-color: #333;
+	border-radius: 5vw;
+	height: fit-content;
+	width: fit-content;
+	margin: 2vw 2vw 2vw auto;
+	padding: 2vw;
+	font-size: clamp(1em, 5vw, 2.5em);
+}
+.left {
+	height: auto;
+	width: auto;
+	margin: 1vw;
+	padding: 1vw;
+	font-size: clamp(1em, 5vw, 2.5em);
+}
+.right {
+	height: auto;
+	width: fit-content;
+	margin: 1vw 1vw 1vw auto;
+	padding: 1vw;
+	font-size: clamp(1em, 5vw, 2.5em);
+}
+.mini_info {
+	width: auto;
+	height: auto;
+	margin: 1vw;
+	padding: 1vw;
+}
+.coins {
+	height: auto;
+	width: auto;
+	padding: 1vw;
+	text-align: center;
+	font-size: clamp(1.5em, 8vw, 5em);
+}
+.tap {
+	height: auto;
+	width: 100%;
+	text-align: center;
+}
+.tap_img {
+	width: min(75%, 512px);
+	height: auto;
+	border-radius: 50%;
+	border: 0.5em solid #808080;
+	background-color: white;
+	transition: filter 0.25s ease;
+}
+.minicard {
+	height: auto;
+	width: auto;
+	border-radius: 15%;
+	font-size: clamp(0.7em, 3vw, 1.5em);
+	margin: auto;
+	background-color: #333;
+}
+.bottom {
+	height: max(10vw, 128px);
+	width: 100%;
+
+}
+.notification {
+	position: absolute;
+	transform: translateX(-50%);
+	font-size: clamp(1em, 5vw, 2.5em);
+	color: white;
+	opacity: 1;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.ads {
+	height: auto;
+	width: 100%;
+	margin-bottom: max(10vw, 128px);
+}
+.shop_container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1vw;
+	padding: 1vw;
+}
+.shop_card {
+	width: auto;
+	height: auto;
+	background-color: #222;
+	padding: 1vw;
+	border-radius: 0.5em;
+}
+.shop_desc {
+	width: 100%;
+	height: auto;
+	font-size: clamp(0.7em, 3vw, 1.5em);
+	text-align: center;
+	white-space: nowrap;
+
+}
+.card_desc {
+	width: 100%;
+	height: auto;
+	font-size: clamp(0.7em, 3vw, 1.5em);
+	text-align: center;
+	white-space: nowrap;
+
+}
+.centered-div {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: auto;
+	height: auto;
+	transform: translate(-50%, -25%);
+	opacity: 0;
+	background-color: #333;
+	color: lightgray;
+	padding: 1vw;
+    border-radius: 2em;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.fullscreen-div {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	border-radius: 2em;
+}
+.note-button {
+	position: absolute;
+	top: 0.5em;
+	right: 0.5em;
+	width: auto;
+	height: auto;
+	font-size: min(8vw, 1.5em);
+	padding: 0.5em;
+	background-color: rgba(127, 127, 127, 0.5);
+	border-radius: 50%;
+	text-align: center;
+	display: none;
+}
+.congratulation-name {
+	width: 100%;
+	height: auto;
+	font-size: clamp(1.5em, 8vw, 5em);
+	text-align: center;
+}
+.congratulation-desc {
+	width: auto;
+	height: auto;
+	font-size: clamp(1em, 5vw, 2.5em);
+	margin: 1vw;
+}
+.congratulation-button {
+	width: 50%;
+	height: auto;
+	font-size: clamp(1em, 5vw, 2.5em);
+	padding: 1vw;
+	background-color: blue;
+	border-radius: 10px;
+	margin: 1vw auto;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+}
+.progress-bar {
+	width: 100%;
+	height: min(2vw, 10px);
+	background-color: blue;
+	background: linear-gradient(45deg, yellow, red, blue);
+	position: relative;
+}
+.progress-fill {
+	height: 100%;
+	background-color: black;
+	width: 100%;
+	float: right;
+	/*transition: width 0.3s ease;*/
+}
+.menu-img {
+	width: clamp(50%, 8vw, 64px);
+	height: auto;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
+h1 {
+	color: white;
+}
+
+p {
+	color: var(--tg-theme-hint-color);
+}
+
+a {
+	color: var(--tg-theme-link-color);
+	text-decoration: none;
+}
+
+/* Стили для прокрутки */
+::-webkit-scrollbar {
+    width: 8px; /* Ширина вертикального скроллбара */
+    height: 8px; /* Высота горизонтального скроллбара */
+}
+
+/* Стили для бегунка */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5); /* Полу-прозрачный цвет бегунка */
+    border-radius: 10px; /* Обтекаемые углы */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.8); /* Цвет бегунка при наведении */
+}
+
+/* Стили для дорожки скролла */
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* Прозрачный трек */
+    border-radius: 10px; /* Обтекаемые углы */
+}
