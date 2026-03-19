@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Классический внешний вид, надежность, износостойкое покрытие. В комплекте с резными наличниками и капителью модель Л13 займет достойное место в вашем интерьере.">
+    <title>Арбат Л13 — Твои Двери</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;%F0%9F%9A%AA&lt;/text&gt;&lt;/svg&gt;">
+
+    <!-- Local Assets -->
+    <link rel="stylesheet" href="product_files/fonts.css">
+    <script src="product_files/tailwind.js"></script>
+    <link rel="stylesheet" href="product_files/aos.css">
+    <script src="product_files/inputmask.min.js"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'emerald-deep': '#1a3c34',
+                        'emerald-darker': '#0d1f1a',
+                        'wood-warm': '#c8956c',
+                        'cream-light': '#f8f7f4',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="product_files/style.css">
+
+    <style>
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 0.75rem;
+            animation: lightboxFadeIn 0.3s ease;
+        }
+        @keyframes lightboxFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .lightbox-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+        .lightbox-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .lightbox-prev { left: 1.5rem; }
+        .lightbox-next { right: 1.5rem; }
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+        .lightbox-close:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+        .lightbox-counter {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.875rem;
+        }
+
+        /* Thumbnail active state */
+        .thumb-item {
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #BDBBBC, #EFEFEF);
+        }
+        .thumb-item.active {
+            border-color: #1a3c34;
+            box-shadow: 0 0 0 2px rgba(26, 60, 52, 0.2);
+        }
+        .thumb-item:hover {
+            border-color: #c8956c;
+        }
+        .thumb-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        /* Main image background gradient */
+        #mainImageWrap {
+            background: linear-gradient(135deg, #BDBBBC, #EFEFEF);
+        }
+
+        #mainImage {
+            object-fit: contain !important;
+        }
+
+        /* Specs table zebra */
+        .spec-row:nth-child(even) {
+            background: #f8f7f4;
+        }
+
+        /* Skeleton loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 0.5rem;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Success checkmark animation */
+        @keyframes checkmark {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(-45deg); opacity: 1; }
+            100% { transform: scale(1) rotate(-45deg); opacity: 1; }
+        }
+        .checkmark-animated {
+            animation: checkmark 0.5s ease forwards;
+        }
+
+        /* Cookie banner */
+        #cookieBanner.show {
+            display: block;
+            transform: translateY(0);
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.bottom-0{bottom:0px}.left-0{left:0px}.right-0{right:0px}.right-4{right:1rem}.top-0{top:0px}.top-4{top:1rem}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-20{height:5rem}.h-24{height:6rem}.h-4{height:1rem}.h-40{height:10rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-8{height:2rem}.h-full{height:100%}.h-px{height:1px}.w-1\/3{width:33.333333%}.w-10{width:2.5rem}.w-20{width:5rem}.w-24{width:6rem}.w-3\/4{width:75%}.w-4{width:1rem}.w-48{width:12rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-64{width:16rem}.w-8{width:2rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-4xl{max-width:56rem}.max-w-6xl{max-width:72rem}.max-w-7xl{max-width:80rem}.translate-y-full{--tw-translate-y:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-zoom-in{cursor:zoom-in}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-emerald-deep{--tw-border-opacity:1;border-color:rgb(26 60 52 / var(--tw-border-opacity, 1))}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-gray-50{--tw-border-opacity:1;border-color:rgb(249 250 251 / var(--tw-border-opacity, 1))}.bg-cream-light{--tw-bg-opacity:1;background-color:rgb(248 247 244 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-emerald-darker{--tw-bg-opacity:1;background-color:rgb(13 31 26 / var(--tw-bg-opacity, 1))}.bg-emerald-deep{--tw-bg-opacity:1;background-color:rgb(26 60 52 / var(--tw-bg-opacity, 1))}.bg-emerald-deep\/10{background-color:rgb(26 60 52 / 0.1)}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.from-emerald-deep\/5{--tw-gradient-from:rgb(26 60 52 / 0.05) var(--tw-gradient-from-position);--tw-gradient-to:rgb(26 60 52 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-wood-warm{--tw-gradient-from:#c8956c var(--tw-gradient-from-position);--tw-gradient-to:rgb(200 149 108 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-amber-700{--tw-gradient-to:rgb(180 83 9 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #b45309 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-cream-light{--tw-gradient-to:rgb(248 247 244 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #f8f7f4 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-orange-800{--tw-gradient-to:#9a3412 var(--tw-gradient-to-position)}.to-wood-warm\/10{--tw-gradient-to:rgb(200 149 108 / 0.1) var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-24{padding-top:6rem;padding-bottom:6rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-2{padding-bottom:0.5rem}.pt-4{padding-top:1rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-right{text-align:right}.font-inter{font-family:Inter, sans-serif}.font-playfair{font-family:Playfair Display, serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-emerald-deep{--tw-text-opacity:1;color:rgb(26 60 52 / var(--tw-text-opacity, 1))}.text-emerald-deep\/20{color:rgb(26 60 52 / 0.2)}.text-emerald-deep\/30{color:rgb(26 60 52 / 0.3)}.text-emerald-deep\/50{color:rgb(26 60 52 / 0.5)}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-white\/60{color:rgb(255 255 255 / 0.6)}.text-white\/80{color:rgb(255 255 255 / 0.8)}.text-white\/90{color:rgb(255 255 255 / 0.9)}.text-wood-warm{--tw-text-opacity:1;color:rgb(200 149 108 / var(--tw-text-opacity, 1))}.text-emerald-deep\/70{color:rgb(26 60 52 / 0.7)}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.accent-emerald-600{accent-color:#059669}.opacity-0{opacity:0}.opacity-10{opacity:0.1}.brightness-0{--tw-brightness:brightness(0);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.invert{--tw-invert:invert(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.duration-500{transition-duration:500ms}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-darker:hover{--tw-bg-opacity:1;background-color:rgb(13 31 26 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-deep:hover{--tw-bg-opacity:1;background-color:rgb(26 60 52 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-deep\/20:hover{background-color:rgb(26 60 52 / 0.2)}.hover\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.hover\:text-emerald-700:hover{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.hover\:text-emerald-deep:hover{--tw-text-opacity:1;color:rgb(26 60 52 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:text-wood-warm:hover{--tw-text-opacity:1;color:rgb(200 149 108 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:shadow-2xl:hover{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-lg:hover{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:text-emerald-deep{--tw-text-opacity:1;color:rgb(26 60 52 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}}@media (min-width: 768px){.md\:flex{display:flex}.md\:h-14{height:3.5rem}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-5xl{font-size:3rem;line-height:1}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 1024px){.lg\:flex{display:flex}.lg\:hidden{display:none}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}}</style></head>
+<body class="font-inter antialiased text-gray-800" data-aos-easing="ease-out-cubic" data-aos-duration="800" data-aos-delay="0">
+
+    <!-- TOP BAR -->
+    <div class="bg-emerald-deep text-white py-2 px-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-sm">
+            <div class="flex flex-wrap gap-6">
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>МО, г. Щелково, ул. Советская д.1 корп.2</span>
+                </span>
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Без выходных: 9:00-18:00 / 10:00-19:00</span>
+                </span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="tel:+79265332077" class="flex items-center gap-2 hover:text-wood-warm transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                    <span>+7 (926) 533-20-77</span>
+                </a>
+                <a href="tel:+79265688682" class="hidden md:flex items-center gap-1 hover:text-wood-warm transition-colors">
+                    <span>+7 (926) 568-86-82</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header id="header" class="bg-white border-b border-gray-100 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="https://tvoidveri-msk.ru/index.html" class="flex items-center gap-2">
+                    <img src="product_files/logo.png" alt="Твои Двери" class="h-12 md:h-14">
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="https://tvoidveri-msk.ru/catalog.html" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Каталог</a>
+                    <a href="https://tvoidveri-msk.ru/index.html#services" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Услуги</a>
+                    <a href="https://tvoidveri-msk.ru/index.html#materials" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Материалы</a>
+                    <a href="https://tvoidveri-msk.ru/index.html#portfolio" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Портфолио</a>
+                    <a href="https://tvoidveri-msk.ru/index.html#stores" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Магазины</a>
+                    <a href="https://tvoidveri-msk.ru/index.html#contacts" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Контакты</a>
+                </nav>
+
+                <!-- Contact Info & CTA -->
+                <div class="hidden lg:flex items-center gap-6">
+                    <div class="text-right">
+                        <a href="tel:+79265332077" class="block text-emerald-deep font-semibold hover:text-wood-warm transition-colors">+7 (926) 533-20-77</a>
+                        <a href="mailto:ruslanin75@mail.ru" class="block text-sm text-gray-500 hover:text-emerald-deep transition-colors">ruslanin75@mail.ru</a>
+                    </div>
+                    <button onclick="openModal('callbackModal')" class="bg-emerald-deep text-white px-6 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium hover:shadow-lg">
+                        Заказать звонок
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="lg:hidden text-emerald-deep">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-gray-100">
+            <nav class="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-4">
+                <a href="https://tvoidveri-msk.ru/catalog.html" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Каталог</a>
+                <a href="https://tvoidveri-msk.ru/index.html#services" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Услуги</a>
+                <a href="https://tvoidveri-msk.ru/index.html#materials" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Материалы</a>
+                <a href="https://tvoidveri-msk.ru/index.html#portfolio" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Портфолио</a>
+                <a href="https://tvoidveri-msk.ru/index.html#stores" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Магазины</a>
+                <a href="https://tvoidveri-msk.ru/index.html#contacts" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Контакты</a>
+                <div class="pt-4 border-t border-gray-100">
+                    <a href="tel:+79265332077" class="block text-emerald-deep font-semibold text-lg mb-1">+7 (926) 533-20-77</a>
+                    <a href="tel:+79265688682" class="block text-emerald-deep font-semibold text-lg mb-2">+7 (926) 568-86-82</a>
+                    <a href="mailto:ruslanin75@mail.ru" class="block text-gray-500 mb-4">ruslanin75@mail.ru</a>
+                    <button onclick="openModal('callbackModal')" class="w-full bg-emerald-deep text-white px-6 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium">
+                        Заказать звонок
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- BREADCRUMBS -->
+        <div class="bg-cream-light border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 py-4">
+                <nav id="breadcrumbs" class="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
+                    <a href="https://tvoidveri-msk.ru/index.html" class="hover:text-emerald-700 transition-colors">Главная</a>
+                    <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    <a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-emerald-700 transition-colors">Каталог</a>
+                    <svg class="breadcrumb-cat-sep w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    <a id="breadcrumb-category" href="https://tvoidveri-msk.ru/catalog.html?cat=shpon-emal" class="hover:text-emerald-700 transition-colors">Шпон + эмаль</a>
+                    <svg class="breadcrumb-series-sep w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    <a id="breadcrumb-series" href="https://tvoidveri-msk.ru/catalog.html?cat=shpon-emal&amp;series=arbat" class="hover:text-emerald-700 transition-colors">Серия Арбат</a>
+                    <svg class="breadcrumb-prod-sep w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    <span id="breadcrumb-product" class="text-emerald-700 font-medium">Арбат Л13</span>
+                </nav>
+            </div>
+        </div>
+
+        <!-- LOADING STATE -->
+        <div id="loadingState" class="max-w-7xl mx-auto px-4 py-12 hidden">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div>
+                    <div class="skeleton w-full rounded-xl" style="aspect-ratio:1/1; max-height:600px;"></div>
+                    <div class="flex gap-3 mt-4">
+                        <div class="skeleton w-20 h-24 rounded-lg"></div>
+                        <div class="skeleton w-20 h-24 rounded-lg"></div>
+                        <div class="skeleton w-20 h-24 rounded-lg"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="skeleton w-24 h-6 mb-4"></div>
+                    <div class="skeleton w-3/4 h-10 mb-4"></div>
+                    <div class="skeleton w-1/3 h-8 mb-6"></div>
+                    <div class="skeleton w-full h-px mb-6"></div>
+                    <div class="skeleton w-full h-20 mb-6"></div>
+                    <div class="skeleton w-full h-40 mb-6"></div>
+                    <div class="flex gap-4">
+                        <div class="skeleton w-48 h-14 rounded-full"></div>
+                        <div class="skeleton w-64 h-14 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 404 STATE -->
+        <div id="notFoundState" class="hidden max-w-2xl mx-auto px-4 py-24 text-center">
+            <div class="mb-8">
+                <svg class="w-24 h-24 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h1 class="font-playfair text-4xl font-bold text-emerald-deep mb-4">Товар не найден</h1>
+            <p class="text-gray-600 text-lg mb-8">К сожалению, запрашиваемый товар не существует или был удален.</p>
+            <a href="https://tvoidveri-msk.ru/catalog.html" class="inline-flex items-center gap-2 bg-emerald-deep text-white px-8 py-4 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium hover:shadow-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Вернуться в каталог
+            </a>
+        </div>
+
+        <!-- PRODUCT SECTION -->
+        <section id="productSection" class="py-12">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid lg:grid-cols-2 gap-12">
+
+                    <!-- LEFT COLUMN: Image Gallery -->
+                    <div data-aos="fade-right" class="aos-init aos-animate">
+                        <!-- Main Image -->
+                        <div id="mainImageWrap" class="relative rounded-xl overflow-hidden cursor-zoom-in" style="aspect-ratio:1/1; max-height:600px;" onclick="openLightbox()">
+                            <img id="mainImage" src="product_files/card_%D0%9B13_1dc09be5.png" alt="Арбат Л13" class="w-full h-full transition-transform duration-300 hover:scale-105">
+                            <!-- Zoom hint -->
+                            <div class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" id="zoomHint">
+                                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+                            </div>
+                        </div>
+
+                        <!-- Placeholder (no images) -->
+                        <div id="placeholderImage" class="hidden rounded-xl overflow-hidden" style="aspect-ratio:1/1; max-height:600px;">
+                            <div class="w-full h-full bg-gradient-to-br from-emerald-deep/5 via-cream-light to-wood-warm/10 flex flex-col items-center justify-center">
+                                <svg class="w-24 h-24 text-emerald-deep/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                                </svg>
+                                <p class="text-emerald-deep/30 text-sm font-medium">Фото отсутствует</p>
+                            </div>
+                        </div>
+
+                        <!-- Thumbnails -->
+                        <div id="thumbnailStrip" class="flex gap-3 mt-4 overflow-x-auto pb-2"><div class="thumb-item active"><img src="product_files/card_%D0%9B13_1dc09be5.png" alt="Арбат Л13 - фото 1" loading="lazy"></div><div class="thumb-item"><img src="product_files/split_left_6dcc5344.jpg" alt="Арбат Л13 - фото 2" loading="lazy"></div><div class="thumb-item"><img src="product_files/split_right_6dcc5344.jpg" alt="Арбат Л13 - фото 3" loading="lazy"></div><div class="thumb-item"><img src="product_files/interior_%D0%9B13_42b2db9a.jpg" alt="Арбат Л13 - фото 4" loading="lazy"></div><div class="thumb-item"><img src="product_files/finish_%D0%9B13_ff824289.jpg" alt="Арбат Л13 - фото 5" loading="lazy"></div><div class="thumb-item"><img src="product_files/finish_%D0%9B13_54b3ea9b.jpg" alt="Арбат Л13 - фото 6" loading="lazy"></div><div class="thumb-item"><img src="product_files/finish_%D0%9B13_39b3775c.jpg" alt="Арбат Л13 - фото 7" loading="lazy"></div><div class="thumb-item"><img src="product_files/finish_%D0%9B13_5e715cb0.jpg" alt="Арбат Л13 - фото 8" loading="lazy"></div><div class="thumb-item"><img src="product_files/finish_%D0%9B13_d4595e5b.jpg" alt="Арбат Л13 - фото 9" loading="lazy"></div><div class="thumb-item"><img src="product_files/finish_%D0%9B13_bbe92161.jpg" alt="Арбат Л13 - фото 10" loading="lazy"></div></div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: Product Info -->
+                    <div data-aos="fade-left" class="aos-init aos-animate">
+                        <!-- Category badge -->
+                        <a id="productCategoryBadge" href="https://tvoidveri-msk.ru/catalog.html?cat=shpon-emal" class="inline-block bg-emerald-deep/10 text-emerald-deep text-sm font-medium px-4 py-1.5 rounded-full mb-4 hover:bg-emerald-deep/20 transition-colors">Шпон + эмаль</a>
+
+                        <!-- Product name -->
+                        <h1 id="productName" class="font-playfair text-3xl md:text-4xl font-bold text-emerald-deep mb-4 leading-tight">Арбат Л13</h1>
+
+                        <!-- Price -->
+                        <div id="productPrice" class="text-2xl font-semibold mb-6"><span class="text-gray-500 italic text-xl">Цена по запросу</span></div>
+
+                        <!-- Divider -->
+                        <div class="border-t border-gray-200 mb-6"></div>
+
+                        <!-- Description -->
+                        <div id="productDescription" class="mb-6">
+                            <h3 class="text-lg font-semibold text-emerald-deep mb-3">Описание</h3>
+                            <div id="descriptionText" class="text-gray-600 leading-relaxed whitespace-pre-line">Классический внешний вид, надежность, износостойкое покрытие. В комплекте с резными наличниками и капителью модель Л13 займет достойное место в вашем интерьере. Исполнима в любом цвете по каталогам RAL и NCS с возможностью нанесения патины.</div>
+                        </div>
+
+                        <!-- Specifications -->
+                        <div id="productSpecs" class="mb-8">
+                            <h3 class="text-lg font-semibold text-emerald-deep mb-3">Характеристики</h3>
+                            <div class="rounded-xl overflow-hidden border border-gray-100">
+                                <table id="specsTable" class="w-full text-sm"><tr class="spec-row"><td class="px-4 py-3 font-medium text-gray-700 border-b border-gray-50 w-1/3">Толщина полотна</td><td class="px-4 py-3 text-gray-600 border-b border-gray-50">Толщина дверного полотна – 40 мм, 55 мм. Полотно ремонтопригодно.</td></tr><tr class="spec-row"><td class="px-4 py-3 font-medium text-gray-700 border-b border-gray-50 w-1/3">Тип отделки</td><td class="px-4 py-3 text-gray-600 border-b border-gray-50">Отделка – эмали любого цвета по каталогам RAL и NCS.</td></tr><tr class="spec-row"><td class="px-4 py-3 font-medium text-gray-700 border-b border-gray-50 w-1/3">Покрытие</td><td class="px-4 py-3 text-gray-600 border-b border-gray-50">Финишное
+ покрытие – высококачественные эмали (пр-во Италия). Эмали наносятся с 
+промежуточным шлифованием, в результате двери получают совершенно 
+гладкую, шелковистую поверхность.</td></tr><tr class="spec-row"><td class="px-4 py-3 font-medium text-gray-700 border-b border-gray-50 w-1/3">Размеры</td><td class="px-4 py-3 text-gray-600 border-b border-gray-50">Стандартные размеры дверных полотен – 2000х600, 700, 800, 900 мм. Возможно изготовление дверных полотен нестандартного размера.</td></tr><tr class="spec-row"><td class="px-4 py-3 font-medium text-gray-700 border-b border-gray-50 w-1/3">Гарантия</td><td class="px-4 py-3 text-gray-600 border-b border-gray-50">Гарантийный срок – 2 года со дня отгрузки дверных блоков потребителю согласно СТБ 2433-2015.</td></tr><tr class="spec-row"><td class="px-4 py-3 font-medium text-gray-700 border-b border-gray-50 w-1/3">Варианты отделки</td><td class="px-4 py-3 text-gray-600 border-b border-gray-50">Эмаль Белая, Эмаль RAL 9010, Эмаль RAL 7035, Эмаль любого цвета по шкале RAL и NCS, Патина "Золото", Патина "Серебро"</td></tr></table>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                            <button onclick="openModal('productRequestModal')" class="bg-emerald-deep text-white px-8 py-4 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium hover:shadow-lg text-center">
+                                Оставить заявку
+                            </button>
+                            <a href="tel:+79265332077" class="border-2 border-emerald-deep text-emerald-deep px-8 py-4 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-center flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                +7 (926) 533-20-77
+                            </a>
+                        </div>
+
+                        <!-- Small text -->
+                        <p class="text-sm text-gray-400 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-emerald-deep/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Бесплатный замер и консультация
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RELATED PRODUCTS -->
+        <section id="relatedSection" class="py-16 bg-cream-light">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="font-playfair text-3xl md:text-4xl font-bold text-emerald-deep mb-10 tracking-tight aos-init aos-animate" data-aos="fade-up">Похожие товары</h2>
+                <div id="relatedGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"><a href="https://tvoidveri-msk.ru/product.html?slug=arbat-l13-s-vitrazh-sonet-l13-b-vitrazh-buket" class="product-card group block aos-init" data-aos="fade-up" data-aos-delay="100"><div class="product-image bg-gray-100"><img src="product_files/card_%25D0%259B13-%25D0%25A1__%25D0%2592%25D0%25B8%25D1%2582%25D1%2580%25D0%25B0%25D0%25B6__.png" alt="Арбат Л13-С (Витраж «Сонет»), Л13-Б (Витраж «Букет»)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy"></div><div class="p-5"><span class="text-xs text-emerald-deep/70 font-medium uppercase tracking-wider">Шпон + эмаль</span><h3 class="font-playfair text-lg font-semibold text-gray-800 mt-1 mb-2 group-hover:text-emerald-deep transition-colors">Арбат Л13-С (Витраж «Сонет»), Л13-Б (Витраж «Букет»)</h3><div class="flex items-center justify-between"><span class="text-gray-500 italic text-sm">Цена по запросу</span><span class="text-emerald-deep text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">Подробнее<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span></div></div></a><a href="https://tvoidveri-msk.ru/product.html?slug=arbat-l32" class="product-card group block aos-init" data-aos="fade-up" data-aos-delay="200"><div class="product-image bg-gray-100"><img src="product_files/card_%D0%9B32_4b0c6745.png" alt="Арбат Л32" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy"></div><div class="p-5"><span class="text-xs text-emerald-deep/70 font-medium uppercase tracking-wider">Шпон + эмаль</span><h3 class="font-playfair text-lg font-semibold text-gray-800 mt-1 mb-2 group-hover:text-emerald-deep transition-colors">Арбат Л32</h3><div class="flex items-center justify-between"><span class="text-gray-500 italic text-sm">Цена по запросу</span><span class="text-emerald-deep text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">Подробнее<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span></div></div></a><a href="https://tvoidveri-msk.ru/product.html?slug=arbat-l32-s-vitrazh-sonet-l32-b-vitrazh-buket" class="product-card group block aos-init" data-aos="fade-up" data-aos-delay="300"><div class="product-image bg-gray-100"><img src="product_files/card_%25D0%259B32-%25D0%25A1__%25D0%2592%25D0%25B8%25D1%2582%25D1%2580%25D0%25B0%25D0%25B6__.png" alt="Арбат Л32-С (Витраж «Сонет»), Л32-Б (Витраж «Букет»)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy"></div><div class="p-5"><span class="text-xs text-emerald-deep/70 font-medium uppercase tracking-wider">Шпон + эмаль</span><h3 class="font-playfair text-lg font-semibold text-gray-800 mt-1 mb-2 group-hover:text-emerald-deep transition-colors">Арбат Л32-С (Витраж «Сонет»), Л32-Б (Витраж «Букет»)</h3><div class="flex items-center justify-between"><span class="text-gray-500 italic text-sm">Цена по запросу</span><span class="text-emerald-deep text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">Подробнее<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span></div></div></a><a href="https://tvoidveri-msk.ru/product.html?slug=arbat-l63" class="product-card group block aos-init" data-aos="fade-up" data-aos-delay="400"><div class="product-image bg-gray-100"><img src="product_files/card_%D0%9B63_7e049568.png" alt="Арбат Л63" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy"></div><div class="p-5"><span class="text-xs text-emerald-deep/70 font-medium uppercase tracking-wider">Шпон + эмаль</span><h3 class="font-playfair text-lg font-semibold text-gray-800 mt-1 mb-2 group-hover:text-emerald-deep transition-colors">Арбат Л63</h3><div class="flex items-center justify-between"><span class="text-gray-500 italic text-sm">Цена по запросу</span><span class="text-emerald-deep text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">Подробнее<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span></div></div></a></div>
+            </div>
+        </section>
+
+        <!-- CTA SECTION -->
+        <section id="ctaSection" class="py-24 bg-gradient-to-br from-wood-warm via-amber-700 to-orange-800 relative overflow-hidden">
+            <!-- Pattern -->
+            <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.05) 10px, rgba(255,255,255,.05) 20px);"></div>
+
+            <div class="max-w-4xl mx-auto px-4 text-center relative z-10 aos-init aos-animate" data-aos="fade-up">
+                <h2 class="font-playfair text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight leading-tight">
+                    Не нашли нужную дверь?
+                </h2>
+                <p class="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto">
+                    Позвоните нам или оставьте заявку -- поможем подобрать!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="tel:+79265332077" class="bg-white text-wood-warm px-10 py-4 rounded-full hover:shadow-2xl transition-all duration-300 font-semibold text-lg hover:scale-105 inline-flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        Позвонить
+                    </a>
+                    <button onclick="openModal('ctaRequestModal')" class="border-2 border-white text-white px-10 py-4 rounded-full hover:bg-white hover:text-wood-warm transition-all duration-300 font-semibold text-lg">
+                        Оставить заявку
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="contacts" class="bg-emerald-darker text-white py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+                <!-- Column 1 - Addresses -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Адреса магазинов</h4>
+                    <div class="space-y-3 text-white/80 text-sm">
+                        <p>Офис: МО, г. Щелково,<br>ул. Советская д.1 корп.2</p>
+                        <p>ТСК "Каширский Двор-2",<br>Каширское шоссе, д.1, пав. 9/6</p>
+                        <p>ТЦ "ЭлитСтройМатериалы",<br>п. Заречье, пав. С-49</p>
+                    </div>
+                </div>
+
+                <!-- Column 2 - Interior Doors -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Межкомнатные двери</h4>
+                    <ul class="space-y-2 text-white/80 text-sm">
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Экошпон</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Шпон натуральный</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Массив дерева</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Эмаль</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Стекло</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 - Entrance Doors -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Входные двери</h4>
+                    <ul class="space-y-2 text-white/80 text-sm">
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Металлические</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Бронированные</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">С отделкой</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Для квартиры</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Для частного дома</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 - Services -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Услуги</h4>
+                    <ul class="space-y-2 text-white/80 text-sm">
+                        <li><a href="https://tvoidveri-msk.ru/index.html#services" class="hover:text-wood-warm transition-colors">Замер</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/index.html#services" class="hover:text-wood-warm transition-colors">Доставка</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/index.html#services" class="hover:text-wood-warm transition-colors">Подъем</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/index.html#services" class="hover:text-wood-warm transition-colors">Монтаж</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/index.html#services" class="hover:text-wood-warm transition-colors">Консультация</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5 - Hardware -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Фурнитура</h4>
+                    <ul class="space-y-2 text-white/80 text-sm">
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Ручки</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Замки</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Петли</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Доводчики</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-white/10 pt-8">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <img src="product_files/logo.png" alt="Твои Двери" class="h-10 mb-2 brightness-0 invert">
+                        <p class="text-white/60 text-sm">Межкомнатные и входные двери от производителя</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold mb-2">Контакты</p>
+                        <p class="text-white/80 text-sm">
+                            <a href="tel:+79265332077" class="hover:text-wood-warm transition-colors">+7 (926) 533-20-77</a><br>
+                            <a href="tel:+79265688682" class="hover:text-wood-warm transition-colors">+7 (926) 568-86-82</a><br>
+                            <a href="mailto:ruslanin75@mail.ru" class="hover:text-wood-warm transition-colors">ruslanin75@mail.ru</a>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="font-semibold mb-2">Режим работы</p>
+                        <p class="text-white/80 text-sm">
+                            Офис (Щелково): 9:00 - 18:00<br>
+                            Салоны: 10:00 - 19:00<br>
+                            Без выходных
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap justify-between items-center gap-4 text-sm text-white/60">
+                    <p>© 2026 Твои Двери. Все права защищены.</p>
+                    <a href="https://tvoidveri-msk.ru/privacy-policy.html" class="hover:text-wood-warm transition-colors">Политика конфиденциальности</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRODUCT REQUEST MODAL -->
+    <div id="productRequestModal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('productRequestModal')"></div>
+        <div class="modal-content">
+            <button onclick="closeModal('productRequestModal')" class="modal-close">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <!-- Form state -->
+            <div id="productRequestForm">
+                <h3 class="font-playfair text-2xl md:text-3xl font-bold text-emerald-deep mb-2">Заявка на <span id="modalProductName">Арбат Л13</span></h3>
+                <p class="text-gray-600 mb-6">Заполните форму, и мы свяжемся с вами</p>
+                <form id="requestForm" onsubmit="handleProductRequest(event)">
+                    <input type="hidden" name="product_id" id="formProductId" value="3659">
+                    <input type="hidden" name="form_type" value="product_request">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Ваше имя *</label>
+                        <input type="text" name="name" required="" class="form-input" placeholder="Как к вам обращаться?">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Телефон *</label>
+                        <input type="tel" name="phone" required="" class="form-input phone-mask" placeholder="+7 (___) ___-__-__" inputmode="text">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Сообщение (необязательно)</label>
+                        <textarea name="message" rows="3" class="form-input" placeholder="Ваш вопрос или пожелание..."></textarea>
+                    </div>
+                    <label class="flex items-start gap-2 text-sm text-gray-600 mt-3">
+                        <input type="checkbox" name="privacy_consent" required="" class="mt-1 accent-emerald-600">
+                        <span>Я согласен на <a href="https://tvoidveri-msk.ru/privacy-policy.html" class="text-emerald-600 hover:underline">обработку персональных данных</a></span>
+                    </label>
+                    <button type="submit" id="requestSubmitBtn" class="w-full bg-emerald-deep text-white px-6 py-4 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium text-lg mt-4">
+                        Отправить заявку
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success state -->
+            <div id="productRequestSuccess" class="hidden text-center py-4">
+                <div class="w-20 h-20 bg-emerald-deep rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-white checkmark-animated" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="font-playfair text-3xl font-bold text-emerald-deep mb-3">Заявка отправлена!</h3>
+                <p class="text-gray-600 mb-6">Мы свяжемся с вами в ближайшее время.</p>
+                <button onclick="closeModal('productRequestModal')" class="bg-emerald-deep text-white px-8 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium">
+                    Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CALLBACK MODAL -->
+    <div id="callbackModal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('callbackModal')"></div>
+        <div class="modal-content">
+            <button onclick="closeModal('callbackModal')" class="modal-close">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h3 class="font-playfair text-3xl font-bold text-emerald-deep mb-2">Заказать звонок</h3>
+            <p class="text-gray-600 mb-6">Оставьте номер телефона, и мы перезвоним вам</p>
+            <form onsubmit="handleCallbackRequest(event)">
+                <input type="hidden" name="form_type" value="callback">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Ваше имя</label>
+                    <input type="text" name="name" required="" class="form-input">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Телефон</label>
+                    <input type="tel" name="phone" required="" class="form-input phone-mask" placeholder="+7 (___) ___-__-__" inputmode="text">
+                </div>
+                <label class="flex items-start gap-2 text-sm text-gray-600 mt-3">
+                    <input type="checkbox" name="privacy_consent" required="" class="mt-1 accent-emerald-600">
+                    <span>Я согласен на <a href="https://tvoidveri-msk.ru/privacy-policy.html" class="text-emerald-600 hover:underline">обработку персональных данных</a></span>
+                </label>
+                <button type="submit" class="w-full bg-emerald-deep text-white px-6 py-4 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium text-lg mt-4">
+                    Отправить
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CTA REQUEST MODAL -->
+    <div id="ctaRequestModal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('ctaRequestModal')"></div>
+        <div class="modal-content">
+            <button onclick="closeModal('ctaRequestModal')" class="modal-close">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h3 class="font-playfair text-3xl font-bold text-emerald-deep mb-2">Оставить заявку</h3>
+            <p class="text-gray-600 mb-6">Расскажите о ваших пожеланиях, и мы подберем идеальное решение</p>
+            <form onsubmit="handleCtaRequest(event)">
+                <input type="hidden" name="form_type" value="product_request">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Ваше имя *</label>
+                    <input type="text" name="name" required="" class="form-input">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Телефон *</label>
+                    <input type="tel" name="phone" required="" class="form-input phone-mask" placeholder="+7 (___) ___-__-__" inputmode="text">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Сообщение (необязательно)</label>
+                    <textarea name="message" rows="3" class="form-input" placeholder="Какую дверь ищете?"></textarea>
+                </div>
+                <label class="flex items-start gap-2 text-sm text-gray-600 mt-3">
+                    <input type="checkbox" name="privacy_consent" required="" class="mt-1 accent-emerald-600">
+                    <span>Я согласен на <a href="https://tvoidveri-msk.ru/privacy-policy.html" class="text-emerald-600 hover:underline">обработку персональных данных</a></span>
+                </label>
+                <button type="submit" class="w-full bg-emerald-deep text-white px-6 py-4 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium text-lg mt-4">
+                    Отправить заявку
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SUCCESS MODAL (for callback & CTA) -->
+    <div id="successModal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('successModal')"></div>
+        <div class="modal-content text-center">
+            <button onclick="closeModal('successModal')" class="modal-close">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="w-20 h-20 bg-emerald-deep rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="font-playfair text-3xl font-bold text-emerald-deep mb-2">Спасибо за заявку!</h3>
+            <p class="text-gray-600 mb-6">Наш специалист свяжется с вами в ближайшее время</p>
+            <button onclick="closeModal('successModal')" class="bg-emerald-deep text-white px-8 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium">
+                Закрыть
+            </button>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <button class="lightbox-btn lightbox-prev" onclick="lightboxPrev()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        <img id="lightboxImage" src="" alt="">
+        <button class="lightbox-btn lightbox-next" onclick="lightboxNext()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <!-- COOKIE BANNER -->
+    <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 transform translate-y-full transition-transform duration-500" style="display:none;">
+        <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-4">
+            <p class="text-sm">Мы используем файлы cookie для 
+обеспечения лучшей работы сайта. Продолжая использовать сайт, вы даёте 
+согласие на использование cookie.</p>
+            <button onclick="acceptCookies()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">Принять</button>
+        </div>
+    </div>
+
+    <!-- AOS Library -->
+    <script src="product_files/aos.js"></script>
+
+    <!-- INLINE JAVASCRIPT -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ========================
+        // STATE
+        // ========================
+        var currentProduct = null;
+        var productImages = [];
+        var currentImageIndex = 0;
+        var lightboxOpen = false;
+
+        // ========================
+        // INIT
+        // ========================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Init AOS
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 800,
+                    once: true,
+                    offset: 100,
+                    easing: 'ease-out-cubic'
+                });
+            }
+
+            // Init phone masks
+            initPhoneMasks();
+
+            // Init mobile menu
+            initMobileMenu();
+
+            // Init header scroll
+            initHeaderScroll();
+
+            // Init cookie banner
+            initCookieBanner();
+
+            // Load product
+            var slug = getUrlParam('slug');
+            if (slug) {
+                loadProduct(slug);
+            } else {
+                showNotFound();
+            }
+        });
+
+        // ========================
+        // COOKIE BANNER
+        // ========================
+        function initCookieBanner() {
+            var cookieBanner = document.getElementById('cookieBanner');
+            if (!cookieBanner) return;
+
+            var accepted = localStorage.getItem('cookiesAccepted');
+            if (!accepted) {
+                setTimeout(function() {
+                    cookieBanner.style.display = 'block';
+                    setTimeout(function() {
+                        cookieBanner.classList.add('show');
+                    }, 100);
+                }, 2000);
+            }
+        }
+
+        window.acceptCookies = function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            var cookieBanner = document.getElementById('cookieBanner');
+            cookieBanner.classList.remove('show');
+            setTimeout(function() {
+                cookieBanner.style.display = 'none';
+            }, 500);
+        };
+
+        // ========================
+        // URL PARAMS
+        // ========================
+        function getUrlParam(name) {
+            var params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // ========================
+        // PHONE MASKS
+        // ========================
+        function initPhoneMasks() {
+            if (typeof Inputmask !== 'undefined') {
+                var phoneMask = new Inputmask('+7 (999) 999-99-99');
+                var phoneInputs = document.querySelectorAll('.phone-mask');
+                phoneInputs.forEach(function(input) {
+                    phoneMask.mask(input);
+                });
+            }
+        }
+
+        // ========================
+        // MOBILE MENU
+        // ========================
+        function initMobileMenu() {
+            var menuBtn = document.getElementById('mobileMenuBtn');
+            var mobileMenu = document.getElementById('mobileMenu');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    var icon = menuBtn.querySelector('svg');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    } else {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                    }
+                });
+
+                var menuLinks = mobileMenu.querySelectorAll('a');
+                menuLinks.forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                        var icon = menuBtn.querySelector('svg');
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    });
+                });
+            }
+        }
+
+        // ========================
+        // HEADER SCROLL
+        // ========================
+        function initHeaderScroll() {
+            var header = document.getElementById('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        }
+
+        // ========================
+        // LOAD PRODUCT
+        // ========================
+        function loadProduct(slug) {
+            fetch('api/index.php?action=product&slug=' + encodeURIComponent(slug))
+                .then(function(res) { return res.json(); })
+                .then(function(json) {
+                    if (!json.success || !json.data) {
+                        showNotFound();
+                        return;
+                    }
+                    currentProduct = json.data;
+                    renderProduct(currentProduct);
+                    loadRelatedProducts(currentProduct.category_slug, currentProduct.series_slug || '', currentProduct.id);
+                })
+                .catch(function(err) {
+                    console.error('Failed to load product:', err);
+                    showNotFound();
+                });
+        }
+
+        // ========================
+        // SHOW NOT FOUND
+        // ========================
+        function showNotFound() {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('notFoundState').classList.remove('hidden');
+        }
+
+        // ========================
+        // RENDER PRODUCT
+        // ========================
+        function renderProduct(product) {
+            // Update page title
+            document.title = product.name + ' — Твои Двери';
+
+            // Update meta description
+            var metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc && product.description) {
+                metaDesc.content = product.description.substring(0, 160);
+            }
+
+            // Breadcrumbs - Category
+            if (product.category_name && product.category_slug) {
+                var catLink = document.getElementById('breadcrumb-category');
+                catLink.textContent = product.category_name;
+                catLink.href = 'catalog.html?cat=' + encodeURIComponent(product.category_slug);
+                catLink.classList.remove('hidden');
+                document.querySelector('.breadcrumb-cat-sep').classList.remove('hidden');
+            }
+
+            // Breadcrumbs - Series
+            var seriesName = product.series_name || product.series || '';
+            var seriesSlug = product.series_slug || '';
+            if (seriesName && seriesSlug) {
+                var serLink = document.getElementById('breadcrumb-series');
+                serLink.textContent = 'Серия ' + seriesName;
+                serLink.href = 'catalog.html?cat=' + encodeURIComponent(product.category_slug) + '&series=' + encodeURIComponent(seriesSlug);
+                serLink.classList.remove('hidden');
+                document.querySelector('.breadcrumb-series-sep').classList.remove('hidden');
+            }
+
+            // Breadcrumbs - Product
+            var prodSpan = document.getElementById('breadcrumb-product');
+            prodSpan.textContent = product.name;
+            prodSpan.classList.remove('hidden');
+            document.querySelector('.breadcrumb-prod-sep').classList.remove('hidden');
+
+            // Images
+            productImages = product.images || [];
+            var isPlaceholder = productImages.length === 0 ||
+                (productImages.length === 1 && productImages[0].url === 'img/placeholder.jpg');
+
+            if (isPlaceholder) {
+                document.getElementById('mainImageWrap').classList.add('hidden');
+                document.getElementById('placeholderImage').classList.remove('hidden');
+            } else {
+                // Set main image
+                var mainImg = document.getElementById('mainImage');
+                mainImg.src = productImages[0].url;
+                mainImg.alt = product.name;
+
+                // Build thumbnails if more than 1 image
+                if (productImages.length > 1) {
+                    var strip = document.getElementById('thumbnailStrip');
+                    strip.classList.remove('hidden');
+                    strip.innerHTML = '';
+                    productImages.forEach(function(img, idx) {
+                        var div = document.createElement('div');
+                        div.className = 'thumb-item' + (idx === 0 ? ' active' : '');
+                        div.onclick = function() { switchImage(idx); };
+                        var thumbImg = document.createElement('img');
+                        thumbImg.src = img.url;
+                        thumbImg.alt = product.name + ' - фото ' + (idx + 1);
+                        thumbImg.loading = 'lazy';
+                        div.appendChild(thumbImg);
+                        strip.appendChild(div);
+                    });
+                }
+            }
+
+            // Category badge
+            var badge = document.getElementById('productCategoryBadge');
+            if (product.category_name) {
+                badge.textContent = product.category_name;
+                badge.href = 'catalog.html?cat=' + encodeURIComponent(product.category_slug);
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            // Product name
+            document.getElementById('productName').textContent = product.name;
+
+            // Price
+            var priceEl = document.getElementById('productPrice');
+            var priceStr = (product.price || '').trim();
+            if (!priceStr || priceStr === '0' || priceStr.toLowerCase() === 'по запросу') {
+                priceEl.innerHTML = '<span class="text-gray-500 italic text-xl">Цена по запросу</span>';
+            } else {
+                priceEl.innerHTML = '<span class="text-emerald-deep">' + escapeHtml(priceStr) + '</span>';
+            }
+
+            // Description
+            if (product.description && product.description.trim() !== '') {
+                document.getElementById('productDescription').classList.remove('hidden');
+                document.getElementById('descriptionText').textContent = product.description;
+            }
+
+            // Specifications
+            var specs = product.specifications;
+            if (specs && typeof specs === 'object' && Object.keys(specs).length > 0) {
+                document.getElementById('productSpecs').classList.remove('hidden');
+                var table = document.getElementById('specsTable');
+                table.innerHTML = '';
+                var keys = Object.keys(specs);
+                keys.forEach(function(key) {
+                    var tr = document.createElement('tr');
+                    tr.className = 'spec-row';
+                    var tdKey = document.createElement('td');
+                    tdKey.className = 'px-4 py-3 font-medium text-gray-700 border-b border-gray-50 w-1/3';
+                    tdKey.textContent = key;
+                    var tdVal = document.createElement('td');
+                    tdVal.className = 'px-4 py-3 text-gray-600 border-b border-gray-50';
+                    tdVal.textContent = specs[key];
+                    tr.appendChild(tdKey);
+                    tr.appendChild(tdVal);
+                    table.appendChild(tr);
+                });
+            }
+
+            // Modal product name & id
+            document.getElementById('modalProductName').textContent = product.name;
+            document.getElementById('formProductId').value = product.id;
+
+            // Hide loading, show product
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('productSection').classList.remove('hidden');
+            document.getElementById('ctaSection').classList.remove('hidden');
+
+            // Refresh AOS
+            if (typeof AOS !== 'undefined') {
+                setTimeout(function() { AOS.refresh(); }, 100);
+            }
+        }
+
+        // ========================
+        // IMAGE GALLERY
+        // ========================
+        function switchImage(index) {
+            if (index < 0 || index >= productImages.length) return;
+            currentImageIndex = index;
+
+            var mainImg = document.getElementById('mainImage');
+            mainImg.src = productImages[index].url;
+
+            // Update active thumbnail
+            var thumbs = document.querySelectorAll('.thumb-item');
+            thumbs.forEach(function(t, i) {
+                t.classList.toggle('active', i === index);
+            });
+        }
+
+        // ========================
+        // LIGHTBOX
+        // ========================
+        function openLightbox() {
+            if (productImages.length === 0) return;
+            var isPlaceholder = productImages.length === 1 && productImages[0].url === 'img/placeholder.jpg';
+            if (isPlaceholder) return;
+
+            lightboxOpen = true;
+            var lb = document.getElementById('lightbox');
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateLightboxImage();
+
+            // Show/hide prev/next if only one image
+            var prevBtn = lb.querySelector('.lightbox-prev');
+            var nextBtn = lb.querySelector('.lightbox-next');
+            if (productImages.length <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            }
+        }
+
+        function closeLightbox() {
+            lightboxOpen = false;
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function lightboxPrev() {
+            currentImageIndex = (currentImageIndex - 1 + productImages.length) % productImages.length;
+            updateLightboxImage();
+            switchImage(currentImageIndex);
+        }
+
+        function lightboxNext() {
+            currentImageIndex = (currentImageIndex + 1) % productImages.length;
+            updateLightboxImage();
+            switchImage(currentImageIndex);
+        }
+
+        function updateLightboxImage() {
+            var lbImg = document.getElementById('lightboxImage');
+            lbImg.src = productImages[currentImageIndex].url;
+            lbImg.alt = (currentProduct ? currentProduct.name : '') + ' - фото ' + (currentImageIndex + 1);
+            document.getElementById('lightboxCounter').textContent =
+                (currentImageIndex + 1) + ' / ' + productImages.length;
+        }
+
+        // Keyboard support for lightbox
+        document.addEventListener('keydown', function(e) {
+            if (!lightboxOpen) {
+                // ESC closes modals
+                if (e.key === 'Escape') {
+                    var activeModal = document.querySelector('.modal.active');
+                    if (activeModal) {
+                        activeModal.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                }
+                return;
+            }
+
+            switch (e.key) {
+                case 'Escape':
+                    closeLightbox();
+                    break;
+                case 'ArrowLeft':
+                    lightboxPrev();
+                    break;
+                case 'ArrowRight':
+                    lightboxNext();
+                    break;
+            }
+        });
+
+        // Close lightbox on background click
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // ========================
+        // RELATED PRODUCTS
+        // ========================
+        function loadRelatedProducts(categorySlug, seriesSlug, currentId) {
+            if (!categorySlug) return;
+
+            var url = 'api/index.php?action=products&category=' + encodeURIComponent(categorySlug);
+            if (seriesSlug) {
+                url += '&series=' + encodeURIComponent(seriesSlug);
+            }
+            url += '&per_page=5';
+
+            fetch(url)
+                .then(function(res) { return res.json(); })
+                .then(function(json) {
+                    if (!json.success || !json.data || !json.data.products) return;
+
+                    // Filter out current product and limit to 4
+                    var related = json.data.products.filter(function(p) {
+                        return p.id !== currentId;
+                    }).slice(0, 4);
+
+                    if (related.length === 0) return;
+
+                    renderRelatedProducts(related);
+                })
+                .catch(function(err) {
+                    console.error('Failed to load related products:', err);
+                });
+        }
+
+        function renderRelatedProducts(products) {
+            var grid = document.getElementById('relatedGrid');
+            grid.innerHTML = '';
+
+            products.forEach(function(product, idx) {
+                var card = document.createElement('a');
+                card.href = 'product.html?slug=' + encodeURIComponent(product.slug);
+                card.className = 'product-card group block';
+                card.setAttribute('data-aos', 'fade-up');
+                card.setAttribute('data-aos-delay', String((idx + 1) * 100));
+
+                var hasImage = product.main_image && product.main_image !== 'img/placeholder.jpg';
+
+                var imageHtml;
+                if (hasImage) {
+                    imageHtml =
+                        '<div class="product-image bg-gray-100">' +
+                            '<img src="' + escapeHtml(product.main_image) + '" alt="' + escapeHtml(product.name) + '" ' +
+                            'class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">' +
+                        '</div>';
+                } else {
+                    imageHtml =
+                        '<div class="product-image bg-gradient-to-br from-emerald-deep/5 via-cream-light to-wood-warm/10 flex items-center justify-center">' +
+                            '<div class="product-door"></div>' +
+                        '</div>';
+                }
+
+                var priceHtml;
+                var priceStr = (product.price || '').trim();
+                if (!priceStr || priceStr === '0' || priceStr.toLowerCase() === 'по запросу') {
+                    priceHtml = '<span class="text-gray-500 italic text-sm">Цена по запросу</span>';
+                } else {
+                    priceHtml = '<span class="text-emerald-deep font-bold text-lg">' + escapeHtml(priceStr) + '</span>';
+                }
+
+                card.innerHTML =
+                    imageHtml +
+                    '<div class="p-5">' +
+                        (product.category_name ? '<span class="text-xs text-emerald-deep/70 font-medium uppercase tracking-wider">' + escapeHtml(product.category_name) + '</span>' : '') +
+                        '<h3 class="font-playfair text-lg font-semibold text-gray-800 mt-1 mb-2 group-hover:text-emerald-deep transition-colors">' + escapeHtml(truncateText(product.name, 60)) + '</h3>' +
+                        '<div class="flex items-center justify-between">' +
+                            priceHtml +
+                            '<span class="text-emerald-deep text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">' +
+                                'Подробнее' +
+                                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+                            '</span>' +
+                        '</div>' +
+                    '</div>';
+
+                grid.appendChild(card);
+            });
+
+            document.getElementById('relatedSection').classList.remove('hidden');
+
+            // Refresh AOS
+            if (typeof AOS !== 'undefined') {
+                setTimeout(function() { AOS.refresh(); }, 200);
+            }
+        }
+
+        // ========================
+        // FORM SUBMISSIONS
+        // ========================
+        function handleProductRequest(event) {
+            event.preventDefault();
+            var form = event.target;
+            var submitBtn = document.getElementById('requestSubmitBtn');
+            var originalText = submitBtn.textContent;
+
+            // Basic validation
+            if (!validateForm(form)) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="flex items-center justify-center gap-2"><span class="spinner" style="width:20px;height:20px;border-width:2px;"></span> Отправка...</span>';
+
+            var formData = new FormData(form);
+
+            fetch('api/index.php?action=submit_form', {
+                method: 'POST',
+                body: formData
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(json) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+
+                if (json.success) {
+                    document.getElementById('productRequestForm').classList.add('hidden');
+                    document.getElementById('productRequestSuccess').classList.remove('hidden');
+                    form.reset();
+                } else {
+                    alert(json.error || 'Произошла ошибка. Попробуйте позже.');
+                }
+            })
+            .catch(function(err) {
+                console.error('Form submission error:', err);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+                alert('Произошла ошибка при отправке формы. Пожалуйста, позвоните нам: +7 (926) 533-20-77');
+            });
+        }
+
+        function handleCallbackRequest(event) {
+            event.preventDefault();
+            submitGenericForm(event.target, 'callbackModal');
+        }
+
+        function handleCtaRequest(event) {
+            event.preventDefault();
+            submitGenericForm(event.target, 'ctaRequestModal');
+        }
+
+        function submitGenericForm(form, modalId) {
+            var submitBtn = form.querySelector('button[type="submit"]');
+            var originalText = submitBtn.textContent;
+
+            if (!validateForm(form)) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="flex items-center justify-center gap-2"><span class="spinner" style="width:20px;height:20px;border-width:2px;"></span> Отправка...</span>';
+
+            var formData = new FormData(form);
+
+            fetch('api/index.php?action=submit_form', {
+                method: 'POST',
+                body: formData
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(json) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+
+                if (json.success) {
+                    closeModal(modalId);
+                    form.reset();
+                    setTimeout(function() {
+                        openModal('successModal');
+                    }, 300);
+                } else {
+                    alert(json.error || 'Произошла ошибка. Попробуйте позже.');
+                }
+            })
+            .catch(function(err) {
+                console.error('Form submission error:', err);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+                alert('Произошла ошибка при отправке формы. Пожалуйста, позвоните нам: +7 (926) 533-20-77');
+            });
+        }
+
+        function validateForm(form) {
+            var valid = true;
+            var required = form.querySelectorAll('input[required], textarea[required]');
+            required.forEach(function(input) {
+                // Remove old errors
+                input.style.borderColor = '';
+                var existing = input.parentElement.querySelector('.error-message');
+                if (existing) existing.remove();
+
+                // For checkbox, check if it's checked
+                if (input.type === 'checkbox') {
+                    if (!input.checked) {
+                        valid = false;
+                        input.style.outline = '2px solid #ef4444';
+                        var err = document.createElement('div');
+                        err.className = 'error-message text-red-500 text-sm mt-1';
+                        err.textContent = 'Необходимо согласие на обработку данных';
+                        input.parentElement.appendChild(err);
+                    }
+                } else {
+                    if (!input.value.trim()) {
+                        valid = false;
+                        input.style.borderColor = '#ef4444';
+                        var err = document.createElement('div');
+                        err.className = 'error-message text-red-500 text-sm mt-1';
+                        err.textContent = 'Это поле обязательно для заполнения';
+                        input.parentElement.appendChild(err);
+                    }
+                }
+            });
+            return valid;
+        }
+
+        // ========================
+        // MODAL FUNCTIONS (window scope)
+        // ========================
+        window.openModal = function(modalId) {
+            var modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            // Reset product request modal state
+            if (modalId === 'productRequestModal') {
+                document.getElementById('productRequestForm').classList.remove('hidden');
+                document.getElementById('productRequestSuccess').classList.add('hidden');
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Re-init phone masks for this modal
+            setTimeout(function() {
+                if (typeof Inputmask !== 'undefined') {
+                    var phoneMask = new Inputmask('+7 (999) 999-99-99');
+                    var phoneInputs = modal.querySelectorAll('.phone-mask');
+                    phoneInputs.forEach(function(input) {
+                        phoneMask.mask(input);
+                    });
+                }
+            }, 50);
+        };
+
+        window.closeModal = function(modalId) {
+            var modal = document.getElementById(modalId);
+            if (!modal) return;
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+
+            // Reset form
+            var form = modal.querySelector('form');
+            if (form) {
+                form.reset();
+                // Clear validation errors
+                var errors = form.querySelectorAll('.error-message');
+                errors.forEach(function(e) { e.remove(); });
+                var inputs = form.querySelectorAll('input, textarea');
+                inputs.forEach(function(i) {
+                    i.style.borderColor = '';
+                    i.style.outline = '';
+                });
+            }
+        };
+
+        // Lightbox functions on window scope
+        window.openLightbox = openLightbox;
+        window.closeLightbox = closeLightbox;
+        window.lightboxPrev = lightboxPrev;
+        window.lightboxNext = lightboxNext;
+
+        // Form handlers on window scope
+        window.handleProductRequest = handleProductRequest;
+        window.handleCallbackRequest = handleCallbackRequest;
+        window.handleCtaRequest = handleCtaRequest;
+
+        // ========================
+        // UTILS
+        // ========================
+        function escapeHtml(str) {
+            if (!str) return '';
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function truncateText(text, maxLen) {
+            if (!text || text.length <= maxLen) return text;
+            var trimmed = text.substring(0, maxLen);
+            var lastSpace = trimmed.lastIndexOf(' ');
+            if (lastSpace > maxLen * 0.5) trimmed = trimmed.substring(0, lastSpace);
+            return trimmed + '...';
+        }
+
+    })();
+    </script>
+
+
+
+</body></html>

@@ -1,0 +1,679 @@
+/* ======================
+   CUSTOM CSS VARIABLES
+   ====================== */
+:root {
+    --emerald-deep: #1a3c34;
+    --emerald-darker: #0d1f1a;
+    --wood-warm: #c8956c;
+    --cream-light: #f8f7f4;
+}
+
+/* ======================
+   GLOBAL STYLES
+   ====================== */
+* {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* ======================
+   DOOR VISUAL (HERO)
+   ====================== */
+.door-visual {
+    perspective: 1000px;
+}
+
+.door-frame {
+    position: relative;
+    width: 280px;
+    height: 500px;
+    margin: 0 auto;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotateY(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotateY(5deg);
+    }
+}
+
+.door-body {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+        #c8956c 0%,
+        #b8855c 25%,
+        #a8754c 50%,
+        #b8855c 75%,
+        #c8956c 100%
+    );
+    border-radius: 8px;
+    position: relative;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.door-panel {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    height: 25%;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.door-panel:nth-child(1) {
+    top: 8%;
+}
+
+.door-panel:nth-child(2) {
+    top: 37.5%;
+}
+
+.door-panel:nth-child(3) {
+    top: 67%;
+}
+
+.door-handle {
+    position: absolute;
+    right: 15%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 60px;
+    background: linear-gradient(90deg, #d4af37, #f4d03f, #d4af37);
+    border-radius: 6px;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.door-handle::before {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #d4af37, #f4d03f);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ======================
+   CATEGORY CARDS
+   ====================== */
+.category-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.category-visual {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+}
+
+.category-card:hover .category-visual {
+    transform: scale(1.05);
+}
+
+.category-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+}
+
+
+/* ======================
+   BRAND CARDS
+   ====================== */
+.brand-card {
+    padding: 1.5rem 2.5rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-card:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    border-color: var(--emerald-deep);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.brand-card img {
+    max-height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* ======================
+   PRODUCT IMAGE OVERRIDE
+   ====================== */
+.object-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: linear-gradient(135deg, #BDBBBC, #EFEFEF);
+}
+
+/* ======================
+   PRODUCT CARDS
+   ====================== */
+.product-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+    aspect-ratio: 1/1;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-door {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 85%;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(0, 0, 0, 0.15) 100%
+    );
+    border-radius: 6px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow:
+        inset 0 10px 20px rgba(255, 255, 255, 0.2),
+        0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Door panels */
+.product-door::before,
+.product-door::after {
+    content: '';
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    height: 30%;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.product-door::before {
+    top: 10%;
+}
+
+.product-door::after {
+    bottom: 10%;
+}
+
+/* ======================
+   FEATURE CARDS
+   ====================== */
+.feature-card {
+    padding: 2rem;
+    border-radius: 1rem;
+    background: white;
+    border: 1px solid #f3f4f6;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: var(--emerald-deep);
+    box-shadow: 0 10px 30px rgba(26, 60, 52, 0.1);
+    transform: translateY(-4px);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,
+        rgba(26, 60, 52, 0.1) 0%,
+        rgba(26, 60, 52, 0.05) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: var(--emerald-deep);
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    background: var(--emerald-deep);
+    color: white;
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* ======================
+   MATERIAL SWATCHES
+   ====================== */
+.material-swatch {
+    aspect-ratio: 1;
+    border-radius: 1rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.material-swatch:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+.material-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.8) 0%,
+        transparent 100%
+    );
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.material-swatch:hover .material-label {
+    transform: translateY(0);
+}
+
+/* Wood texture effect */
+.material-swatch::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(0, 0, 0, 0.03) 3px
+        );
+    mix-blend-mode: multiply;
+}
+
+/* ======================
+   PORTFOLIO ITEMS
+   ====================== */
+.portfolio-item {
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    min-height: 300px;
+}
+
+.portfolio-image {
+    height: 100%;
+    min-height: 300px;
+    position: relative;
+    transition: transform 0.5s ease;
+}
+
+.portfolio-item:hover .portfolio-image {
+    transform: scale(1.1);
+}
+
+.portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+}
+
+/* ======================
+   STORE CARDS
+   ====================== */
+.store-card {
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.store-card:hover {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+}
+
+.store-map {
+    height: 100%;
+    min-height: 420px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.store-info {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    max-width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* ======================
+   MODAL STYLES
+   ====================== */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    padding: 3rem;
+    border-radius: 1.5rem;
+    max-width: 500px;
+    width: 90%;
+    margin: 2rem auto;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+    z-index: 10000;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background: var(--emerald-deep);
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* ======================
+   FORM STYLES
+   ====================== */
+.form-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--emerald-deep);
+    box-shadow: 0 0 0 3px rgba(26, 60, 52, 0.1);
+}
+
+textarea.form-input {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* ======================
+   HEADER SCROLL EFFECT
+   ====================== */
+#header.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+}
+
+/* ======================
+   RESPONSIVE ADJUSTMENTS
+   ====================== */
+@media (max-width: 1024px) {
+    .door-frame {
+        width: 220px;
+        height: 400px;
+    }
+
+    .store-map {
+        min-height: 380px;
+    }
+}
+
+@media (max-width: 768px) {
+    .door-frame {
+        width: 180px;
+        height: 320px;
+    }
+
+    .product-image {
+        aspect-ratio: 1/1;
+    }
+
+    .category-visual {
+        height: 240px;
+    }
+
+    .modal-content {
+        padding: 2rem;
+    }
+
+    .store-map {
+        min-height: 350px;
+    }
+}
+
+/* ======================
+   UTILITY ANIMATIONS
+   ====================== */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ======================
+   LOADING SPINNER
+   ====================== */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(26, 60, 52, 0.1);
+    border-top-color: var(--emerald-deep);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ======================
+   SMOOTH TRANSITIONS
+   ====================== */
+a, button {
+    transition: all 0.3s ease;
+}
+
+img {
+    transition: transform 0.3s ease;
+}
+
+/* ======================
+   SELECTION STYLING
+   ====================== */
+::selection {
+    background: var(--emerald-deep);
+    color: white;
+}
+
+::-moz-selection {
+    background: var(--emerald-deep);
+    color: white;
+}
+
+/* ======================
+   SCROLLBAR STYLING
+   ====================== */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--emerald-deep);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--emerald-darker);
+}
+
+/* ======================
+   FOCUS VISIBLE
+   ====================== */
+*:focus-visible {
+    outline: 2px solid var(--emerald-deep);
+    outline-offset: 4px;
+}
+
+/* ======================
+   PRINT STYLES
+   ====================== */
+@media print {
+    .modal,
+    header,
+    footer,
+    button {
+        display: none !important;
+    }
+}

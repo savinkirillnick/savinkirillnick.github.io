@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Наши работы - фотогалерея установленных дверей. Примеры монтажа межкомнатных и входных дверей от Твои Двери.">
+    <title>Наши работы - Портфолио установленных дверей - Твои Двери</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;%F0%9F%9A%AA&lt;/text&gt;&lt;/svg&gt;">
+
+    <!-- Local Assets -->
+    <link rel="stylesheet" href="portfolio_files/fonts.css">
+    <script src="portfolio_files/tailwind.js"></script>
+    <link rel="stylesheet" href="portfolio_files/aos.css">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'emerald-deep': '#1a3c34',
+                        'emerald-darker': '#0d1f1a',
+                        'wood-warm': '#c8956c',
+                        'cream-light': '#f8f7f4',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="portfolio_files/style.css">
+
+    <style>
+        /* ======================
+           GLOBAL STYLES
+           ====================== */
+        * { scroll-behavior: smooth; }
+        body { overflow-x: hidden; }
+
+        ::selection { background: var(--emerald-deep); color: white; }
+        ::-moz-selection { background: var(--emerald-deep); color: white; }
+
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--emerald-deep); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--emerald-darker); }
+
+        *:focus-visible {
+            outline: 2px solid var(--emerald-deep);
+            outline-offset: 4px;
+        }
+
+        a, button { transition: all 0.3s ease; }
+
+        /* ======================
+           HEADER SCROLL EFFECT
+           ====================== */
+        #header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+        }
+
+        /* ======================
+           MASONRY GRID
+           ====================== */
+        .masonry-grid {
+            column-count: 3;
+            column-gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .masonry-grid {
+                column-count: 1;
+            }
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .masonry-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 1rem;
+            transition: transform 0.4s ease;
+        }
+
+        .masonry-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .masonry-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 1rem;
+            pointer-events: none;
+        }
+
+        .masonry-item:hover::before {
+            opacity: 1;
+        }
+
+        .masonry-item .overlay-text {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .masonry-item:hover .overlay-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ======================
+           LIGHTBOX
+           ====================== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.95);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10001;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10001;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-nav.prev {
+            left: 2rem;
+        }
+
+        .lightbox-nav.next {
+            right: 2rem;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 10001;
+        }
+
+        @media (max-width: 640px) {
+            .lightbox-close,
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            .lightbox-close {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .lightbox-nav.prev {
+                left: 1rem;
+            }
+
+            .lightbox-nav.next {
+                right: 1rem;
+            }
+
+            .lightbox-counter {
+                bottom: 1rem;
+            }
+        }
+
+        /* ======================
+           FADE ANIMATION
+           ====================== */
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.sticky{position:sticky}.top-0{top:0px}.bottom-0{bottom:0px}.left-0{left:0px}.right-0{right:0px}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-12{margin-bottom:3rem}.mb-6{margin-bottom:1.5rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.mr-1{margin-right:0.25rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-12{height:3rem}.h-4{height:1rem}.h-8{height:2rem}.h-10{height:2.5rem}.h-20{height:5rem}.h-48{height:12rem}.h-6{height:1.5rem}.h-5{height:1.25rem}.min-h-screen{min-height:100vh}.w-4{width:1rem}.w-8{width:2rem}.w-full{width:100%}.w-10{width:2.5rem}.w-20{width:5rem}.w-6{width:1.5rem}.w-5{width:1.25rem}.max-w-7xl{max-width:80rem}.max-w-6xl{max-width:72rem}.flex-shrink-0{flex-shrink:0}.translate-y-full{--tw-translate-y:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.gap-3{gap:0.75rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.whitespace-nowrap{white-space:nowrap}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.bg-cream-light{--tw-bg-opacity:1;background-color:rgb(248 247 244 / var(--tw-bg-opacity, 1))}.bg-emerald-deep{--tw-bg-opacity:1;background-color:rgb(26 60 52 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-emerald-darker{--tw-bg-opacity:1;background-color:rgb(13 31 26 / var(--tw-bg-opacity, 1))}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.p-4{padding:1rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.px-8{padding-left:2rem;padding-right:2rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pt-4{padding-top:1rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-right{text-align:right}.font-inter{font-family:Inter, sans-serif}.font-playfair{font-family:Playfair Display, serif}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.text-emerald-deep{--tw-text-opacity:1;color:rgb(26 60 52 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-white\/40{color:rgb(255 255 255 / 0.4)}.text-white\/50{color:rgb(255 255 255 / 0.5)}.text-white\/60{color:rgb(255 255 255 / 0.6)}.text-white\/70{color:rgb(255 255 255 / 0.7)}.text-white\/80{color:rgb(255 255 255 / 0.8)}.text-wood-warm{--tw-text-opacity:1;color:rgb(200 149 108 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.accent-emerald-600{accent-color:#059669}.brightness-0{--tw-brightness:brightness(0);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.invert{--tw-invert:invert(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.duration-500{transition-duration:500ms}.hover\:bg-emerald-darker:hover{--tw-bg-opacity:1;background-color:rgb(13 31 26 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.hover\:text-emerald-deep:hover{--tw-text-opacity:1;color:rgb(26 60 52 / var(--tw-text-opacity, 1))}.hover\:text-wood-warm:hover{--tw-text-opacity:1;color:rgb(200 149 108 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:shadow-lg:hover{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:border-emerald-deep:focus{--tw-border-opacity:1;border-color:rgb(26 60 52 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}@media (min-width: 768px){.md\:flex{display:flex}.md\:h-14{height:3.5rem}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:py-12{padding-top:3rem;padding-bottom:3rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}}@media (min-width: 1024px){.lg\:flex{display:flex}.lg\:hidden{display:none}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:text-5xl{font-size:3rem;line-height:1}}</style></head>
+<body class="font-inter antialiased text-gray-800" data-aos-easing="ease-out-cubic" data-aos-duration="800" data-aos-delay="0">
+
+    <!-- TOP BAR -->
+    <div class="bg-emerald-deep text-white py-2 px-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-sm">
+            <div class="flex flex-wrap gap-6">
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>МО, г. Щёлково, ул. Советская д.1 корп.2</span>
+                </span>
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Без выходных: 9:00–18:00 / 10:00–19:00</span>
+                </span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="tel:+79265332077" class="flex items-center gap-2 hover:text-wood-warm transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                    <span>+7 (926) 533-20-77</span>
+                </a>
+                <a href="tel:+79265688682" class="hidden md:flex items-center gap-1 hover:text-wood-warm transition-colors">
+                    <span>+7 (926) 568-86-82</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header id="header" class="bg-white border-b border-gray-100 sticky top-0 z-50 transition-all duration-300 scrolled">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="https://tvoidveri-msk.ru/index.html" class="flex items-center gap-2">
+                    <img src="portfolio_files/logo.png" alt="Твои Двери" class="h-12 md:h-14">
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="https://tvoidveri-msk.ru/catalog.html" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Каталог</a>
+                    <a href="https://tvoidveri-msk.ru/index.html#services" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Услуги</a>
+                    <a href="https://tvoidveri-msk.ru/index.html#materials" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Материалы</a>
+                    <a href="https://tvoidveri-msk.ru/portfolio.html" class="text-emerald-deep font-semibold">Портфолио</a>
+                    <a href="https://tvoidveri-msk.ru/index.html#stores" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Магазины</a>
+                    <a href="https://tvoidveri-msk.ru/index.html#contacts" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Контакты</a>
+                </nav>
+
+                <!-- Contact Info & CTA -->
+                <div class="hidden lg:flex items-center gap-6">
+                    <div class="text-right">
+                        <a href="tel:+79265332077" class="block text-emerald-deep font-semibold hover:text-wood-warm transition-colors">+7 (926) 533-20-77</a>
+                        <a href="mailto:ruslanin75@mail.ru" class="block text-sm text-gray-500 hover:text-emerald-deep transition-colors">ruslanin75@mail.ru</a>
+                    </div>
+                    <button onclick="openModal('callbackModal')" class="bg-emerald-deep text-white px-6 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium hover:shadow-lg">
+                        Заказать звонок
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="lg:hidden text-emerald-deep">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-gray-100">
+            <nav class="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-4">
+                <a href="https://tvoidveri-msk.ru/catalog.html" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Каталог</a>
+                <a href="https://tvoidveri-msk.ru/index.html#services" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Услуги</a>
+                <a href="https://tvoidveri-msk.ru/index.html#materials" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Материалы</a>
+                <a href="https://tvoidveri-msk.ru/portfolio.html" class="text-emerald-deep font-semibold py-2">Портфолио</a>
+                <a href="https://tvoidveri-msk.ru/index.html#stores" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Магазины</a>
+                <a href="https://tvoidveri-msk.ru/index.html#contacts" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Контакты</a>
+                <div class="pt-4 border-t border-gray-100">
+                    <a href="tel:+79265332077" class="block text-emerald-deep font-semibold text-lg mb-1">+7 (926) 533-20-77</a>
+                    <a href="tel:+79265688682" class="block text-emerald-deep font-semibold text-lg mb-2">+7 (926) 568-86-82</a>
+                    <a href="mailto:ruslanin75@mail.ru" class="block text-gray-500 mb-4">ruslanin75@mail.ru</a>
+                    <button onclick="openModal('callbackModal')" class="w-full bg-emerald-deep text-white px-6 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium">
+                        Заказать звонок
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="bg-cream-light min-h-screen">
+
+        <!-- BREADCRUMBS -->
+        <div class="bg-white border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 py-3">
+                <nav class="flex items-center gap-2 text-sm text-gray-500">
+                    <a href="https://tvoidveri-msk.ru/index.html" class="hover:text-emerald-deep transition-colors">Главная</a>
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                    <span class="text-emerald-deep font-medium">Наши работы</span>
+                </nav>
+            </div>
+        </div>
+
+        <!-- PAGE TITLE -->
+        <div class="bg-white border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 py-8 md:py-12">
+                <h1 class="font-playfair text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-deep tracking-tight mb-3 aos-init aos-animate" data-aos="fade-up">
+                    Наши работы
+                </h1>
+                <p class="text-gray-500 text-lg aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                    Фотогалерея установленных дверей — реальные примеры нашего монтажа
+                </p>
+            </div>
+        </div>
+
+        <!-- PORTFOLIO GRID -->
+        <div class="max-w-7xl mx-auto px-4 py-12">
+            <div class="masonry-grid" id="portfolioGrid">
+                    <div class="masonry-item aos-init aos-animate fade-enter-active" onclick="openLightbox(0)" data-aos="fade-up" data-aos-delay="0">
+                        <img src="portfolio_files/portfolio-01.jpg" alt="Установка двери - пример 1" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(1)" data-aos="fade-up" data-aos-delay="30">
+                        <img src="portfolio_files/portfolio-02.jpg" alt="Установка двери - пример 2" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(2)" data-aos="fade-up" data-aos-delay="60">
+                        <img src="portfolio_files/portfolio-03.jpg" alt="Установка двери - пример 3" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(3)" data-aos="fade-up" data-aos-delay="90">
+                        <img src="portfolio_files/portfolio-04.jpg" alt="Установка двери - пример 4" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(4)" data-aos="fade-up" data-aos-delay="120">
+                        <img src="portfolio_files/portfolio-05.jpg" alt="Установка двери - пример 5" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(5)" data-aos="fade-up" data-aos-delay="150">
+                        <img src="portfolio_files/portfolio-06.jpg" alt="Установка двери - пример 6" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(6)" data-aos="fade-up" data-aos-delay="180">
+                        <img src="portfolio_files/portfolio-07.jpg" alt="Установка двери - пример 7" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(7)" data-aos="fade-up" data-aos-delay="210">
+                        <img src="portfolio_files/portfolio-08.jpg" alt="Установка двери - пример 8" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(8)" data-aos="fade-up" data-aos-delay="240">
+                        <img src="portfolio_files/portfolio-09.jpg" alt="Установка двери - пример 9" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init aos-animate fade-enter-active" onclick="openLightbox(9)" data-aos="fade-up" data-aos-delay="270">
+                        <img src="portfolio_files/portfolio-10.jpg" alt="Установка двери - пример 10" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(10)" data-aos="fade-up" data-aos-delay="300">
+                        <img src="portfolio_files/portfolio-11.jpg" alt="Установка двери - пример 11" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(11)" data-aos="fade-up" data-aos-delay="330">
+                        <img src="portfolio_files/portfolio-12.jpg" alt="Установка двери - пример 12" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(12)" data-aos="fade-up" data-aos-delay="360">
+                        <img src="portfolio_files/portfolio-13.jpg" alt="Установка двери - пример 13" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(13)" data-aos="fade-up" data-aos-delay="390">
+                        <img src="portfolio_files/portfolio-14.jpg" alt="Установка двери - пример 14" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(14)" data-aos="fade-up" data-aos-delay="420">
+                        <img src="portfolio_files/portfolio-15.jpg" alt="Установка двери - пример 15" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(15)" data-aos="fade-up" data-aos-delay="450">
+                        <img src="portfolio_files/portfolio-16.jpg" alt="Установка двери - пример 16" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(16)" data-aos="fade-up" data-aos-delay="480">
+                        <img src="portfolio_files/portfolio-17.jpg" alt="Установка двери - пример 17" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(17)" data-aos="fade-up" data-aos-delay="510">
+                        <img src="portfolio_files/portfolio-18.jpg" alt="Установка двери - пример 18" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(18)" data-aos="fade-up" data-aos-delay="540">
+                        <img src="portfolio_files/portfolio-19.jpg" alt="Установка двери - пример 19" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init aos-animate fade-enter-active" onclick="openLightbox(19)" data-aos="fade-up" data-aos-delay="570">
+                        <img src="portfolio_files/portfolio-20.jpg" alt="Установка двери - пример 20" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(20)" data-aos="fade-up" data-aos-delay="600">
+                        <img src="portfolio_files/portfolio-21.jpg" alt="Установка двери - пример 21" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(21)" data-aos="fade-up" data-aos-delay="630">
+                        <img src="portfolio_files/portfolio-22.jpg" alt="Установка двери - пример 22" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(22)" data-aos="fade-up" data-aos-delay="660">
+                        <img src="portfolio_files/portfolio-23.jpg" alt="Установка двери - пример 23" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(23)" data-aos="fade-up" data-aos-delay="690">
+                        <img src="portfolio_files/portfolio-24.jpg" alt="Установка двери - пример 24" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(24)" data-aos="fade-up" data-aos-delay="720">
+                        <img src="portfolio_files/portfolio-25.jpg" alt="Установка двери - пример 25" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(25)" data-aos="fade-up" data-aos-delay="750">
+                        <img src="portfolio_files/portfolio-26.jpg" alt="Установка двери - пример 26" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(26)" data-aos="fade-up" data-aos-delay="780">
+                        <img src="portfolio_files/portfolio-27.jpg" alt="Установка двери - пример 27" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(27)" data-aos="fade-up" data-aos-delay="810">
+                        <img src="portfolio_files/portfolio-28.jpg" alt="Установка двери - пример 28" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(28)" data-aos="fade-up" data-aos-delay="840">
+                        <img src="portfolio_files/portfolio-29.jpg" alt="Установка двери - пример 29" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                
+                    <div class="masonry-item aos-init fade-enter-active aos-animate" onclick="openLightbox(29)" data-aos="fade-up" data-aos-delay="870">
+                        <img src="portfolio_files/portfolio-30.jpg" alt="Установка двери - пример 30" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="contacts" class="bg-emerald-darker text-white py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Column 1 - About -->
+                <div>
+                    <a href="https://tvoidveri-msk.ru/index.html" class="inline-block mb-4">
+                        <img src="portfolio_files/logo.png" alt="Твои Двери" class="h-10 brightness-0 invert">
+                    </a>
+                    <p class="text-white/70 text-sm leading-relaxed mb-4">
+                        Межкомнатные и входные двери от производителя. 
+Низкие цены, помощь в подборе, профессиональный монтаж и замер.
+                    </p>
+                    <p class="text-white/50 text-sm">Работаем без выходных</p>
+                </div>
+
+                <!-- Column 2 - Quick Links -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Навигация</h4>
+                    <ul class="space-y-2 text-white/80 text-sm">
+                        <li><a href="https://tvoidveri-msk.ru/catalog.html" class="hover:text-wood-warm transition-colors">Каталог дверей</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/index.html#services" class="hover:text-wood-warm transition-colors">Услуги</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/index.html#materials" class="hover:text-wood-warm transition-colors">Материалы</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/portfolio.html" class="hover:text-wood-warm transition-colors">Портфолио</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/index.html#stores" class="hover:text-wood-warm transition-colors">Магазины</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 - Contacts -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Контакты</h4>
+                    <div class="space-y-3 text-white/80 text-sm">
+                        <div class="flex items-start gap-3">
+                            <svg class="w-4 h-4 mt-0.5 flex-shrink-0 text-wood-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            <div>
+                                <a href="tel:+79265332077" class="block hover:text-wood-warm transition-colors">+7 (926) 533-20-77</a>
+                                <a href="tel:+79265688682" class="block hover:text-wood-warm transition-colors">+7 (926) 568-86-82</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <svg class="w-4 h-4 mt-0.5 flex-shrink-0 text-wood-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <a href="mailto:ruslanin75@mail.ru" class="hover:text-wood-warm transition-colors">ruslanin75@mail.ru</a>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <svg class="w-4 h-4 mt-0.5 flex-shrink-0 text-wood-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>МО, г. Щёлково, ул. Советская д.1 корп.2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 4 - Map Placeholder -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Наш офис</h4>
+                    <div class="bg-white/10 rounded-xl h-48 flex items-center justify-center">
+                        <div class="text-center text-white/40">
+                            <svg class="w-10 h-10 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <p class="text-sm">Карта</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-white/10 pt-8">
+                <div class="flex flex-wrap justify-between items-center gap-4 text-sm text-white/60">
+                    <p>© 2026 Твои Двери. Все права защищены.</p>
+                    <a href="https://tvoidveri-msk.ru/privacy-policy.html" class="hover:text-wood-warm transition-colors">Политика конфиденциальности</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 transform translate-y-full transition-transform duration-500" style="display:none;">
+        <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-4">
+            <p class="text-sm">Мы используем файлы cookie для 
+обеспечения лучшей работы сайта. Продолжая использовать сайт, вы даёте 
+согласие на использование cookie.</p>
+            <button onclick="acceptCookies()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">Принять</button>
+        </div>
+    </div>
+
+    <!-- CALLBACK MODAL -->
+    <div id="callbackModal" class="modal">
+        <div class="modal-overlay" onclick="closeModal('callbackModal')"></div>
+        <div class="modal-content">
+            <button onclick="closeModal('callbackModal')" class="modal-close">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h3 class="font-playfair text-3xl font-bold text-emerald-deep mb-2">Заказать звонок</h3>
+            <p class="text-gray-600 mb-6">Оставьте номер телефона, и мы перезвоним вам</p>
+            <form id="callbackForm" onsubmit="submitCallbackForm(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Ваше имя</label>
+                    <input type="text" name="name" required="" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-deep transition-colors" placeholder="Введите ваше имя">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Телефон</label>
+                    <input type="tel" name="phone" required="" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-deep transition-colors" placeholder="+7 (___) ___-__-__">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Сообщение (необязательно)</label>
+                    <textarea name="message" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-deep transition-colors resize-vertical" placeholder="Ваш вопрос или пожелание..."></textarea>
+                </div>
+                <label class="flex items-start gap-2 text-sm text-gray-600 mt-3">
+                    <input type="checkbox" name="privacy_consent" required="" class="mt-1 accent-emerald-600">
+                    <span>Я согласен на <a href="https://tvoidveri-msk.ru/privacy-policy.html" class="text-emerald-600 hover:underline">обработку персональных данных</a></span>
+                </label>
+                <button type="submit" class="w-full bg-emerald-deep text-white px-6 py-4 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium text-lg mt-4">
+                    Отправить
+                </button>
+            </form>
+            <!-- Success State -->
+            <div id="callbackSuccess" class="hidden text-center">
+                <div class="w-20 h-20 bg-emerald-deep rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="font-playfair text-3xl font-bold text-emerald-deep mb-2">Спасибо за заявку!</h3>
+                <p class="text-gray-600 mb-6">Наш специалист свяжется с вами в ближайшее время</p>
+                <button onclick="closeModal('callbackModal')" class="bg-emerald-deep text-white px-8 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium">
+                    Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <button class="lightbox-nav prev" onclick="navigateLightbox(-1)">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        <button class="lightbox-nav next" onclick="navigateLightbox(1)">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightboxImage" src="" alt="Portfolio">
+        </div>
+        <div class="lightbox-counter">
+            <span id="lightboxCounter">1 / 30</span>
+        </div>
+    </div>
+
+    <!-- AOS Library -->
+    <script src="portfolio_files/aos.js"></script>
+
+    <!-- MAIN JAVASCRIPT -->
+    <script>
+    (function() {
+        'use strict';
+
+        // Portfolio images
+        const portfolioImages = [];
+        for (let i = 1; i <= 30; i++) {
+            const num = i.toString().padStart(2, '0');
+            portfolioImages.push({
+                src: `img/portfolio/portfolio-${num}.jpg`,
+                alt: `Установка двери - пример ${i}`
+            });
+        }
+
+        let currentLightboxIndex = 0;
+
+        // ======================
+        // INIT
+        // ======================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 800,
+                    once: true,
+                    offset: 80,
+                    easing: 'ease-out-cubic'
+                });
+            }
+
+            // Initialize mobile menu
+            initMobileMenu();
+
+            // Initialize header scroll
+            initHeaderScroll();
+
+            // Load portfolio images
+            loadPortfolio();
+
+            // Show cookie banner if not accepted
+            if (!localStorage.getItem('cookiesAccepted')) {
+                const banner = document.getElementById('cookieBanner');
+                banner.style.display = '';
+                setTimeout(() => { banner.style.transform = 'translateY(0)'; }, 100);
+            }
+        });
+
+        // ======================
+        // LOAD PORTFOLIO
+        // ======================
+        function loadPortfolio() {
+            const grid = document.getElementById('portfolioGrid');
+            let html = '';
+
+            portfolioImages.forEach((image, index) => {
+                html += `
+                    <div class="masonry-item fade-enter" onclick="openLightbox(${index})" data-aos="fade-up" data-aos-delay="${index * 30}">
+                        <img src="${image.src}" alt="${image.alt}" loading="lazy">
+                        <div class="overlay-text">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            Увеличить
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+
+            // Trigger fade-in animation
+            requestAnimationFrame(() => {
+                const items = document.querySelectorAll('.masonry-item');
+                items.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.classList.add('fade-enter-active');
+                        item.classList.remove('fade-enter');
+                    }, i * 30);
+                });
+            });
+        }
+
+        // ======================
+        // LIGHTBOX
+        // ======================
+        window.openLightbox = function(index) {
+            currentLightboxIndex = index;
+            updateLightboxImage();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeLightbox = function() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        window.navigateLightbox = function(direction) {
+            currentLightboxIndex += direction;
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = portfolioImages.length - 1;
+            } else if (currentLightboxIndex >= portfolioImages.length) {
+                currentLightboxIndex = 0;
+            }
+            updateLightboxImage();
+        };
+
+        function updateLightboxImage() {
+            const img = document.getElementById('lightboxImage');
+            const counter = document.getElementById('lightboxCounter');
+            img.src = portfolioImages[currentLightboxIndex].src;
+            img.alt = portfolioImages[currentLightboxIndex].alt;
+            counter.textContent = `${currentLightboxIndex + 1} / ${portfolioImages.length}`;
+        }
+
+        // Close lightbox on ESC or click outside
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                navigateLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateLightbox(1);
+            }
+        });
+
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // ======================
+        // MOBILE MENU
+        // ======================
+        function initMobileMenu() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = menuBtn.querySelector('svg');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    } else {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                    }
+                });
+
+                const menuLinks = mobileMenu.querySelectorAll('a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                        const icon = menuBtn.querySelector('svg');
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    });
+                });
+            }
+        }
+
+        // ======================
+        // HEADER SCROLL
+        // ======================
+        function initHeaderScroll() {
+            const header = document.getElementById('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        }
+
+        // ======================
+        // MODAL FUNCTIONS
+        // ======================
+        window.openModal = function(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                // Reset to form view
+                const form = modal.querySelector('form');
+                const success = modal.querySelector('[id$="Success"]');
+                if (form) form.style.display = '';
+                if (success) success.classList.add('hidden');
+
+                const h3 = modal.querySelector('.modal-content > h3');
+                const p = modal.querySelector('.modal-content > p');
+                if (h3) h3.style.display = '';
+                if (p) p.style.display = '';
+
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        window.closeModal = function(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                const form = modal.querySelector('form');
+                if (form) form.reset();
+            }
+        };
+
+        // Close modal on ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const activeModal = document.querySelector('.modal.active');
+                if (activeModal && activeModal.id !== 'lightbox') {
+                    activeModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+
+        // ======================
+        // FORM SUBMISSION
+        // ======================
+        window.submitCallbackForm = function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const name = form.querySelector('[name="name"]').value.trim();
+            const phone = form.querySelector('[name="phone"]').value.trim();
+
+            if (!name || name.length < 2) {
+                alert('Пожалуйста, введите ваше имя');
+                return;
+            }
+            if (!phone || phone.replace(/[^0-9]/g, '').length < 11) {
+                alert('Пожалуйста, введите корректный номер телефона');
+                return;
+            }
+
+            // Show success (in production, send to API)
+            form.style.display = 'none';
+            const modal = form.closest('.modal-content');
+            const h3 = modal.querySelector('h3');
+            const p = modal.querySelector('h3 + p');
+            if (h3) h3.style.display = 'none';
+            if (p) p.style.display = 'none';
+            document.getElementById('callbackSuccess').classList.remove('hidden');
+            form.reset();
+        };
+
+        // ======================
+        // COOKIE BANNER
+        // ======================
+        window.acceptCookies = function() {
+            localStorage.setItem('cookiesAccepted', '1');
+            const banner = document.getElementById('cookieBanner');
+            banner.style.transform = 'translateY(100%)';
+            setTimeout(() => { banner.style.display = 'none'; }, 500);
+        };
+
+    })();
+    </script>
+
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            position: relative;
+            background: white;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            margin: 2rem auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+            z-index: 10000;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .modal-close:hover {
+            background: var(--emerald-deep);
+            color: white;
+            transform: rotate(90deg);
+        }
+        @media (max-width: 768px) {
+            .modal-content { padding: 2rem; }
+        }
+    </style>
+
+
+
+</body></html>
