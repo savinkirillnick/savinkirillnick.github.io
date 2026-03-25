@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Каталог дверей - межкомнатные и входные двери от производителя. Широкий ассортимент, низкие цены, доставка по Москве и МО.">
+    <title>Арбат - Шпон + эмаль - Каталог - Твои Двери</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://tvoidveri-msk.ru/img/favicon.png">
+
+    <!-- Local Assets -->
+    <link rel="stylesheet" href="serie_files/fonts.css">
+    <script src="serie_files/tailwind.js"></script>
+    <link rel="stylesheet" href="serie_files/aos.css">
+    <script src="serie_files/inputmask.min.js"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'emerald-deep': '#1a3c34',
+                        'emerald-darker': '#0d1f1a',
+                        'wood-warm': '#c8956c',
+                        'cream-light': '#f8f7f4',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ======================
+           CSS VARIABLES
+           ====================== */
+        :root {
+            --emerald-deep: #1a3c34;
+            --emerald-darker: #0d1f1a;
+            --wood-warm: #c8956c;
+            --cream-light: #f8f7f4;
+        }
+
+        /* ======================
+           GLOBAL STYLES
+           ====================== */
+        * { scroll-behavior: smooth; }
+        body { overflow-x: hidden; }
+
+        ::selection { background: var(--emerald-deep); color: white; }
+        ::-moz-selection { background: var(--emerald-deep); color: white; }
+
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--emerald-deep); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--emerald-darker); }
+
+        *:focus-visible {
+            outline: 2px solid var(--emerald-deep);
+            outline-offset: 4px;
+        }
+
+        a, button { transition: all 0.3s ease; }
+        img { transition: transform 0.3s ease; }
+
+        /* ======================
+           HEADER SCROLL EFFECT
+           ====================== */
+        #header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+        }
+
+        /* ======================
+           CATEGORY FILTER PILLS
+           ====================== */
+        .category-pills {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .category-pills::-webkit-scrollbar { display: none; }
+
+        .category-pill {
+            white-space: nowrap;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .category-pill:hover {
+            border-color: var(--emerald-deep);
+            color: var(--emerald-deep);
+        }
+        .category-pill.active {
+            background: var(--emerald-deep);
+            color: white;
+            border-color: var(--emerald-deep);
+        }
+
+        /* ======================
+           PRODUCT/SERIES CARD
+           ====================== */
+        .product-card {
+            background: white;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        .product-card:hover .product-card-image img {
+            transform: scale(1.05);
+        }
+
+        .product-card-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* List view */
+        .products-list .product-card {
+            display: flex;
+            flex-direction: row;
+        }
+        .products-list .product-card .product-card-image {
+            width: 280px;
+            min-width: 280px;
+        }
+        .products-list .product-card .product-card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+        @media (max-width: 640px) {
+            .products-list .product-card {
+                flex-direction: column;
+            }
+            .products-list .product-card .product-card-image {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+
+        /* ======================
+           SKELETON LOADING
+           ====================== */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 0.5rem;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ======================
+           MODAL STYLES
+           ====================== */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            position: relative;
+            background: white;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            margin: 2rem auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+            z-index: 10000;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .modal-close:hover {
+            background: var(--emerald-deep);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* ======================
+           FORM STYLES
+           ====================== */
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--emerald-deep);
+            box-shadow: 0 0 0 3px rgba(26, 60, 52, 0.1);
+        }
+        textarea.form-input {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* ======================
+           CUSTOM SELECT
+           ====================== */
+        .custom-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+
+        /* ======================
+           PAGINATION
+           ====================== */
+        .pagination-btn {
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pagination-btn:hover:not(:disabled):not(.active) {
+            border-color: var(--emerald-deep);
+            color: var(--emerald-deep);
+        }
+        .pagination-btn.active {
+            background: var(--emerald-deep);
+            color: white;
+            border-color: var(--emerald-deep);
+        }
+        .pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ======================
+           FADE TRANSITION
+           ====================== */
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* ======================
+           SPINNER
+           ====================== */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(26, 60, 52, 0.1);
+            border-top-color: var(--emerald-deep);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        .spinner-sm {
+            width: 20px;
+            height: 20px;
+            border-width: 2px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ======================
+           RESPONSIVE
+           ====================== */
+        @media (max-width: 768px) {
+            .modal-content { padding: 2rem; }
+        }
+
+        @media print {
+            .modal, header, footer, button { display: none !important; }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.top-0{top:0px}.bottom-0{bottom:0px}.left-0{left:0px}.right-0{right:0px}.top-\[65px\]{top:65px}.left-3{left:0.75rem}.top-3{top:0.75rem}.z-50{z-index:50}.z-40{z-index:40}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-1{margin-top:0.25rem}.mt-10{margin-top:2.5rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.ml-2{margin-left:0.5rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-12{height:3rem}.h-4{height:1rem}.h-8{height:2rem}.h-10{height:2.5rem}.h-20{height:5rem}.h-3{height:0.75rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-9{height:2.25rem}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-4{width:1rem}.w-8{width:2rem}.w-10{width:2.5rem}.w-16{width:4rem}.w-20{width:5rem}.w-24{width:6rem}.w-28{width:7rem}.w-3\/4{width:75%}.w-32{width:8rem}.w-36{width:9rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-full{width:100%}.max-w-7xl{max-width:80rem}.max-w-6xl{max-width:72rem}.translate-y-full{--tw-translate-y:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.whitespace-nowrap{white-space:nowrap}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.bg-emerald-deep{--tw-bg-opacity:1;background-color:rgb(26 60 52 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-cream-light{--tw-bg-opacity:1;background-color:rgb(248 247 244 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-emerald-darker{--tw-bg-opacity:1;background-color:rgb(13 31 26 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-emerald-deep\/5{background-color:rgb(26 60 52 / 0.05)}.object-contain{object-fit:contain}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-8{padding-left:2rem;padding-right:2rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-8{padding-top:2rem;padding-bottom:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pb-1{padding-bottom:0.25rem}.pb-12{padding-bottom:3rem}.pb-4{padding-bottom:1rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-right{text-align:right}.font-inter{font-family:Inter, sans-serif}.font-playfair{font-family:Playfair Display, serif}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-medium{font-weight:500}.font-semibold{font-weight:600}.font-bold{font-weight:700}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-emerald-deep{--tw-text-opacity:1;color:rgb(26 60 52 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-white\/60{color:rgb(255 255 255 / 0.6)}.text-white\/80{color:rgb(255 255 255 / 0.8)}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-wood-warm{--tw-text-opacity:1;color:rgb(200 149 108 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.accent-emerald-600{accent-color:#059669}.opacity-70{opacity:0.7}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.brightness-0{--tw-brightness:brightness(0);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.invert{--tw-invert:invert(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.duration-500{transition-duration:500ms}.hover\:bg-emerald-darker:hover{--tw-bg-opacity:1;background-color:rgb(13 31 26 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-200:hover{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-deep:hover{--tw-bg-opacity:1;background-color:rgb(26 60 52 / var(--tw-bg-opacity, 1))}.hover\:text-emerald-deep:hover{--tw-text-opacity:1;color:rgb(26 60 52 / var(--tw-text-opacity, 1))}.hover\:text-wood-warm:hover{--tw-text-opacity:1;color:rgb(200 149 108 / var(--tw-text-opacity, 1))}.hover\:text-emerald-darker:hover{--tw-text-opacity:1;color:rgb(13 31 26 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:shadow-lg:hover{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:border-emerald-deep:focus{--tw-border-opacity:1;border-color:rgb(26 60 52 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.group:hover .group-hover\:text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:block{display:block}.sm\:inline{display:inline}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 768px){.md\:top-\[73px\]{top:73px}.md\:flex{display:flex}.md\:h-14{height:3.5rem}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:py-12{padding-top:3rem;padding-bottom:3rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}}@media (min-width: 1024px){.lg\:block{display:block}.lg\:flex{display:flex}.lg\:hidden{display:none}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.lg\:text-5xl{font-size:3rem;line-height:1}}</style></head>
+<body class="font-inter antialiased text-gray-800" data-aos-easing="ease-out-cubic" data-aos-duration="800" data-aos-delay="0">
+
+    <!-- TOP BAR -->
+    <div class="bg-emerald-deep text-white py-2 px-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-sm">
+            <div class="flex flex-wrap gap-6">
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>MO, г. Щёлково, ул. Советская д.1 корп.2</span>
+                </span>
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Без выходных: 9:00--18:00 / 10:00--19:00</span>
+                </span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="tel:+79265332077" class="flex items-center gap-2 hover:text-wood-warm transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                    <span>+7 (926) 533-20-77</span>
+                </a>
+                <a href="tel:+79265688682" class="hidden md:flex items-center gap-1 hover:text-wood-warm transition-colors">
+                    <span>+7 (926) 568-86-82</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header id="header" class="bg-white border-b border-gray-100 sticky top-0 z-50 transition-all duration-300 scrolled">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="https://tvoidveri-msk.ru/" class="flex items-center gap-2">
+                    <img src="serie_files/logo.png" alt="Твои Двери" class="h-12 md:h-14">
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="https://tvoidveri-msk.ru/catalog/" class="text-emerald-deep font-semibold">Каталог</a>
+                    <a href="https://tvoidveri-msk.ru/uslugi/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Услуги</a>
+                    <a href="https://tvoidveri-msk.ru/materialy/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Материалы</a>
+                    <a href="https://tvoidveri-msk.ru/portfolio/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Портфолио</a>
+                    <a href="https://tvoidveri-msk.ru/magaziny/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Магазины</a>
+                    <a href="https://tvoidveri-msk.ru/kontakty/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium">Контакты</a>
+                </nav>
+
+                <!-- Contact Info & CTA -->
+                <div class="hidden lg:flex items-center gap-6">
+                    <div class="text-right">
+                        <a href="tel:+79265332077" class="block text-emerald-deep font-semibold hover:text-wood-warm transition-colors">+7 (926) 533-20-77</a>
+                        <a href="mailto:ruslanin75@mail.ru" class="block text-sm text-gray-500 hover:text-emerald-deep transition-colors">ruslanin75@mail.ru</a>
+                    </div>
+                    <button onclick="window.openModal('callbackModal')" class="bg-emerald-deep text-white px-6 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium hover:shadow-lg">
+                        Заказать звонок
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="lg:hidden text-emerald-deep">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-gray-100">
+            <nav class="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-4">
+                <a href="https://tvoidveri-msk.ru/catalog/" class="text-emerald-deep font-semibold py-2">Каталог</a>
+                <a href="https://tvoidveri-msk.ru/uslugi/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Услуги</a>
+                <a href="https://tvoidveri-msk.ru/materialy/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Материалы</a>
+                <a href="https://tvoidveri-msk.ru/portfolio/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Портфолио</a>
+                <a href="https://tvoidveri-msk.ru/magaziny/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Магазины</a>
+                <a href="https://tvoidveri-msk.ru/kontakty/" class="text-gray-700 hover:text-emerald-deep transition-colors font-medium py-2">Контакты</a>
+                <div class="pt-4 border-t border-gray-100">
+                    <a href="tel:+79265332077" class="block text-emerald-deep font-semibold text-lg mb-1">+7 (926) 533-20-77</a>
+                    <a href="tel:+79265688682" class="block text-emerald-deep font-semibold text-lg mb-2">+7 (926) 568-86-82</a>
+                    <a href="mailto:ruslanin75@mail.ru" class="block text-gray-500 mb-4">ruslanin75@mail.ru</a>
+                    <button onclick="window.openModal('callbackModal')" class="w-full bg-emerald-deep text-white px-6 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium">
+                        Заказать звонок
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="bg-cream-light min-h-screen">
+
+        <!-- BREADCRUMBS -->
+        <div class="bg-white border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 py-3">
+                <nav id="breadcrumbs" class="flex items-center gap-2 text-sm text-gray-500"><a href="https://tvoidveri-msk.ru/" class="hover:text-emerald-deep transition-colors">Главная</a><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg><a href="https://tvoidveri-msk.ru/catalog/" class="hover:text-emerald-deep transition-colors">Каталог</a><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg><a href="https://tvoidveri-msk.ru/catalog/shpon-emal/" class="hover:text-emerald-deep transition-colors">Шпон + эмаль</a><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg><span class="text-emerald-deep font-medium">Арбат</span></nav>
+            </div>
+        </div>
+
+        <!-- PAGE TITLE -->
+        <div class="bg-white border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 py-8 md:py-12">
+                <h1 id="pageTitle" class="font-playfair text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-deep tracking-tight aos-init aos-animate" data-aos="fade-up">Арбат</h1>
+                <p id="pageSubtitle" class="mt-3 text-gray-500 text-lg aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">8 товаров</p>
+            </div>
+        </div>
+
+        <!-- CATEGORY FILTER BAR -->
+        <div class="bg-white border-b border-gray-100 sticky top-[65px] md:top-[73px] z-40">
+            <div class="max-w-7xl mx-auto px-4 py-4">
+                <div id="categoryFilters" class="category-pills flex gap-2 overflow-x-auto pb-1"><button class="category-pill" data-category="" onclick="window.filterByCategory('')">Все</button><button class="category-pill active" data-category="shpon-emal" onclick="window.filterByCategory('shpon-emal')">Шпон + эмаль <span class="text-xs opacity-70">(183)</span></button><button class="category-pill" data-category="premium" onclick="window.filterByCategory('premium')">Премиум двери <span class="text-xs opacity-70">(250)</span></button><button class="category-pill" data-category="soft-touch" onclick="window.filterByCategory('soft-touch')">Soft touch <span class="text-xs opacity-70">(323)</span></button><button class="category-pill" data-category="vhodnye" onclick="window.filterByCategory('vhodnye')">Входные в наличии <span class="text-xs opacity-70">(2848)</span></button><button class="category-pill" data-category="plintus" onclick="window.filterByCategory('plintus')">Плинтус <span class="text-xs opacity-70">(77)</span></button></div>
+            </div>
+        </div>
+
+        <!-- BACK TO SERIES BUTTON (hidden by default) -->
+        <div id="backToSeriesContainer" class="max-w-7xl mx-auto px-4 pt-6">
+            <button onclick="window.backToSeries()" class="flex items-center gap-2 text-emerald-deep hover:text-emerald-darker font-medium transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                Назад к сериям
+            </button>
+        </div>
+
+        <!-- SORT & VIEW CONTROLS -->
+        <div class="max-w-7xl mx-auto px-4 pt-6 pb-4">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <!-- Left: Sort -->
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <label for="sortSelect" class="text-sm text-gray-500 hidden sm:inline">Сортировка:</label>
+                        <select id="sortSelect" class="custom-select bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-emerald-deep">
+                            <option value="default" selected="selected">По умолчанию</option>
+                            <option value="price_asc">Цена (по возрастанию)</option>
+                            <option value="price_desc">Цена (по убыванию)</option>
+                            <option value="name_asc">По названию</option>
+                        </select>
+                    </div>
+                    <span id="productCount" class="text-sm text-gray-400 hidden sm:inline">8 товаров</span>
+                </div>
+
+                <!-- Right: View Toggle -->
+                <div class="flex items-center gap-2">
+                    <button id="viewGrid" class="p-2 rounded-lg bg-emerald-deep text-white" title="Сетка">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                        </svg>
+                    </button>
+                    <button id="viewList" class="p-2 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200" title="Список">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCT/SERIES GRID -->
+        <div class="max-w-7xl mx-auto px-4 pb-12">
+            <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"><div class="product-card aos-init aos-animate fade-enter-active" data-aos="fade-up" data-aos-delay="0"><a href="https://tvoidveri-msk.ru/product/arbat-l13/" class="product-card-image block" style="aspect-ratio: 1/1;"><img src="serie_files/card_%D0%9B13_1dc09be5.png" alt="Арбат Л13" class="w-full h-full object-contain transition-transform duration-500" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\' style=\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\'><svg class=\'w-16 h-16 text-white/30\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'/></svg></div>'"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">Шпон + эмаль</span></a><div class="product-card-body p-5"><p class="text-xs text-wood-warm font-medium uppercase tracking-wider mb-2">Шпон + эмаль</p><h3 class="font-playfair text-lg font-semibold text-gray-800 mb-2"><a href="https://tvoidveri-msk.ru/product/arbat-l13/" class="hover:text-emerald-deep transition-colors">Арбат Л13</a></h3><p class="text-gray-500 text-sm leading-relaxed mb-4">Классический внешний вид, надежность, износостойкое покрытие. В комплекте с...</p><div class="mb-4"><p class="text-gray-400 italic font-medium">Цена по запросу</p></div><a href="https://tvoidveri-msk.ru/product/arbat-l13/" class="inline-flex items-center justify-center w-full bg-emerald-deep/5 text-emerald-deep px-6 py-3 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-sm">Подробнее<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a></div></div><div class="product-card aos-init aos-animate fade-enter-active" data-aos="fade-up" data-aos-delay="50"><a href="https://tvoidveri-msk.ru/product/arbat-l13-s-vitrazh-sonet-l13-b-vitrazh-buket/" class="product-card-image block" style="aspect-ratio: 1/1;"><img src="serie_files/card_%25D0%259B13-%25D0%25A1__%25D0%2592%25D0%25B8%25D1%2582%25D1%2580%25D0%25B0%25D0%25B6__.png" alt="Арбат Л13-С (Витраж «Сонет»), Л13-Б (Витраж «Букет»)" class="w-full h-full object-contain transition-transform duration-500" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\' style=\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\'><svg class=\'w-16 h-16 text-white/30\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'/></svg></div>'"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">Шпон + эмаль</span></a><div class="product-card-body p-5"><p class="text-xs text-wood-warm font-medium uppercase tracking-wider mb-2">Шпон + эмаль</p><h3 class="font-playfair text-lg font-semibold text-gray-800 mb-2"><a href="https://tvoidveri-msk.ru/product/arbat-l13-s-vitrazh-sonet-l13-b-vitrazh-buket/" class="hover:text-emerald-deep transition-colors">Арбат Л13-С (Витраж «Сонет»), Л13-Б (Витраж «Букет»)</a></h3><p class="text-gray-500 text-sm leading-relaxed mb-4">Остекленная версия модели Л13 с витражом «Сонет» в верхней части полотна выглядит...</p><div class="mb-4"><p class="text-gray-400 italic font-medium">Цена по запросу</p></div><a href="https://tvoidveri-msk.ru/product/arbat-l13-s-vitrazh-sonet-l13-b-vitrazh-buket/" class="inline-flex items-center justify-center w-full bg-emerald-deep/5 text-emerald-deep px-6 py-3 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-sm">Подробнее<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a></div></div><div class="product-card aos-init aos-animate fade-enter-active" data-aos="fade-up" data-aos-delay="100"><a href="https://tvoidveri-msk.ru/product/arbat-l32/" class="product-card-image block" style="aspect-ratio: 1/1;"><img src="serie_files/card_%D0%9B32_4b0c6745.png" alt="Арбат Л32" class="w-full h-full object-contain transition-transform duration-500" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\' style=\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\'><svg class=\'w-16 h-16 text-white/30\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'/></svg></div>'"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">Шпон + эмаль</span></a><div class="product-card-body p-5"><p class="text-xs text-wood-warm font-medium uppercase tracking-wider mb-2">Шпон + эмаль</p><h3 class="font-playfair text-lg font-semibold text-gray-800 mb-2"><a href="https://tvoidveri-msk.ru/product/arbat-l32/" class="hover:text-emerald-deep transition-colors">Арбат Л32</a></h3><p class="text-gray-500 text-sm leading-relaxed mb-4">Для оформления интерьера в классическом стиле модель Л32 с глухим полотном,...</p><div class="mb-4"><p class="text-gray-400 italic font-medium">Цена по запросу</p></div><a href="https://tvoidveri-msk.ru/product/arbat-l32/" class="inline-flex items-center justify-center w-full bg-emerald-deep/5 text-emerald-deep px-6 py-3 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-sm">Подробнее<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a></div></div><div class="product-card aos-init fade-enter-active aos-animate" data-aos="fade-up" data-aos-delay="150"><a href="https://tvoidveri-msk.ru/product/arbat-l32-s-vitrazh-sonet-l32-b-vitrazh-buket/" class="product-card-image block" style="aspect-ratio: 1/1;"><img src="serie_files/card_%25D0%259B32-%25D0%25A1__%25D0%2592%25D0%25B8%25D1%2582%25D1%2580%25D0%25B0%25D0%25B6__.png" alt="Арбат Л32-С (Витраж «Сонет»), Л32-Б (Витраж «Букет»)" class="w-full h-full object-contain transition-transform duration-500" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\' style=\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\'><svg class=\'w-16 h-16 text-white/30\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'/></svg></div>'"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">Шпон + эмаль</span></a><div class="product-card-body p-5"><p class="text-xs text-wood-warm font-medium uppercase tracking-wider mb-2">Шпон + эмаль</p><h3 class="font-playfair text-lg font-semibold text-gray-800 mb-2"><a href="https://tvoidveri-msk.ru/product/arbat-l32-s-vitrazh-sonet-l32-b-vitrazh-buket/" class="hover:text-emerald-deep transition-colors">Арбат Л32-С (Витраж «Сонет»), Л32-Б (Витраж «Букет»)</a></h3><p class="text-gray-500 text-sm leading-relaxed mb-4">Вериант модели Л32 с остеклением верхней части витражом "Сонет". Идеальный варинт...</p><div class="mb-4"><p class="text-gray-400 italic font-medium">Цена по запросу</p></div><a href="https://tvoidveri-msk.ru/product/arbat-l32-s-vitrazh-sonet-l32-b-vitrazh-buket/" class="inline-flex items-center justify-center w-full bg-emerald-deep/5 text-emerald-deep px-6 py-3 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-sm">Подробнее<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a></div></div><div class="product-card aos-init fade-enter-active aos-animate" data-aos="fade-up" data-aos-delay="200"><a href="https://tvoidveri-msk.ru/product/arbat-l63/" class="product-card-image block" style="aspect-ratio: 1/1;"><img src="serie_files/card_%D0%9B63_7e049568.png" alt="Арбат Л63" class="w-full h-full object-contain transition-transform duration-500" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\' style=\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\'><svg class=\'w-16 h-16 text-white/30\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'/></svg></div>'"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">Шпон + эмаль</span></a><div class="product-card-body p-5"><p class="text-xs text-wood-warm font-medium uppercase tracking-wider mb-2">Шпон + эмаль</p><h3 class="font-playfair text-lg font-semibold text-gray-800 mb-2"><a href="https://tvoidveri-msk.ru/product/arbat-l63/" class="hover:text-emerald-deep transition-colors">Арбат Л63</a></h3><p class="text-gray-500 text-sm leading-relaxed mb-4">Это не просто межкомнатная дверь в классическом стиле, это произведение...</p><div class="mb-4"><p class="text-gray-400 italic font-medium">Цена по запросу</p></div><a href="https://tvoidveri-msk.ru/product/arbat-l63/" class="inline-flex items-center justify-center w-full bg-emerald-deep/5 text-emerald-deep px-6 py-3 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-sm">Подробнее<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a></div></div><div class="product-card aos-init fade-enter-active aos-animate" data-aos="fade-up" data-aos-delay="250"><a href="https://tvoidveri-msk.ru/product/arbat-l63-a-vitrazh-arabeska/" class="product-card-image block" style="aspect-ratio: 1/1;"><img src="serie_files/card_%25D0%259B63-%25D0%2590__%25D0%2592%25D0%25B8%25D1%2582%25D1%2580%25D0%25B0%25D0%25B6__.png" alt="Арбат Л63-А (Витраж «Арабеска»)" class="w-full h-full object-contain transition-transform duration-500" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\' style=\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\'><svg class=\'w-16 h-16 text-white/30\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'/></svg></div>'"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">Шпон + эмаль</span></a><div class="product-card-body p-5"><p class="text-xs text-wood-warm font-medium uppercase tracking-wider mb-2">Шпон + эмаль</p><h3 class="font-playfair text-lg font-semibold text-gray-800 mb-2"><a href="https://tvoidveri-msk.ru/product/arbat-l63-a-vitrazh-arabeska/" class="hover:text-emerald-deep transition-colors">Арбат Л63-А (Витраж «Арабеска»)</a></h3><p class="text-gray-500 text-sm leading-relaxed mb-4">Это не просто межкомнатная дверь в классическом стиле, это произведение...</p><div class="mb-4"><p class="text-gray-400 italic font-medium">Цена по запросу</p></div><a href="https://tvoidveri-msk.ru/product/arbat-l63-a-vitrazh-arabeska/" class="inline-flex items-center justify-center w-full bg-emerald-deep/5 text-emerald-deep px-6 py-3 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-sm">Подробнее<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a></div></div><div class="product-card aos-init fade-enter-active aos-animate" data-aos="fade-up" data-aos-delay="300"><a href="https://tvoidveri-msk.ru/product/arbat-l63-a2-vitrazh-arabeska/" class="product-card-image block" style="aspect-ratio: 1/1;"><img src="serie_files/card_%25D0%259B63-%25D0%25902__%25D0%2592%25D0%25B8%25D1%2582%25D1%2580%25D0%25B0%25D0%25B6_.png" alt="Арбат Л63-А2 (Витраж «Арабеска»)" class="w-full h-full object-contain transition-transform duration-500" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\' style=\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\'><svg class=\'w-16 h-16 text-white/30\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'/></svg></div>'"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">Шпон + эмаль</span></a><div class="product-card-body p-5"><p class="text-xs text-wood-warm font-medium uppercase tracking-wider mb-2">Шпон + эмаль</p><h3 class="font-playfair text-lg font-semibold text-gray-800 mb-2"><a href="https://tvoidveri-msk.ru/product/arbat-l63-a2-vitrazh-arabeska/" class="hover:text-emerald-deep transition-colors">Арбат Л63-А2 (Витраж «Арабеска»)</a></h3><p class="text-gray-500 text-sm leading-relaxed mb-4">Остекленный вариант модели Л63 с витражом "Арабеска". Характерные особенности -...</p><div class="mb-4"><p class="text-gray-400 italic font-medium">Цена по запросу</p></div><a href="https://tvoidveri-msk.ru/product/arbat-l63-a2-vitrazh-arabeska/" class="inline-flex items-center justify-center w-full bg-emerald-deep/5 text-emerald-deep px-6 py-3 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-sm">Подробнее<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a></div></div><div class="product-card aos-init fade-enter-active aos-animate" data-aos="fade-up" data-aos-delay="350"><a href="https://tvoidveri-msk.ru/product/arbat-lf20/" class="product-card-image block" style="aspect-ratio: 1/1;"><img src="serie_files/card_%D0%9B%D0%A420_17533842.png" alt="Арбат ЛФ20" class="w-full h-full object-contain transition-transform duration-500" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\' style=\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\'><svg class=\'w-16 h-16 text-white/30\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'/></svg></div>'"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">Шпон + эмаль</span></a><div class="product-card-body p-5"><p class="text-xs text-wood-warm font-medium uppercase tracking-wider mb-2">Шпон + эмаль</p><h3 class="font-playfair text-lg font-semibold text-gray-800 mb-2"><a href="https://tvoidveri-msk.ru/product/arbat-lf20/" class="hover:text-emerald-deep transition-colors">Арбат ЛФ20</a></h3><p class="text-gray-500 text-sm leading-relaxed mb-4">Классическое полотно с английской решеткой. Используемое стекло с фацетом...</p><div class="mb-4"><p class="text-gray-400 italic font-medium">Цена по запросу</p></div><a href="https://tvoidveri-msk.ru/product/arbat-lf20/" class="inline-flex items-center justify-center w-full bg-emerald-deep/5 text-emerald-deep px-6 py-3 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-sm">Подробнее<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a></div></div></div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden text-center py-20">
+                <svg class="w-20 h-20 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <h3 class="font-playfair text-2xl font-bold text-gray-400 mb-2">Товары не найдены</h3>
+                <p class="text-gray-400 mb-6">В данной категории пока нет товаров</p>
+                <button onclick="window.resetFilters()" class="bg-emerald-deep text-white px-6 py-3 rounded-full hover:bg-emerald-darker transition-all font-medium">
+                    Показать все товары
+                </button>
+            </div>
+
+            <!-- PAGINATION -->
+            <div id="pagination" class="flex items-center justify-center gap-2 mt-10 hidden">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="contacts" class="bg-emerald-darker text-white py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+                <!-- Column 1 - Addresses -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Адреса магазинов</h4>
+                    <div class="space-y-3 text-white/80 text-sm">
+                        <p>Офис: МО, г. Щёлково,<br>ул. Советская д.1 корп.2</p>
+                        <p>ТСК «Каширский Двор-2»,<br>Каширское шоссе, д.1, пав. 9/6</p>
+                        <p>ТЦ «ЭлитСтройМатериалы»,<br>п. Заречье, пав. С-49</p>
+                    </div>
+                </div>
+
+                <!-- Column 2 - Interior Doors -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Межкомнатные двери</h4>
+                    <ul class="space-y-2 text-white/80 text-sm">
+                        <li><a href="https://tvoidveri-msk.ru/catalog/shpon-emal/" class="hover:text-wood-warm transition-colors">Шпон + эмаль</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog/premium/" class="hover:text-wood-warm transition-colors">Премиум</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog/soft-touch/" class="hover:text-wood-warm transition-colors">Soft touch</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog/plintus/" class="hover:text-wood-warm transition-colors">Плинтус</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog/" class="hover:text-wood-warm transition-colors">Весь каталог</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 - Entrance Doors -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Входные двери</h4>
+                    <ul class="space-y-2 text-white/80 text-sm">
+                        <li><a href="https://tvoidveri-msk.ru/catalog/vhodnye/" class="hover:text-wood-warm transition-colors">Входные в наличии</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/catalog/" class="hover:text-wood-warm transition-colors">Все модели</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 - Services -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Услуги</h4>
+                    <ul class="space-y-2 text-white/80 text-sm">
+                        <li><a href="https://tvoidveri-msk.ru/uslugi/" class="hover:text-wood-warm transition-colors">Замер</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/uslugi/" class="hover:text-wood-warm transition-colors">Доставка</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/uslugi/" class="hover:text-wood-warm transition-colors">Подъём</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/uslugi/" class="hover:text-wood-warm transition-colors">Монтаж</a></li>
+                        <li><a href="https://tvoidveri-msk.ru/uslugi/" class="hover:text-wood-warm transition-colors">Консультация</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5 - Hardware -->
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4">Фурнитура</h4>
+                    <ul class="space-y-2 text-white/80 text-sm">
+                        <li><a href="#" class="hover:text-wood-warm transition-colors">Ручки</a></li>
+                        <li><a href="#" class="hover:text-wood-warm transition-colors">Замки</a></li>
+                        <li><a href="#" class="hover:text-wood-warm transition-colors">Петли</a></li>
+                        <li><a href="#" class="hover:text-wood-warm transition-colors">Доводчики</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-white/10 pt-8">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <img src="serie_files/logo.png" alt="Твои Двери" class="h-10 mb-2 brightness-0 invert">
+                        <p class="text-white/60 text-sm">Межкомнатные и входные двери от производителя</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold mb-2">Контакты</p>
+                        <p class="text-white/80 text-sm">
+                            <a href="tel:+79265332077" class="hover:text-wood-warm transition-colors">+7 (926) 533-20-77</a><br>
+                            <a href="tel:+79265688682" class="hover:text-wood-warm transition-colors">+7 (926) 568-86-82</a><br>
+                            <a href="mailto:ruslanin75@mail.ru" class="hover:text-wood-warm transition-colors">ruslanin75@mail.ru</a>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="font-semibold mb-2">Режим работы</p>
+                        <p class="text-white/80 text-sm">
+                            Офис (Щёлково): 9:00 – 18:00<br>
+                            Салоны: 10:00 – 19:00<br>
+                            Без выходных
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap justify-between items-center gap-4 text-sm text-white/60">
+                    <p>© 2026 Твои Двери. Все права защищены.</p>
+                    <a href="https://tvoidveri-msk.ru/privacy-policy/" class="hover:text-white transition-colors">Политика конфиденциальности</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 transform translate-y-full transition-transform duration-500" style="display:none;">
+        <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-4">
+            <p class="text-sm">Мы используем файлы cookie для 
+обеспечения лучшей работы сайта. Продолжая использовать сайт, вы даёте 
+согласие на использование cookie.</p>
+            <button onclick="acceptCookies()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">Принять</button>
+        </div>
+    </div>
+
+    <!-- CALLBACK MODAL -->
+    <div id="callbackModal" class="modal">
+        <div class="modal-overlay" onclick="window.closeModal('callbackModal')"></div>
+        <div class="modal-content">
+            <button onclick="window.closeModal('callbackModal')" class="modal-close">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h3 class="font-playfair text-3xl font-bold text-emerald-deep mb-2">Заказать звонок</h3>
+            <p class="text-gray-600 mb-6">Оставьте номер телефона, и мы перезвоним вам</p>
+            <form id="callbackForm" onsubmit="window.submitCallbackForm(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Ваше имя</label>
+                    <input type="text" name="name" required="" class="form-input" placeholder="Введите ваше имя">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Телефон</label>
+                    <input type="tel" name="phone" required="" class="form-input phone-mask" placeholder="+7 (___) ___-__-__" inputmode="text">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Сообщение (необязательно)</label>
+                    <textarea name="message" rows="3" class="form-input" placeholder="Ваш вопрос или пожелание..."></textarea>
+                </div>
+                <label class="flex items-start gap-2 text-sm text-gray-600 mt-3">
+                    <input type="checkbox" name="privacy_consent" required="" class="mt-1 accent-emerald-600">
+                    <span>Я согласен на <a href="https://tvoidveri-msk.ru/privacy-policy/" class="text-emerald-600 hover:underline">обработку персональных данных</a></span>
+                </label>
+                <button type="submit" class="w-full bg-emerald-deep text-white px-6 py-4 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium text-lg mt-4">
+                    Отправить
+                </button>
+            </form>
+            <!-- Success State -->
+            <div id="callbackSuccess" class="hidden text-center">
+                <div class="w-20 h-20 bg-emerald-deep rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="font-playfair text-3xl font-bold text-emerald-deep mb-2">Спасибо за заявку!</h3>
+                <p class="text-gray-600 mb-6">Наш специалист свяжется с вами в ближайшее время</p>
+                <button onclick="window.closeModal('callbackModal')" class="bg-emerald-deep text-white px-8 py-3 rounded-full hover:bg-emerald-darker transition-all duration-300 font-medium">
+                    Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Library -->
+    <script src="serie_files/aos.js"></script>
+
+    <!-- MAIN JAVASCRIPT -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ======================
+        // STATE
+        // ======================
+        var state = {
+            categories: [],
+            products: [],
+            series: [],
+            currentCategory: '',
+            currentCategoryName: '',
+            currentSeries: '',
+            currentSeriesName: '',
+            currentPage: 1,
+            currentSort: 'default',
+            totalPages: 1,
+            totalProducts: 0,
+            viewMode: 'grid',
+            isLoading: false,
+            showingSeries: false
+        };
+
+        var API_BASE = '/api/index.php';
+
+        // ======================
+        // INIT
+        // ======================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Parse URL params
+            parseUrlParams();
+
+            // Initialize AOS
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 800,
+                    once: true,
+                    offset: 80,
+                    easing: 'ease-out-cubic'
+                });
+            }
+
+            // Initialize phone masks
+            initPhoneMasks();
+
+            // Initialize mobile menu
+            initMobileMenu();
+
+            // Initialize header scroll
+            initHeaderScroll();
+
+            // Initialize sort change
+            document.getElementById('sortSelect').addEventListener('change', function() {
+                state.currentSort = this.value;
+                state.currentPage = 1;
+                updateUrl();
+                fetchData();
+            });
+
+            // Initialize view toggles
+            document.getElementById('viewGrid').addEventListener('click', function() {
+                setViewMode('grid');
+            });
+            document.getElementById('viewList').addEventListener('click', function() {
+                setViewMode('list');
+            });
+
+            // Listen for popstate (back/forward)
+            window.addEventListener('popstate', function() {
+                parseUrlParams();
+                fetchCategories(true, function() {
+                    fetchData();
+                });
+            });
+
+            // Load data — categories first, then content
+            fetchCategories(false, function() {
+                fetchData();
+            });
+        });
+
+        // ======================
+        // URL PARAMS
+        // ======================
+        function parseUrlParams() {
+            // Support CNC URLs: /catalog/{cat}/{series}/
+            var path = window.location.pathname;
+            var match = path.match(/\/catalog\/([a-z0-9_-]+)(?:\/([a-z0-9_-]+))?\/?$/);
+            if (match) {
+                state.currentCategory = match[1] || '';
+                state.currentSeries = match[2] || '';
+            } else {
+                // Fallback to query params for backwards compatibility
+                var params = new URLSearchParams(window.location.search);
+                state.currentCategory = params.get('cat') || '';
+                state.currentSeries = params.get('series') || '';
+            }
+            var params = new URLSearchParams(window.location.search);
+            state.currentPage = parseInt(params.get('page')) || 1;
+            state.currentSort = params.get('sort') || 'default';
+
+            // Update sort select
+            var sortSelect = document.getElementById('sortSelect');
+            if (sortSelect) {
+                sortSelect.value = state.currentSort;
+            }
+        }
+
+        function updateUrl() {
+            var url = '/catalog/';
+            if (state.currentCategory) {
+                url += encodeURIComponent(state.currentCategory) + '/';
+            }
+            if (state.currentSeries) {
+                url += encodeURIComponent(state.currentSeries) + '/';
+            }
+
+            var params = new URLSearchParams();
+            if (state.currentPage > 1) {
+                params.set('page', state.currentPage);
+            }
+            if (state.currentSort && state.currentSort !== 'default') {
+                params.set('sort', state.currentSort);
+            }
+
+            var paramString = params.toString();
+            if (paramString) {
+                url += '?' + paramString;
+            }
+
+            window.history.pushState({
+                cat: state.currentCategory,
+                series: state.currentSeries,
+                page: state.currentPage,
+                sort: state.currentSort
+            }, '', url);
+        }
+
+        // ======================
+        // FETCH CATEGORIES
+        // ======================
+        function fetchCategories(skipRender, callback, retryCount) {
+            retryCount = retryCount || 0;
+
+            // If categories are already loaded, just use cached data
+            if (state.categories && state.categories.length > 0) {
+                if (!skipRender) {
+                    renderCategoryFilters();
+                } else {
+                    updateActiveCategory();
+                }
+                updatePageInfo();
+                if (callback) callback();
+                return;
+            }
+
+            fetch(API_BASE + '?action=categories')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.success) {
+                        state.categories = data.data;
+                        if (!skipRender) {
+                            renderCategoryFilters();
+                        } else {
+                            updateActiveCategory();
+                        }
+                        renderFooterCatalogLinks();
+                        updatePageInfo();
+                    }
+                    if (callback) callback();
+                })
+                .catch(function(err) {
+                    console.error('Error fetching categories:', err);
+                    if (retryCount < 2) {
+                        setTimeout(function() {
+                            fetchCategories(skipRender, callback, retryCount + 1);
+                        }, 1000);
+                    } else {
+                        // Only show error if categories were never loaded
+                        if (!state.categories || state.categories.length === 0) {
+                            var container = document.getElementById('categoryFilters');
+                            container.innerHTML = '<span class="text-sm text-gray-400">Не удалось загрузить категории</span>';
+                        }
+                        if (callback) callback();
+                    }
+                });
+        }
+
+        function renderCategoryFilters() {
+            var container = document.getElementById('categoryFilters');
+            var html = '';
+
+            // "All" button
+            var allActive = !state.currentCategory ? ' active' : '';
+            html += '<button class="category-pill' + allActive + '" data-category="" onclick="window.filterByCategory(\'\')">Все</button>';
+
+            state.categories.forEach(function(cat) {
+                var isActive = state.currentCategory === cat.slug ? ' active' : '';
+                var countBadge = cat.product_count > 0 ? ' <span class="text-xs opacity-70">(' + cat.product_count + ')</span>' : '';
+                html += '<button class="category-pill' + isActive + '" data-category="' + escapeHtml(cat.slug) + '" onclick="window.filterByCategory(\'' + escapeHtml(cat.slug) + '\')">' + escapeHtml(cat.name) + countBadge + '</button>';
+            });
+
+            container.innerHTML = html;
+        }
+
+        function updateActiveCategory() {
+            var pills = document.querySelectorAll('.category-pill');
+            pills.forEach(function(pill) {
+                var cat = pill.getAttribute('data-category');
+                if (cat === state.currentCategory || (cat === '' && !state.currentCategory)) {
+                    pill.classList.add('active');
+                } else {
+                    pill.classList.remove('active');
+                }
+            });
+        }
+
+        function renderFooterCatalogLinks() {
+            var container = document.getElementById('footerCatalogLinks');
+            var html = '<li><a href="/catalog/" class="hover:text-wood-warm transition-colors">Все двери</a></li>';
+            state.categories.forEach(function(cat) {
+                html += '<li><a href="/catalog/' + encodeURIComponent(cat.slug) + '/" class="hover:text-wood-warm transition-colors">' + escapeHtml(cat.name) + '</a></li>';
+            });
+            container.innerHTML = html;
+        }
+
+        // ======================
+        // FETCH DATA (series or products)
+        // ======================
+        function fetchData() {
+            // Determine what to fetch:
+            // 1. If no category and no series: fetch all series
+            // 2. If category selected but no series: fetch series for that category
+            // 3. If series selected: fetch products for that series
+
+            if (state.currentSeries) {
+                // Series selected - show products
+                state.showingSeries = false;
+                fetchProducts();
+            } else {
+                // No series selected - show series (all or by category)
+                state.showingSeries = true;
+                fetchSeries();
+            }
+        }
+
+        // ======================
+        // FETCH SERIES
+        // ======================
+        function fetchSeries() {
+            if (state.isLoading) return;
+            state.isLoading = true;
+
+            showLoadingSkeletons();
+
+            var url = API_BASE + '?action=series';
+            if (state.currentCategory) {
+                url += '&category=' + encodeURIComponent(state.currentCategory);
+            }
+
+            fetch(url)
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    state.isLoading = false;
+                    if (data.success) {
+                        state.series = data.data;
+                        renderSeries();
+                        updatePageInfo();
+                        document.getElementById('pagination').classList.add('hidden');
+                        document.getElementById('backToSeriesContainer').classList.add('hidden');
+                    } else {
+                        showError('Не удалось загрузить серии');
+                    }
+                })
+                .catch(function(err) {
+                    state.isLoading = false;
+                    console.error('Error fetching series:', err);
+                    showError('Ошибка загрузки. Попробуйте обновить страницу.');
+                });
+        }
+
+        function renderSeries() {
+            var container = document.getElementById('productsContainer');
+            var emptyState = document.getElementById('emptyState');
+
+            if (!state.series || state.series.length === 0) {
+                container.innerHTML = '';
+                container.className = 'grid grid-cols-1 gap-6';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            container.className = state.viewMode === 'list'
+                ? 'products-list flex flex-col gap-6'
+                : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
+
+            var html = '';
+            state.series.forEach(function(series, index) {
+                html += renderSeriesCard(series, index);
+            });
+
+            container.innerHTML = html;
+
+            // Trigger fade-in animation
+            requestAnimationFrame(function() {
+                var cards = container.querySelectorAll('.product-card');
+                cards.forEach(function(card, i) {
+                    card.classList.add('fade-enter');
+                    setTimeout(function() {
+                        card.classList.add('fade-enter-active');
+                        card.classList.remove('fade-enter');
+                    }, i * 50);
+                });
+            });
+        }
+
+        function renderSeriesCard(series, index) {
+            var imageHtml = '';
+            if (series.cover_image && series.cover_image !== '/img/placeholder.jpg') {
+                imageHtml = '<img src="' + escapeHtml(series.cover_image) + '" alt="' + escapeHtml(series.name) + '" class="w-full h-full object-contain" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=\\\'w-full h-full flex items-center justify-center\\\' style=\\\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\\\'><svg class=\\\'w-16 h-16 text-white/30\\\' fill=\\\'none\\\' stroke=\\\'currentColor\\\' viewBox=\\\'0 0 24 24\\\'><path stroke-linecap=\\\'round\\\' stroke-linejoin=\\\'round\\\' stroke-width=\\\'1\\\' d=\\\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\\\'/></svg></div>\'">';
+            } else {
+                imageHtml = '<div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);"><svg class="w-16 h-16 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>';
+            }
+
+            var priceHtml = '';
+            if (series.series_price && series.series_price.trim() !== '') {
+                priceHtml = '<p class="text-sm text-emerald-700 font-medium mt-1">' + escapeHtml(series.series_price) + '</p>';
+            } else if (series.min_price && parseFloat(series.min_price) > 0) {
+                priceHtml = '<p class="text-sm text-emerald-700 font-medium mt-1">от ' + formatPrice(series.min_price) + ' ₽</p>';
+            }
+
+            var categoryBadge = '';
+            if (!state.currentCategory && series.category_name) {
+                categoryBadge = '<span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">' + escapeHtml(series.category_name) + '</span>';
+            }
+
+            var catSlug = series.category_slug || state.currentCategory || '';
+
+            var modelWord = declensionModels(series.model_count);
+
+            return '<div class="product-card group cursor-pointer" onclick="window.filterBySeries(\'' + escapeHtml(series.slug) + '\', \'' + escapeHtml(series.name) + '\', \'' + escapeHtml(catSlug) + '\')" data-aos="fade-up" data-aos-delay="' + (index * 50) + '">' +
+                '<div class="relative overflow-hidden" style="aspect-ratio:1/1;">' +
+                    imageHtml +
+                    categoryBadge +
+                '</div>' +
+                '<div class="p-4">' +
+                    '<h3 class="font-semibold text-gray-800 group-hover:text-emerald-700 transition-colors">Серия ' + escapeHtml(series.name) + '</h3>' +
+                    '<p class="text-sm text-gray-500 mt-1">' + series.model_count + ' ' + modelWord + '</p>' +
+                    priceHtml +
+                '</div>' +
+            '</div>';
+        }
+
+        // ======================
+        // FETCH PRODUCTS
+        // ======================
+        function fetchProducts() {
+            if (state.isLoading) return;
+            state.isLoading = true;
+
+            showLoadingSkeletons();
+
+            var sortMap = {
+                'default': 'default',
+                'price_asc': 'price_asc',
+                'price_desc': 'price_desc',
+                'name_asc': 'name_asc'
+            };
+            var sortParam = sortMap[state.currentSort] || 'default';
+
+            var url = API_BASE + '?action=products&page=' + state.currentPage + '&per_page=12&sort=' + sortParam;
+            if (state.currentCategory) {
+                url += '&category=' + encodeURIComponent(state.currentCategory);
+            }
+            if (state.currentSeries) {
+                url += '&series=' + encodeURIComponent(state.currentSeries);
+            }
+
+            fetch(url)
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    state.isLoading = false;
+                    if (data.success) {
+                        state.products = data.data.products;
+                        state.totalProducts = data.data.total;
+                        state.totalPages = data.data.total_pages;
+                        state.currentPage = data.data.page;
+
+                        // Extract series name from first product if not yet set
+                        if (state.currentSeries && !state.currentSeriesName && state.products.length > 0) {
+                            state.currentSeriesName = state.products[0].series || '';
+                        }
+
+                        renderProducts();
+                        renderPagination();
+                        updatePageInfo();
+
+                        // Show/hide back button
+                        if (state.currentSeries) {
+                            document.getElementById('backToSeriesContainer').classList.remove('hidden');
+                        } else {
+                            document.getElementById('backToSeriesContainer').classList.add('hidden');
+                        }
+                    } else {
+                        showError('Не удалось загрузить товары');
+                    }
+                })
+                .catch(function(err) {
+                    state.isLoading = false;
+                    console.error('Error fetching products:', err);
+                    showError('Ошибка загрузки. Попробуйте обновить страницу.');
+                });
+        }
+
+        function showLoadingSkeletons() {
+            var container = document.getElementById('productsContainer');
+            var count = state.viewMode === 'grid' ? 6 : 4;
+            var html = '';
+
+            for (var i = 0; i < count; i++) {
+                if (state.viewMode === 'list') {
+                    html += '<div class="product-card flex flex-col sm:flex-row"><div class="skeleton sm:w-[280px] sm:min-w-[280px]" style="aspect-ratio: 1/1;"></div><div class="p-5 flex-1"><div class="skeleton h-3 w-20 mb-3"></div><div class="skeleton h-5 w-3/4 mb-2"></div><div class="skeleton h-4 w-full mb-4"></div><div class="skeleton h-6 w-24 mb-4"></div><div class="skeleton h-10 w-36 rounded-full"></div></div></div>';
+                } else {
+                    html += '<div class="product-card"><div class="skeleton" style="aspect-ratio: 1/1;"></div><div class="p-5"><div class="skeleton h-3 w-20 mb-3"></div><div class="skeleton h-5 w-full mb-2"></div><div class="skeleton h-5 w-3/4 mb-4"></div><div class="skeleton h-6 w-24 mb-4"></div><div class="skeleton h-10 w-full rounded-full"></div></div></div>';
+                }
+            }
+
+            container.className = state.viewMode === 'list'
+                ? 'products-list flex flex-col gap-6'
+                : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
+            container.innerHTML = html;
+
+            document.getElementById('emptyState').classList.add('hidden');
+            document.getElementById('pagination').classList.add('hidden');
+        }
+
+        function showError(message) {
+            var container = document.getElementById('productsContainer');
+            container.innerHTML = '<div class="col-span-full text-center py-16"><p class="text-red-500 text-lg">' + escapeHtml(message) + '</p></div>';
+        }
+
+        // ======================
+        // RENDER PRODUCTS
+        // ======================
+        function renderProducts() {
+            var container = document.getElementById('productsContainer');
+            var emptyState = document.getElementById('emptyState');
+
+            if (!state.products || state.products.length === 0) {
+                container.innerHTML = '';
+                container.className = 'grid grid-cols-1 gap-6';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            container.className = state.viewMode === 'list'
+                ? 'products-list flex flex-col gap-6'
+                : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
+
+            var html = '';
+            state.products.forEach(function(product, index) {
+                html += renderProductCard(product, index);
+            });
+
+            container.innerHTML = html;
+
+            // Trigger fade-in animation
+            requestAnimationFrame(function() {
+                var cards = container.querySelectorAll('.product-card');
+                cards.forEach(function(card, i) {
+                    card.classList.add('fade-enter');
+                    setTimeout(function() {
+                        card.classList.add('fade-enter-active');
+                        card.classList.remove('fade-enter');
+                    }, i * 50);
+                });
+            });
+        }
+
+        function renderProductCard(product, index) {
+            var imageHtml = '';
+            if (product.main_image && product.main_image !== '/img/placeholder.jpg') {
+                imageHtml = '<img src="' + escapeHtml(product.main_image) + '" alt="' + escapeHtml(product.name) + '" class="w-full h-full object-contain transition-transform duration-500" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=\\\'w-full h-full flex items-center justify-center\\\' style=\\\'background: linear-gradient(135deg, #BDBBBC, #EFEFEF);\\\'><svg class=\\\'w-16 h-16 text-white/30\\\' fill=\\\'none\\\' stroke=\\\'currentColor\\\' viewBox=\\\'0 0 24 24\\\'><path stroke-linecap=\\\'round\\\' stroke-linejoin=\\\'round\\\' stroke-width=\\\'1\\\' d=\\\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\\\'/></svg></div>\'">';
+            } else {
+                imageHtml = '<div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #BDBBBC, #EFEFEF);"><svg class="w-16 h-16 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>';
+            }
+
+            var categoryBadge = product.category_name
+                ? '<span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-deep text-xs font-medium px-3 py-1 rounded-full shadow-sm">' + escapeHtml(product.category_name) + '</span>'
+                : '';
+
+            var priceHtml = '';
+            if (product.price && product.price !== '0' && product.price !== '' && product.price !== 'null' && product.price !== 'По запросу') {
+                priceHtml = '<p class="text-emerald-deep font-bold text-xl">' + escapeHtml(product.price) + '</p>';
+            } else {
+                priceHtml = '<p class="text-gray-400 italic font-medium">Цена по запросу</p>';
+            }
+
+            var descHtml = product.description
+                ? '<p class="text-gray-500 text-sm leading-relaxed mb-4">' + escapeHtml(truncateText(product.description, 120)) + '</p>'
+                : '';
+
+            var productUrl = '/product/' + encodeURIComponent(product.slug) + '/';
+
+            return '<div class="product-card" data-aos="fade-up" data-aos-delay="' + (index * 50) + '">' +
+                '<a href="' + productUrl + '" class="product-card-image block" style="aspect-ratio: 1/1;">' +
+                    imageHtml +
+                    categoryBadge +
+                '</a>' +
+                '<div class="product-card-body p-5">' +
+                    (product.category_name ? '<p class="text-xs text-wood-warm font-medium uppercase tracking-wider mb-2">' + escapeHtml(product.category_name) + '</p>' : '') +
+                    '<h3 class="font-playfair text-lg font-semibold text-gray-800 mb-2">' +
+                        '<a href="' + productUrl + '" class="hover:text-emerald-deep transition-colors">' + escapeHtml(truncateText(product.name, 60)) + '</a>' +
+                    '</h3>' +
+                    descHtml +
+                    '<div class="mb-4">' + priceHtml + '</div>' +
+                    '<a href="' + productUrl + '" class="inline-flex items-center justify-center w-full bg-emerald-deep/5 text-emerald-deep px-6 py-3 rounded-full hover:bg-emerald-deep hover:text-white transition-all duration-300 font-medium text-sm">' +
+                        'Подробнее' +
+                        '<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+                    '</a>' +
+                '</div>' +
+            '</div>';
+        }
+
+        // ======================
+        // RENDER PAGINATION
+        // ======================
+        function renderPagination() {
+            var container = document.getElementById('pagination');
+
+            if (state.totalPages <= 1) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+
+            var html = '';
+
+            // Previous button
+            html += '<button class="pagination-btn px-3" onclick="window.goToPage(' + (state.currentPage - 1) + ')"' + (state.currentPage <= 1 ? ' disabled' : '') + '>';
+            html += '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>';
+            html += '</button>';
+
+            // Page numbers
+            var pages = getPageNumbers(state.currentPage, state.totalPages);
+            pages.forEach(function(page) {
+                if (page === '...') {
+                    html += '<span class="pagination-btn cursor-default border-none">...</span>';
+                } else {
+                    var isActive = page === state.currentPage ? ' active' : '';
+                    html += '<button class="pagination-btn' + isActive + '" onclick="window.goToPage(' + page + ')">' + page + '</button>';
+                }
+            });
+
+            // Next button
+            html += '<button class="pagination-btn px-3" onclick="window.goToPage(' + (state.currentPage + 1) + ')"' + (state.currentPage >= state.totalPages ? ' disabled' : '') + '>';
+            html += '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>';
+            html += '</button>';
+
+            // Page info
+            html += '<span class="text-sm text-gray-400 ml-4">' + state.currentPage + ' / ' + state.totalPages + '</span>';
+
+            container.innerHTML = html;
+        }
+
+        function getPageNumbers(current, total) {
+            if (total <= 7) {
+                var result = [];
+                for (var i = 1; i <= total; i++) result.push(i);
+                return result;
+            }
+
+            var pages = [];
+            pages.push(1);
+
+            if (current > 3) {
+                pages.push('...');
+            }
+
+            var start = Math.max(2, current - 1);
+            var end = Math.min(total - 1, current + 1);
+
+            for (var j = start; j <= end; j++) {
+                pages.push(j);
+            }
+
+            if (current < total - 2) {
+                pages.push('...');
+            }
+
+            pages.push(total);
+
+            return pages;
+        }
+
+        // ======================
+        // UPDATE PAGE INFO
+        // ======================
+        function updatePageInfo() {
+            var title = document.getElementById('pageTitle');
+            var subtitle = document.getElementById('pageSubtitle');
+            var breadcrumbs = document.getElementById('breadcrumbs');
+            var productCount = document.getElementById('productCount');
+
+            // Find current category name
+            state.currentCategoryName = '';
+            if (state.currentCategory) {
+                for (var i = 0; i < state.categories.length; i++) {
+                    if (state.categories[i].slug === state.currentCategory) {
+                        state.currentCategoryName = state.categories[i].name;
+                        break;
+                    }
+                }
+                // Fallback: get category name from loaded series or products
+                if (!state.currentCategoryName) {
+                    if (state.series && state.series.length > 0 && state.series[0].category_name) {
+                        state.currentCategoryName = state.series[0].category_name;
+                    } else if (state.products && state.products.length > 0 && state.products[0].category_name) {
+                        state.currentCategoryName = state.products[0].category_name;
+                    }
+                }
+            }
+
+            // Update title
+            if (state.currentSeriesName) {
+                title.textContent = state.currentSeriesName;
+                document.title = state.currentSeriesName + ' - ' + state.currentCategoryName + ' - Каталог - Твои Двери';
+            } else if (state.currentCategoryName) {
+                title.textContent = state.currentCategoryName;
+                document.title = state.currentCategoryName + ' - Каталог - Твои Двери';
+            } else {
+                title.textContent = 'Каталог дверей';
+                document.title = 'Каталог дверей - Твои Двери';
+            }
+
+            // Update subtitle
+            if (state.showingSeries) {
+                var seriesCountText = state.series.length + ' ' + declensionSeries(state.series.length);
+                subtitle.textContent = seriesCountText;
+                if (productCount) {
+                    productCount.textContent = seriesCountText;
+                }
+            } else {
+                var countText = declensionProducts(state.totalProducts);
+                subtitle.textContent = countText;
+                if (productCount) {
+                    productCount.textContent = countText;
+                }
+            }
+
+            // Update breadcrumbs
+            if (state.currentSeriesName) {
+                // Showing products in a series
+                breadcrumbs.innerHTML =
+                    '<a href="/" class="hover:text-emerald-deep transition-colors">Главная</a>' +
+                    '<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+                    '<a href="/catalog/" class="hover:text-emerald-deep transition-colors">Каталог</a>' +
+                    '<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+                    '<a href="/catalog/' + encodeURIComponent(state.currentCategory) + '/" class="hover:text-emerald-deep transition-colors">' + escapeHtml(state.currentCategoryName) + '</a>' +
+                    '<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+                    '<span class="text-emerald-deep font-medium">' + escapeHtml(state.currentSeriesName) + '</span>';
+            } else if (state.currentCategoryName) {
+                // Showing series or products in a category
+                breadcrumbs.innerHTML =
+                    '<a href="/" class="hover:text-emerald-deep transition-colors">Главная</a>' +
+                    '<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+                    '<a href="/catalog/" class="hover:text-emerald-deep transition-colors">Каталог</a>' +
+                    '<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+                    '<span class="text-emerald-deep font-medium">' + escapeHtml(state.currentCategoryName) + '</span>';
+            } else {
+                // Showing all products
+                breadcrumbs.innerHTML =
+                    '<a href="/" class="hover:text-emerald-deep transition-colors">Главная</a>' +
+                    '<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+                    '<span class="text-emerald-deep font-medium">Каталог</span>';
+            }
+        }
+
+        function declensionProducts(count) {
+            var n = Math.abs(count) % 100;
+            var n1 = n % 10;
+            if (n > 10 && n < 20) return count + ' товаров';
+            if (n1 > 1 && n1 < 5) return count + ' товара';
+            if (n1 === 1) return count + ' товар';
+            return count + ' товаров';
+        }
+
+        function declensionSeries(count) {
+            var n = Math.abs(count) % 100;
+            var n1 = n % 10;
+            if (n > 10 && n < 20) return 'серий';
+            if (n1 > 1 && n1 < 5) return 'серии';
+            if (n1 === 1) return 'серия';
+            return 'серий';
+        }
+
+        function declensionModels(count) {
+            var n = Math.abs(count) % 100;
+            var n1 = n % 10;
+            if (n > 10 && n < 20) return 'моделей';
+            if (n1 > 1 && n1 < 5) return 'модели';
+            if (n1 === 1) return 'модель';
+            return 'моделей';
+        }
+
+        // ======================
+        // VIEW MODE
+        // ======================
+        function setViewMode(mode) {
+            state.viewMode = mode;
+
+            var gridBtn = document.getElementById('viewGrid');
+            var listBtn = document.getElementById('viewList');
+
+            if (mode === 'grid') {
+                gridBtn.className = 'p-2 rounded-lg bg-emerald-deep text-white';
+                listBtn.className = 'p-2 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200';
+            } else {
+                gridBtn.className = 'p-2 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200';
+                listBtn.className = 'p-2 rounded-lg bg-emerald-deep text-white';
+            }
+
+            if (state.showingSeries) {
+                renderSeries();
+            } else {
+                renderProducts();
+            }
+        }
+
+        // ======================
+        // PHONE MASK
+        // ======================
+        function initPhoneMasks() {
+            if (typeof Inputmask !== 'undefined') {
+                var phoneMask = new Inputmask('+7 (999) 999-99-99');
+                var phoneInputs = document.querySelectorAll('.phone-mask');
+                phoneInputs.forEach(function(input) {
+                    phoneMask.mask(input);
+                });
+            }
+        }
+
+        // ======================
+        // MOBILE MENU
+        // ======================
+        function initMobileMenu() {
+            var menuBtn = document.getElementById('mobileMenuBtn');
+            var mobileMenu = document.getElementById('mobileMenu');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    var icon = menuBtn.querySelector('svg');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    } else {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                    }
+                });
+
+                var menuLinks = mobileMenu.querySelectorAll('a');
+                menuLinks.forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                        var icon = menuBtn.querySelector('svg');
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    });
+                });
+            }
+        }
+
+        // ======================
+        // HEADER SCROLL
+        // ======================
+        function initHeaderScroll() {
+            var header = document.getElementById('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        }
+
+        // ======================
+        // MODAL FUNCTIONS
+        // ======================
+        function openModal(modalId) {
+            var modal = document.getElementById(modalId);
+            if (modal) {
+                // Reset to form view (hide success)
+                var form = modal.querySelector('form');
+                var success = modal.querySelector('[id$="Success"]');
+                if (form) form.style.display = '';
+                if (success) success.classList.add('hidden');
+                // Reset title/subtitle visibility
+                var h3 = modal.querySelector('.modal-content > h3');
+                var p = modal.querySelector('.modal-content > p');
+                if (h3) h3.style.display = '';
+                if (p) p.style.display = '';
+
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            var modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                var form = modal.querySelector('form');
+                if (form) form.reset();
+            }
+        }
+
+        // Close modal on ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                var activeModal = document.querySelector('.modal.active');
+                if (activeModal) {
+                    activeModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+
+        // ======================
+        // FORM SUBMISSION
+        // ======================
+        function submitCallbackForm(event) {
+            event.preventDefault();
+
+            var form = event.target;
+            var submitBtn = form.querySelector('button[type="submit"]');
+            var originalText = submitBtn.textContent;
+
+            // Basic validation
+            var name = form.querySelector('[name="name"]').value.trim();
+            var phone = form.querySelector('[name="phone"]').value.trim();
+
+            if (!name || name.length < 2) {
+                alert('Пожалуйста, введите ваше имя');
+                return;
+            }
+            if (!phone || phone.replace(/[^0-9]/g, '').length < 11) {
+                alert('Пожалуйста, введите корректный номер телефона');
+                return;
+            }
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="flex items-center justify-center gap-2"><span class="spinner spinner-sm inline-block"></span> Отправка...</span>';
+
+            var formData = new FormData(form);
+            formData.append('form_type', 'callback');
+
+            fetch(API_BASE + '?action=submit_form', {
+                method: 'POST',
+                body: formData
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+
+                if (data.success) {
+                    // Show success state
+                    form.style.display = 'none';
+                    var modal = form.closest('.modal-content');
+                    var h3 = modal.querySelector('h3');
+                    var p = modal.querySelector('h3 + p');
+                    if (h3) h3.style.display = 'none';
+                    if (p) p.style.display = 'none';
+                    document.getElementById('callbackSuccess').classList.remove('hidden');
+                    form.reset();
+                } else {
+                    alert(data.error || 'Произошла ошибка. Попробуйте позже или позвоните нам.');
+                }
+            })
+            .catch(function(err) {
+                console.error('Error:', err);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+                alert('Произошла ошибка при отправке. Пожалуйста, позвоните нам по телефону +7 (926) 533-20-77');
+            });
+        }
+
+        // ======================
+        // COOKIE BANNER
+        // ======================
+        window.acceptCookies = function() {
+            localStorage.setItem('cookiesAccepted', '1');
+            var banner = document.getElementById('cookieBanner');
+            banner.style.transform = 'translateY(100%)';
+            setTimeout(function() { banner.style.display = 'none'; }, 500);
+        };
+
+        // Show cookie banner if not accepted
+        if (!localStorage.getItem('cookiesAccepted')) {
+            var banner = document.getElementById('cookieBanner');
+            banner.style.display = '';
+            setTimeout(function() { banner.style.transform = 'translateY(0)'; }, 100);
+        }
+
+        // ======================
+        // UTILITY
+        // ======================
+        function escapeHtml(text) {
+            if (!text) return '';
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(text));
+            return div.innerHTML;
+        }
+
+        function truncateText(text, maxLen) {
+            if (!text || text.length <= maxLen) return text;
+            var trimmed = text.substring(0, maxLen);
+            var lastSpace = trimmed.lastIndexOf(' ');
+            if (lastSpace > maxLen * 0.5) trimmed = trimmed.substring(0, lastSpace);
+            return trimmed + '...';
+        }
+
+        function formatPrice(num) {
+            return Math.round(parseFloat(num)).toLocaleString('ru-RU');
+        }
+
+        // ======================
+        // GLOBAL FUNCTIONS (window scope for onclick handlers)
+        // ======================
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.submitCallbackForm = submitCallbackForm;
+
+        window.filterByCategory = function(slug) {
+            state.currentCategory = slug;
+            state.currentSeries = '';
+            state.currentSeriesName = '';
+            state.currentPage = 1;
+            updateUrl();
+            updateActiveCategory();
+            fetchData();
+
+            // Scroll to top of products
+            var titleEl = document.getElementById('pageTitle');
+            if (titleEl) {
+                titleEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+
+        window.filterBySeries = function(slug, name, catSlug) {
+            if (catSlug && !state.currentCategory) {
+                state.currentCategory = catSlug;
+                // Update active category pill
+                renderCategoryFilters();
+            }
+            state.currentSeries = slug;
+            state.currentSeriesName = name;
+            state.currentPage = 1;
+            updateUrl();
+            fetchData();
+
+            // Scroll to top of products
+            var titleEl = document.getElementById('pageTitle');
+            if (titleEl) {
+                titleEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+
+        window.backToSeries = function() {
+            state.currentSeries = '';
+            state.currentSeriesName = '';
+            state.currentPage = 1;
+            updateUrl();
+            fetchData();
+
+            // Scroll to top
+            var titleEl = document.getElementById('pageTitle');
+            if (titleEl) {
+                titleEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+
+        window.goToPage = function(page) {
+            if (page < 1 || page > state.totalPages) return;
+            state.currentPage = page;
+            updateUrl();
+            fetchData();
+
+            // Scroll to top of products
+            var container = document.getElementById('productsContainer');
+            if (container) {
+                var offset = container.getBoundingClientRect().top + window.pageYOffset - 180;
+                window.scrollTo({ top: offset, behavior: 'smooth' });
+            }
+        };
+
+        window.resetFilters = function() {
+            state.currentCategory = '';
+            state.currentSeries = '';
+            state.currentSeriesName = '';
+            state.currentPage = 1;
+            state.currentSort = 'default';
+            document.getElementById('sortSelect').value = 'default';
+            updateUrl();
+            updateActiveCategory();
+            fetchData();
+        };
+
+    })();
+    </script>
+
+
+
+</body></html>
