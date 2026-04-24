@@ -1,172 +1,392 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кирилл Савин — Портфолио</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Кирилл Савин — Дизайнер, программист</title>
+ <style>
+ body {
+   margin: 0;
+   font-family: Arial, sans-serif;
+   line-height: 1.6;
+   color: #333;
+ }
+
+/* Топ-бар */
+.top-bar {
+  background: #222;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; /* Важно для позиционирования меню */
+  z-index: 1000; /* Чтобы быть выше других элементов */
+}
+.top-bar a {
+  color: #fff;
+  margin-left: 15px;
+  text-decoration: none;
+}
+.top-bar span {
+  margin-left: 15px;
+}
+.top-bar a:hover {
+  text-decoration: underline;
+}
+.menu-toggle {
+  display: none; /* Скрыт по умолчанию */
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.5em;
+}
+
+/* Выпадающее меню */
+.menu-items {
+  display: flex; /* Показываем пункты в ряд на широких экранах */
+  gap: 20px; /* Отступ между пунктами */
+  width: 100%;
+}
+.menu-items div{
+  flex: auto;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 1024px) {
+  .menu-toggle {
+    display: block; /* Показываем кнопку на узких экранах */
+  }
+
+  .menu-items {
+    display: none; /* Прячем пункты */
+    flex-direction: column; /* Выводим столбцом */
+    position: absolute; /* Позиционируем относительно .top-bar */
+    top: 100%; /* Располагаем под шапкой */
+    left: 0;
+    right: 0;
+    background-color: #222; /* Темный фон */
+    padding: 20px;
+    /* border-radius: 8px; */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    opacity: 0; /* Скрываем по прозрачности */
+    visibility: hidden; /* Скрываем по видимости */
+    transform: translateY(-10px); /* Сдвигаем вверх для анимации */
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 999; /* Ниже чем .top-bar, но выше контента */
+  }
+
+  /* Стили для открытого меню */
+  .menu-opened > .menu-items {
+    display: flex; /* Показываем */
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Стили ссылок в мобильном меню */
+  .top-bar a {
+    display: block;
+    /* margin-bottom: 15px; */
+    font-size: 1.1em;
+  }
+}
+
+ /* Hero */
+ .hero {
+   background: url('images/bg.jpg') center/cover no-repeat;
+   color: #fff;
+   padding: 100px 10%;
+   display: flex;
+   align-items: center;
+ }
+ .hero-content {
+   flex: 1;
+ }
+ .hero-content h1 {
+   font-size: 3em;
+   margin-bottom: 10px;
+ }
+ .hero-content p {
+   font-size: 1.2em;
+   color: rgb(255 255 255 / .8);
+ }
+ .hero-checkmarks {
+   margin-top: 20px;
+   gap: 0.5rem;
+   flex-direction: column;
+   display: flex;
+ }
+  .hero-checkmarks div {
+   border-color: rgb(255 255 255 / 0.2);
+   background-color: rgb(226 235 250 / 0.2);
+   border-radius: 0.5rem;
+   border-width: 1px;
+   display: flex;
+   padding-left: 0.75rem;
+   padding-right: 0.75rem;
+   padding-top: 0.5rem;
+   padding-bottom: 0.5rem;
+   font-size: 0.875rem;
+   line-height: 1.25rem;
+   width: fit-content;
+ }
+ .hero-checkmarks span {
+   display: inline-block;
+   margin-right: 15px;
+ }
+  .hero-checkmarks svg {
+   color: rgb(102, 204, 255);
+   flex-shrink: 0;
+   width: 1.25rem;
+   height: 1.25rem;
+ }
+ .hero-btn {
+   margin-top: 20px;
+ }
+ .hero-image img {
+   max-width: 100%;
+   height: auto;
+ }
+  .call-button {
+   margin-top: 20px;
+   padding: 15px 25px;
+   text-decoration: none;
+   font-size: 18px;
+   border-radius: 5px;
+   display: inline-block;
+   font-weight: bold;
+  }
+.cbb {    
+   background-color: #007bff;
+   color: white;
+}
+
+.cbw {    
+   background-color: white;
+   color: #007bff;
+}
+ /* Галерея */
+ .gallery {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   gap: 20px;
+   padding: 40px 20px;
+ }
+ .card {
+   background: #fff;
+   border-radius: 8px;
+   overflow: hidden;
+   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+ }
+ .card img {
+   width: 100%;
+   object-fit: cover;
+   aspect-ratio: 4 / 3;
+ }
+ .card-body {
+   padding: 15px;
+ }
+ .card-body span{
+    font-size: .8rem;
+   color: #999;
+ }
+ .card-body h3, .card-body p{
+   margin: 0;
+ }
+
+.more-link {
+    color: #007bff;
+    position: relative;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.more-link::after {
+    content: "";
+    margin-left: 0;
+    transition: margin-left 0.1s ease;
+}
+
+.more-link:hover::after {
+    content: "  ";
+    margin-left: 20px;
+}
+
+ /* Статистика */
+ .stats {
+   display: flex;
+   justify-content: center;
+   gap: 40px;
+   padding: 40px 20px;
+   background: #f9f9f9;
+ }
+ .stat-item {
+     text-align: center;
+ }
+
+ /* CTA */
+ .cta {
+     text-align: center;
+     padding: 40px 20px;
+     background: #007bff;
+     color: #fff;
+ }
+
+ /* Подвал */
+ footer {
+     background: #333;
+     color: #fff;
+     text-align: center;
+     padding: 20px 0;
+ }
+ footer a {
+     color: #fff;
+     margin: 0 10px;
+ }
+
+/* Адаптивность */
+ @media (max-width: 1024px) {
+
+     /* Hero */
+     .hero { flex-direction:column; text-align:center;}
+     .hero-content { order:-1;}
+     .hero-image { order:-2; margin-top:30px;}
+
+     /* Галерея */
+     .gallery { padding-left:20px; padding-right:20px;}
+
+     /* CTA */
+     button { padding-left:45%; padding-right:45%;}
+
+     /* Статистика */
+     .stat-item { margin-bottom:15px;}
+
+     /* Подвал */
+     footer a { margin-bottom:.5em;}
+
+      /* Альтернативный вариант для простого отображения меню (без JS) */
+      @media (max-width: 1024px) {
+          /* Если нужно, чтобы меню всегда было видно на очень маленьких экранах */
+          /*.top-bar .menu-items { display:none;}*/
+          button { padding-left:.7em; padding-right:.7em;}
+          footer p { font-size:.9em;}
+          footer a { font-size:.9em;}
+      }
+
+}
+
+
+ </style>
 </head>
 <body>
 
-    <header class="header">
-        <div class="container">
-            <h1 class="header__name">Кирилл Савин</h1>
-            <p class="header__subtitle">Портфолио работ</p>
-        </div>
-    </header>
+<!-- Топ-бар -->
+<div class="top-bar">
+  <div class="menu-toggle" onclick="this.parentNode.classList.toggle('menu-opened')">☰</div>
 
-    <main class="portfolio">
+  <div class="menu-items">
+    <div><a href="mailto:savinkirillnick@gmail.com">savinkirillnick@gmail.com</a></div>
+    <div><span>Режим работы: Пн-Сб, 9-18</span></div>
+    <div><a href="tel:+79509707700">+7 (950) 970-77-00</a></div>
+    
+    <div>
+    <a href="https://t.me/savinkirillnick" title="Telegram">
+      Telegram
+    </a>
+    <a href="https://max.ru/u/f9LHodD0cOL3tggURfP-GYWJLCV-0Ige02_zLDhklJ_frBxcUQiZdOwQTqc" title="Max">
+      MAX
+    </a>
+    </div>
+  </div>
+</div>
+ 
+ <!-- Hero -->
+ <section class="hero">
+ <div class="hero-content">
+ <h1>Кирилл Савин</h1>
+ <p>Разработка сайтов, программирование, продвижение</p>
+ <div class="hero-checkmarks">
+ <div>
+    <svg class="w-5 h-5 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+    <span>Дизайн</span>
+ </div>
+ <div>
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+    <span>Верстка</span>
+</div>
+ <div>
+    <svg class="w-5 h-5 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+    <span>Анимация</span>
+</div>
+ </div>
+ <a href="tel:+79509707700" class="call-button cbb">Связаться</a>
+ </div>
+ <div class="hero-image">
+ <!-- Замените src на путь к вашей фотографии -->
+ <!-- <img src="https://via.placeholder.com/450x350" alt="Последняя работа"> -->
+ </div>
+ </section>
 
-        <div class="container">
-            <h2 class="main__subtitle">Задизайнил</h2>
-        </div>
+ <!-- Галерея -->
+ <section class="gallery">
+<!-- Карточки -->
+ <div class="card">
+ <img src="projects\tvoidveri-msk\thumb.JPG" alt="Твои двери">
+ <div class="card-body">
+ <h3>Твои двери</h3>
+ <p>Лендинг, страницы и каталог.</p>
+ <p><a class="more-link" href="projects/tvoidveri-msk/project.html">Подробнее</a> &gt;</p>
+ <span>разработка, верстка, редактирование</span>
+ </div>
+ </div>
 
-        <div class="container">
-            <div class="grid">
+ <div class="card">
+ <img src="projects\ipprime\thumb.JPG" alt="IPPRIME">
+ <div class="card-body">
+ <h3>IPPRIME</h3>
+ <p>Лендинг и многостраничник.</p>
+ <p><a class="more-link" href="projects/ipprime/project.html">Подробнее</a> &gt;</p>
+ <span>верстка, исправление, редактирование</span>
+ </div>
+ </div>
 
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="projects\tvoidveri-msk\thumb.JPG" alt="Твои двери" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">Твои двери</p>
-                        <p class="card__desc"><a href="projects/tvoidveri-msk/project.html">Лендинг и каталог</a></p>
-                    </div>
-                </div>
+ <!-- Добавь больше карточек по аналогии -->
+ </section>
 
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="projects\ipprime\thumb.JPG" alt="IPPRIME" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">IPPRIME</p>
-                        <p class="card__desc"><a href="projects/ipprime/project.html">Лендинг и многостраничник</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+ <!-- Статистика -->
+<!--
+ <section class="stats">
+ <div class="stat-item">
+ <strong>17 лет</strong> на рынке
+ </div>
+ <div class="stat-item">
+ <strong>100+</strong> реализованных проектов
+ </div>
+ </section>
+-->
 
-        <div class="container">
-            <h2 class="main__subtitle">Разработал</h2>
-        </div>
+ <!-- CTA -->
+ <section class="cta">
+ <h2>Готовы начать новый проект?</h2>
+ <p>Свяжитесь со мной для обсуждения деталей!</p>
+ <a class="call-button cbw">Связаться</a>
+ </section>
 
-        <div class="container">
-            <div class="grid">
-
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="images/colored-balls.jpg" alt="Цветные шарики" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">Цветные шарики</p>
-                        <p class="card__desc"><a href="https://savinkirillnick.github.io/colored-balls/">Игра</a> &gt; <a href="https://github.com/savinkirillnick/savinkirillnick.github.io/tree/main/colored-balls">Код</a> &gt; <a href="https://t.me/game_colored_balls_bot/">tg</a></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="images/15-puzzle.jpg" alt="Пятнашки" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">Пятнашки</p>
-                        <p class="card__desc"><a href="https://savinkirillnick.github.io/15-puzzle/">Игра</a> &gt; <a href="https://github.com/savinkirillnick/savinkirillnick.github.io/tree/main/15-puzzle">Код</a> &gt; <a href="https://t.me/game_15_puzzle_bot/">tg</a></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="images/capital-show.jpg" alt="Угадай слово" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">Угадай слово</p>
-                        <p class="card__desc"><a href="https://savinkirillnick.github.io/capital-show/">Игра</a> &gt; <a href="https://github.com/savinkirillnick/savinkirillnick.github.io/tree/main/capital-show">Код</a> &gt; <a href="https://t.me/game_pole_slov_bot/">tg</a></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="images/bible.jpg" alt="Библия на русском" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">Библия на русском</p>
-                        <p class="card__desc"><a href="https://savinkirillnick.github.io/bible/">Библия</a> &gt; <a href="https://github.com/savinkirillnick/savinkirillnick.github.io/tree/main/bible">Код</a> &gt; <a href="https://t.me/ru_bible_bot/">tg</a></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="images/quran.jpg" alt="Коран на русском" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">Коран на русском</p>
-                        <p class="card__desc"><a href="https://savinkirillnick.github.io/quran/">Коран</a> &gt; <a href="https://github.com/savinkirillnick/savinkirillnick.github.io/tree/main/quran">Код</a> &gt; <a href="https://t.me/ru_quran_bot/">tg</a></p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="container">
-            <h2 class="main__subtitle">Запрограммировал</h2>
-        </div>
-
-        <div class="container">
-            <div class="grid">
-
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="images/terminal.jpg" alt="Terminal" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">Terminal</p>
-                        <p class="card__desc"><a href="https://github.com/savinkirillnick/terminal">Торговый терминал</a></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="images/sniper.jpg" alt="Sniperbot" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">Sniperbot</p>
-                        <p class="card__desc"><a href="https://github.com/savinkirillnick/sniperbot2">Торговый бот по уровням</a></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="images/stepbot.jpg" alt="Stepbot" class="card__img">
-                    </div>
-                    <div class="card__body">
-                        <p class="card__title">Stepbot</p>
-                        <p class="card__desc"><a href="https://github.com/savinkirillnick/stepbot">Торговый бот мартингейл</a></p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <h2 class="footer__title">Контакты</h2>
-            <div class="footer__contacts">
-                <a href="mailto:savinkirillnick@gmail.com" class="footer__link">
-                    <svg class="footer__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    savinkirillnick@gmail.com
-                </a>
-                <a href="https://t.me/savinkirillnick" target="_blank" class="footer__link">
-                    <svg class="footer__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                    t.me/savinkirillnick
-                </a>
-            </div>
-            <p class="footer__copy">&copy; 2026 Кирилл Савин</p>
-        </div>
-    </footer>
+ <!-- Подвал -->
+ <footer>
+ <p>© 2026 Кирилл Савин. Все права защищены.</p>
+ <p>
+ <a href="/privacy-policy">Политика конфиденциальности</a>
+ | 
+ <a href="mailto:savinkirillnick@gmail.com">savinkirillnick@gmail.com</a>
+ | 
+ <a href="tel:+79509707700">+7 (950) 970-77-00</a>
+  | 
+ <a href="https://t.me/savinkirillnick">TG</a>
+ | 
+ <a href="https://max.ru/u/f9LHodD0cOL3tggURfP-GYWJLCV-0Ige02_zLDhklJ_frBxcUQiZdOwQTqc">MAX</a>
+ </p>
+ </footer>
 
 </body>
 </html>

@@ -1,67 +1,350 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кирилл Савин — Твои двери</title>
-    <link rel="stylesheet" href="../../style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Твои Двери — Кирилл Савин</title>
+ <style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Топ-бар */
+.top-bar {
+  background: #222;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; /* Важно для позиционирования меню */
+  z-index: 1000; /* Чтобы быть выше других элементов */
+}
+.top-bar a {
+  color: #fff;
+  margin-left: 15px;
+  text-decoration: none;
+}
+.top-bar span {
+  margin-left: 15px;
+}
+.top-bar a:hover {
+  text-decoration: underline;
+}
+.menu-toggle {
+  display: none; /* Скрыт по умолчанию */
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.5em;
+}
+
+/* Выпадающее меню */
+.menu-items {
+  display: flex; /* Показываем пункты в ряд на широких экранах */
+  gap: 20px; /* Отступ между пунктами */
+  width: 100%;
+}
+.menu-items div{
+  flex: auto;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 1024px) {
+  .menu-toggle {
+    display: block; /* Показываем кнопку на узких экранах */
+  }
+
+  .menu-items {
+    display: none; /* Прячем пункты */
+    flex-direction: column; /* Выводим столбцом */
+    position: absolute; /* Позиционируем относительно .top-bar */
+    top: 100%; /* Располагаем под шапкой */
+    left: 0;
+    right: 0;
+    background-color: #222; /* Темный фон */
+    padding: 20px;
+    /* border-radius: 8px; */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    opacity: 0; /* Скрываем по прозрачности */
+    visibility: hidden; /* Скрываем по видимости */
+    transform: translateY(-10px); /* Сдвигаем вверх для анимации */
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 999; /* Ниже чем .top-bar, но выше контента */
+  }
+
+  /* Стили для открытого меню */
+  .menu-opened > .menu-items {
+    display: flex; /* Показываем */
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Стили ссылок в мобильном меню */
+  .top-bar a {
+    display: block;
+    /* margin-bottom: 15px; */
+    font-size: 1.1em;
+  }
+}
+
+
+ /* Шапка (Header) */
+.header {
+  background-color: #333;
+  color: white;
+  height: 180px;
+  padding: 15px 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-logo {
+  height: 140px;
+}
+.header-logo a {
+  color: #fff;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: none;
+}
+.breadcrumbs {
+  height: 24px;
+  bottom: 0;
+  color: rgb(255 255 255 / .7);
+  font-size: 0.9em;
+}
+.breadcrumbs a {
+  color: #fff;
+  text-decoration: none;
+}
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+ /* Хлебные крошки разделитель */
+ .breadcrumbs span::after {
+   content: " > ";
+   margin: 0 5px;
+ }
+ .breadcrumbs span:last-child::after {
+   content: "";
+ }
+
+ /* Блок проекта */
+ .project-container {
+   max-width: 1200px;
+   margin: 40px auto;
+   padding: 0 20px;
+ }
+
+ .project-header {
+     display: flex;
+     gap: 40px;
+     align-items: flex-start;
+     margin-bottom: 40px;
+ }
+
+ .project-info {
+     flex: 1;
+ }
+
+ .project-info h1 {
+     font-size: 2.5em;
+     margin-bottom: 15px;
+     color: #333;
+ }
+
+ .project-info p {
+     font-size: 1.1em;
+     color: #666;
+     margin-bottom: 25px;
+ }
+
+ .work-list {
+     list-style-type: none;
+     padding-left: 0;
+ }
+
+ .work-list li {
+     background-color: #f0f8ff; /* Светло-голубой */
+     border-left: 4px solid #007bff; /* Синий акцент */
+     padding: 8px 12px;
+     margin-bottom: 8px;
+     border-radius: 4px;
+     font-size: 1em;
+ }
+
+ /* Изображение проекта */
+ .project-image img {
+     max-width: 100%;
+     height: auto;
+     border-radius: 8px;
+     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+ }
+
+ /* Ссылки на сайт */
+ .links-block {
+     margin-top: 30px;
+ }
+
+ .links-block h3 {
+     margin-bottom: 15px;
+     font-size: 1.3em;
+ }
+
+ .links-list {
+     list-style-type: none;
+     padding-left: 0;
+ }
+
+ .links-list li {
+     margin-bottom: 10px;
+ }
+
+ .links-list a {
+     display: inline-block;
+     padding: 10px 15px;
+     background-color: #007bff; /* Синий */
+     color: white !important; /* Приоритетный белый */
+     border-radius: 5px;
+     text-decoration: none !important; /* Убираем подчеркивание */
+     transition: background-color 0.3s ease, transform 0.2s ease;
+ }
+
+ .links-list a.cbw { /* Вариант с белой кнопкой */
+    background-color: white !important;
+    color: #007bff !important; /* Синий текст */
+    border: 1px solid #007bff !important; /* Синяя рамка */
+}
+
+.links-list a.cbb { /* Вариант с синей кнопкой */
+    background-color: #007bff !important; /* Синий фон */
+    color: white !important; /* Белый текст */
+}
+
+.links-list a.cbw.hover,
+.links-list a.cbb.hover {
+    transform: scale(1.03);
+}
+.links-list a.cbw.hover {
+    background-color: #f0f8ff !important; /* Светло-синий при наведении */
+}
+.links-list a.cbb.hover {
+    background-color: #0056b3 !important; /* Темно-синий при наведении */
+}
+.links-list a.cbw.hover,
+.links-list a.cbb.hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+ /* Подвал */
+ footer {
+     background: #333;
+     color: #fff;
+     text-align: center;
+     padding: 20px 0;
+ }
+ footer a {
+     color: #fff;
+     margin: 0 10px;
+ }
+
+ </style>
 </head>
 <body>
 
-    <header class="header">
-        <div class="container">
-            <h1 class="header__name">Кирилл Савин</h1>
-            <p class="header__subtitle">Портфолио работ</p>
-        </div>
-    </header>
+<!-- Топ-бар -->
+<div class="top-bar">
+  <div class="menu-toggle" onclick="this.parentNode.classList.toggle('menu-opened')">☰</div>
 
-    <main class="portfolio">
-        <div class="container">
-            <h2 class="main__subtitle">Твои двери</h2>
-        </div>
-        <div class="container">
-            <div class="grid">
+  <div class="menu-items">
+    <div><a href="mailto:savinkirillnick@gmail.com">savinkirillnick@gmail.com</a></div>
+    <div><span>Режим работы: Пн-Сб, 9-18</span></div>
+    <div><a href="tel:+79509707700">+7 (950) 970-77-00</a></div>
+    
+    <div>
+    <a href="https://t.me/savinkirillnick" title="Telegram">
+      Telegram
+    </a>
+    <a href="https://max.ru/u/f9LHodD0cOL3tggURfP-GYWJLCV-0Ige02_zLDhklJ_frBxcUQiZdOwQTqc" title="Max">
+      MAX
+    </a>
+    </div>
+  </div>
+</div>
 
-                <div class="card">
-                    <div class="card__img-wrap">
-                        <img src="thumb.JPG" alt="Твои двери" class="card__img">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card__body">
-                        <p>Сайт: <a href="https://tvoidveri-msk.ru/">tvoidveri-msk.ru</a></p>
-                        <p>Главная страница (лэндинг): <a href="index.html">index.html</a></p>
-                        <p>Каталог: <a href="catalog.html">catalog.html</a></p>
-                        <p>Карта товара: <a href="product.html">product.html</a></p>
-                        <p>Портфолио: <a href="portfolio.html">portfolio.html</a></p>
 
-                    </div>
-                </div>
+ <!-- Шапка -->
+ <header class="header">
+ <div class="header-logo">
+ <a href="/index.html">Кирилл Савин</a>
+ </div>
+ <nav class="breadcrumbs">
+ <span><a href="/index.html">Главная</a></span>
+ <span>Твои Двери</span>
+ </nav>
+ </header>
 
-            </div>
-        </div>
-    </main>
+ <!-- Блок проекта -->
+ <section class="project-container">
+ <div class="project-header">
+ <div class="project-info">
+ <h1>Твои Двери</h1>
+ <p>Лендинг, внутренние страницы и каталог для компании по продаже дверей.</p>
 
-    <footer class="footer">
-        <div class="container">
-            <h2 class="footer__title">Контакты</h2>
-            <div class="footer__contacts">
-                <a href="mailto:savinkirillnick@gmail.com" class="footer__link">
-                    <svg class="footer__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    savinkirillnick@gmail.com
-                </a>
-                <a href="https://t.me/savinkirillnick" target="_blank" class="footer__link">
-                    <svg class="footer__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                    t.me/savinkirillnick
-                </a>
-            </div>
-            <p class="footer__copy">&copy; 2026 Кирилл Савин</p>
-        </div>
-    </footer>
+ <h3>Проведенная работа:</h3>
+ <ul class="work-list">
+ <li>Разработка (PHP/SQL)</li>
+ <li>Верстка (HTML/CSS)</li>
+ <li>Динамика, анимация, интерактив (JavaScript)</li>
+ <li>Адаптивная верстка (Mobile First)</li>
+ <li>Парсинг товаров по категориям, сериям</li>
+ <li>Полноценная панель администратора</li>
+ </ul>
+ </div>
+
+ <!-- Фотография сайта -->
+ <div class="project-image">
+ <!-- Замените src на скриншот сайта -->
+ <img src="thumb.JPG" alt="Скриншот сайта Твои Двери" style="max-width:550px;"> 
+ </div>
+ </div>
+
+ <!-- Ссылки на сайт -->
+ <div class="links-block">
+ <h3>Перейти на сайт:</h3>
+ <ul class="links-list">
+ <!-- Внешняя ссылка (пример) -->
+ <li><a href="https://tvoidveri-msk.ru/" target="_blank" rel="noopener noreferrer" class="cbb">Официальный сайт</a></li>
+ <!-- Внутренние ссылки -->
+ <li><a href="index.html" class="cbw">Главная страница многостраничника</a></li>
+ <li><a href="catalog.html" class="cbw">Страница каталога</a></li>
+ <li><a href="product.html" class="cbw">Описание продукции</a></li>
+ <li><a href="portfolio.html" class="cbw">Фотогалерея выполненных работ</a></li>
+ <!-- Добавьте другие ссылки по аналогии -->
+ </ul>
+ </div>
+ </section>
+
+ <!-- Подвал -->
+ <footer>
+ <p>© 2026 Кирилл Савин. Все права защищены.</p>
+ <p>
+ <a href="/privacy-policy">Политика конфиденциальности</a>
+ | 
+ <a href="mailto:savinkirillnick@gmail.com">savinkirillnick@gmail.com</a>
+ | 
+ <a href="tel:+79509707700">+7 (950) 970-77-00</a>
+ | 
+ <a href="https://t.me/savinkirillnick">TG</a>
+ | 
+ <a href="https://max.ru/u/f9LHodD0cOL3tggURfP-GYWJLCV-0Ige02_zLDhklJ_frBxcUQiZdOwQTqc">MAX</a>
+ </p>
+ </footer>
 
 </body>
 </html>
