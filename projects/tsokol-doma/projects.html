@@ -478,10 +478,6 @@
                     }
                 });
         }
-        loadComponent('topbar-placeholder', 'topbar.html');
-        loadComponent('header-placeholder', 'header.html');
-        loadComponent('footer-placeholder', 'footer.html');
-        loadComponent('modals-placeholder', 'modals.html');
 
         if (!localStorage.getItem('cookieAccepted')) {
             setTimeout(() => { document.getElementById('cookieBanner').style.transform = 'translateY(0)'; }, 2000);

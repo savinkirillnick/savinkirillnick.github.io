@@ -1050,12 +1050,6 @@
         });
 
         document.addEventListener('DOMContentLoaded', async () => {
-            await Promise.all([
-                loadComponent('topbar-placeholder', 'components/topbar.html'),
-                loadComponent('header-placeholder', 'components/header.html'),
-                loadComponent('footer-placeholder', 'components/footer.html'),
-                loadComponent('modals-placeholder', 'components/modals.html')
-            ]);
             loadProduct();
             initReveal();
             checkCookies();

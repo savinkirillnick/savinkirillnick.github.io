@@ -1823,29 +1823,7 @@
 
     <!-- Scripts -->
     <script>
-        // Load components
-        function loadComponent(id, file) {
-            fetch('components/' + file)
-                .then(r => r.text())
-                .then(html => {
-                    const el = document.getElementById(id);
-                    el.innerHTML = html;
-                    document.querySelectorAll('#' + id + ' .nav-link').forEach(a => {
-                        a.href = a.href.replace(/index\.html#/, '#');
-                    });
-                    document.querySelectorAll('#' + id + ' .header-home-link').forEach(a => {
-                        a.href = '#';
-                    });
-                    if (window.Alpine && typeof window.Alpine.initTree === 'function') {
-                        window.Alpine.initTree(el);
-                    }
-                });
-        }
-        loadComponent('topbar-placeholder', 'topbar.html');
-        loadComponent('header-placeholder', 'header.html');
-        loadComponent('footer-placeholder', 'footer.html');
-        loadComponent('modals-placeholder', 'modals.html');
-
+        
         // Show cookie banner if not accepted
         if (!localStorage.getItem('cookieAccepted')) {
             setTimeout(() => {
