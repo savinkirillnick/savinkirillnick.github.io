@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реализованные проекты — Рамэкс Тех | Портфолио облицовки фасадов</title>
+    <meta name="description" content="Портфолио реализованных проектов РАМЭКС ТЕХ. Более 1500 объектов: облицовка фасадов, цоколей, заборов. Фотографии до и после.">
+    <meta property="og:title" content="Реализованные проекты — Рамэкс Тех">
+    <meta property="og:description" content="Более 1500 реализованных проектов по облицовке фасадов и цоколей">
+    <meta property="og:type" content="website">
+
+    <script src="projects_files/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: { bg: '#0a0f1a', card: '#1a2332', section: '#111827' },
+                        accent: { DEFAULT: '#38ffde', glow: 'rgba(56, 255, 222, 0.5)' }
+                    },
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <script defer="defer" src="projects_files/alpine-intersect.min.js"></script>
+    <script defer="defer" src="projects_files/alpine-mask.min.js"></script>
+    <script defer="defer" src="projects_files/alpine-collapse.min.js"></script>
+    <script defer="defer" src="projects_files/alpine.min.js"></script>
+
+    <style>
+        @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('fonts/inter-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+        @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('fonts/inter-cyrillic-ext.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+        @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+        html { scroll-behavior: smooth; }
+        body { background: #0a0f1a; color: #ffffff; }
+        [x-cloak] { display: none !important; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        #topbar-placeholder { min-height: 40px; }
+        #header-placeholder { min-height: 72px; position: sticky; top: 0; z-index: 50; }
+        .glow-hover { transition: all 0.3s ease; }
+        .glow-hover:hover { box-shadow: 0 0 20px rgba(56, 255, 222, 0.5), 0 0 40px rgba(56, 255, 222, 0.3); transform: translateY(-5px); }
+
+        .counter { font-variant-numeric: tabular-nums; }
+
+        .project-card { cursor: pointer; overflow: hidden; }
+        .project-card img { transition: transform 0.3s ease; }
+        .project-card:hover img { transform: scale(1.05); }
+
+        .tag { display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+        .tag-facade { background: rgba(56, 255, 222, 0.15); color: #38ffde; }
+        .tag-foundation { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+        .tag-fence { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+        .tag-commercial { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .tag-combined { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+
+        .lightbox { position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.95); display: flex; align-items: center; justify-content: center; }
+        .lightbox-img { max-width: 90%; max-height: 85vh; object-fit: contain; }
+        .lightbox-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 12px 16px; border-radius: 8px; cursor: pointer; transition: all 0.3s; backdrop-filter: blur(10px); }
+        .lightbox-btn:hover { background: rgba(255, 255, 255, 0.2); }
+        .lightbox-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        @keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .counter-animate { animation: countUp 0.8s ease-out; }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ImageGallery",
+        "name": "Реализованные проекты РАМЭКС ТЕХ",
+        "description": "Портфолио реализованных проектов облицовки фасадов и цоколей",
+        "provider": {
+            "@type": "Organization",
+            "name": "РАМЭКС ТЕХ",
+            "url": "https://ramexteh.ru"
+        }
+    }
+    </script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, system-ui, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.bottom-0{bottom:0px}.bottom-10{bottom:2.5rem}.left-0{left:0px}.left-1\/4{left:25%}.left-10{left:2.5rem}.left-6{left:1.5rem}.right-0{right:0px}.right-1\/4{right:25%}.right-20{right:5rem}.right-6{right:1.5rem}.top-0{top:0px}.top-1\/2{top:50%}.top-20{top:5rem}.top-6{top:1.5rem}.right-4{right:1rem}.top-4{top:1rem}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mb-4{margin-bottom:1rem}.mt-1{margin-top:0.25rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-\[4\/3\]{aspect-ratio:4/3}.h-12{height:3rem}.h-6{height:1.5rem}.h-80{height:20rem}.h-96{height:24rem}.h-full{height:100%}.h-4{height:1rem}.h-10{height:2.5rem}.h-5{height:1.25rem}.max-h-12{max-height:3rem}.w-12{width:3rem}.w-6{width:1.5rem}.w-80{width:20rem}.w-96{width:24rem}.w-full{width:100%}.w-4{width:1rem}.w-10{width:2.5rem}.w-5{width:1.25rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-md{max-width:28rem}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-y-full{--tw-translate-y:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.resize-none{resize:none}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-8{gap:2rem}.gap-2{gap:0.5rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.whitespace-nowrap{white-space:nowrap}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.rounded-2xl{border-radius:1rem}.border{border-width:1px}.border-y{border-top-width:1px;border-bottom-width:1px}.border-t{border-top-width:1px}.border-b{border-bottom-width:1px}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-transparent{border-color:transparent}.border-white\/5{border-color:rgb(255 255 255 / 0.05)}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.bg-accent{--tw-bg-opacity:1;background-color:rgb(56 255 222 / var(--tw-bg-opacity, 1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.bg-dark-bg{--tw-bg-opacity:1;background-color:rgb(10 15 26 / var(--tw-bg-opacity, 1))}.bg-dark-bg\/80{background-color:rgb(10 15 26 / 0.8)}.bg-dark-card{--tw-bg-opacity:1;background-color:rgb(26 35 50 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-dark-section{--tw-gradient-from:#111827 var(--tw-gradient-from-position);--tw-gradient-to:rgb(17 24 39 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-black\/60{--tw-gradient-from:rgb(0 0 0 / 0.6) var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-dark-bg{--tw-gradient-to:rgb(10 15 26 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #0a0f1a var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), transparent var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-dark-card{--tw-gradient-to:#1a2332 var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-4{padding:1rem}.p-3{padding:0.75rem}.p-2{padding:0.5rem}.p-8{padding:2rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.font-sans{font-family:Inter, system-ui, sans-serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.text-accent{--tw-text-opacity:1;color:rgb(56 255 222 / var(--tw-text-opacity, 1))}.text-dark-bg{--tw-text-opacity:1;color:rgb(10 15 26 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-10{opacity:0.1}.opacity-5{opacity:0.05}.opacity-0{opacity:0}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-3xl{--tw-blur:blur(64px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.brightness-0{--tw-brightness:brightness(0);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.invert{--tw-invert:invert(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-500{transition-duration:500ms}.hover\:bg-accent\/90:hover{background-color:rgb(56 255 222 / 0.9)}.hover\:bg-dark-card\/80:hover{background-color:rgb(26 35 50 / 0.8)}.hover\:bg-white\/20:hover{background-color:rgb(255 255 255 / 0.2)}.hover\:text-accent:hover{--tw-text-opacity:1;color:rgb(56 255 222 / var(--tw-text-opacity, 1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:opacity-100:hover{opacity:1}.focus\:border-transparent:focus{border-color:transparent}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}@media (min-width: 640px){.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}}@media (min-width: 768px){.md\:col-span-1{grid-column:span 1 / span 1}.md\:max-h-14{max-height:3.5rem}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:py-24{padding-top:6rem;padding-bottom:6rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-5xl{font-size:3rem;line-height:1}.md\:text-base{font-size:1rem;line-height:1.5rem}}@media (min-width: 1024px){.lg\:block{display:block}.lg\:flex{display:flex}.lg\:hidden{display:none}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:text-5xl{font-size:3rem;line-height:1}.lg\:text-6xl{font-size:3.75rem;line-height:1}}@media (min-width: 1280px){.xl\:text-base{font-size:1rem;line-height:1.5rem}}</style></head>
+
+<body class="font-sans antialiased">
+    <div id="topbar-placeholder"><div class="text-white py-2 text-sm" style="background-color: #006666;">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span>МО, г. Раменское, ул. Карла Маркса, д 5</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>ПН-СБ 9:00-20:00, ВС выходной</span>
+            </div>
+            <a href="tel:+74993808608" class="flex items-center gap-2 font-semibold hover:text-primary-200 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                </svg>
+                +7 (499) 380-86-08
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+    <div id="header-placeholder"><header id="header" class="backdrop-blur-sm bg-dark-bg border-b border-transparent" style="transition: background-color 1s ease, border-color 1s ease, box-shadow 1s ease;" x-data="{open: false, scrolled: false}" @scroll.window="scrolled = (window.pageYOffset &gt; 50)" :class="scrolled ? 'bg-dark-bg/80 shadow-lg border-b border-white/5' : 'bg-dark-bg'">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <a href="#" alt="index.html" class="flex items-center header-home-link">
+                <img src="projects_files/logo-new.png" alt="Рамэкс Тех" class="max-h-12 md:max-h-14 header-logo brightness-0 invert">
+            </a>
+            <nav class="hidden lg:flex items-center gap-8 xl:text-base text-sm whitespace-nowrap">
+                <a href="#" alt="catalog.html" class="text-gray-300 hover:text-accent transition nav-link">Каталог</a>
+                <a href="#" alt="production.html" class="text-gray-300 hover:text-accent transition nav-link">Производство</a>
+                <a href="#" alt="calculator.html" class="text-gray-300 hover:text-accent transition nav-link">Калькулятор</a>
+                <a href="#" alt="projects.html" class="text-gray-300 hover:text-accent transition nav-link">Проекты</a>
+                <a href="#" alt="about.html" class="text-gray-300 hover:text-accent transition nav-link">О&nbsp;компании</a>
+                <a href="#" alt="contacts.html" class="text-gray-300 hover:text-accent transition nav-link">Контакты</a>
+            </nav>
+            <button @click="$dispatch('open-modal', 'callback')" class="hidden lg:block bg-accent hover:bg-accent/90 text-dark-bg px-6 py-3 rounded-lg transition font-semibold">
+                Бесплатная консультация
+            </button>
+            <button @click="open = !open" class="lg:hidden p-2 text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" style="display: none;"></path>
+                </svg>
+            </button>
+        </div>
+        <div x-show="open" x-transition="" class="lg:hidden pb-4" style="display: none;">
+            <nav class="flex flex-col gap-4">
+                <a href="#" alt="catalog.html" @click="open = false" class="text-gray-300 hover:text-accent transition py-2 nav-link">Каталог</a>
+                <a href="#" alt="production.html" @click="open = false" class="text-gray-300 hover:text-accent transition py-2 nav-link">Производство</a>
+                <a href="#" alt="calculator.html" @click="open = false" class="text-gray-300 hover:text-accent transition py-2 nav-link">Калькулятор</a>
+                <a href="#" alt="projects.html" @click="open = false" class="text-gray-300 hover:text-accent transition py-2 nav-link">Проекты</a>
+                <a href="#" alt="about.html" @click="open = false" class="text-gray-300 hover:text-accent transition py-2 nav-link">О&nbsp;компании</a>
+                <a href="#" alt="contacts.html" @click="open = false" class="text-gray-300 hover:text-accent transition py-2 nav-link">Контакты</a>
+                <button @click="$dispatch('open-modal', 'callback'); open = false" class="bg-accent text-dark-bg px-6 py-3 rounded-lg transition font-semibold text-left">
+                    Бесплатная консультация
+                </button>
+            </nav>
+        </div>
+    </div>
+</header>
+</div>
+
+    <!-- Hero Section with Breadcrumbs -->
+    <section class="relative bg-gradient-to-br from-dark-section via-dark-bg to-dark-card py-16 md:py-24 overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-20 left-10 w-96 h-96 bg-accent rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 right-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <nav class="flex items-center space-x-2 text-sm text-gray-400 mb-8 reveal active">
+                <a href="#" alt="index.html" class="hover:text-accent transition">Главная</a>
+                <span>/</span>
+                <span class="text-white">Реализованные проекты</span>
+            </nav>
+
+            <div class="max-w-4xl reveal active">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                    Реализованные <span class="text-accent">проекты</span>
+                </h1>
+                <p class="text-xl text-gray-300 leading-relaxed">
+                    Более 1 500 выполненных объектов по всей России. Частные дома, коттеджные посёлки, коммерческие здания.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Bar -->
+    <section class="bg-dark-card py-12 border-y border-white/10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center reveal counter-animate active" x-data="{ count: 0 }" x-intersect.once="$el.classList.add('counter-animate'); let target = 1500; let duration = 2000; let step = target / (duration / 16); let current = 0; let timer = setInterval(() =&gt; { current += step; if (current &gt;= target) { count = target; clearInterval(timer); } else { count = Math.floor(current); } }, 16)">
+                    <div class="text-4xl md:text-5xl font-bold text-accent mb-2 counter" x-text="count + '+'">1500+</div>
+                    <div class="text-gray-400 text-sm md:text-base">Реализованных объектов</div>
+                </div>
+
+                <div class="text-center reveal counter-animate active" x-data="{ count: 0 }" x-intersect.once="$el.classList.add('counter-animate'); let target = 100000; let duration = 2000; let step = target / (duration / 16); let current = 0; let timer = setInterval(() =&gt; { current += step; if (current &gt;= target) { count = target; clearInterval(timer); } else { count = Math.floor(current); } }, 16)">
+                    <div class="text-4xl md:text-5xl font-bold text-accent mb-2 counter" x-text="count.toLocaleString('ru-RU') + '+'">100&nbsp;000+</div>
+                    <div class="text-gray-400 text-sm md:text-base">Квадратных метров облицовки</div>
+                </div>
+
+                <div class="text-center reveal counter-animate active" x-data="{ count: 0 }" x-intersect.once="$el.classList.add('counter-animate'); let target = 50; let duration = 2000; let step = target / (duration / 16); let current = 0; let timer = setInterval(() =&gt; { current += step; if (current &gt;= target) { count = target; clearInterval(timer); } else { count = Math.floor(current); } }, 16)">
+                    <div class="text-4xl md:text-5xl font-bold text-accent mb-2 counter" x-text="count + '+'">50+</div>
+                    <div class="text-gray-400 text-sm md:text-base">Регионов России</div>
+                </div>
+
+                <div class="text-center reveal counter-animate active" x-data="{ count: 0 }" x-intersect.once="$el.classList.add('counter-animate'); let target = 15; let duration = 2000; let step = target / (duration / 16); let current = 0; let timer = setInterval(() =&gt; { current += step; if (current &gt;= target) { count = target; clearInterval(timer); } else { count = Math.floor(current); } }, 16)">
+                    <div class="text-4xl md:text-5xl font-bold text-accent mb-2 counter" x-text="count + '+'">15+</div>
+                    <div class="text-gray-400 text-sm md:text-base">Лет успешной работы</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Photo Grid -->
+    <section class="py-16 md:py-24 bg-dark-bg" x-data="portfolioData()">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10 reveal active">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3">Фотогалерея объектов</h2>
+                <p class="text-gray-400">Показано <span class="text-accent font-semibold" x-text="Math.min(visibleCount, allPhotos.length)">20</span> из <span class="text-accent font-semibold" x-text="allPhotos.length">231</span> фото</p>
+            </div>
+
+            <!-- Photo Grid 4 columns x 5 rows -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
+                <template x-for="(photoId, idx) in displayedPhotos" :key="photoId">
+                    <div class="bg-dark-card rounded-xl overflow-hidden glow-hover project-card" @click="openLightbox(idx)">
+                        <div class="relative aspect-[4/3] overflow-hidden">
+                            <img :src="'projects_files/p' + photoId + '.jpg'" :alt="'Объект №' + photoId" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end p-3">
+                                <span class="text-white text-sm font-semibold">Объект №<span x-text="photoId"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center" x-show="visibleCount &lt; allPhotos.length">
+                <button @click="visibleCount += 20" class="bg-accent text-dark-bg px-8 py-4 rounded-lg font-bold text-lg hover:bg-accent/90 transition">
+                    Показать ещё проекты
+                </button>
+            </div>
+        </div>
+
+        <!-- Lightbox -->
+        <div x-show="lightboxOpen" @keydown.escape.window="closeLightbox()" @keydown.left.window="prevImage()" @keydown.right.window="nextImage()" class="lightbox" @click.self="closeLightbox()" style="display: none;">
+
+            <div class="absolute top-6 right-6 z-10">
+                <button @click="closeLightbox()" class="lightbox-btn text-2xl w-12 h-12">×</button>
+            </div>
+
+            <div class="absolute top-6 left-6 z-10 text-white text-lg font-semibold bg-dark-bg/80 backdrop-blur-sm px-4 py-2 rounded-lg">
+                <span x-text="currentImageIndex + 1">1</span> / <span x-text="allPhotos.length">231</span>
+            </div>
+
+            <button @click="prevImage()" :disabled="currentImageIndex === 0" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-2xl w-12 h-12" disabled="disabled">
+                ←
+            </button>
+
+            <img :src="currentImage" alt="Проект РАМЭКС ТЕХ" class="lightbox-img" @click.stop="" src="projects_files/p1_002.jpg">
+
+            <button @click="nextImage()" :disabled="currentImageIndex === allPhotos.length - 1" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-2xl w-12 h-12">
+                →
+            </button>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-24 bg-gradient-to-br from-dark-section to-dark-card relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-accent rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 reveal active">
+                    Хотите такой же <span class="text-accent">результат?</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-8 reveal leading-relaxed active">
+                    Закажите бесплатную консультацию специалиста. 
+Рассчитаем стоимость облицовки вашего дома, подберём оптимальное решение
+ и расскажем о сроках.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal active">
+                    <button onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'callback' }))" class="bg-accent text-dark-bg px-8 py-4 rounded-lg font-bold text-lg hover:bg-accent/90 transition glow-hover">
+                        Заказать расчёт
+                    </button>
+                    <a href="tel:+74993808608" class="flex items-center gap-3 bg-dark-card px-6 py-4 rounded-lg hover:bg-dark-card/80 transition">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                        <div class="text-left">
+                            <div class="text-xs text-gray-400">Звоните прямо сейчас</div>
+                            <div class="font-bold text-lg">+7 (499) 380-86-08</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cookie Banner -->
+    <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-white/10 p-4 z-50 transform translate-y-full transition-transform duration-500">
+        <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-gray-300 text-sm">Мы используем файлы cookie для улучшения работы сайта. <a href="#" alt="privacy.html" class="text-accent hover:underline">Подробнее</a></p>
+            <button onclick="localStorage.setItem('cookieAccepted','1'); this.closest('#cookieBanner').style.transform='translateY(100%)'" class="bg-accent text-dark-bg px-6 py-2 rounded-lg font-semibold text-sm whitespace-nowrap">Принять</button>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"><footer class="bg-primary-900 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="md:col-span-1">
+                <img src="projects_files/logo-new.png" alt="Рамэкс Тех" class="max-h-12 mb-4 brightness-0 invert footer-logo">
+                <p class="text-gray-300 text-sm">Производство и монтаж легких каменных панелей для облицовки фасадов и цоколей</p>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-4">Навигация</h3>
+                <ul class="space-y-2 text-gray-300">
+                    <li><a href="#" alt="catalog.html" class="hover:text-primary-300 transition">Каталог</a></li>
+                    <li><a href="#" alt="production.html" class="hover:text-primary-300 transition">Производство</a></li>
+                    <li><a href="#" alt="calculator.html" class="hover:text-primary-300 transition">Калькулятор</a></li>
+                    <li><a href="#" alt="projects.html" class="hover:text-primary-300 transition">Проекты</a></li>
+                    <li><a href="#" alt="about.html" class="hover:text-primary-300 transition">О компании</a></li>
+                    <li><a href="#" alt="contacts.html" class="hover:text-primary-300 transition">Контакты</a></li>
+                    <li><a href="#" alt="index.html#faq" class="hover:text-primary-300 transition nav-link">FAQ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-4">Контакты</h3>
+                <ul class="space-y-2 text-gray-300">
+                    <li><a href="tel:+74993808608" class="hover:text-primary-300 transition">+7 (499) 380-86-08</a></li>
+                    <li><a href="mailto:info@tsokol-doma.ru" class="hover:text-primary-300 transition">info@tsokol-doma.ru</a></li>
+                    <li class="text-sm">МО, г. Раменское, ул. Карла Маркса, д 5</li>
+                    <li class="text-sm">ПН-СБ 9:00-20:00, ВС выходной</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-4">Мы в соцсетях</h3>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.504-1.36 8.629-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
+            <p>© 2026 Рамэкс Тех. Все права защищены.</p>
+            <a href="#" alt="privacy.html" class="hover:text-primary-300 transition nav-link-privacy">Политика конфиденциальности</a>
+        </div>
+    </div>
+</footer>
+</div>
+    <div id="modals-placeholder"><div x-data="{
+    modal: null,
+    formData: {name: '', phone: '', email: '', message: ''},
+    sending: false,
+    submitForm(type, successMsg) {
+        if (this.sending) return;
+        this.sending = true;
+        const fd = new FormData();
+        fd.append('name', this.formData.name);
+        fd.append('phone', this.formData.phone);
+        if (this.formData.email) fd.append('email', this.formData.email);
+        if (this.formData.message) fd.append('message', this.formData.message);
+        fd.append('form_type', type);
+        fetch('send.php', {method:'POST', body: fd})
+            .then(r =&gt; r.json())
+            .then(d =&gt; { alert(successMsg); this.modal = null; this.formData = {name:'',phone:'',email:'',message:''}; })
+            .catch(() =&gt; { alert(successMsg); this.modal = null; })
+            .finally(() =&gt; { this.sending = false; });
+    }
+}" @open-modal.window="modal = $event.detail; formData = {name: '', phone: '', email: '', message: ''}">
+
+    <!-- Callback Modal -->
+    <div x-show="modal === 'callback'" x-transition.opacity="" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" @click.self="modal = null" style="display: none;">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 relative" @click.away="modal = null">
+            <button @click="modal = null" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h3 class="text-2xl font-bold mb-6 text-gray-800">Заказать звонок</h3>
+            <form @submit.prevent="submitForm('callback', 'Спасибо! Мы перезвоним вам в течение 15 минут.')" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold">Ваше имя</label>
+                    <input type="text" x-model="formData.name" required="" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-700 focus:border-transparent" placeholder="Иван">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold">Телефон</label>
+                    <input type="tel" x-model="formData.phone" required="" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-700 focus:border-transparent" placeholder="+7 (___) ___-__-__" x-mask="+7 (999) 999-99-99">
+                </div>
+                <div class="flex items-start gap-2">
+                    <input type="checkbox" required="" class="mt-1" id="modal-callback-consent">
+                    <label for="modal-callback-consent" class="text-gray-600 text-sm">Нажимая кнопку, вы соглашаетесь с <a href="#" alt="privacy.html" class="text-primary-700 hover:underline">политикой конфиденциальности</a></label>
+                </div>
+                <button type="submit" class="w-full bg-primary-700 hover:bg-primary-800 text-white px-6 py-4 rounded-lg font-semibold text-lg transition">
+                    Жду звонка
+                </button>
+                <p class="text-gray-500 text-sm text-center">Перезвоним в течение 15 минут</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Discount Modal -->
+    <div x-show="modal === 'discount'" x-transition.opacity="" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" @click.self="modal = null" style="display: none;">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 relative" @click.away="modal = null">
+            <button @click="modal = null" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">Получить скидку 10%</h3>
+            <p class="text-gray-600 mb-6">Оставьте заявку и получите персональную скидку на весь каталог</p>
+            <form @submit.prevent="submitForm('discount', 'Спасибо! Ваша скидка активирована. Мы свяжемся с вами.')" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold">Ваше имя</label>
+                    <input type="text" x-model="formData.name" required="" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-700 focus:border-transparent" placeholder="Иван">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold">Телефон</label>
+                    <input type="tel" x-model="formData.phone" required="" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-700 focus:border-transparent" placeholder="+7 (___) ___-__-__" x-mask="+7 (999) 999-99-99">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold">Email</label>
+                    <input type="email" x-model="formData.email" required="" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-700 focus:border-transparent" placeholder="example@mail.ru">
+                </div>
+                <div class="flex items-start gap-2">
+                    <input type="checkbox" required="" class="mt-1" id="modal-discount-consent">
+                    <label for="modal-discount-consent" class="text-gray-600 text-sm">Нажимая кнопку, вы соглашаетесь с <a href="#" alt="privacy.html" class="text-primary-700 hover:underline">политикой конфиденциальности</a></label>
+                </div>
+                <button type="submit" class="w-full bg-primary-700 hover:bg-primary-800 text-white px-6 py-4 rounded-lg font-semibold text-lg transition">
+                    Получить скидку
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Request Modal -->
+    <div x-show="modal === 'request'" x-transition.opacity="" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" @click.self="modal = null" style="display: none;">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 relative" @click.away="modal = null">
+            <button @click="modal = null" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h3 class="text-2xl font-bold mb-6 text-gray-800">Оставить заявку</h3>
+            <form @submit.prevent="submitForm('request', 'Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.')" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold">Ваше имя</label>
+                    <input type="text" x-model="formData.name" required="" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-700 focus:border-transparent" placeholder="Иван">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold">Телефон</label>
+                    <input type="tel" x-model="formData.phone" required="" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-700 focus:border-transparent" placeholder="+7 (___) ___-__-__" x-mask="+7 (999) 999-99-99">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold">Сообщение</label>
+                    <textarea x-model="formData.message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-700 focus:border-transparent resize-none" placeholder="Расскажите о вашем проекте..."></textarea>
+                </div>
+                <div class="flex items-start gap-2">
+                    <input type="checkbox" required="" class="mt-1" id="modal-request-consent">
+                    <label for="modal-request-consent" class="text-gray-600 text-sm">Нажимая кнопку, вы соглашаетесь с <a href="#" alt="privacy.html" class="text-primary-700 hover:underline">политикой конфиденциальности</a></label>
+                </div>
+                <button type="submit" class="w-full bg-primary-700 hover:bg-primary-800 text-white px-6 py-4 rounded-lg font-semibold text-lg transition">
+                    Отправить заявку
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script>
+        function loadComponent(id, file) {
+            fetch('components/' + file)
+                .then(r => r.text())
+                .then(html => {
+                    const el = document.getElementById(id);
+                    el.innerHTML = html;
+                    if (window.Alpine && typeof window.Alpine.initTree === 'function') {
+                        window.Alpine.initTree(el);
+                    }
+                });
+        }
+        loadComponent('topbar-placeholder', 'topbar.html');
+        loadComponent('header-placeholder', 'header.html');
+        loadComponent('footer-placeholder', 'footer.html');
+        loadComponent('modals-placeholder', 'modals.html');
+
+        if (!localStorage.getItem('cookieAccepted')) {
+            setTimeout(() => { document.getElementById('cookieBanner').style.transform = 'translateY(0)'; }, 2000);
+        }
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < window.innerHeight - 150) { el.classList.add('active'); }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+    </script>
+
+    <script>
+        function portfolioData() {
+            return {
+                visibleCount: 20,
+                lightboxOpen: false,
+                currentImageIndex: 0,
+                allPhotos: Array.from({ length: 231 }, (_, i) => i + 1),
+
+                get displayedPhotos() {
+                    return this.allPhotos.slice(0, this.visibleCount);
+                },
+
+                get currentImage() {
+                    return 'projects_files/p' + this.allPhotos[this.currentImageIndex] + '.jpg';
+                },
+
+                openLightbox(idx) {
+                    this.currentImageIndex = idx;
+                    this.lightboxOpen = true;
+                    document.body.style.overflow = 'hidden';
+                },
+
+                closeLightbox() {
+                    this.lightboxOpen = false;
+                    document.body.style.overflow = '';
+                },
+
+                nextImage() {
+                    if (this.currentImageIndex < this.allPhotos.length - 1) {
+                        this.currentImageIndex++;
+                    }
+                },
+
+                prevImage() {
+                    if (this.currentImageIndex > 0) {
+                        this.currentImageIndex--;
+                    }
+                }
+            }
+        }
+    </script>
+
+
+</body></html>

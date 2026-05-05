@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a6b5a">
+    <meta name="description" content="Управление образования Администрации Конаковского муниципального округа Тверской области. Новости, документы, информация для родителей и педагогов.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="Управление образования Конаковского МО">
+    <meta property="og:title" content="Управление образования Администрации Конаковского МО">
+    <meta property="og:description" content="Управление образования Администрации Конаковского муниципального округа Тверской области. Новости, документы, информация для родителей и педагогов.">
+    <title>Управление образования Администрации Конаковского МО</title>
+    <link rel="stylesheet" href="index_files/fonts.css">
+    <link rel="stylesheet" href="index_files/style.css">
+    <link rel="stylesheet" href="index_files/fontawesome.min.css">
+    <style>
+        /* Year of Unity of Peoples Widget */
+        .unity-hero {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: #fff;
+        }
+        .unity-hero img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* POS Gosuslugi "Решаем вместе" banner (адаптация под наш сайт) */
+        .pos-banner-wrap {
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .pos-banner {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            background: linear-gradient(90deg, #38bafe 0%, #2d73bc 100%);
+            color: #fff;
+            position: relative;
+            min-height: 180px;
+        }
+        .pos-banner__content {
+            padding: 28px 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+        }
+        .pos-banner__title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin: 0;
+        }
+        .pos-banner__text {
+            font-size: 1rem;
+            line-height: 1.4;
+            opacity: 0.95;
+            margin: 0;
+        }
+        .pos-banner__btn {
+            display: inline-block;
+            align-self: flex-start;
+            padding: 12px 24px;
+            background: #fff;
+            color: #0b1f33;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .pos-banner__btn:hover {
+            background: #e4ecfd;
+        }
+        .pos-banner__decor {
+            background: #f8efec url('assets/img/pos-bg.svg') no-repeat right bottom / cover;
+            position: relative;
+        }
+        .pos-banner__logo-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 14px 12px 10px;
+            background: #fff;
+            border-radius: 0 0 8px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .pos-banner__logo {
+            width: 70px;
+            height: auto;
+            display: block;
+        }
+        .pos-banner__slogan {
+            font-size: 0.72rem;
+            color: #005ca9;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        @media (max-width: 700px) {
+            .pos-banner {
+                grid-template-columns: 1fr;
+                min-height: 0;
+            }
+            .pos-banner__decor {
+                min-height: 110px;
+            }
+            .pos-banner__content {
+                padding: 20px;
+            }
+            .pos-banner__title { font-size: 1.1rem; }
+        }
+
+        /* Section Header */
+        .section-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 1.25rem;
+        }
+
+        /* Info Stats Grid */
+        .info-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--color-primary);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-details {
+            font-size: 0.85rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Banner Grid */
+        .banner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .banner-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .banner-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+        .banner-card i {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .banner-card span {
+            display: block;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        /* Hotline Card */
+        .hotline-card {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .hotline-card i {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .hotline-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .hotline-card a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .hotline-card a:hover {
+            text-decoration: underline;
+        }
+
+        .hotline-card p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .hotline-card .all-contacts-link {
+            font-size: 0.95rem;
+            font-weight: 400;
+            text-decoration: underline;
+        }
+
+        /* Org Lists Toggle */
+        .org-toggle-btn {
+            display: block;
+            width: 100%;
+            margin-top: 0.75rem;
+            padding: 0.5rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .org-toggle-btn:hover { background: #1a5276; }
+        .org-list {
+            margin-top: 0.75rem;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+        .org-list-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.82rem;
+        }
+        .org-list-item:last-child { border-bottom: none; }
+        .org-list-name { font-weight: 600; color: #1a1a1a; }
+        .org-list-address { color: #666; font-size: 0.78rem; }
+        .org-list-item a { color: var(--color-primary); text-decoration: none; font-size: 0.78rem; }
+        .org-list-item a:hover { text-decoration: underline; }
+    </style>
+    <script src="index_files/tailwind.js"></script>
+<style>/* ! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.visible{visibility:visible}.hidden{display:none}</style></head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span id="currentDate">4 мая 2026 г.</span>
+            <span>|</span>
+            <span><a href="tel:+74824249795" style="color:inherit;text-decoration:none;"><i class="fa-solid fa-phone" style="font-size:0.8em;margin-right:4px;"></i>8 (48242) 4-97-95</a></span>
+        
+        </div>
+        <div class="top-bar-right">
+            <button id="accessibilityBtn" class="btn-accessible" title="Версия для слабовидящих">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                Для слабовидящих
+            </button>
+        
+    
+
+        </div>
+    </div>
+    <!-- Main Header -->
+    <header class="main-header">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+        <a href="#" alt="index.html"><img src="index_files/logo.svg" alt="Логотип" class="header-logo"></a>
+        <div class="header-title">
+            <h1>УПРАВЛЕНИЕ ОБРАЗОВАНИЯ<br><span class="header-subtitle">АДМИНИСТРАЦИИ КОНАКОВСКОГО МУНИЦИПАЛЬНОГО ОКРУГА</span></h1>
+        
+        </div>
+        <a href="https://vk.com/club215676668" target="_blank" rel="nofollow noopener" class="header-vk" title="Мы ВКонтакте">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.073 2H8.938C3.332 2 2 3.333 2 8.927v6.136C2 20.667 3.323 22 8.927 22h6.136C20.667 22 22 20.677 22 15.073V8.938C22 3.332 20.677 2 15.073 2zm3.073 14.27h-1.459c-.552 0-.72-.45-1.71-1.46-0.865-.833-1.229-.948-1.448-.948-.302 0-.385.083-.385.5v1.333c0 .354-.115.573-1.042.573a5.66 5.66 0 01-4.458-2.74C6.021 11.042 5.5 9.125 5.5 8.802c0-.219.083-.417.5-.417h1.458c.375 0 .51.167.656.573.708 2.094 1.927 3.927 2.427 3.927.188 0 .271-.083.271-.552V10.24c-.063-.948-.562-1.031-.562-1.375 0-.167.146-.344.375-.344h2.292c.312 0 .417.167.417.542v2.469c0 .312.135.417.229.417.188 0 .344-.104.687-.448 1.073-1.188 1.823-3.021 1.823-3.021.104-.219.271-.417.646-.417h1.458c.438 0 .531.229.438.542-.188.833-1.958 3.385-1.958 3.385-.156.25-.219.365 0 .646.146.208.646.635 .979 1.02.615.698 1.083 1.292 1.208 1.698.135.385-.073.583-.458.583z"></path></svg>
+        </a>
+        <div class="search-box" style="position: relative;">
+            <input type="text" class="search-input" placeholder="Поиск по сайту...">
+        
+        <div class="search-dropdown" style="display: none;"></div></div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <a href="#" alt="index.html" class="nav-link active">Главная</a>
+        <a href="#" alt="dokumenty.html" class="nav-link">Документы</a>
+        <div class="nav-dropdown">
+            <a href="#" class="nav-link nav-link-dropdown">Деятельность <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg></a>
+            <div class="nav-dropdown-menu">
+                <a href="#" alt="attestacia.html">Аттестация</a>
+                <a href="#" alt="bezopasnost.html">Безопасность</a>
+                <a href="#" alt="konkursy-meropriyatiya.html">Конкурсы и мероприятия</a>
+                <a href="#" alt="metodicheskaya-kopilka.html">Виртуальный методический кабинет</a>
+                <a href="#" alt="monitoring.html">Мониторинг</a>
+                <a href="#" alt="noko.html">НОКО</a>
+                <a href="#" alt="vospitatelnaya-rabota.html">Воспитательная работа</a>
+                <a href="#" alt="vpr.html">Всероссийские проверочные работы (ВПР)</a>
+                <a href="#" alt="vsosh.html">Всероссийская олимпиада школьников (ВсОШ)</a>
+            
+        
+            </div>
+        </div>
+        <div class="nav-dropdown">
+            <a href="#" class="nav-link nav-link-dropdown">ГИА <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg></a>
+            <div class="nav-dropdown-menu">
+                <a href="#" alt="gia-ege.html">ЕГЭ</a>
+                <a href="#" alt="gia-oge.html">ОГЭ</a>
+                <a href="#" alt="gia-sochinenie.html">Итоговое сочинение (11 класс)</a>
+                <a href="#" alt="gia-sobesedovanie.html">Итоговое собеседование (9 класс)</a>
+            
+        
+            </div>
+        </div>
+        <div class="nav-dropdown">
+            <a href="#" class="nav-link nav-link-dropdown">Родителям <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg></a>
+            <div class="nav-dropdown-menu">
+                <a href="#" alt="roditelyam-pitanie.html">Организация горячего питания</a>
+                <a href="#" alt="roditelyam-zapis.html">Приём детей в первый класс</a>
+                <a href="#" alt="roditelyam-lager.html">Летняя оздоровительная кампания</a>
+                <a href="#" alt="roditelyam-oplata.html">Родительская плата за присмотр и уход в ДОУ</a>
+            
+        
+            </div>
+        </div>
+        <a href="https://vk.com/wall-181509097_23280" class="nav-link" target="_blank" rel="noopener">Новости</a>
+        <a href="#" alt="kontakty.html" class="nav-link">Контакты</a>
+    </nav>
+
+    <!-- Layout Body -->
+    <div class="layout-body">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar"><button class="sidebar-close-btn" aria-label="Закрыть меню">×</button>
+            <nav class="sidebar-menu">
+                <div class="menu-item">
+                    <div class="menu-link" onclick="toggleSubmenu(this)"><span>Документы</span><span class="arrow">▼</span>
+                    </div>
+                    <div class="submenu"><a href="#" alt="dokumenty.html" class="submenu-link">Нормативные акты</a>
+                
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-link" onclick="toggleSubmenu(this)"><span>Деятельность</span><span class="arrow">▼</span>
+                    </div>
+                    <div class="submenu">
+                        <a href="#" alt="attestacia.html" class="submenu-link">Аттестация</a>
+                        <a href="#" alt="bezopasnost.html" class="submenu-link">Безопасность</a>
+                        <a href="#" alt="konkursy-meropriyatiya.html" class="submenu-link">Конкурсы и мероприятия</a>
+                        <a href="#" alt="metodicheskaya-kopilka.html" class="submenu-link">Виртуальный методический кабинет</a>
+                        <a href="#" alt="monitoring.html" class="submenu-link">Мониторинг</a>
+                        <a href="#" alt="noko.html" class="submenu-link">НОКО</a>
+                        <a href="#" alt="vospitatelnaya-rabota.html" class="submenu-link">Воспитательная работа</a>
+                        <a href="#" alt="vpr.html" class="submenu-link">Всероссийские проверочные работы (ВПР)</a>
+                        <a href="#" alt="vsosh.html" class="submenu-link">Всероссийская олимпиада школьников (ВсОШ)</a>
+                    
+                
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-link" onclick="toggleSubmenu(this)"><span>ГИА</span><span class="arrow">▼</span>
+                    </div>
+                    <div class="submenu">
+                        <a href="#" alt="gia-ege.html" class="submenu-link">ЕГЭ</a>
+                        <a href="#" alt="gia-oge.html" class="submenu-link">ОГЭ</a>
+                        <a href="#" alt="gia-sochinenie.html" class="submenu-link">Итоговое сочинение (11 класс)</a>
+                        <a href="#" alt="gia-sobesedovanie.html" class="submenu-link">Итоговое собеседование (9 класс)</a>
+                    
+                
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-link" onclick="toggleSubmenu(this)"><span>Родителям</span><span class="arrow">▼</span>
+                    </div>
+                    <div class="submenu">
+                        <a href="#" alt="roditelyam-pitanie.html" class="submenu-link">Организация горячего питания</a>
+                        <a href="#" alt="roditelyam-zapis.html" class="submenu-link">Приём детей в первый класс</a>
+                        <a href="#" alt="roditelyam-lager.html" class="submenu-link">Летняя оздоровительная кампания</a>
+                        <a href="#" alt="roditelyam-oplata.html" class="submenu-link">Родительская плата за присмотр и уход в ДОУ</a>
+                    
+                
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <a href="https://vk.com/wall-181509097_23280" target="_blank" rel="noopener" class="menu-link" style="display:block;text-decoration:none;color:inherit;"><span>Новости</span></a>
+                
+                </div>
+                <div class="menu-item">
+                    <div class="menu-link" onclick="toggleSubmenu(this)"><span>Учреждения</span><span class="arrow">▼</span>
+                    </div>
+                    <div class="submenu">
+                        <a href="#" alt="shkoly.html" class="submenu-link">Школы</a>
+                        <a href="#" alt="detskie-sady.html" class="submenu-link">Детские сады</a>
+                        <a href="#" alt="dop-obrazovanie.html" class="submenu-link">Доп. образование</a>
+                    
+                
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Mobile Backdrop -->
+        <div class="mobile-backdrop" id="mobileBackdrop">
+
+        </div>
+        <!-- Main Content -->
+        <main class="content-area">
+            <!-- POS Gosuslugi "Решаем вместе" widget -->
+            <div class="pos-banner-wrap">
+                <div class="pos-banner">
+                    <div class="pos-banner__content">
+                        <h2 class="pos-banner__title">Не убрана дорога, яма на дворовой территории?</h2>
+                        <p class="pos-banner__text">Столкнулись с проблемой — напишите жалобу.</p>
+                        <a href="https://pos.gosuslugi.ru/" target="_blank" rel="nofollow noopener" class="pos-banner__btn">Написать о проблеме</a>
+                    
+                    </div>
+                    <div class="pos-banner__decor">
+                        <div class="pos-banner__logo-wrap">
+                            <img src="index_files/gosuslugi-logo-blue.svg" alt="Госуслуги" class="pos-banner__logo">
+                            <div class="pos-banner__slogan">Решаем вместе
+                        
+                    
+                
+            
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 1. Year of Unity of Peoples Widget -->
+            <div class="unity-hero">
+                <img src="index_files/god-edinstva-narodov.svg" alt="Год единства народов" style="padding:10px;">
+            
+
+            </div>
+            <!-- 2. Information Stats -->
+            <h2 class="section-header">Информационная справка</h2>
+            <div class="info-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">29
+                    </div>
+                    <div class="stat-title">Общеобразовательные учреждения
+                    </div>
+                    <div class="stat-details">
+                        24 средних СОШ<br>
+                        1 гимназия<br>
+                        1 ООШ, 1 НОШ<br>
+                        1 вечерняя<br>
+                        1 специальная коррекц.
+                    
+                    </div>
+                    <a href="#" alt="shkoly.html" style="display:inline-block;margin-top:0.5rem;color:var(--color-primary);font-size:0.9rem;font-weight:600;text-decoration:none;">Подробнее →</a>
+                    <button class="org-toggle-btn" onclick="toggleOrgList('schools')">Показать список ▼</button>
+                    <div class="org-list" id="schools" style="display:none;">
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №1 г. Конаково им. Д.С. Стребина</div><div class="org-list-address">ул. Первомайская, д.60</div><a href="http://school1konakovo.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №2 г. Конаково</div><div class="org-list-address">ул. Комсомольская, д.9</div><a href="http://konakovo-sosh2.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №3 г. Конаково</div><div class="org-list-address">ул. Гагарина, д.23</div><a href="https://school3kon.nubex.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СКШ №4 г. Конаково</div><div class="org-list-address">ул. Ворохова, д.2</div><a href="http://skh4-kon.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ гимназия №5 г. Конаково</div><div class="org-list-address">проспект Ленина, д.28-а</div><a href="http://school5kon.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №6 г. Конаково</div><div class="org-list-address">ул. Маяковского, д.16</div><a href="https://shcool6konakovo.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №7 г. Конаково</div><div class="org-list-address">ул. Горького, д.13</div><a href="http://school7-konakovo.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №8 г. Конаково</div><div class="org-list-address">ул. Энергетиков, д.38</div><a href="http://xn--8--6kcck7bdbdyffdb0l.xn--p1ai/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №9 г. Конаково</div><div class="org-list-address">ул. Баскакова, д.27</div><a href="http://sosh9-kon.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ ВСОШ г. Конаково</div><div class="org-list-address">ул. Свободы, д.130</div><a href="https://school-konakovo.narod.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №1 п. Редкино</div><div class="org-list-address">ул. Правды, д.8</div><a href="http://www.redkino1.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №2 п. Редкино</div><div class="org-list-address">ул. Калинина, д.4а</div><a href="https://dvoechka.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №3 п. Редкино</div><div class="org-list-address">ул. Диева, д.33а</div><a href="https://redkino-school3.nubex.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №1 п. Новозавидовский</div><div class="org-list-address">пер. Первомайский, д.1</div><a href="https://novozavid-school1.nubex.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ №2 п. Новозавидовский</div><div class="org-list-address">ул. Советская, д.6</div><a href="https://shkola2nzav.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ п. Озерки</div><div class="org-list-address">ул. Школьная, д.1</div><a href="http://ozerki-school.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ п. Изоплит</div><div class="org-list-address">ул. Школьная, д.1</div><a href="https://izoplit.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ п. Козлово</div><div class="org-list-address">ул. Стадиона</div><a href="https://school-kozlovo.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ п. Радченко</div><div class="org-list-address">пгт Радченко, д.16</div><a href="https://www.shkolaradchenko.nubex.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ п. Первое Мая</div><div class="org-list-address">ул. Школьная, д.4</div><a href="http://xn---1-6kcc0cgkl2gsd.xn----7sbec2bbthdbbz.xn--p1ai/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ НОШ п. 2-ое Моховое</div><div class="org-list-address">ул. Центральная, д.14</div><a href="http://shkola-mokhovoe.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ ООШ д. Старое Мелково</div><div class="org-list-address">ул. Центральная, д.8</div><a href="https://smelkovo-school.nubex.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ д. Ручьи</div><div class="org-list-address">ул. Гаранина, д.20</div><a href="http://www.ruchischool.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ д. Вахонино</div><div class="org-list-address">ул. Малая, д.20</div><a href="http://vahonino-school.edusite.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ с. Завидово</div><div class="org-list-address">ул. Школьная, д.12</div><a href="http://zavidovo-schkola.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ с. Городня</div><div class="org-list-address">ул. Советская, д.19</div><a href="http://school-gorodnya.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ с. Юрьево-Девичье</div><div class="org-list-address">ул. Центральная, д.14</div><a href="https://yrevo-deviche.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ с. Дмитрова Гора</div><div class="org-list-address">ул. Ударная, д.1</div><a href="http://dmgora.tver.eduru.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБОУ СОШ с. Селихово</div><div class="org-list-address">ул. Новая, д.15</div><a href="http://mbouselihovo.tver.eduru.ru/about" rel="nofollow noopener" target="_blank">сайт</a></div>
+                    
+                
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">26
+                    </div>
+                    <div class="stat-title">Дошкольные образовательные учреждения
+                    </div>
+                    <div class="stat-details">
+                        25 детских садов<br>
+                        1 ЦРР
+                    
+                    </div>
+                    <a href="#" alt="detskie-sady.html" style="display:inline-block;margin-top:0.5rem;color:var(--color-primary);font-size:0.9rem;font-weight:600;text-decoration:none;">Подробнее →</a>
+                    <button class="org-toggle-btn" onclick="toggleOrgList('kindergartens')">Показать список ▼</button>
+                    <div class="org-list" id="kindergartens" style="display:none;">
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 г. Конаково</div><div class="org-list-address">ул. Энергетиков, д.26</div><a href="https://www.dou-svetlyachok.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №2 г. Конаково</div><div class="org-list-address">ул. Набережная Волги, д.30</div><a href="http://ds2-konakovo.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №3 г. Конаково</div><div class="org-list-address">ул. Свободы, д.137</div><a href="http://berezka3.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №6 г. Конаково</div><div class="org-list-address">ул. Гагарина, д.26А</div><a href="http://ds6-konakovo.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №7 г. Конаково</div><div class="org-list-address">ул. Маяковского, д.9</div><a href="https://ds7.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №9 г. Конаково</div><div class="org-list-address">ул. Васильковского, д.11а</div><a href="http://teremok9.ucoz.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №10 г. Конаково</div><div class="org-list-address">Торговый проезд, д.4А</div><a href="http://dsromashka.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №11 ЦРР г. Конаково</div><div class="org-list-address">ул. Баскакова, д.20</div><a href="http://mdou11-crr.narod.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №12 г. Конаково</div><div class="org-list-address">ул. Революции, д.2А</div><a href="http://ds12-konakovo.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №14 г. Конаково</div><div class="org-list-address">ул. Васильковского, д.11б</div><a href="https://ds14-konakovo.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №3 п. Редкино</div><div class="org-list-address">ул. Академическая, д.1а</div><a href="https://ds3-redkino.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №5 п. Редкино</div><div class="org-list-address">ул. Фадеева, д.7а</div><a href="https://ds5-redkino.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №10 п. Редкино</div><div class="org-list-address">ул. Правды, д.11а</div><a href="http://ds10-redkino.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 п. Новозавидовский</div><div class="org-list-address">ул. Октябрьская, д.21</div><a href="http://detsad-novozav1.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №2 п. Новозавидовский</div><div class="org-list-address">ул. Фабричная, д.28</div><a href="http://dou2novozavidovo.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 п. Козлово</div><div class="org-list-address">ул. Стадиона, д.8</div><a href="http://ds1-kozlovo.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 п. Изоплит</div><div class="org-list-address">ул. Пионерская, д.3А</div><a href="http://detsadizoplit.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 п. Радченко</div><div class="org-list-address">п. Радченко, д.72</div><a href="https://sad1951.nubex.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 д. Ручьи</div><div class="org-list-address">ул. Гаранина, д.13</div><a href="http://mbdou1ruchi.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 с. Дмитрова Гора</div><div class="org-list-address">ул. Ударная, д.3-Б</div><a href="http://ds-dmg.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 с. Селихово</div><div class="org-list-address">ул. Новая, д.14</div><a href="https://ds1-selihovo.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 д. Вахонино</div><div class="org-list-address">ул. Малая, д.20</div><a href="http://detsad-vahonino.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 с. Юрьево-Девичье</div><div class="org-list-address">ул. Центральная</div><a href="http://ds-yurevodevishe.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 д. Старое Мелково</div><div class="org-list-address">ул. Центральная, д.8</div><a href="http://ds-staromelkovo.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 с. Городня</div><div class="org-list-address">ул. Советская, д.7</div><a href="https://ds1gorodnya.nubex.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБДОУ детский сад №1 д. Мокшино</div><div class="org-list-address">д. Мокшино</div><a href="http://ds1-mokshino.tver.prosadiki.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                    
+                
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7
+                    </div>
+                    <div class="stat-title">Учреждения дополнительного образования
+                    </div>
+                    <div class="stat-details">
+                        2 ДЮЦ<br>
+                        3 СШ<br>
+                        1 ЦВР<br>
+                        1 Хоровая школа
+                    
+                    </div>
+                    <a href="#" alt="dop-obrazovanie.html" style="display:inline-block;margin-top:0.5rem;color:var(--color-primary);font-size:0.9rem;font-weight:600;text-decoration:none;">Подробнее →</a>
+                    <button class="org-toggle-btn" onclick="toggleOrgList('additional')">Показать список ▼</button>
+                    <div class="org-list" id="additional" style="display:none;">
+                        <div class="org-list-item"><div class="org-list-name">МБУ ДО СШ «ОЛИМП»</div><div class="org-list-address">ул. Строителей, д.15</div><a href="http://olimp-konakovo.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБУ ДО ЦВР г. Конаково</div><div class="org-list-address">ул. Баскакова, д.11</div><a href="https://cvr-konakovo.nubex.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБУ ДО ДЮЦ Конаковского района</div><div class="org-list-address">п. Новозавидовский, ул. Октябрьская, д.63а</div><a href="https://detcentr.profiedu.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБУ ДО ДЮЦ «Новая Корчева» г. Конаково</div><div class="org-list-address">ул. Горького, д.3</div><a href="http://www.novaya-korcheva.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБУ ДО Детская хоровая школа мальчиков и юношей г. Конаково</div><div class="org-list-address">ул. Энергетиков, д.31А</div><a href="https://choral-school.tver.muzkult.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБУ ДО СШ «Единоборства»</div><div class="org-list-address">ул. Баскакова, д.20А</div><a href="http://www.konshor.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                        <div class="org-list-item"><div class="org-list-name">МБУ ДО СШ «Вольная борьба»</div><div class="org-list-address">д. Мокшино, ул. Школьная, д.4</div><a href="http://dyussh-14.tver.sportsng.ru/" rel="nofollow noopener" target="_blank">сайт</a></div>
+                    
+                
+            
+
+                    </div>
+                </div>
+            </div>
+            <!-- 6. Banner Cards -->
+            <div class="banner-grid">
+                <a href="https://uslugi.tverobr.ru/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-baby"></i>
+                    <span>Запись в детский сад</span>
+                </a>
+                <a href="#" alt="roditelyam-zapis.html" class="banner-card">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Запись в 1 класс</span>
+                </a>
+                <a href="https://pos.gosuslugi.ru/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Решаем вместе</span>
+                </a>
+                <a href="https://myschool.edu.ru/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-school"></i>
+                    <span>ФГИС Моя школа</span>
+                </a>
+                <a href="https://www.gosuslugi.ru/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-landmark"></i>
+                    <span>Портал Госуслуг</span>
+                </a>
+                <a href="https://xn--80abucjiibhv9a.xn--80aabd4aoiteh0a.xn--p1ai/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Минобр Тверской области</span>
+                </a>
+                <a href="https://edu.gov.ru/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-building-columns"></i>
+                    <span>Минпросвещения РФ</span>
+                </a>
+                <a href="https://obrnadzor.gov.ru/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Рособрнадзор</span>
+                </a>
+                <a href="https://tiuu.ru/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <span>ТИУУ</span>
+                </a>
+                <a href="https://resh.edu.ru/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-laptop"></i>
+                    <span>Российская электронная школа</span>
+                </a>
+                <a href="https://bus.gov.ru/" rel="nofollow noopener" class="banner-card" target="_blank">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Оценка качества (bus.gov.ru)</span>
+                </a>
+            
+
+            </div>
+            <!-- 7. Hotline Card -->
+            <div class="hotline-card">
+                <i class="fa-solid fa-phone-volume"></i>
+                <h3>Горячая линия</h3>
+                <a href="tel:+74824249795">+7 (48242) 4-97-95</a>
+                <p>Пн-Пт: 9:00-17:00</p>
+                <a href="#" alt="kontakty.html" class="all-contacts-link">Все контакты</a>
+            
+            </div>
+        </main>
+    
+
+    </div>
+    <!-- Footer -->
+    <footer class="footer" id="contacts-section">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>Об управлении</h3>
+                <ul>
+                    <li><a href="#" alt="index.html">Главная</a></li>
+                    <li><a href="#" alt="dokumenty.html">Документы</a></li>
+                    <li><a href="#" alt="rekvizity.html">Реквизиты</a></li>
+                    <li><a href="#" alt="kontakty.html">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Деятельность</h3>
+                <ul>
+                    <li><a href="#" alt="gia-ege.html">ГИА — ЕГЭ</a></li>
+                    <li><a href="#" alt="gia-oge.html">ГИА — ОГЭ</a></li>
+                    <li><a href="#" alt="gia-sobesedovanie.html">Итоговое собеседование</a></li>
+                    <li><a href="#" alt="gia-sochinenie.html">Итоговое сочинение</a></li>
+                    <li><a href="#" alt="attestacia.html">Аттестация</a></li>
+                    <li><a href="#" alt="noko.html">НОКО</a></li>
+                    <li><a href="#" alt="monitoring.html">Мониторинг</a></li>
+                    <li><a href="#" alt="bezopasnost.html">Безопасность</a></li>
+                    <li><a href="#" alt="vospitatelnaya-rabota.html">Воспитательная работа</a></li>
+                    <li><a href="#" alt="konkursy-meropriyatiya.html">Конкурсы и мероприятия</a></li>
+                    <li><a href="#" alt="metodicheskaya-kopilka.html">Виртуальный методический кабинет</a></li>
+                    <li><a href="#" alt="vsosh.html">Всероссийская олимпиада школьников</a></li>
+                    <li><a href="#" alt="vpr.html">Всероссийские проверочные работы</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Родителям</h3>
+                <ul>
+                    <li><a href="#" alt="roditelyam-zapis.html">Приём в 1 класс</a></li>
+                    <li><a href="#" alt="roditelyam-pitanie.html">Горячее питание</a></li>
+                    <li><a href="#" alt="roditelyam-lager.html">Летний отдых</a></li>
+                    <li><a href="#" alt="roditelyam-oplata.html">Родительская плата за присмотр и уход в ДОУ</a></li>
+                </ul>
+                <h3 style="margin-top:24px">Учреждения и новости</h3>
+                <ul>
+                    <li><a href="#" alt="shkoly.html">Школы</a></li>
+                    <li><a href="#" alt="detskie-sady.html">Детские сады</a></li>
+                    <li><a href="#" alt="dop-obrazovanie.html">Дополнительное образование</a></li>
+                    <li><a href="https://vk.com/wall-181509097_23280" target="_blank" rel="noopener">Новости</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Режим работы</h3>
+                <p>Понедельник — Четверг:</p>
+                <p>8:00 — 17:15</p>
+                <p>Пятница:</p>
+                <p>8:00 — 16:00</p>
+                <p>Обед: 13:00 — 14:00</p>
+                <p style="margin-top:8px">Суббота, Воскресенье — выходной</p>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <div class="footer-contact-item">
+                    <i class="fa-solid fa-location-dot" style="color:rgba(255,255,255,0.6);margin-top:3px;"></i>
+                    <span>171252, Тверская обл., г. Конаково, ул. Энергетиков, д.31А</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa-solid fa-phone" style="color:rgba(255,255,255,0.6);margin-top:3px;"></i>
+                    <a href="tel:+74824249795">8 (48242) 4-97-95</a>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa-solid fa-envelope" style="color:rgba(255,255,255,0.6);margin-top:3px;"></i>
+                    <a href="mailto:uob2004@yandex.ru">uob2004@yandex.ru</a>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa-brands fa-vk" style="color:rgba(255,255,255,0.6);margin-top:3px;"></i>
+                    <a href="https://vk.com/club215676668" rel="nofollow noopener" target="_blank">ВКонтакте</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-copy">© 2026 Управление образования Администрации Конаковского муниципального округа</div>
+            <div class="footer-bottom-links">
+                <a href="#" alt="privacy.html">Политика конфиденциальности</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Наверх"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <!-- Cookie Consent -->
+    <div class="cookie-banner hidden" id="cookieBanner">
+        <p>Этот сайт использует файлы cookie для обеспечения наилучшего взаимодействия. Продолжая использовать сайт, вы соглашаетесь с <a href="#" alt="privacy.html">политикой конфиденциальности</a>.</p>
+        <button class="cookie-banner-btn" id="cookieAccept">Принять</button>
+    </div>
+<script src="index_files/main.js"></script>
+    <script>
+    function toggleOrgList(id) {
+        var list = document.getElementById(id);
+        var btn = list.previousElementSibling;
+        if (list.style.display === 'none') {
+            list.style.display = 'block';
+            btn.textContent = 'Скрыть список ▲';
+        } else {
+            list.style.display = 'none';
+            btn.textContent = 'Показать список ▼';
+        }
+    }
+    </script>
+
+
+</body></html>

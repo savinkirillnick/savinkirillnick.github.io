@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="kronsteyny_files/tag_phono.js" type="text/javascript" charset="utf-8" async=""></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кронштейны КМ, Р, РА — Каталог ЭнергоСнаб</title>
+    <meta name="description" content="Кронштейны КМ, Р, РА — каталог ЖБИ от ЭнергоСнаб. 10 позиций в наличии. Производство под заказ.">
+    <link rel="stylesheet" href="kronsteyny_files/style.css">
+    <link rel="stylesheet" href="kronsteyny_files/all.min.css">
+    <style>
+        .prod-grid {
+            padding: 48px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .prod-card {
+            border: 1px solid rgba(0,0,0,.08);
+            overflow: hidden;
+            transition: border-color .3s, box-shadow .3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .prod-card:hover {
+            border-color: var(--black);
+            box-shadow: 0 12px 40px rgba(0,0,0,.06);
+        }
+        .prod-card__img {
+            height: 220px;
+            background: linear-gradient(to bottom, #f0f0ee, #e3e2de);
+            overflow: hidden;
+        }
+        .prod-card__img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
+            background: #fff;
+        }
+        .prod-card__body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+        .prod-card__body h3 {
+            font-family: var(--font-h);
+            font-size: .95rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            min-height: 2.5em;
+        }
+        .prod-card__specs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+            font-size: .8rem;
+            color: var(--gray);
+            flex: 1;
+        }
+        .prod-card__specs .spec-label {
+            font-weight: 600;
+            color: var(--black);
+            margin-right: 6px;
+        }
+        .prod-card__actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            font-family: var(--font-h);
+            font-size: .75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            border: 1.5px solid var(--black);
+            color: var(--black);
+            background: transparent;
+            text-decoration: none;
+            transition: all .25s;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background: var(--black);
+            color: var(--cream, #fff);
+        }
+        .btn-primary[onclick] {
+            padding: 10px 16px !important;
+            font-size: .75rem !important;
+        }
+        .cta-catalog {
+            padding: 80px 48px;
+            background: var(--cream, #f5f4ef);
+            text-align: center;
+        }
+        .cta-catalog h2 {
+            font-family: var(--font-h);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .cta-catalog p { color: var(--gray); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .cat-empty { text-align: center; padding: 80px 24px; color: var(--gray); }
+        @media (max-width: 600px) {
+            .prod-grid { padding: 32px 20px; grid-template-columns: 1fr; }
+            .cta-catalog { padding: 60px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="cursor" id="cursor" style="left: 882px; top: 207px;"></div>
+    <div class="cursor-follower" id="cursorFollower" style="left: 882px; top: 207px;"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+    <a href="#" alt="index.html" class="nav__logo"><img src="kronsteyny_files/logo.png" alt="ЭнергоСнаб"></a>
+    <div class="nav__links" id="navLinks">
+        <a href="#" alt="about.html">О компании</a>
+        <a href="#" alt="catalog.html">Продукция</a>
+        <a href="#" alt="solutions.html">Решения</a>
+        <a href="#" alt="contacts.html">Контакты</a>
+    </div>
+    <button class="nav__action magnetic" onclick="openModal('mainModal')">Запросить КП</button>
+    <button class="nav__burger" id="burger" onclick="toggleNav()"><span></span><span></span></button>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+    <div class="breadcrumbs">
+        <a href="#" alt="index.html">Главная</a><span>/</span><a href="#" alt="catalog.html">Каталог</a><span>/</span><span>Кронштейны КМ, Р, РА</span>
+    </div>
+    <h1>Кронштейны КМ, Р, РА</h1>
+    <p>10 позиций — элементы для крепления оборудования на опорах</p>
+</section>
+
+<!-- PRODUCT GRID -->
+<section class="prod-grid">
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p215.jpg" alt="Кронштейн КМ-3" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн КМ-3</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 0,60 кг</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ103-76</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=215" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p216.jpg" alt="Кронштейн КМ-1" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн КМ-1</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 2.70 кг</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ8509-86, ГОСТ2590-71, ГОСТ5915-70, ГОСТ11371-78</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=216" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p217.jpg" alt="Кронштейн Р-1" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн Р-1</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 1.40 кг</span>
+                <span><span class="spec-label">Чертёж:</span> 3.407.1-143</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ103-76, ГОСТ2590-71</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=217" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p218.jpg" alt="Кронштейн Р-2" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн Р-2</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 2.70 кг</span>
+                <span><span class="spec-label">Чертёж:</span> 3.407.1-143</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ8509-86, ГОСТ103-76, ГОСТ2590-71</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=218" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p219.jpg" alt="Кронштейн Р-4" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн Р-4</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 1.50 кг</span>
+                <span><span class="spec-label">Чертёж:</span> 3.407.1-143.</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ103-76, ГОСТ2590-71</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=219" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p220.jpg" alt="Кронштейн Р-5" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн Р-5</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 1.50 кг</span>
+                <span><span class="spec-label">Чертёж:</span> 3.407.1-143</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ103-76, ГОСТ2590-71</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=220" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p221.jpg" alt="Кронштейн РА-1" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн РА-1</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 13.80 кг</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ8509-86, ГОСТ2590-71, ГОСТ7798-70, ГОСТ5915-70</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=221" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p222.jpg" alt="Кронштейн РА-2" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн РА-2</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 8.00 кг</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ103-76, ГОСТ7798-70, ГОСТ5915-70</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=222" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p223.jpg" alt="Кронштейн РА-4" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн РА-4</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 1.50 кг</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ103-76, ГОСТ2590-71</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=223" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="prod-card appear in">
+        <div class="prod-card__img">
+            <img src="kronsteyny_files/p224.jpg" alt="Кронштейн РА-5" loading="lazy">
+        </div>
+        <div class="prod-card__body">
+            <h3>Кронштейн РА-5</h3>
+            <div class="prod-card__specs">
+                <span><span class="spec-label">Масса:</span> 1.50 кг</span>
+                <span><span class="spec-label">ГОСТ:</span> ГОСТ8509-86, ГОСТ2590-71</span>
+            </div>
+            <div class="prod-card__actions">
+                <a href="#" alt="product.html?id=224" class="btn-secondary">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Запросить КП</span><i class="btn-arrow">→</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-catalog">
+    <h2 class="appear">Нужен расчёт под ваш проект?</h2>
+    <p class="appear">Отправим коммерческое предложение с актуальными ценами и сроками поставки в течение часа</p>
+    <button class="btn-primary btn-lg magnetic appear" onclick="openModal('mainModal')">
+        <span>Получить КП</span>
+        <i class="btn-arrow">→</i>
+    </button>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot" id="contact">
+    <div class="foot__top">
+        <div class="foot__brand"><img src="kronsteyny_files/logo-footer.png" alt=""><p>Производство и поставка ЖБИ для строительства ЛЭП</p></div>
+        <div class="foot__cols">
+            <div class="foot__col"><h5>Навигация</h5><a href="#" alt="about.html">О компании</a><a href="#" alt="catalog.html">Продукция</a><a href="#" alt="solutions.html">Решения</a><a href="#" alt="contacts.html">Контакты</a></div>
+            <div class="foot__col"><h5>Разделы</h5><a href="#" alt="production.html">Производство</a><a href="#" alt="quality.html">Контроль качества</a><a href="#" alt="projects.html">Проекты</a><a href="#" alt="tenders.html">Для тендеров</a></div>
+            <div class="foot__col"><h5>Телефоны</h5><a href="tel:+79585008565">+7 958 500-85-65</a><a href="tel:+79932278007">+7 993 227-80-07</a></div>
+            <div class="foot__col"><h5>Email</h5><a href="mailto:energosnabmsk@gmail.com">energosnabmsk@gmail.com</a><p>140200, Московская обл., г. Воскресенск, ул. Гиганта, д. 13</p></div>
+        </div>
+    </div>
+    <div class="foot__bottom"><span>© 2026 ЭнергоСнаб</span><a href="#" alt="privacy.html">Политика конфиденциальности</a></div>
+</footer>
+
+<!-- MODAL КП -->
+<div class="modal-wrap" id="mainModal">
+    <div class="modal-bg" onclick="closeModal('mainModal')"></div>
+    <div class="modal-box">
+        <button class="modal-x" onclick="closeModal('mainModal')"><span></span><span></span></button>
+        <div class="modal-body">
+            <h3>Запросить коммерческое предложение</h3>
+            <p>Отправьте запрос и наш менеджер свяжется с вами в течение 15 минут</p>
+            <form onsubmit="submitForm(event)">
+                <div class="field"><input type="text" name="name" required="" placeholder=" "><label>Имя</label></div>
+                <div class="field"><input type="tel" name="phone" class="phone-mask" required="" placeholder=" "><label>Телефон</label></div>
+                <div class="field"><input type="email" name="email" placeholder=" "><label>Email</label></div>
+                <div class="field"><textarea name="message" rows="3" placeholder=" "></textarea><label>Комментарий</label></div>
+                <input type="hidden" name="form_type" value="kp_request">
+                <div style="margin-bottom:16px">
+                    <label style="display:flex;align-items:flex-start;gap:10px;font-size:.75rem;color:var(--gray);cursor:pointer;position:static;pointer-events:auto;">
+                        <input type="checkbox" name="privacy" required="" style="margin-top:2px;width:16px;height:16px;accent-color:var(--accent2);">
+                        Я соглашаюсь с <a href="#" alt="privacy.html" style="color:var(--accent2);text-decoration:underline;">политикой конфиденциальности</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary btn-primary--full magnetic"><span>Отправить запрос</span><i class="btn-arrow">→</i></button>
+            </form>
+            <div class="modal-ok" id="modalOk"><div class="modal-ok__icon">✓</div><p>Спасибо! Ваш запрос принят.<br>Мы свяжемся с вами в ближайшее время.</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- COOKIE -->
+<div class="cookie" id="cookie">
+    <p>Продолжая, вы соглашаетесь с <a href="#" alt="privacy.html">политикой конфиденциальности</a></p>
+    <button onclick="acceptCookie()">OK</button>
+</div>
+
+<script src="kronsteyny_files/main.js"></script>
+
+
+</body></html>

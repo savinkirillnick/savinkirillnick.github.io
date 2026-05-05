@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="index_files/tag_phono.js" type="text/javascript" charset="utf-8" async=""></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЭнергоСнаб — Производство ЖБИ для строительства ЛЭП</title>
+    <meta name="description" content="Производство железобетонных изделий для строительства ЛЭП. До 17 000 изделий в месяц.">
+    <link rel="stylesheet" href="index_files/style.css">
+    <link rel="stylesheet" href="index_files/all.min.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ЭнергоСнаб",
+        "url": "https://energosnab-msk.ru",
+        "logo": "https://energosnab-msk.ru/assets/img/logo.png",
+        "description": "Производство железобетонных изделий для строительства ЛЭП. До 17 000 изделий в месяц.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "ул. Гиганта, д. 13",
+            "addressLocality": "Воскресенск",
+            "addressRegion": "Московская область",
+            "postalCode": "140200",
+            "addressCountry": "RU"
+        },
+        "telephone": ["8 (495) 120-60-99", "8 (800) 500-43-03"],
+        "email": "info@energosnab-msk.ru",
+        "foundingDate": "2012",
+        "sameAs": []
+    }
+    </script>
+</head>
+<body>
+    <!-- Grain overlay -->
+    <div class="grain"></div>
+
+    <!-- Custom cursor -->
+    <div class="cursor" id="cursor" style="left: 1193px; top: 240px;"></div>
+    <div class="cursor-follower" id="cursorFollower" style="left: 1170.09px; top: 240.164px;"></div>
+
+    <!-- NAVBAR -->
+    <nav class="nav scrolled" id="nav">
+        <a href="#" alt="index.html" class="nav__logo">
+            <img src="index_files/logo.png" alt="ЭнергоСнаб">
+        </a>
+        <div class="nav__links" id="navLinks">
+            <a href="#" alt="about.html" data-text="О компании">О компании</a>
+            <a href="#" alt="catalog.html" data-text="Продукция">Продукция</a>
+            <a href="#" alt="solutions.html" data-text="Решения">Решения</a>
+            <a href="#" alt="contacts.html" data-text="Контакты">Контакты</a>
+        </div>
+        <button class="nav__action magnetic" onclick="openModal('mainModal')">
+            Обсудить проект
+        </button>
+        <button class="nav__burger" id="burger" onclick="toggleNav()">
+            <span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- HERO — full-screen split -->
+    <section class="hero" id="hero">
+        <div class="hero__left">
+            <div class="hero__tag">
+                <span class="line-reveal" style="--d:0s">Производитель ЖБИ</span>
+            </div>
+            <h1 class="hero__title">
+                <span class="line-reveal" style="--d:.1s">Строим</span>
+                <span class="line-reveal" style="--d:.2s">энергетическую</span>
+                <span class="line-reveal accent-line" style="--d:.3s">инфраструктуру</span>
+                <span class="line-reveal" style="--d:.4s">страны</span>
+            </h1>
+            <p class="hero__desc line-reveal" style="--d:.55s">
+                До 17 000 железобетонных изделий ежемесячно для строительства линий электропередачи любого класса напряжения
+            </p>
+            <div class="hero__btns line-reveal" style="--d:.7s">
+                <button class="btn-primary magnetic" onclick="openModal('mainModal')">
+                    <span>Получить КП</span>
+                    <i class="btn-arrow">→</i>
+                </button>
+                <a href="#" alt="catalog.html" class="btn-ghost magnetic">Каталог</a>
+            </div>
+        </div>
+        <div class="hero__right">
+            <div class="hero__img-stack">
+                <div class="hero__img-main parallax-img" style="transform: translateY(253.17px);">
+                    <img src="index_files/production1.jpg" alt="Производство">
+                </div>
+                <div class="hero__img-float parallax-img" data-speed="2" style="transform: translateY(506.34px);">
+                    <img src="index_files/cat-stoyky-sv.webp" alt="Стойка">
+                </div>
+                <div class="hero__counter">
+                    <span class="counter" data-to="17000">17&nbsp;000</span>
+                    <small>изделий / мес.</small>
+                </div>
+            </div>
+        </div>
+        <div class="hero__scroll">
+            <span>scroll</span>
+            <div class="hero__scroll-bar"></div>
+        </div>
+    </section>
+
+    <!-- MARQUEE TAPE -->
+    <div class="tape">
+        <div class="tape__track">
+            <span>Стойки</span><span class="tape__dot"></span>
+            <span>Фундаменты</span><span class="tape__dot"></span>
+            <span>Приставки</span><span class="tape__dot"></span>
+            <span>Траверсы</span><span class="tape__dot"></span>
+            <span>Дорожные плиты</span><span class="tape__dot"></span>
+            <span>Аэродромные плиты</span><span class="tape__dot"></span>
+            <span>Стойки</span><span class="tape__dot"></span>
+            <span>Фундаменты</span><span class="tape__dot"></span>
+            <span>Приставки</span><span class="tape__dot"></span>
+            <span>Траверсы</span><span class="tape__dot"></span>
+            <span>Дорожные плиты</span><span class="tape__dot"></span>
+            <span>Аэродромные плиты</span><span class="tape__dot"></span>
+        </div>
+    </div>
+
+    <!-- ABOUT — horizontal numbers -->
+    <section class="about" id="about">
+        <div class="about__header">
+            <span class="label-tag appear in">( 01 )</span>
+            <h2 class="split-title appear in">
+                <span>Масштаб,</span>
+                <span>который <em>говорит</em></span>
+                <span>сам за себя</span>
+            </h2>
+        </div>
+        <div class="about__numbers">
+            <div class="num-card appear in" style="--d:.1s">
+                <div class="num-card__value"><span class="counter" data-to="1100000" data-format="short">1.1 млн</span></div>
+                <div class="num-card__label">единиц поставлено</div>
+                <div class="num-card__line"></div>
+            </div>
+            <div class="num-card appear in" style="--d:.2s">
+                <div class="num-card__value"><span class="counter" data-to="1100">1&nbsp;100</span></div>
+                <div class="num-card__label">позиций в наличии</div>
+                <div class="num-card__line"></div>
+            </div>
+            <div class="num-card appear in" style="--d:.3s">
+                <div class="num-card__value"><span class="counter" data-to="17000">17&nbsp;000</span>+</div>
+                <div class="num-card__label">единиц / месяц</div>
+                <div class="num-card__line"></div>
+            </div>
+            <div class="num-card appear in" style="--d:.4s">
+                <div class="num-card__value"><span class="counter" data-to="2">2</span></div>
+                <div class="num-card__label">производственные площадки</div>
+                <div class="num-card__line"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTIONS — staggered cards -->
+    <section class="solutions" id="solutions">
+        <div class="solutions__head">
+            <span class="label-tag appear in">( 02 )</span>
+            <h2 class="split-title appear in">
+                <span>Решения по</span>
+                <span><em>сегментам</em></span>
+            </h2>
+        </div>
+        <div class="solutions__grid">
+            <article class="sol-card appear in" style="--d:.1s">
+                <div class="sol-card__img curtain-reveal in">
+                    <img src="index_files/reshenia_1.jpg" alt="Генподрядчики">
+                </div>
+                <div class="sol-card__body">
+                    <span class="sol-card__num">01</span>
+                    <h3>Генподрядчики</h3>
+                    <p>Комплексные поставки ЖБИ для крупных инфраструктурных проектов с гарантией объёмов и сроков</p>
+                </div>
+            </article>
+            <article class="sol-card sol-card--offset appear in" style="--d:.25s">
+                <div class="sol-card__img curtain-reveal in">
+                    <img src="index_files/reshenia_2.jpg" alt="Сетевые компании">
+                </div>
+                <div class="sol-card__body">
+                    <span class="sol-card__num">02</span>
+                    <h3>Сетевые компании</h3>
+                    <p>Полный ассортимент для строительства и модернизации электрических сетей всех классов напряжения</p>
+                </div>
+            </article>
+            <article class="sol-card appear in" style="--d:.4s">
+                <div class="sol-card__img curtain-reveal in">
+                    <img src="index_files/index-2-3.png" alt="Подрядчики">
+                </div>
+                <div class="sol-card__body">
+                    <span class="sol-card__num">03</span>
+                    <h3>Подрядчики</h3>
+                    <p>Гибкие условия, минимальные партии от 1 единицы, оперативная отгрузка со склада</p>
+                </div>
+            </article>
+            <article class="sol-card sol-card--offset appear in" style="--d:.55s">
+                <div class="sol-card__img curtain-reveal in">
+                    <img src="index_files/index-2-4.webp" alt="ТЭК">
+                </div>
+                <div class="sol-card__body">
+                    <span class="sol-card__num">04</span>
+                    <h3>Топливно-Энергетический сектор</h3>
+                    <p>Производство и поставка ЖБИ для объектов нефтегазовой инфраструктуры, энергетических комплексов и ТЭЦ</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- CATALOG — horizontal scroll -->
+    <section class="catalog" id="catalog">
+        <div class="catalog__head">
+            <span class="label-tag appear in">( 03 )</span>
+            <h2 class="split-title appear in">
+                <span>Продукция</span>
+            </h2>
+            <a href="#" alt="catalog.html" class="catalog__all appear magnetic in" style="">
+                Весь каталог <span>→</span>
+            </a>
+        </div>
+        <div class="catalog__scroll" style="">
+            <div class="catalog__track" id="catalogTrack">
+                <div class="cat-item">
+                    <div class="cat-item__img">
+                        <img src="index_files/cat-stoyky-sv.webp" alt="Стойки">
+                    </div>
+                    <div class="cat-item__info">
+                        <h3>Стойки</h3>
+                        <p>СВ 95 — СВ 164<br>ГОСТ 35818</p>
+                    </div>
+                    <a href="#" alt="catalog.html" class="cat-item__link magnetic">→</a>
+                </div>
+                <div class="cat-item">
+                    <div class="cat-item__img">
+                        <img src="index_files/cat-fundamenty.webp" alt="Фундаменты">
+                    </div>
+                    <div class="cat-item__info">
+                        <h3>Фундаменты</h3>
+                        <p>ФП, Ф4-А, ФС<br>ГОСТ 34576</p>
+                    </div>
+                    <a href="#" alt="catalog.html" class="cat-item__link magnetic">→</a>
+                </div>
+                <div class="cat-item">
+                    <div class="cat-item__img">
+                        <img src="index_files/cat-pristavki.webp" alt="Приставки">
+                    </div>
+                    <div class="cat-item__info">
+                        <h3>Приставки</h3>
+                        <p>ПТ-33 — ПТ-45<br>ГОСТ 34576</p>
+                    </div>
+                    <a href="#" alt="catalog.html" class="cat-item__link magnetic">→</a>
+                </div>
+                <div class="cat-item">
+                    <div class="cat-item__img">
+                        <img src="index_files/cat-traversy-visokovoltnie.webp" alt="Траверсы">
+                    </div>
+                    <div class="cat-item__info">
+                        <h3>Траверсы</h3>
+                        <p>ТМ-3, ТА-1<br>Для ЛЭП 6–110 кВ</p>
+                    </div>
+                    <a href="#" alt="catalog.html" class="cat-item__link magnetic">→</a>
+                </div>
+                <div class="cat-item">
+                    <div class="cat-item__img">
+                        <img src="index_files/cat-plity.webp" alt="Плиты">
+                    </div>
+                    <div class="cat-item__info">
+                        <h3>Плиты</h3>
+                        <p>2П30, ПАГ-14<br>ГОСТ 25912</p>
+                    </div>
+                    <a href="#" alt="catalog.html" class="cat-item__link magnetic">→</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADVANTAGES — two-column editorial -->
+    <section class="adv" id="adv">
+        <div class="adv__left appear in">
+            <span class="label-tag">( 04 )</span>
+            <h2 class="split-title">
+                <span>Почему</span>
+                <span>выбирают <em>нас</em></span>
+            </h2>
+            <p class="adv__desc">Собственное аттестованное производство,
+ лицензированная лаборатория, постоянный контроль качества, гибкая 
+логистика и индивидуальный подход к каждому клиенту.</p>
+        </div>
+        <div class="adv__right">
+            <div class="adv-item appear in" style="--d:.05s">
+                <div class="adv-item__icon"><i class="fas fa-truck-fast"></i></div>
+                <div class="adv-item__text">
+                    <h4>Поставки по всей РФ</h4>
+                    <p>Собственный и наёмный транспорт, ж/д перевозки</p>
+                </div>
+            </div>
+            <div class="adv-item appear in" style="--d:.12s">
+                <div class="adv-item__icon"><i class="fas fa-cube"></i></div>
+                <div class="adv-item__text">
+                    <h4>От 1 единицы</h4>
+                    <p>Отгрузка минимальных партий без наценки</p>
+                </div>
+            </div>
+            <div class="adv-item appear in" style="--d:.19s">
+                <div class="adv-item__icon"><i class="fas fa-industry"></i></div>
+                <div class="adv-item__text">
+                    <h4>Свыше 1 млн м³ продукции</h4>
+                    <p>Подтверждённый опыт масштабного производства</p>
+                </div>
+            </div>
+            <div class="adv-item appear in" style="--d:.26s">
+                <div class="adv-item__icon"><i class="fas fa-flask-vial"></i></div>
+                <div class="adv-item__text">
+                    <h4>Лабораторный контроль</h4>
+                    <p>Испытания каждой партии на собственном оборудовании</p>
+                </div>
+            </div>
+            <div class="adv-item appear in" style="--d:.33s">
+                <div class="adv-item__icon"><i class="fas fa-file-shield"></i></div>
+                <div class="adv-item__text">
+                    <h4>Полная документация</h4>
+                    <p>Сертификаты, паспорта качества, протоколы испытаний</p>
+                </div>
+            </div>
+            <div class="adv-item appear in" style="--d:.4s">
+                <div class="adv-item__icon"><i class="fas fa-drafting-compass"></i></div>
+                <div class="adv-item__text">
+                    <h4>Нестандартные изделия</h4>
+                    <p>Производство по вашим чертежам и спецификациям</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS — cinematic gallery -->
+    <section class="projects" id="projects">
+        <div class="projects__head">
+            <span class="label-tag appear in">( 05 )</span>
+            <h2 class="split-title appear in">
+                <span>Реализованные</span>
+                <span><em>проекты</em></span>
+            </h2>
+            <p class="projects__sub appear in">Инфраструктурные объекты федерального масштаба</p>
+        </div>
+        <div class="projects__gallery">
+            <div class="proj-slide appear in" style="--d:.05s">
+                <img src="index_files/index-5-1.webp" alt="Транснефть">
+                <div class="proj-slide__overlay"><span>Поставка ЖБИ для реконструкции нефтепровода Транснефть</span></div>
+            </div>
+            <div class="proj-slide appear in" style="--d:.12s">
+                <img src="index_files/index-5-2.webp" alt="Россети">
+                <div class="proj-slide__overlay"><span>Поставки для нужд ПАО «Россети»</span></div>
+            </div>
+            <div class="proj-slide appear in" style="--d:.19s">
+                <img src="index_files/index-5-3.webp" alt="Россети Урал">
+                <div class="proj-slide__overlay"><span>Реконструкция сетей ПАО «Россети Урал»</span></div>
+            </div>
+            <div class="proj-slide appear in" style="--d:.26s">
+                <img src="index_files/index-5-4.webp" alt="Ладожское озеро">
+                <div class="proj-slide__overlay"><span>Реконструкция сетей в районе Ладожского озера</span></div>
+            </div>
+            <div class="proj-slide appear in" style="--d:.33s">
+                <img src="index_files/index-5-5.webp" alt="Новые регионы">
+                <div class="proj-slide__overlay"><span>Поставки продукции в Новые регионы</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTION — masonry -->
+    <section class="prod" id="prod">
+        <div class="prod__head">
+            <span class="label-tag appear in">( 06 )</span>
+            <h2 class="split-title appear in">
+                <span>Производственные</span>
+                <span><em>мощности</em></span>
+            </h2>
+        </div>
+        <div class="prod__masonry">
+            <div class="prod__item prod__item--tall appear in"><img src="index_files/production1.jpg" alt=""></div>
+            <div class="prod__item appear in" style="--d:.08s"><img src="index_files/production2.jpg" alt=""></div>
+            <div class="prod__item appear in" style="--d:.16s"><img src="index_files/production3.jpg" alt=""></div>
+            <div class="prod__item prod__item--wide appear in" style="--d:.24s"><img src="index_files/production4.jpg" alt=""></div>
+            <div class="prod__item appear in" style="--d:.32s"><img src="index_files/production5.jpg" alt=""></div>
+            <div class="prod__item appear in" style="--d:.4s"><img src="index_files/production6.jpg" alt=""></div>
+        </div>
+        <div class="prod-map appear in">
+            <h3 class="prod-map__title">Производственные площадки — Московская область</h3>
+            <div class="prod-map__container">
+                <img src="index_files/map-cfo-b.svg" alt="Карта производственных площадок" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="prod-map__info">
+                <div class="prod-map__badge">
+                    <span class="prod-map__badge-dot"></span>
+                    <span>Волоколамск — производственная площадка №1</span>
+                </div>
+                <div class="prod-map__badge">
+                    <span class="prod-map__badge-dot"></span>
+                    <span>Воскресенск — производственная площадка №2</span>
+                </div>
+                <div class="prod-map__badge">
+                    <span class="prod-map__badge-dot"></span>
+                    <span>Полный охват поставок ЦФО</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GEOGRAPHY — interactive map -->
+    <section class="geo-map" id="geography">
+        <div class="geo-map__head">
+            <span class="label-tag appear in">( 07 )</span>
+            <h2 class="split-title appear in">
+                <span>География</span>
+                <span><em>поставок</em></span>
+            </h2>
+        </div>
+        <div class="geo-map__container appear in">
+            <img src="index_files/map-rf.svg" alt="География поставок по России" style="width:100%; height:100%; object-fit:contain;">
+        </div>
+        <div class="geo-map__info appear in">
+            <div class="geo-map__stat">
+                <span class="geo-map__stat-val">50+</span>
+                <span class="geo-map__stat-label">регионов поставок</span>
+            </div>
+            <div class="geo-map__stat">
+                <span class="geo-map__stat-val">2</span>
+                <span class="geo-map__stat-label">производственные площадки</span>
+            </div>
+            <div class="geo-map__stat">
+                <span class="geo-map__stat-val">ЦФО</span>
+                <span class="geo-map__stat-label">полный охват</span>
+            </div>
+            <div class="geo-map__stat">
+                <span class="geo-map__stat-val">ЛНР / ДНР</span>
+                <span class="geo-map__stat-label">новые регионы</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA — big statement -->
+    <section class="cta">
+        <div class="cta__inner appear in">
+            <div class="cta__text">
+                <h2>
+                    <span class="line-reveal" style="--d:0s">Готовы обсудить</span>
+                    <span class="line-reveal accent-line" style="--d:.12s">ваш проект?</span>
+                </h2>
+                <p class="line-reveal" style="--d:.25s">Коммерческое предложение с расчётом стоимости и сроков — за 2 часа</p>
+            </div>
+            <div class="cta__action line-reveal" style="--d:.38s">
+                <button class="btn-primary btn-primary--lg magnetic" onclick="openModal('mainModal')">
+                    <span>Оставить заявку</span>
+                    <i class="btn-arrow">→</i>
+                </button>
+            </div>
+            <div class="cta__person">
+                <img src="index_files/girl.png" alt="Менеджер" style="height: 480px; object-position: bottom; margin-bottom: -100px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- PARTNERS -->
+    <section class="partners" id="partners">
+        <div class="partners__head">
+            <span class="label-tag appear in">( 08 )</span>
+            <h2 class="split-title appear in"><span>Партнёры</span></h2>
+        </div>
+        <div class="partners__row appear in">
+            <div class="partner" style="height:60px"><img src="index_files/partner_met_energo.png" alt="МетЭнерго"></div>
+            <div class="partner"><img src="index_files/partner_rosseti_mr.png" alt="Россети МР"></div>
+            <div class="partner"><img src="index_files/partner_rosseti_ural.png" alt="Россети Урал"></div>
+            <div class="partner"><img src="index_files/partner_transneft-logo-eng.png" alt="Транснефть"></div>
+            <div class="partner"><img src="index_files/partner_lukoil.png" alt="Лукойл"></div>
+            <div class="partner"><img src="index_files/partner_meridian.png" alt="Меридиан"></div>
+            <div class="partner"><img src="index_files/partner_transol.png" alt="Трансол"></div>
+            <div class="partner"><img src="index_files/partner_veles.png" alt="Велес"></div>
+            <div class="partner" style="height:30px"><img src="index_files/partner_electrum-new2.png" alt="Опора-ЛЭП"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="foot" id="contact">
+        <div class="foot__top">
+            <div class="foot__brand">
+                <img src="index_files/logo-footer.png" alt="ЭнергоСнаб">
+                <p>Производство и поставка ЖБИ<br>для строительства ЛЭП</p>
+            </div>
+            <div class="foot__cols">
+                <div class="foot__col">
+                    <h5>Навигация</h5>
+                    <a href="#" alt="about.html">О компании</a>
+                    <a href="#" alt="catalog.html">Продукция</a>
+                    <a href="#" alt="solutions.html">Решения</a>
+                    <a href="#" alt="contacts.html">Контакты</a>
+                </div>
+                <div class="foot__col">
+                    <h5>Разделы</h5>
+                    <a href="#" alt="production.html">Производство</a>
+                    <a href="#" alt="quality.html">Контроль качества</a>
+                    <a href="#" alt="projects.html">Проекты</a>
+                    <a href="#" alt="tenders.html">Для тендеров</a>
+                </div>
+                <div class="foot__col">
+                    <h5>Телефоны</h5>
+                    <a href="tel:+74951206099">8 (495) 120-60-99</a>
+                    <a href="tel:+78005004303">8 (800) 500-43-03</a>
+                </div>
+                <div class="foot__col">
+                    <h5>Контакты</h5>
+                    <a href="mailto:info@energosnab-msk.ru">info@energosnab-msk.ru</a>
+                    <p>140200, Московская обл.,<br>г. Воскресенск, ул. Гиганта, д. 13</p>
+                </div>
+            </div>
+        </div>
+        <div class="foot__bottom">
+            <span>© 2026 ЭнергоСнаб</span>
+            <a href="#" alt="privacy.html">Политика конфиденциальности</a>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal-wrap" id="mainModal">
+        <div class="modal-bg" onclick="closeModal('mainModal')"></div>
+        <div class="modal-box">
+            <button class="modal-x" onclick="closeModal('mainModal')">
+                <span></span><span></span>
+            </button>
+            <div class="modal-body">
+                <h3>Обсудить проект</h3>
+                <p>Расскажите о задаче — подготовим предложение за 2 часа</p>
+                <form id="mainForm" onsubmit="submitForm(event)">
+                    <div class="field">
+                        <input type="text" name="name" id="fname" required="" placeholder=" ">
+                        <label for="fname">Имя</label>
+                    </div>
+                    <div class="field">
+                        <input type="tel" name="phone" id="fphone" class="phone-mask" required="" placeholder=" ">
+                        <label for="fphone">Телефон</label>
+                    </div>
+                    <div class="field">
+                        <input type="email" name="email" id="femail" placeholder=" ">
+                        <label for="femail">Email</label>
+                    </div>
+                    <div class="field">
+                        <textarea name="comment" id="fcomment" rows="3" placeholder=" "></textarea>
+                        <label for="fcomment">Комментарий</label>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: flex; align-items: flex-start; gap: 10px; font-size: .75rem; color: var(--gray); cursor: pointer; position: static; pointer-events: auto;">
+                            <input type="checkbox" name="privacy" required="" style="margin-top: 2px; width: 16px; height: 16px; accent-color: var(--accent2);">
+                            Я соглашаюсь с <a href="#" alt="privacy.html" style="color: var(--accent2); text-decoration: underline;">политикой конфиденциальности</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary btn-primary--full magnetic">
+                        <span>Отправить</span>
+                        <i class="btn-arrow">→</i>
+                    </button>
+                </form>
+                <div class="modal-ok" id="modalOk">
+                    <div class="modal-ok__icon">✓</div>
+                    <p>Заявка отправлена.<br>Свяжемся с вами в ближайшее время.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COOKIE -->
+    <div class="cookie" id="cookie">
+        <p>Продолжая, вы соглашаетесь с <a href="#" alt="privacy.html">политикой конфиденциальности</a></p>
+        <button onclick="acceptCookie()">OK</button>
+    </div>
+
+    <script src="index_files/main.js"></script>
+
+
+</body></html>

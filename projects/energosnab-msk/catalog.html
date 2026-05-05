@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="catalog_files/tag_phono.js" type="text/javascript" charset="utf-8" async=""></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог продукции — ЭнергоСнаб</title>
+    <meta name="description" content="Каталог железобетонных изделий для строительства ЛЭП. 282 позиции: траверсы, стойки, фундаменты, плиты. Производство под заказ.">
+    <link rel="stylesheet" href="catalog_files/style.css">
+    <link rel="stylesheet" href="catalog_files/all.min.css">
+    <style>
+.catalog-section { padding: 60px 48px; }
+.catalog-section h2 {
+    font-family: var(--font-h);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -.02em;
+}
+.catalog-section .section-desc {
+    color: var(--gray);
+    font-size: .9rem;
+    margin-bottom: 40px;
+}
+.catalog-grid-main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+.catalog-grid-extra {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+.cat-card {
+    border: 1px solid rgba(0,0,0,.08);
+    overflow: hidden;
+    transition: border-color .3s, box-shadow .3s, transform .3s;
+}
+.cat-card:hover {
+    border-color: var(--black);
+    box-shadow: 0 12px 40px rgba(0,0,0,.08);
+    transform: translateY(-4px);
+}
+.cat-card__img {
+    height: 220px;
+    background: linear-gradient(to bottom, #999ca6, #dbdad6);
+    overflow: hidden;
+}
+.cat-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cat-card__body {
+    padding: 24px;
+}
+.cat-card__body h3 {
+    font-family: var(--font-h);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+.cat-card__body p {
+    font-size: .8rem;
+    color: var(--gray);
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+.cat-card__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-h);
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    border-bottom: 1.5px solid var(--black);
+    padding-bottom: 2px;
+    transition: border-color .3s, color .3s;
+    cursor: pointer;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.cat-card__btn:hover { border-bottom-color: var(--accent2); color: var(--accent2); }
+
+.catalog-grid-extra .cat-card__img { height: 180px; }
+
+@media (max-width: 1024px) {
+    .catalog-grid-main { grid-template-columns: repeat(2, 1fr); }
+    .catalog-grid-extra { grid-template-columns: repeat(2, 1fr); }
+    .catalog-section { padding: 40px 32px; }
+}
+@media (max-width: 600px) {
+    .catalog-grid-main { grid-template-columns: 1fr; }
+    .catalog-grid-extra { grid-template-columns: 1fr; }
+    .catalog-section { padding: 32px 20px; }
+}
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="cursor" id="cursor" style="left: 807px; top: 232px;"></div>
+    <div class="cursor-follower" id="cursorFollower" style="left: 806.212px; top: 233.474px;"></div>
+
+<nav class="nav" id="nav">
+    <a href="#" alt="index.html" class="nav__logo"><img src="catalog_files/logo.png" alt="ЭнергоСнаб"></a>
+    <div class="nav__links" id="navLinks">
+        <a href="#" alt="about.html">О компании</a>
+        <a href="#" alt="catalog.html">Продукция</a>
+        <a href="#" alt="solutions.html">Решения</a>
+        <a href="#" alt="contacts.html">Контакты</a>
+    </div>
+    <button class="nav__action magnetic" onclick="openModal('mainModal')">Запросить КП</button>
+    <button class="nav__burger" id="burger" onclick="toggleNav()"><span></span><span></span></button>
+</nav>
+
+<section class="page-hero">
+    <div class="breadcrumbs">
+        <a href="#" alt="index.html">Главная</a><span>/</span><span>Каталог</span>
+    </div>
+    <h1>Каталог продукции</h1>
+    <p>282 позиции ЖБИ для строительства ЛЭП</p>
+</section>
+
+<section class="catalog-section">
+    <h2>Основные категории</h2>
+    <p class="section-desc">Траверсы железобетонные высоковольтные и низковольтные всех серий</p>
+    <div class="catalog-grid-main">
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-traversy-bvtv.webp" alt="Траверсы Б, В, ТВ">
+            </div>
+            <div class="cat-card__body">
+                <h3>Траверсы высоковольтные Б, В, ТВ</h3>
+                <p>51 позиция — траверсы серий Б, В, ТВ для высоковольтных ЛЭП</p>
+                <a href="#" alt="traversy-bvtv.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-traversy-visokovoltnie.webp" alt="Траверсы М, Т, ТА, ТЗ, ТМ">
+            </div>
+            <div class="cat-card__body">
+                <h3>Траверсы высоковольтные М, Т, ТА, ТЗ, ТМ, ТМи, ТП, ТМs, ТАЦ, ТПЦ, ТУПЦ, SH</h3>
+                <p>91 позиция — траверсы серий ТМ, М и другие для высоковольтных ЛЭП</p>
+                <a href="#" alt="traversy-visokovoltnie.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-traversy-tn.webp" alt="Траверсы ТН">
+            </div>
+            <div class="cat-card__body">
+                <h3>Траверсы низковольтные ТН</h3>
+                <p>40 позиций — траверсы серии ТН для низковольтных линий</p>
+                <a href="#" alt="traversy-tn.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="catalog-section" style="background-color: #f9f9f9;">
+    <h2>Дополнительные категории</h2>
+    <p class="section-desc">Стойки, фундаменты, плиты и комплектующие для ЛЭП</p>
+    <div class="catalog-grid-extra">
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-stoyky-sv.webp" alt="Стойки СВ">
+            </div>
+            <div class="cat-card__body">
+                <h3>Стойки СВ 95 — 164 ГОСТ 35818</h3>
+                <p>8 позиций — стойки вибрированные ВЛ 0,4–35 кВ</p>
+                <a href="#" alt="stoyky-sv.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-fundamenty.webp" alt="Фундаменты">
+            </div>
+            <div class="cat-card__body">
+                <h3>Фундаменты ФП, Ф4-А, ФС ГОСТ 34576</h3>
+                <p>10 позиций — основания опор ЛЭП</p>
+                <a href="#" alt="fundamenty.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-pristavki.webp" alt="Приставки">
+            </div>
+            <div class="cat-card__body">
+                <h3>Приставки ПТ-33 — ПТ-60 ГОСТ 34576</h3>
+                <p>4 позиции — для удлинения опор</p>
+                <a href="#" alt="pristavki.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-plity.webp" alt="Плиты">
+            </div>
+            <div class="cat-card__body">
+                <h3>Плиты 2П30, ПАГ-14 ГОСТ 25912</h3>
+                <p>1 позиция — аэродромные и дорожные плиты</p>
+                <a href="#" alt="plity.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-krepleniya-ki.webp" alt="Крепление изолятора">
+            </div>
+            <div class="cat-card__body">
+                <h3>Крепление изолятора КИ-1, КИ-1М</h3>
+                <p>2 позиции — крепёжные элементы для штыревых изоляторов</p>
+                <a href="#" alt="krepleniya-ki.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-krepleniya-u.webp" alt="Крепление подкоса">
+            </div>
+            <div class="cat-card__body">
+                <h3>Крепление подкоса У 1.3, 4, 52, 71</h3>
+                <p>7 позиций — крепёжные узлы для подкосов опор</p>
+                <a href="#" alt="krepleniya-u.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-kronshteyny.webp" alt="Кронштейны">
+            </div>
+            <div class="cat-card__body">
+                <h3>Кронштейны КМ, Р, РА</h3>
+                <p>10 позиций — для крепления оборудования на опорах</p>
+                <a href="#" alt="kronshteyny.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-ogolovki.webp" alt="Оголовок">
+            </div>
+            <div class="cat-card__body">
+                <h3>Оголовки ОГ</h3>
+                <p>13 позиций — верхняя часть опоры для подвеса проводов</p>
+                <a href="#" alt="ogolovki.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-provodniki.webp" alt="Проводник ЗП">
+            </div>
+            <div class="cat-card__body">
+                <h3>Проводник ЗП</h3>
+                <p>16 позиций — заземляющие проводники</p>
+                <a href="#" alt="provodniki.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-homuty.webp" alt="Хомуты">
+            </div>
+            <div class="cat-card__body">
+                <h3>Хомуты Х</h3>
+                <p>21 позиция — крепёжные хомуты разных типоразмеров</p>
+                <a href="#" alt="homuty.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-nadstavki.webp" alt="Надставки ТС">
+            </div>
+            <div class="cat-card__body">
+                <h3>Надставки ТС</h3>
+                <p>6 позиций — удлинители опор</p>
+                <a href="#" alt="nadstavki.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-card__img">
+                <img src="catalog_files/cat-styazhki.webp" alt="Стяжки">
+            </div>
+            <div class="cat-card__body">
+                <h3>Стяжки</h3>
+                <p>2 позиции — стяжные элементы металлоконструкций</p>
+                <a href="#" alt="styazhki.html" class="cat-card__btn">
+                    <span>Подробнее</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="foot" id="contact">
+    <div class="foot__top">
+        <div class="foot__brand"><img src="catalog_files/logo-footer.png" alt=""><p>Производство и поставка ЖБИ для строительства ЛЭП</p></div>
+        <div class="foot__cols">
+            <div class="foot__col"><h5>Навигация</h5><a href="#" alt="about.html">О компании</a><a href="#" alt="catalog.html">Продукция</a><a href="#" alt="solutions.html">Решения</a><a href="#" alt="contacts.html">Контакты</a></div>
+            <div class="foot__col"><h5>Разделы</h5><a href="#" alt="production.html">Производство</a><a href="#" alt="quality.html">Контроль качества</a><a href="#" alt="projects.html">Проекты</a><a href="#" alt="tenders.html">Для тендеров</a></div>
+            <div class="foot__col"><h5>Телефоны</h5><a href="tel:+74951206099">8 (495) 120-60-99</a><a href="tel:+78005004303">8 (800) 500-43-03</a></div>
+            <div class="foot__col"><h5>Email</h5><a href="mailto:info@energosnab-msk.ru">info@energosnab-msk.ru</a><p>140200, Московская обл., г. Воскресенск, ул. Гиганта, д. 13</p></div>
+        </div>
+    </div>
+    <div class="foot__bottom"><span>© 2026 ЭнергоСнаб</span><a href="#" alt="privacy.html">Политика конфиденциальности</a></div>
+</footer>
+
+<div class="modal-wrap" id="mainModal">
+    <div class="modal-bg" onclick="closeModal('mainModal')"></div>
+    <div class="modal-box">
+        <button class="modal-x" onclick="closeModal('mainModal')"><span></span><span></span></button>
+        <div class="modal-body">
+            <h3>Запросить коммерческое предложение</h3>
+            <p>Отправьте запрос и наш менеджер свяжется с вами в течение 15 минут</p>
+            <form onsubmit="submitForm(event)">
+                <div class="field"><input type="text" name="name" required="" placeholder=" "><label>Имя</label></div>
+                <div class="field"><input type="tel" name="phone" class="phone-mask" required="" placeholder=" "><label>Телефон</label></div>
+                <div class="field"><input type="email" name="email" placeholder=" "><label>Email</label></div>
+                <div class="field"><textarea name="message" rows="3" placeholder=" "></textarea><label>Комментарий</label></div>
+                <input type="hidden" name="form_type" value="kp_request">
+                <div style="margin-bottom:16px">
+                    <label style="display:flex;align-items:flex-start;gap:10px;font-size:.75rem;color:var(--gray);cursor:pointer;position:static;pointer-events:auto;">
+                        <input type="checkbox" name="privacy" required="" style="margin-top:2px;width:16px;height:16px;accent-color:var(--accent2);">
+                        Я соглашаюсь с <a href="#" alt="privacy.html" style="color:var(--accent2);text-decoration:underline;">политикой конфиденциальности</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary btn-primary--full magnetic"><span>Отправить запрос</span><i class="btn-arrow">→</i></button>
+            </form>
+            <div class="modal-ok" id="modalOk"><div class="modal-ok__icon">✓</div><p>Спасибо! Ваш запрос принят.<br>Мы свяжемся с вами в ближайшее время.</p></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-wrap" id="priceModal">
+    <div class="modal-bg" onclick="closeModal('priceModal')"></div>
+    <div class="modal-box">
+        <button class="modal-x" onclick="closeModal('priceModal')"><span></span><span></span></button>
+        <div class="modal-body">
+            <h3>Заказать прайслист</h3>
+            <p>Отправим прайслист на указанную почту</p>
+            <form onsubmit="submitForm(event)">
+                <div class="field"><input type="text" name="name" required="" placeholder=" "><label>Имя</label></div>
+                <div class="field"><input type="tel" name="phone" class="phone-mask" required="" placeholder=" "><label>Телефон</label></div>
+                <div class="field"><input type="email" name="email" placeholder=" "><label>Email</label></div>
+                <input type="hidden" name="form_type" value="pricelist">
+                <div style="margin-bottom:16px">
+                    <label style="display:flex;align-items:flex-start;gap:10px;font-size:.75rem;color:var(--gray);cursor:pointer;position:static;pointer-events:auto;">
+                        <input type="checkbox" name="privacy" required="" style="margin-top:2px;width:16px;height:16px;accent-color:var(--accent2);">
+                        Я соглашаюсь с <a href="#" alt="privacy.html" style="color:var(--accent2);text-decoration:underline;">политикой конфиденциальности</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary btn-primary--full magnetic"><span>Получить прайслист</span><i class="btn-arrow">→</i></button>
+            </form>
+            <div class="modal-ok" id="modalOk"><div class="modal-ok__icon">✓</div><p>Прайслист отправлен на Вашу почту.</p></div>
+        </div>
+    </div>
+</div>
+
+<div class="cookie" id="cookie">
+    <p>Продолжая, вы соглашаетесь с <a href="#" alt="privacy.html">политикой конфиденциальности</a></p>
+    <button onclick="acceptCookie()">OK</button>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Каталог продукции",
+  "description": "Каталог железобетонных изделий для строительства ЛЭП. 282 позиции: траверсы, стойки, фундаменты, плиты.",
+  "url": "https://energosnab-msk.ru/catalog.html",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ЭнергоСнаб",
+    "url": "https://energosnab-msk.ru"
+  }
+}
+</script>
+
+<script src="catalog_files/main.js"></script>
+
+
+
+</body></html>
