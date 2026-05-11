@@ -106,10 +106,6 @@ body {
      margin-bottom: 40px;
  }
 
-.project-image {
-  flex: 1;
-}
-
  .project-info {
      flex: 1;
  }
@@ -126,83 +122,10 @@ body {
      margin-bottom: 25px;
  }
 
- .work-list {
-     list-style-type: none;
-     padding-left: 0;
+ .project-info li {
+     font-size: 1.0em;
+     color: #666;
  }
-
- .work-list li {
-     background-color: #f0f8ff; /* Светло-голубой */
-     border-left: 4px solid #007bff; /* Синий акцент */
-     padding: 8px 12px;
-     margin-bottom: 8px;
-     border-radius: 4px;
-     font-size: 1em;
- }
-
- /* Изображение проекта */
- .project-image img {
-     max-width: 100%;
-     height: auto;
-     border-radius: 8px;
-     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
- }
-
- /* Ссылки на сайт */
- .links-block {
-     margin-top: 30px;
- }
-
- .links-block h3 {
-     margin-bottom: 15px;
-     font-size: 1.3em;
- }
-
- .links-list {
-     list-style-type: none;
-     padding-left: 0;
- }
-
- .links-list li {
-     margin-bottom: 10px;
- }
-
- .links-list a {
-     display: inline-block;
-     padding: 10px 15px;
-     background-color: #007bff; /* Синий */
-     color: white !important; /* Приоритетный белый */
-     border-radius: 5px;
-     text-decoration: none !important; /* Убираем подчеркивание */
-     transition: background-color 0.3s ease, transform 0.2s ease;
- }
-
- .links-list a.cbw { /* Вариант с белой кнопкой */
-    background-color: white !important;
-    color: #007bff !important; /* Синий текст */
-    border: 1px solid #007bff !important; /* Синяя рамка */
-}
-
-.links-list a.cbb { /* Вариант с синей кнопкой */
-    background-color: #007bff !important; /* Синий фон */
-    color: white !important; /* Белый текст */
-}
-
-.links-list a.cbw.hover,
-.links-list a.cbb.hover {
-    transform: scale(1.03);
-}
-.links-list a.cbw.hover {
-    background-color: #f0f8ff !important; /* Светло-синий при наведении */
-}
-.links-list a.cbb.hover {
-    background-color: #0056b3 !important; /* Темно-синий при наведении */
-}
-.links-list a.cbw.hover,
-.links-list a.cbb.hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
 
  /* Подвал */
  footer {
@@ -259,14 +182,6 @@ body {
     flex-direction: column;
   }
 
-  .project-image {
-    order: -1; /* Фото идет первым */
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  .project-image img{
-    width: 100%;
-  }
   .project-info {
     order: 1; /* Текст после фото */
     width: 100%;
@@ -316,11 +231,11 @@ body {
  <div class="project-info">
 <h1>Политика конфиденциальности</h1>
 
-<p>1. Общие положения</p>
+<h3>1. Общие положения</h3>
 <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта ЭнергоСнаб.</p>
-<p>2. Основные понятия</p>
+<h3>2. Основные понятия</h3>
 <p>Персональные данные — любая информация, относящаяся к прямо или косвенно определённому физическому лицу.</p>
-<p>3. Цели обработки</p>
+<h3>3. Цели обработки</h3>
  <ul>
     <li>Идентификация для оформления заказа и заключения договора</li>
     <li>Предоставление доступа к сервисам сайта</li>
@@ -328,18 +243,21 @@ body {
     <li>Улучшение качества работы сайта</li>
     <li>Проведение статистических исследований</li>
 </ul>
-<p>4. Правовые основания</p>
+<h3>4. Правовые основания</h3>
 <p>Обработка осуществляется на основании ФЗ №152-ФЗ «О персональных данных» и согласия пользователя.</p>
-<p>5. Объём данных</p>
+<h3>5. Объём данных</h3>
 <p>Обрабатываются: имя, телефон, email, IP-адрес, данные cookies, информация о браузере.</p>
-<p>6. Порядок сбора и хранения</p>
+<h3>6. Порядок сбора и хранения</h3>
 <p>Сбор — при заполнении форм. Хранение — в защищённой базе данных. Данные не передаются третьим лицам без согласия, кроме случаев, предусмотренных законодательством.</p>
-<p>7. Права субъекта</p>
+<h3>7. Права субъекта</h3>
 <p>Пользователь имеет право на получение информации, уточнение, блокирование или уничтожение своих данных.</p>
-<p>8. Оператор</p>
-<p>Кирилл Савин, г. Новосибирск. Email: savinkirillnick@gmail.com
-<p>9. Заключительные положения</p>
+<h3>8. Оператор</h3>
+<p>Кирилл Савин, г. Новосибирск. Email: savinkirillnick@gmail.com</p>
+<h3>9. Заключительные положения</h3>
 <p>Политика может быть изменена оператором. Новая редакция вступает в силу с момента размещения.</p>
+</div>
+</div>
+</section>
 
  <!-- Подвал -->
  <footer>
