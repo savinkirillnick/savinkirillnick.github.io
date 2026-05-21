@@ -188,7 +188,7 @@ Esc - Close panels / Menu<br>
 </div>
 <div id="inventory_panel" class="panel">
 <span class="close" id="closeInv">&times;</span>
-<h2>INVENTORY <span id="btn_del_inv" onclick="toggleDeleteMode()" style="font-size:min(4vw,4.5vh);line-height:1.0;cursor:pointer;color:#555;margin-left:min(2vw,2vh);border:min(.1vw,.15vh)solid #555;padding:min(.2vw,.3vh) min(.4vw,.6vh);border-radius:min(.2vw,.3vh)">Drop</span></h2>
+<h2>INVENTORY <span id="btn_del_inv" onclick="toggleDeleteMode()" style="font-size:min(2.5vw,3vh);line-height:1.0;cursor:pointer;color:#555;margin-left:min(2vw,2vh);border:min(.1vw,.15vh)solid #555;padding:min(.2vw,.3vh) min(.4vw,.6vh);border-radius:min(.2vw,.3vh)">Drop</span></h2>
 <div style="display:flex;gap:min(2vw,3vh);flex-wrap:wrap;justify-content:center">
  <div style="text-align:center"><div style="color:#960;font-size:min(4vw,4.5vh);line-height:1.0;margin-bottom:min(.5vw,.7vh)">Equipment</div><div class="equip_grid" id="equipSlots"></div></div>
  <div style="text-align:center"><div style="color:#960;font-size:min(4vw,4.5vh);line-height:1.0;margin-bottom:min(.5vw,.7vh)">Backpack</div><div class="inv_grid" id="invSlots"></div></div>
@@ -514,16 +514,23 @@ function randomItemDrop(level){
 // ---- Monsters ----
 const MONSTER_TYPES=[
  {id:0,name:'Rat',color:'#866',minHP:3,maxHP:6,dmg:2,ac:0,xp:5,level:1},
- {id:1,name:'Zombie',color:'#686',minHP:6,maxHP:12,dmg:4,ac:2,xp:10,level:1},
- {id:2,name:'Skeleton',color:'#bbb',minHP:8,maxHP:16,dmg:5,ac:4,xp:15,level:2},
- {id:3,name:'Fallen One',color:'#c66',minHP:10,maxHP:20,dmg:6,ac:3,xp:18,level:2},
- {id:4,name:'Scavenger',color:'#886',minHP:12,maxHP:24,dmg:7,ac:5,xp:22,level:3},
- {id:5,name:'Goat Man',color:'#686',minHP:16,maxHP:30,dmg:9,ac:7,xp:30,level:3},
- {id:6,name:'Acid Beast',color:'#6c6',minHP:20,maxHP:35,dmg:10,ac:6,xp:35,level:4},
- {id:7,name:'Winged Fiend',color:'#868',minHP:22,maxHP:38,dmg:12,ac:8,xp:40,level:4},
- {id:8,name:'Blood Knight',color:'#c44',minHP:30,maxHP:55,dmg:15,ac:12,xp:60,level:5},
- {id:9,name:'Magma Demon',color:'#c60',minHP:40,maxHP:70,dmg:18,ac:15,xp:80,level:6},
- {id:10,name:'Diablo',color:'#c00',minHP:100,maxHP:150,dmg:25,ac:20,xp:500,level:7}
+ {id:1,name:'Larva',color:'#486',minHP:5,maxHP:10,dmg:2,ac:10,xp:8,level:1},
+ {id:2,name:'Zombie',color:'#686',minHP:6,maxHP:12,dmg:4,ac:2,xp:10,level:1},
+ {id:3,name:'Skeleton',color:'#bbb',minHP:8,maxHP:16,dmg:5,ac:4,xp:15,level:2},
+ {id:4,name:'Fallen One',color:'#c66',minHP:10,maxHP:20,dmg:6,ac:3,xp:18,level:2},
+ {id:5,name:'Scavenger',color:'#886',minHP:12,maxHP:24,dmg:7,ac:5,xp:22,level:3},
+ {id:6,name:'Goat Man',color:'#686',minHP:16,maxHP:30,dmg:9,ac:7,xp:30,level:3},
+ {id:7,name:'Acid Beast',color:'#6c6',minHP:20,maxHP:35,dmg:10,ac:6,xp:35,level:4},
+ {id:8,name:'Winged Fiend',color:'#868',minHP:22,maxHP:38,dmg:12,ac:8,xp:40,level:4},
+ {id:9,name:'Blood Knight',color:'#c44',minHP:30,maxHP:55,dmg:15,ac:12,xp:60,level:5},
+ {id:10,name:'Magma Demon',color:'#c60',minHP:40,maxHP:70,dmg:18,ac:15,xp:80,level:6},
+ {id:11,name:'Minion',color:'#d33',minHP:100,maxHP:150,dmg:18,ac:40,xp:150,level:7},
+ {id:12,name:'Taurus',color:'#cc0',minHP:170,maxHP:240,dmg:20,ac:50,xp:250,level:8},
+ {id:13,name:'Succub',color:'#33d',minHP:250,maxHP:350,dmg:20,ac:80,xp:350,level:9},
+ {id:14,name:'Wiwern',color:'#00c',minHP:350,maxHP:450,dmg:20,ac:100,xp:500,level:10},
+ {id:15,name:'Cursed Demon',color:'#0d0',minHP:300,maxHP:480,dmg:22,ac:120,xp:700,level:11},
+ {id:16,name:'Miniablo',color:'#d30',minHP:650,maxHP:800,dmg:50,ac:180,xp:2500,level:12},
+ {id:17,name:'Diablo',color:'#c00',minHP:2500,maxHP:2500,dmg:100,ac:200,xp:5000,level:13}
 ];
 function spawnMonster(typeId,x,y,level){
  let t=MONSTER_TYPES.find(m=>m.id===typeId);
@@ -537,8 +544,11 @@ function spawnMonster(typeId,x,y,level){
  };
 }
 function getMonstersForLevel(level){
- if(level===G.MAX_LEVELS)return [MONSTER_TYPES[10]]; // Diablo only
- let pool=MONSTER_TYPES.filter(m=>m.level<=Math.min(7,Math.ceil(level/2)+2)&&m.level>=Math.max(1,Math.floor(level/3)));
+ if(level===G.MAX_LEVELS)return [MONSTER_TYPES[17]]; // Diablo only
+ if(level===12)return [MONSTER_TYPES[16]];
+ if(level===11)return [MONSTER_TYPES[11], MONSTER_TYPES[12], MONSTER_TYPES[13], MONSTER_TYPES[14], MONSTER_TYPES[15]];
+ if(level===10)return [MONSTER_TYPES[9], MONSTER_TYPES[10], MONSTER_TYPES[11], MONSTER_TYPES[12], MONSTER_TYPES[13]];
+ let pool=MONSTER_TYPES.filter(m=>m.level<=Math.min(16,Math.ceil(level/2)+2)&&m.level>=Math.max(1,Math.floor(level/3)));
  if(pool.length===0)pool=[MONSTER_TYPES[0]];
  return pool;
 }
@@ -766,7 +776,7 @@ function updateMonsters(){
  for(let m of G.monsters){
   if(!m.alive)continue;
   if(!m._lastMove)m._lastMove=now;
-  if(now-m._lastMove<200)continue;
+  if(now-m._lastMove<150)continue;
   m._lastMove=now;
   let d=dist(m.x,m.y,G.player.x,G.player.y);
   if(d<8)m.aggro=true;
@@ -1036,8 +1046,8 @@ function toggleSuperAttack(){
 function updateSuperBtn(){
  let btn=document.getElementById('btn_super');
  if(!btn)return;
- if(G.superAttackMode){btn.style.cssText='background:#f00;border-color:#f88;color:#fff;box-shadow:0 0 min(1vw,1vh) #f00';}
- else{btn.style.cssText='background:#555;border-color:#888;color:#999';}
+ if(G.superAttackMode){btn.style.cssText='background:#f00;border-color:#f88;color:#fff';}
+ else{btn.style.cssText='';}
 }
 function toggleDeleteMode(){
  G._deleteMode=!G._deleteMode;
@@ -1398,14 +1408,12 @@ function loadLevel(lvl){
    if(lvl===4||lvl===8||lvl===12){
     let pr=rooms[rooms.length-1];
     G.portals=[];
-    let pdirs=[[-2,-2],[0,-2],[2,-2]];
-    let plabels=['D','U','T'];
-    for(let pi=0;pi<3;pi++){
-     let px=pr.cx+pdirs[pi][0],py=pr.cy+pdirs[pi][1];
-     if(px>=0&&px<MAP_W&&py>=0&&py<MAP_H&&G.map[py][px]!==T_WALL){
-      G.map[py][px]=T_PORTAL;
-      G.portals.push({x:px,y:py,label:plabels[pi]});
-     }
+    let pdirs=[2,-2];
+    let plabels='T';
+    let px=pr.cx+pdirs[0],py=pr.cy+pdirs[1];
+    if(px>=0&&px<MAP_W&&py>=0&&py<MAP_H&&G.map[py][px]!==T_WALL){
+     G.map[py][px]=T_PORTAL;
+     G.portals.push({x:px,y:py,label:plabels});
     }
    }
   }
@@ -1461,7 +1469,7 @@ function gameLoop(){
     if(plr.movePath&&plr.moveIndex<plr.movePath.length-1){
      if(!plr._lastMove)plr._lastMove=performance.now();
      let now=performance.now();
-     if(now-plr._lastMove>=166){
+     if(now-plr._lastMove>=125){
      plr._lastMove=now;
      plr.moveIndex++;
     let [nx,ny]=plr.movePath[plr.moveIndex];
