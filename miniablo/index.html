@@ -34,25 +34,35 @@ body{font-family:Miniablo;background:#000;color:#c90;overflow:hidden;width:100vw
 #game_hud{position:absolute;inset:0;display:none}
 #game_hud.active{display:block}
 #gameCanvas{display:block;position:absolute;inset:0;background:#111}
-.ui_overlay{position:absolute;font-size:min(2.5vw,3vh);pointer-events:none}
-#hp_bar{position:absolute;bottom:min(8vh,8vw);left:min(2vw,2vh);height:min(2.5vw,3vh);background:#400;border:min(.15vw,.2vh)solid #800;min-width:min(20vw,25vh)}
-#mp_bar{position:absolute;bottom:min(8vh,8vw);right:min(2vw,2vh);height:min(2.5vw,3vh);background:#004;border:min(.15vw,.2vh)solid #008;min-width:min(20vw,25vh)}
-#hp_bar_fill{height:100%;background:#c00;transition:width .1s}
-#mp_bar_fill{height:100%;background:#00c;transition:width .1s}
-#bar_text{position:absolute;bottom:min(11.5vh,11.5vw);left:min(2vw,2vh);font-size:min(2vw,2.5vh);color:#c90;text-shadow:1px 1px 2px #000;font-family:MiniabloBold}
-#mp_text{position:absolute;bottom:min(11.5vh,11.5vw);right:min(2vw,2vh);font-size:min(2vw,2.5vh);color:#ccf;text-shadow:1px 1px 2px #000;font-family:MiniabloBold}
-#lvl_text{position:absolute;top:min(1vh,1vw);left:min(2vw,2vh);font-size:min(2vw,2.5vh);color:#c90;text-shadow:1px 1px 2px #000;font-family:MiniabloBold;z-index:5;line-height:1.4;pointer-events:none}
-#msg_text{position:absolute;bottom:min(12vh,12vw);left:50%;translate:-50%0;font-size:min(3vw,3.5vh);color:#fe0;text-shadow:1px 1px 2px #000;pointer-events:none;transition:opacity .3s;opacity:0;text-align:center;max-width:80vw;font-family:MiniabloBold;z-index:5}
+/* HP indicator bottom left - 2x bigger */
+#hp_indicator{position:absolute;bottom:min(3vh,3vw);left:min(2vw,2vh);width:min(12.8vw,14.4vh);height:min(12.8vw,14.4vh);background:#400;border:min(.15vw,.2vh)solid #800;overflow:hidden}
+#hp_fill{position:absolute;bottom:0;left:0;width:100%;background:#c00;transition:height .1s}
+#hp_label{position:absolute;bottom:calc(min(3vh,3vw) + min(12.8vw,14.4vh) + min(.3vh,.3vw));left:min(2vw,2vh);font-size:min(2.5vw,3vh);color:#f66;font-family:MiniabloBold;text-shadow:1px 1px 2px #000;pointer-events:none;z-index:5}
+/* MP indicator bottom right - 2x bigger */
+#mp_indicator{position:absolute;bottom:min(3vh,3vw);right:min(2vw,2vh);width:min(12.8vw,14.4vh);height:min(12.8vw,14.4vh);background:#004;border:min(.15vw,.2vh)solid #008;overflow:hidden}
+#mp_fill{position:absolute;bottom:0;left:0;width:100%;background:#00c;transition:height .1s}
+#mp_label{position:absolute;bottom:calc(min(3vh,3vw) + min(12.8vw,14.4vh) + min(.3vh,.3vw));right:min(2vw,2vh);font-size:min(2.5vw,3vh);color:#66f;font-family:MiniabloBold;text-shadow:1px 1px 2px #000;pointer-events:none;z-index:5}
+/* Bottom of page - XP bar full width */
+#xp_bar{position:absolute;bottom:0;left:0;width:100vw;height:min(1.2vh,1.2vw);background:#222;overflow:hidden}
+#xp_fill{height:100%;width:0%;background:#888;transition:width .1s}
+/* Action buttons centered above xp bar */
+#bottom_bar{position:absolute;bottom:min(2vh,2vw);left:50%;translate:-50%0;display:flex;flex-direction:column;align-items:center}
+#action_buttons{display:flex;gap:min(1vw,1.2vh)}
+.action_btn{width:min(4vw,5vh);height:min(4vw,5vh);background:#222;border:min(.15vw,.2vh)solid #555;color:#c90;font-family:MiniabloBold;font-size:min(2.5vw,3vh);display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+.action_btn:hover{background:#444;border-color:#c90}
+/* Top left info: 3 lines */
+#top_info{position:absolute;top:min(1vh,1vw);left:min(2vw,2vh);font-size:min(1.8vw,2.2vh);color:#c90;text-shadow:1px 1px 2px #000;font-family:MiniabloBold;z-index:5;line-height:1.5;pointer-events:none}
+#msg_text{position:absolute;bottom:min(16vh,16vw);left:50%;translate:-50%0;font-size:min(3vw,3.5vh);color:#fe0;text-shadow:1px 1px 2px #000;pointer-events:none;transition:opacity .3s;opacity:0;text-align:center;max-width:80vw;font-family:MiniabloBold;z-index:5}
 .panel{position:absolute;background:rgba(0,0,0,.92);border:min(.3vw,.3vh)solid #630;padding:min(2vw,2vh);display:none;z-index:10;font-size:min(3vw,3.5vh);max-height:90vh;overflow-y:auto;min-width:min(40vw,50vh)}
 .panel.active{display:block}
 .panel h2{color:#c00;font-family:MiniabloBold;font-size:min(3vw,3.5vh);margin-bottom:min(1.5vw,2vh)}
 .panel .close{position:absolute;top:min(.5vw,.5vh);right:min(1vw,1vh);cursor:pointer;color:#900;font-size:min(3vw,4vh)}
 .panel .close:hover{color:#c00}
-.inv_slot{width:min(5vw,6vh);height:min(5vw,6vh);border:min(.1vw,.15vh)solid #555;display:inline-flex;align-items:center;justify-content:center;font-size:min(3vw,3.5vh);background:#1a1a1a;margin:min(.1vw,.15vh);cursor:pointer;color:#aaa}
+.inv_slot{width:min(3.5vw,4.5vh);height:min(3.5vw,4.5vh);border:min(.1vw,.15vh)solid #555;display:inline-flex;align-items:center;justify-content:center;font-size:min(4vw,4.5vh);line-height:1.0;background:#1a1a1a;margin:min(.05vw,.1vh);cursor:pointer;color:#aaa}
 .inv_slot.equipped{border-color:#c90;background:#2a2a1a}
 .inv_slot:hover{border-color:#c90;background:#333}
-.inv_grid{display:grid;grid-template-columns:repeat(5,min(4vw,5vh));gap:min(.2vw,.3vh);margin:min(1vw,1.5vh)0}
-.equip_grid{display:grid;grid-template-columns:repeat(3,min(4vw,5vh));gap:min(.2vw,.3vh);margin:min(1vw,1.5vh)0;justify-content:center}
+.inv_grid{display:grid;grid-template-columns:repeat(8,min(3.5vw,4.5vh));gap:min(.15vw,.2vh);margin:min(1vw,1.5vh)0}
+.equip_grid{display:grid;grid-template-columns:repeat(3,min(3.5vw,4.5vh));grid-template-rows:repeat(2,min(3.5vw,4.5vh));gap:min(.15vw,.2vh);margin:min(1vw,1.5vh)0;justify-content:center}
 .stat_row{display:flex;justify-content:space-between;padding:min(.3vw,.4vh)0;color:#aaa;border-bottom:min(.05vw,.08vh)solid #222;font-size:min(3vw,3.5vh)}
 .stat_row .stat_val{color:#c90}
 .stat_row .stat_btn{cursor:pointer;color:#0a0;margin-left:min(1vw,1.5vh);font-weight:bold}
@@ -62,11 +72,11 @@ body{font-family:Miniablo;background:#000;color:#c90;overflow:hidden;width:100vw
 .quest_item.done{opacity:.5;border-color:#060}
 .quest_item.done .qstatus{color:#0a0}
 .qstatus{color:#960;font-size:min(3vw,3.5vh)}
-.npc_dialog{position:absolute;bottom:min(15vh,15vw);left:50%;translate:-50%0;background:rgba(0,0,0,.95);border:min(.3vw,.3vh)solid #630;padding:min(2vw,2.5vh);max-width:min(70vw,80vh);min-width:min(40vw,50vh);z-index:20;display:none}
+.npc_dialog{position:absolute;bottom:min(10vh,10vw);left:50%;translate:-50%0;background:rgba(0,0,0,.95);border:min(.3vw,.3vh)solid #630;padding:min(2vw,2.5vh);max-width:min(85vw,90vh);min-width:min(50vw,60vh);z-index:20;display:none}
 .npc_dialog.active{display:block}
-.npc_dialog .npc_name{color:#c00;font-family:MiniabloBold;font-size:min(3vw,3.5vh);margin-bottom:min(1vw,1.5vh)}
-.npc_dialog .npc_text{color:#caa;font-size:min(3vw,3.5vh);margin-bottom:min(1.5vw,2vh);line-height:1.4}
-.npc_dialog .npc_btn{display:block;width:100%;padding:min(1vw,1.5vh);margin:min(.5vw,.7vh)0;background:#300;border:min(.1vw,.15vh)solid #630;color:#c90;cursor:pointer;font-family:Miniablo;font-size:min(3vw,3.5vh);text-align:left}
+.npc_dialog .npc_name{color:#c00;font-family:MiniabloBold;font-size:min(4vw,4.5vh);margin-bottom:min(1vw,1.5vh)}
+.npc_dialog .npc_text{color:#caa;font-size:min(4vw,4.5vh);margin-bottom:min(1.5vw,2vh);line-height:1.0}
+.npc_dialog .npc_btn{display:block;width:100%;padding:min(1vw,1.5vh);margin:min(.5vw,.7vh)0;background:#300;border:min(.1vw,.15vh)solid #630;color:#c90;cursor:pointer;font-family:Miniablo;font-size:min(4vw,4.5vh);text-align:left}
 .npc_dialog .npc_btn:hover{background:#500;border-color:#c90}
 #inventory_panel{top:50%;left:50%;translate:-50%-50%}
 #char_panel{top:50%;left:50%;translate:-50%-50%}
@@ -111,20 +121,25 @@ body{font-family:Miniablo;background:#000;color:#c90;overflow:hidden;width:100vw
 <b style="color:#c90">Controls:</b><br>
 WASD / Arrow keys - Move<br>
 Click - Attack / Interact / Move<br>
-I - Inventory<br>
-C - Character Stats<br>
+I - Inventory (or click I button)<br>
+C - Character Stats (or click C button)<br>
 Q - Quest Log<br>
+H - Use Health Potion<br>
+M - Use Mana Potion<br>
+S - Super Attack (costs mana)<br>
+M - Toggle Minimap<br>
 Space - Close all panels<br>
 Esc - Close panels / Menu<br>
 <br>
 <b style="color:#c90">Tips:</b><br>
 - Talk to Elder Quinn in town for quests<br>
-- Healer, Blacksmith, and Trainer NPCs are in town<br>
+- Healer, Blacksmith, Merchant, Alchemist, and Trainer NPCs are in town<br>
 - Click monsters to attack (melee for Warrior, ranged for Mage)<br>
 - Press C to spend stat points on level up<br>
-- Find the portal (U) in town to enter the dungeon<br>
+- Find portals (D/U/T) on levels 4/8/12<br>
 - Find down stairs (D) to go deeper<br>
 - Game auto-saves every 30 seconds<br>
+- Casino Vex in SE corner gambles items<br>
 </div>
 <div class="button" id="btnBackSettings" style="margin-top:min(2vh,2vw)">BACK</div>
 </div>
@@ -150,22 +165,35 @@ Esc - Close panels / Menu<br>
 </div>
 <div id="game_hud">
 <canvas id="gameCanvas"></canvas>
-<div id="bar_text"></div>
-<div id="mp_text"></div>
-<div id="lvl_text"></div>
-<div id="hp_bar"><div id="hp_bar_fill"></div></div>
-<div id="mp_bar"><div id="mp_bar_fill"></div></div>
+<!-- HP indicator bottom left -->
+<div id="hp_indicator"><div id="hp_fill"></div></div>
+<div id="hp_label">HP: 0/0</div>
+<!-- MP indicator bottom right -->
+<div id="mp_indicator"><div id="mp_fill"></div></div>
+<div id="mp_label">MP: 0/0</div>
+<!-- XP bar at very bottom of page -->
+<div id="xp_bar"><div id="xp_fill"></div></div>
+<!-- Action buttons -->
+<div id="bottom_bar">
+ <div id="action_buttons">
+    <div class="action_btn" id="btn_inv" onclick="togglePanel('inventory_panel')">I</div>
+    <div class="action_btn" id="btn_char" onclick="togglePanel('char_panel')">C</div>
+    <div class="action_btn" id="btn_minimap" onclick="toggleMinimap()">M</div>
+    <div class="action_btn" id="btn_super" onclick="toggleSuperAttack()" title="Super Attack toggle (2x DMG, costs mana)">S</div>
+ </div>
+</div>
+<div id="top_info"></div>
 <div id="msg_text"></div>
 <div id="minimap"></div>
 </div>
 <div id="inventory_panel" class="panel">
 <span class="close" id="closeInv">&times;</span>
-<h2>INVENTORY</h2>
-<div style="display:flex;gap:min(2vw,3vh);flex-wrap:wrap">
- <div><div style="color:#960;font-size:min(3vw,3.5vh);margin-bottom:min(.5vw,.7vh)">Equipment</div><div class="equip_grid" id="equipSlots"></div></div>
- <div><div style="color:#960;font-size:min(3vw,3.5vh);margin-bottom:min(.5vw,.7vh)">Backpack</div><div class="inv_grid" id="invSlots"></div></div>
+<h2>INVENTORY <span id="btn_del_inv" onclick="toggleDeleteMode()" style="font-size:min(4vw,4.5vh);line-height:1.0;cursor:pointer;color:#555;margin-left:min(2vw,2vh);border:min(.1vw,.15vh)solid #555;padding:min(.2vw,.3vh) min(.4vw,.6vh);border-radius:min(.2vw,.3vh)">Drop</span></h2>
+<div style="display:flex;gap:min(2vw,3vh);flex-wrap:wrap;justify-content:center">
+ <div style="text-align:center"><div style="color:#960;font-size:min(4vw,4.5vh);line-height:1.0;margin-bottom:min(.5vw,.7vh)">Equipment</div><div class="equip_grid" id="equipSlots"></div></div>
+ <div style="text-align:center"><div style="color:#960;font-size:min(4vw,4.5vh);line-height:1.0;margin-bottom:min(.5vw,.7vh)">Backpack</div><div class="inv_grid" id="invSlots"></div></div>
 </div>
-<div id="itemInfo" style="margin-top:min(1vw,1.5vh);color:#aaa;font-size:min(3vw,3.5vh);min-height:min(4vw,5vh);border-top:min(.05vw,.08vh)solid #333;padding-top:min(.5vw,.7vh)"></div>
+<div id="itemInfo" style="margin-top:min(1vw,1.5vh);color:#aaa;font-size:min(4vw,4.5vh);line-height:1.0;min-height:min(3.5vw,4.5vh);border-top:min(.05vw,.08vh)solid #333;padding-top:min(.5vw,.7vh)"></div>
 </div>
 <div id="char_panel" class="panel">
 <span class="close" id="closeChar">&times;</span>
@@ -203,7 +231,7 @@ const app=document.getElementById('app');
 const canvas=document.getElementById('gameCanvas');
 const ctx=canvas.getContext('2d');
 let TILE=32;
-const MAP_W=60,MAP_H=60;
+const MAP_W=64,MAP_H=64;
 function calcTile(){
  let dim=Math.max(window.innerWidth,window.innerHeight);
  TILE=Math.max(16,Math.floor(dim/23));
@@ -221,11 +249,11 @@ const DMG_PER_STR=[2,0];
 const DMG_PER_MAG=[0,3];
 const XP_PER_LEVEL=[0,50,130,260,450,720,1100,1600,2300,3200,4500,6200,8500,11500,15500,21000,28000,37000,49000,65000,86000];
 // ---- Tiles ----
-const T_VOID=0,T_FLOOR=1,T_WALL=2,T_WATER=3,T_GRASS=4,T_ROAD=5,T_DOOR=6,T_DWALL=7,T_TOWN_FLOOR=8,T_ALTAR=9,T_STAIRS_DOWN=10;
-const TILE_COLORS={0:'#000',1:'#444',2:'#222',3:'#236',4:'#252',5:'#433',6:'#654',7:'#322',8:'#433',9:'#644',10:'#446'};
-const TILE_WALK={0:0,1:1,2:0,3:0,4:1,5:1,6:1,7:0,8:1,9:1,10:1};
+const T_VOID=0,T_FLOOR=1,T_WALL=2,T_WATER=3,T_GRASS=4,T_ROAD=5,T_DOOR=6,T_DWALL=7,T_TOWN_FLOOR=8,T_ALTAR=9,T_STAIRS_DOWN=10,T_PORTAL=11;
+const TILE_COLORS={0:'#000',1:'#444',2:'#111',3:'#236',4:'#252',5:'#433',6:'#654',7:'#322',8:'#433',9:'#644',10:'#446',11:'#848'};
+const TILE_WALK={0:0,1:1,2:0,3:0,4:1,5:1,6:1,7:0,8:1,9:1,10:1,11:1};
 // ---- Game State ----
-let G={screen:'title',player:null,monsters:[],items:[],npcs:[],quests:[],map:[],level:0,levelType:0,MAX_LEVELS:13,MAX_COW_LEVEL:14,camera:{x:0,y:0},keys:{},mouse:{x:0,y:0,worldX:0,worldY:0},selectedInv:null,msgTimeout:0,msgText:'',gameTime:0,turnCounter:0,dead:false,towners:[],unlocked:{well:false,crypt:false,cave:false,hatch:false},lastEntranceName:null,gameSeed:0};
+let G={screen:'title',player:null,monsters:[],items:[],npcs:[],quests:[],map:[],level:0,levelType:0,MAX_LEVELS:13,MAX_COW_LEVEL:14,camera:{x:0,y:0},keys:{},mouse:{x:0,y:0,worldX:0,worldY:0},selectedInv:null,msgTimeout:0,msgText:'',gameTime:0,turnCounter:0,dead:false,towners:[],unlocked:{well:false,crypt:false,cave:false,hatch:false},lastEntranceName:null,gameSeed:0,portals:[],spawnEntry:null,floatingTexts:[],superAttackMode:false,_deleteMode:false};
 // ---- RNG ----
 let RNG_SEED=Date.now();
 function rng(){RNG_SEED=(RNG_SEED*1664525+1013904223)&0xffffffff;return (RNG_SEED>>>0)/4294967296;}
@@ -248,7 +276,7 @@ function findPath(sx,sy,tx,ty,map){
  let q=[[sx,sy]],vis={},parent={};
  let key=sx+','+sy;
  vis[key]=true;
- let dirs=[[0,-1],[0,1],[-1,0],[1,0],[-1,-1],[1,-1],[-1,1],[1,1]];
+  let dirs=[[0,-1],[0,1],[-1,0],[1,0]];
  while(q.length){
   let [cx,cy]=q.shift();
   if(cx===tx&&cy===ty){
@@ -313,66 +341,175 @@ function generateDungeon(level){
  return {map,rooms};
 }
 function generateTown(){
- let townData=[[4,4,4,4,4,4,2,8,8,8,8,8,8,8,8,8,8,8,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4],[4,4,4,4,4,4,2,8,8,8,8,8,8,8,8,8,8,8,2,4,4,4,4,2,4,2,4,4,4,4,4,4,4,4,5,4,2,4,4,4,4,4,4,4,4,2,5,5,5,2,4,2,4,2,4,2,4,4,4,4],[4,4,4,4,4,4,2,8,8,8,8,8,8,8,8,8,8,8,2,4,4,4,4,5,4,5,4,4,2,4,2,4,2,4,5,4,5,4,4,4,4,4,4,4,4,2,2,6,2,2,4,5,4,5,4,5,4,4,4,4],[4,4,4,4,4,4,2,8,8,8,8,8,8,8,8,8,8,8,2,4,4,4,4,5,4,5,4,4,5,4,5,4,5,4,4,4,5,4,4,4,2,4,2,4,4,4,4,4,4,4,4,5,4,5,4,5,4,4,4,4],[4,4,4,4,2,2,2,2,8,2,2,2,2,2,2,2,8,2,2,2,2,4,4,4,4,4,4,4,5,4,5,4,5,4,4,4,4,4,4,4,5,4,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,4,4],[4,4,4,4,2,8,8,8,8,8,2,8,8,8,2,8,8,8,8,8,2,4,4,2,4,2,4,4,4,4,4,4,4,4,2,4,2,4,4,4,5,4,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4],[4,4,4,4,2,8,8,8,8,8,2,8,8,8,2,8,8,8,8,8,2,4,4,5,4,5,4,4,2,4,5,4,2,4,5,4,5,4,2,4,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4],[4,2,4,4,2,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,2,4,4,5,4,5,4,4,5,4,5,4,5,4,5,4,5,4,5,4,2,4,2,4,5,4,4,4,2,2,2,2,2,4,4,2,4,4,4,4],[4,4,4,4,2,8,8,8,8,8,2,8,8,8,2,8,8,8,8,8,2,4,4,4,4,4,4,4,5,4,5,4,5,4,4,4,4,4,5,4,5,4,5,4,5,4,4,4,2,5,5,5,2,4,4,5,4,2,4,4],[4,4,4,4,2,8,8,8,8,8,2,8,8,8,2,8,8,8,8,8,2,4,4,4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4,5,4,5,4,4,4,4,4,2,5,5,5,2,4,4,5,4,5,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,9,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,2,5,9,5,2,4,4,4,4,5,4,4],[4,4,4,4,2,4,4,2,4,2,4,4,8,4,4,2,4,2,4,4,2,4,4,4,4,4,2,2,2,2,5,2,2,4,4,4,4,5,5,5,5,5,5,5,5,5,4,4,2,2,6,2,2,4,4,4,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,4,2,2,2,2,2,2,2,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,2,2,2,2,2,2,2,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,2,2,2,2,2,2,4,4,4],[4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,2,2,2],[4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[4,4,4,4,4,4,4,4,4,5,5,5,5,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[4,4,4,4,4,4,4,4,4,5,5,5,5,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4],[4,4,4,4,4,4,2,2,2,2,2,5,5,4,4,4,4,4,4,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,4,4,4,4],[4,4,4,4,4,4,2,8,8,8,2,5,5,4,2,2,2,2,2,2,2,2,2,2,5,5,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,2,2,2,2,2,2,2,2,2,2,2,2,5,4,4,4,4],[4,4,4,4,4,4,2,8,8,8,2,5,5,4,2,8,8,8,8,8,2,8,8,2,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,2,8,8,2,8,8,8,2,8,8,8,2,5,4,4,4,4],[4,4,4,4,4,4,2,8,8,8,2,5,5,4,2,8,8,8,8,8,2,8,8,2,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,2,8,8,2,8,8,8,2,8,8,8,2,5,4,4,4,4],[4,4,4,4,4,4,2,8,8,8,2,5,5,4,2,8,8,8,8,8,8,8,8,2,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,2,2,8,2,8,8,8,2,8,8,8,2,5,4,4,4,4],[4,4,4,4,4,4,2,2,6,2,2,5,5,4,2,8,8,8,8,8,2,2,2,2,8,8,2,2,8,8,8,8,2,2,8,8,8,8,8,4,4,4,4,2,8,8,8,8,8,8,8,8,8,8,2,5,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,5,5,5,4,2,8,8,8,8,8,8,8,8,2,8,8,2,8,8,8,8,8,8,2,8,8,8,8,8,4,4,4,4,2,8,8,8,8,8,8,2,8,8,8,2,5,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,5,5,5,4,2,8,8,8,8,8,8,8,8,2,8,8,8,8,8,8,5,5,5,8,8,8,8,8,8,4,4,4,4,2,8,8,8,8,8,8,2,8,8,8,2,5,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,5,5,5,4,2,2,2,2,2,6,2,2,2,2,8,8,8,8,8,8,5,5,5,8,8,8,8,8,8,4,4,4,4,2,2,2,2,2,6,2,2,2,2,2,2,5,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,5,4,4,8,8,8,8,8,8,8,8,5,5,5,8,8,8,8,8,8,5,4,4,4,4,4,4,4,4,5,5,5,5,4,4,4,5,4,4,4,4],[4,5,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4],[4,5,5,5,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4],[4,4,4,5,5,5,5,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,8,8,8,8,2,8,8,8,8,8,8,2,8,8,9,8,8,5,5,5,5,5,4,4,4,4,4,4,5,5,5,5,2,2,2,2,2,4],[4,4,4,4,4,4,5,4,4,4,4,4,5,5,4,4,4,4,5,5,5,5,8,8,8,8,2,2,8,8,8,8,2,2,8,8,8,8,8,5,5,5,4,4,4,4,4,4,4,4,5,5,5,4,2,8,8,8,2,4],[2,2,2,2,2,4,5,5,5,4,5,5,5,4,2,2,2,2,2,4,5,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,2,8,8,8,2,4],[2,2,2,2,2,4,4,4,5,5,5,4,4,4,2,8,8,8,2,4,5,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,2,8,8,8,2,4],[2,2,2,2,2,4,4,4,4,4,5,4,4,4,2,8,8,8,2,4,4,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,2,8,8,8,2,4],[2,2,2,2,2,2,2,2,2,4,5,5,5,4,2,8,8,8,2,4,4,4,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,2,2,6,2,2,4],[2,2,2,2,2,2,2,2,2,4,4,4,5,5,2,8,8,8,2,4,4,4,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,4,4,4,4,4,2,2,6,2,2,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,5,5,4,4,4,4,2,2,2,2,2,2,2,2,2,2,4,5,5,4,2,2,2,2,2,2,2,2,2,2,4,4,4,4,5,5,5,2,2,2,2,2,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,2,8,8,2,8,8,8,8,8,2,4,5,5,4,2,8,8,2,8,8,2,8,8,2,4,4,4,4,5,5,5,2,8,8,8,2,4,4,4],[2,2,5,5,5,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,2,8,8,2,8,8,8,8,8,2,4,5,5,4,2,8,8,8,8,8,8,8,8,2,4,4,4,4,5,5,5,2,8,8,8,2,4,4,4],[2,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,2,8,8,2,8,8,8,2,2,2,4,5,5,4,2,8,8,8,8,8,8,8,8,2,4,4,4,4,5,5,5,2,8,8,8,2,4,4,4],[2,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,4,4,4,4,4,2,8,8,8,8,8,8,8,8,2,4,5,5,4,2,8,8,2,8,8,2,8,8,2,4,4,4,4,5,5,5,2,8,8,8,2,4,4,4],[5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,4,4,4,4,4,2,8,8,2,8,8,8,8,8,2,4,5,5,4,2,8,8,2,8,8,2,8,8,2,4,4,4,5,5,5,5,2,2,6,2,2,4,4,4],[5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,4,4,4,4,4,2,8,8,2,8,8,8,8,8,2,4,5,5,4,2,8,8,2,8,8,2,8,8,2,4,4,4,5,5,5,5,5,5,5,4,4,4,4,4],[5,5,5,5,5,5,5,2,5,5,5,5,5,2,2,2,4,4,4,4,4,2,2,2,2,2,6,2,2,2,2,4,5,5,4,2,2,2,2,2,6,2,2,2,2,4,4,4,5,5,5,5,5,5,5,5,5,4,4,4],[5,5,5,5,5,5,2,2,5,5,5,5,5,2,2,2,4,4,4,4,4,4,4,4,4,4,5,4,4,4,4,4,5,5,4,4,4,4,4,4,5,5,4,4,4,4,4,4,5,5,5,5,5,5,5,5,4,4,4,4],[5,5,5,2,2,2,2,2,2,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4],[5,5,5,2,2,2,2,2,2,5,5,5,5,5,2,2,2,2,4,4,4,4,4,4,4,4,5,5,4,4,4,4,5,5,4,4,4,4,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4],[5,5,2,2,2,2,2,2,2,5,5,5,5,5,2,2,2,2,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4],[2,2,2,2,2,5,5,5,5,5,5,5,5,5,2,2,2,2,4,4,4,4,4,4,4,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,4,4,4,4,4,4,4],[2,2,2,2,2,5,5,5,5,5,5,5,9,5,2,2,2,2,2,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,9,5,4,4,4,4,4,4,4,4],[2,2,2,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,4,4,4,4,4,4,4,4],[2,2,2,5,5,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,5,5,5,2,5,5,5,2,5,5,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,5,5,5,5,5,5,5,5,2,2,5,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,5,5,5,5,5,5,5,5,2,2,2,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]];
+ let _td=[[4,4,4,4,4,2,2,8,8,8,8,8,8,8,8,8,8,8,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,2,2,2,2,2,4,4,4,4,4,4,4,4,2,4,2,4,2,4],
+[4,4,4,4,4,4,2,8,8,8,8,8,8,8,8,8,8,8,2,4,4,4,4,2,4,2,4,4,4,4,4,4,4,4,5,4,2,4,4,4,4,4,4,4,4,2,5,5,5,2,4,2,4,2,4,2,4,4,5,4,5,4,5,4],
+[4,4,4,4,4,4,2,8,8,8,8,8,8,8,8,8,8,8,2,4,4,4,4,5,4,5,4,4,2,4,2,4,2,4,5,4,5,4,4,4,4,4,4,4,4,2,5,5,5,2,4,5,4,5,4,5,4,4,5,4,5,4,5,4],
+[4,4,4,4,4,4,2,2,8,8,8,8,8,8,8,8,8,2,2,4,4,4,4,5,4,5,4,4,5,4,5,4,5,4,4,4,5,4,4,4,2,4,2,4,4,2,2,6,2,2,4,5,4,5,4,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,2,2,2,2,8,2,2,2,2,2,2,2,8,2,2,2,2,4,4,4,4,4,4,4,5,4,5,4,5,4,4,4,4,4,4,4,5,4,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,4,4,4,4,2,4],
+[4,4,4,4,2,8,8,8,8,8,2,8,8,8,2,8,8,8,8,8,2,4,4,2,4,2,4,4,4,4,4,4,4,4,2,4,2,4,4,4,5,4,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4,4,4,5,4],
+[4,4,4,4,2,8,8,8,8,8,2,8,8,8,2,8,8,8,8,8,2,4,4,5,4,5,4,4,2,4,5,4,2,4,5,4,5,4,2,4,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4,2,4,5,4],
+[4,4,4,4,2,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,2,4,4,5,4,5,4,4,5,4,5,4,5,4,5,4,5,4,5,4,2,4,2,4,5,4,4,4,2,2,2,2,2,4,4,2,4,4,4,4,5,4,4,4],
+[4,4,4,4,2,8,8,8,8,8,2,8,8,8,2,8,8,8,8,8,2,4,4,4,4,4,4,4,5,4,5,4,5,4,4,4,4,4,5,4,5,4,5,4,5,4,4,4,2,5,5,5,2,4,4,5,4,2,4,4,5,4,2,4],
+[4,4,4,2,2,8,8,8,8,8,2,8,8,8,2,8,8,8,8,8,2,2,4,4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4,5,4,5,4,4,4,4,4,2,5,5,5,2,4,4,5,4,5,4,4,4,4,5,4],
+[2,2,2,2,2,2,2,2,2,2,2,2,9,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,2,5,9,5,2,4,4,4,4,5,4,2,4,4,5,4],
+[4,4,4,2,2,4,2,2,4,2,2,4,8,4,2,2,4,2,2,4,2,2,4,4,4,4,2,2,2,2,5,2,2,4,4,4,4,5,5,5,5,5,5,5,5,5,4,4,2,2,6,2,2,4,4,4,4,4,4,5,4,4,4,4],
+[4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,4,2,2,2,2,2,2,2,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,4,4,4,5,4,2,4,4],
+[4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,2,2,2,2,2,2,2,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4,4,5,4,4],
+[4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,5,4,4],
+[4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,2,2,2,2,2,2,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,2,2,2,2,2,2,4],
+[4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,2],
+[4,4,4,4,4,4,4,4,4,5,5,5,5,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,4,4,4,5,5,5,5,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,2,2,2,2,2,5,5,4,4,4,4,4,4,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,2,8,8,8,2,5,5,4,2,2,2,2,2,2,2,2,2,2,5,5,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,2,2,2,2,2,2,2,2,2,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,2,8,8,8,2,5,5,4,2,8,8,8,8,8,2,8,8,2,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,2,8,8,8,2,8,8,8,2,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,2,8,8,8,2,5,5,4,2,8,8,8,8,8,2,8,8,2,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,2,8,8,8,2,8,8,8,2,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,2,8,8,8,2,5,5,4,2,8,8,8,8,8,8,8,8,2,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,2,8,8,8,2,8,8,8,2,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,2,2,6,2,2,5,5,4,2,8,8,8,8,8,2,2,2,2,8,8,2,2,8,8,8,8,2,2,8,8,8,8,8,4,4,4,4,4,4,4,2,8,8,8,8,8,8,8,2,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,4,4,4,4,5,5,5,4,2,8,8,8,8,8,8,8,8,2,8,8,2,8,8,8,8,8,8,2,8,8,8,8,8,4,4,4,4,4,4,4,2,8,8,8,2,8,8,8,2,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,4,4,4,4,5,5,5,4,2,8,8,8,8,8,8,8,8,2,8,8,8,8,8,8,5,5,5,8,8,8,8,8,8,4,4,4,4,4,4,4,2,8,8,8,2,8,8,8,2,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,4,4,4,4,5,5,5,4,2,2,2,2,2,6,2,2,2,2,8,8,8,8,8,8,5,5,5,8,8,8,8,8,8,4,4,4,4,4,4,4,2,2,6,2,2,2,2,2,2,5,4,4,4,4,4,4,4,4],
+[4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,5,4,4,8,8,8,8,8,8,8,8,5,5,5,8,8,8,8,8,8,5,4,4,4,4,4,4,4,4,5,5,5,5,4,4,4,5,4,4,4,4,4,4,4,4],
+[4,5,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4],
+[4,5,5,5,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4],
+[4,4,4,5,5,5,5,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,8,8,8,8,2,8,8,8,8,8,8,2,8,8,9,8,8,5,5,5,5,5,4,4,4,4,4,4,5,5,5,5,2,2,2,2,2,4,4,4,4,4],
+[4,4,4,4,4,4,5,4,4,4,4,4,5,5,4,4,4,4,5,5,5,5,8,8,8,8,2,2,8,8,8,8,2,2,8,8,8,8,8,5,5,5,4,4,4,4,4,4,4,4,5,5,5,4,2,8,8,8,2,4,4,4,4,4],
+[2,2,2,2,2,4,5,5,5,4,5,5,5,4,2,2,2,2,2,4,5,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,2,8,8,8,2,4,4,4,4,4],
+[2,2,2,2,2,4,4,4,5,5,5,4,4,4,2,8,8,8,2,4,5,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,2,8,8,8,2,4,4,4,4,4],
+[2,2,2,2,2,4,4,4,4,4,5,4,4,4,2,8,8,8,2,4,4,5,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,2,8,8,8,2,4,4,4,4,4],
+[2,2,2,2,2,2,2,2,2,4,5,5,5,4,2,8,8,8,2,4,4,4,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,2,2,6,2,2,4,4,4,4,4],
+[2,2,2,2,2,2,2,2,2,4,4,4,5,5,2,8,8,8,2,4,4,4,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,2,2,2,2,2,2,2,4,4,4,4,4,2,2,6,2,2,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,5,5,4,4,4,4,2,2,2,2,2,2,2,2,2,2,4,5,5,4,2,2,2,2,2,2,2,2,2,2,4,4,4,4,5,5,5,2,2,2,2,2,4,4,4,4,4,4,4],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,2,8,8,2,8,8,8,8,8,2,4,5,5,4,2,8,8,2,8,8,2,8,8,2,4,4,4,4,5,5,5,2,8,8,8,2,4,4,4,4,4,4,4],
+[2,2,5,5,5,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,2,8,8,2,8,8,8,8,8,2,4,5,5,4,2,8,8,8,8,8,8,8,8,2,4,4,4,4,5,5,5,2,8,8,8,2,4,4,4,4,4,4,4],
+[2,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,2,8,8,2,8,8,8,2,2,2,4,5,5,4,2,8,8,8,8,8,8,8,8,2,4,4,4,4,5,5,5,2,8,8,8,2,4,4,4,4,4,4,4],
+[2,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,4,4,4,4,4,2,8,8,8,8,8,8,8,8,2,4,5,5,4,2,8,8,2,8,8,2,8,8,2,4,4,4,4,5,5,5,2,8,8,8,2,4,4,4,4,4,4,4],
+[5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,4,4,4,4,4,2,8,8,2,8,8,8,8,8,2,4,5,5,4,2,8,8,2,8,8,2,8,8,2,4,4,4,5,5,5,5,2,2,6,2,2,4,4,4,4,4,4,4],
+[5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,4,4,4,4,4,2,8,8,2,8,8,8,8,8,2,4,5,5,4,2,8,8,2,8,8,2,8,8,2,4,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4],
+[5,5,5,5,5,5,5,2,5,5,5,5,5,2,2,2,4,4,4,4,4,2,2,2,2,2,6,2,2,2,2,4,5,5,4,2,2,2,2,2,6,2,2,2,2,4,4,4,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4],
+[5,5,5,5,5,5,2,2,5,5,5,5,5,2,2,2,4,4,4,4,4,4,4,4,4,4,5,4,4,4,4,4,5,5,4,4,4,4,4,4,5,5,4,4,4,4,4,4,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4],
+[5,5,5,2,2,2,2,2,2,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4],
+[5,5,5,2,2,2,2,2,2,5,5,5,5,5,2,2,2,2,4,4,4,4,4,4,4,4,5,5,4,4,4,4,5,5,4,4,4,4,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4],
+[5,5,2,2,2,2,2,2,2,5,5,5,5,5,2,2,2,2,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4],
+[2,2,2,2,2,5,5,5,5,5,5,5,5,5,2,2,2,2,4,4,4,4,4,4,4,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,2,2,2,5,5,5,5,5,5,5,9,5,2,2,2,2,2,4,4,4,4,4,4,4,4,4,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,9,5,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,2,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,2,5,5,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,5,5,5,2,5,5,5,2,5,5,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,5,5,5,5,5,5,5,5,2,2,5,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,5,5,5,5,5,5,5,5,2,2,2,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,5,5,5,2,5,2,5,2,2,2,2,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,5,5,5,5,5,5,2,2,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]];
+ let townData=[];
+ for(let r of _td)townData.push([4,4,...r,4,4]);
+ townData.unshift(...Array.from({length:2},()=>Array(64).fill(4)));
+ townData.push(...Array.from({length:2},()=>Array(64).fill(4)));
  return townData.map(r=>[...r]);
 }
 // ---- Items ----
 const ITEM_TYPES=[
- {id:0,name:'Short Sword',type:'weapon',slot:'hand1',minDmg:3,maxDmg:8,minStr:0,color:'#888',icon:'/'},
- {id:1,name:'Long Sword',type:'weapon',slot:'hand1',minDmg:5,maxDmg:12,minStr:10,color:'#aaa',icon:'/'},
- {id:2,name:'Battle Axe',type:'weapon',slot:'hand1',minDmg:7,maxDmg:15,minStr:20,color:'#999',icon:'/'},
- {id:3,name:'Great Sword',type:'weapon',slot:'hand2',minDmg:10,maxDmg:22,minStr:30,color:'#bbb',icon:'/'},
- {id:4,name:'Short Staff',type:'weapon',slot:'hand2',minDmg:2,maxDmg:6,minMag:0,color:'#897',icon:'/'},
- {id:5,name:'Long Staff',type:'weapon',slot:'hand2',minDmg:4,maxDmg:10,minMag:15,color:'#a98',icon:'/'},
- {id:6,name:'War Staff',type:'weapon',slot:'hand2',minDmg:6,maxDmg:14,minMag:25,color:'#ba9',icon:'/'},
- {id:7,name:'Buckler',type:'shield',slot:'hand2',ac:5,minStr:0,color:'#876',icon:'-'},
- {id:8,name:'Small Shield',type:'shield',slot:'hand2',ac:10,minStr:15,color:'#987',icon:'-'},
- {id:9,name:'Large Shield',type:'shield',slot:'hand2',ac:18,minStr:25,color:'#a98',icon:'-'},
- {id:10,name:'Cap',type:'helm',slot:'head',ac:3,color:'#665',icon:'^'},
- {id:11,name:'Helm',type:'helm',slot:'head',ac:7,minStr:10,color:'#887',icon:'^'},
- {id:12,name:'Crown',type:'helm',slot:'head',ac:10,minStr:20,color:'#ca8',icon:'^'},
- {id:13,name:'Rags',type:'armor',slot:'body',ac:5,color:'#554',icon:'#'},
- {id:14,name:'Leather Armor',type:'armor',slot:'body',ac:12,minStr:10,color:'#776',icon:'#'},
- {id:15,name:'Chain Mail',type:'armor',slot:'body',ac:22,minStr:25,color:'#998',icon:'#'},
- {id:16,name:'Plate Mail',type:'armor',slot:'body',ac:35,minStr:40,color:'#bba',icon:'#'},
- {id:17,name:'Ring',type:'ring',slot:'ring1',color:'#ca6',icon:'o'},
- {id:18,name:'Amulet',type:'amulet',slot:'neck',color:'#ac8',icon:'*'},
- {id:19,name:'Health Potion',type:'potion',color:'#c44',icon:'!',misc:'heal'},
- {id:20,name:'Mana Potion',type:'potion',color:'#44c',icon:'!',misc:'mana'},
- {id:21,name:'Rejuvenation Potion',type:'potion',color:'#c4c',icon:'!',misc:'rejuv'},
- {id:22,name:'Scroll of Firebolt',type:'scroll',color:'#c84',icon:'?',misc:'firebolt'},
- {id:23,name:'Scroll of Lightning',type:'scroll',color:'#84c',icon:'?',misc:'lightning'},
- {id:24,name:'Scroll of Heal',type:'scroll',color:'#4c8',icon:'?',misc:'healscroll'},
- {id:25,name:'Gold',type:'gold',color:'#ca0',icon:'$'}
+  // Swords (id 0-2)
+  {id:0,name:'Short Sword',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minStr:0,color:'#888',icon:'/',weapClass:'sword'},
+  {id:1,name:'Long Sword',type:'weapon',slot:'weapon',minDmg:5,maxDmg:12,minStr:10,color:'#aaa',icon:'/',weapClass:'sword'},
+  {id:2,name:'Great Sword',type:'weapon',slot:'weapon',minDmg:10,maxDmg:22,minStr:30,color:'#bbb',icon:'/',weapClass:'sword'},
+  // Axes (id 3-4)
+  {id:3,name:'Hand Axe',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#987',icon:'/',weapClass:'axe'},
+  {id:4,name:'Battle Axe',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#a98',icon:'/',weapClass:'axe'},
+  // Blunt (id 5-6)
+  {id:5,name:'Club',type:'weapon',slot:'weapon',minDmg:3,maxDmg:9,minStr:5,color:'#876',icon:'/',weapClass:'blunt'},
+  {id:6,name:'Mace',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minStr:15,color:'#a87',icon:'/',weapClass:'blunt'},
+  // Staves (id 7-9)
+  {id:7,name:'Short Staff',type:'weapon',slot:'weapon',minDmg:2,maxDmg:6,minMag:0,color:'#897',icon:'/',weapClass:'staff'},
+  {id:8,name:'Long Staff',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minMag:15,color:'#a98',icon:'/',weapClass:'staff'},
+  {id:9,name:'War Staff',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minMag:25,color:'#ba9',icon:'/',weapClass:'staff'},
+  // Wands (id 10-11)
+  {id:10,name:'Simple Wand',type:'weapon',slot:'weapon',minDmg:1,maxDmg:4,minMag:5,color:'#cba',icon:'/',weapClass:'wand'},
+  {id:11,name:'Sorcerer Wand',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minMag:20,color:'#dcb',icon:'/',weapClass:'wand'},
+  // Shields (id 12-14)
+  {id:12,name:'Buckler',type:'shield',slot:'offhand',ac:5,minStr:0,color:'#876',icon:'-'},
+  {id:13,name:'Small Shield',type:'shield',slot:'offhand',ac:10,minStr:15,color:'#987',icon:'-'},
+  {id:14,name:'Large Shield',type:'shield',slot:'offhand',ac:18,minStr:25,color:'#a98',icon:'-'},
+ // Helms (id 15-17)
+ {id:15,name:'Cap',type:'helm',slot:'head',ac:3,color:'#665',icon:'^'},
+ {id:16,name:'Helm',type:'helm',slot:'head',ac:7,minStr:10,color:'#887',icon:'^'},
+ {id:17,name:'Crown',type:'helm',slot:'head',ac:10,minStr:20,color:'#ca8',icon:'^'},
+ // Armor (id 18-20)
+ {id:18,name:'Rags',type:'armor',slot:'body',ac:5,color:'#554',icon:'#'},
+ {id:19,name:'Leather Armor',type:'armor',slot:'body',ac:12,minStr:10,color:'#776',icon:'#'},
+ {id:20,name:'Chain Mail',type:'armor',slot:'body',ac:22,minStr:25,color:'#998',icon:'#'},
+ {id:21,name:'Plate Mail',type:'armor',slot:'body',ac:35,minStr:40,color:'#bba',icon:'#'},
+ // Rings / Amulets (id 22-25)
+  {id:22,name:'Copper Ring',type:'ring',slot:'ring',color:'#ca6',icon:'o'},
+  {id:23,name:'Silver Ring',type:'ring',slot:'ring',color:'#ccc',icon:'o'},
+  {id:24,name:'Gold Ring',type:'ring',slot:'ring',color:'#fc0',icon:'o'},
+ {id:25,name:'Amulet',type:'amulet',slot:'neck',color:'#ac8',icon:'*'},
+ {id:26,name:'Pendant',type:'amulet',slot:'neck',color:'#8ca',icon:'*'},
+ // Potions (id 27-30)
+ {id:27,name:'Health Potion',type:'potion',color:'#c44',icon:'!',misc:'heal'},
+ {id:28,name:'Mana Potion',type:'potion',color:'#44c',icon:'!',misc:'mana'},
+ {id:29,name:'Rejuvenation Potion',type:'potion',color:'#c4c',icon:'!',misc:'rejuv'},
+ {id:30,name:'Full Rejuvenation',type:'potion',color:'#fcf',icon:'!',misc:'fullrejuv'},
+ // Scrolls (id 31-33)
+ {id:31,name:'Scroll of Firebolt',type:'scroll',color:'#c84',icon:'?',misc:'firebolt'},
+ {id:32,name:'Scroll of Lightning',type:'scroll',color:'#84c',icon:'?',misc:'lightning'},
+ {id:33,name:'Scroll of Heal',type:'scroll',color:'#4c8',icon:'?',misc:'healscroll'},
+ {id:34,name:'Gold',type:'gold',color:'#ca0',icon:'$'}
+];
+const SUFFIXES=[
+ {name:'of Strength',stat:'str',val:2,types:['armor','helm','shield','ring','amulet'],weaponBonus:0},
+ {name:'of Magic',stat:'mag',val:2,types:['armor','helm','shield','ring','amulet'],weaponBonus:0},
+ {name:'of Dexterity',stat:'dex',val:2,types:['armor','helm','shield','ring','amulet'],weaponBonus:0},
+ {name:'of Vitality',stat:'vit',val:2,types:['armor','helm','shield','ring','amulet'],weaponBonus:0},
+ {name:'of Health',stat:'hp',val:10,types:['armor','helm','shield','ring','amulet'],weaponBonus:0},
+ {name:'of Might',stat:'dmg',val:3,types:['weapon','staff','wand'],weaponBonus:3},
+ {name:'of Mana',stat:'mana',val:15,types:['staff','wand'],weaponBonus:0},
+ {name:'of Dragons',stat:'dmg',val:6,types:['weapon','staff','wand'],weaponBonus:6}
 ];
 function createItem(typeId,level){
  let t=ITEM_TYPES.find(it=>it.id===typeId);
  if(!t)return null;
  let item=JSON.parse(JSON.stringify(t));
  item.level=level;item.id=G.gameTime+(G.turnCounter++);
+ // Apply suffix
+ let suffixChance=Math.min(.25+.02*level,.6);
+ if(rng()<suffixChance){
+  let pool=SUFFIXES.filter(s=>s.types.includes(item.type));
+  if(pool.length){
+   let sfx=choice(pool);
+   item.suffix=sfx;
+   item.name+=' '+sfx.name;
+   item.magic=true;
+  }
+ }
  if(item.minDmg&&rng()<.2+level*.03){
   let bonus=Math.floor(level*(rng()*.3+.1));
   item.minDmg+=bonus;item.maxDmg+=bonus;
-  item.magic=true;item.name='Magic '+item.name;
+  if(!item.suffix){item.magic=true;item.name='Magic '+item.name;}
  }
  if(item.ac&&rng()<.15+level*.02){
   let bonus=Math.floor(level*(rng()*.2+.1));
-  item.ac+=bonus;item.magic=true;item.name='Magic '+item.name;
+  item.ac+=bonus;item.magic=true;
+  if(!item.suffix){item.magic=true;item.name='Magic '+item.name;}
  }
  return item;
 }
 function randomItemDrop(level){
  let cat=rng();
- if(cat<.25)return createItem(19,level); // health
- if(cat<.4)return createItem(20,level); // mana
- if(cat<.5)return [createItem(19,level),createItem(25,level)];
- if(cat<.55)return createItem(24,level); // heal scroll
- if(cat<.65)return createItem(25,level); // gold
- // Weapon pool
- let wpns=[0,1,2,4,5]; // swords and staves
- if(level>2)wpns.push(3,6);
- if(level>1)wpns.push(1,5);
- return createItem(choice(wpns),level);
+ if(cat<.2)return createItem(27,level); // health
+ if(cat<.3)return createItem(28,level); // mana
+ if(cat<.4)return createItem(34,level); // gold
+ if(cat<.45)return createItem(33,level); // heal scroll
+ if(cat<.5)return createItem(29,level); // rejuv
+ // Equipment pool
+ let eq=[0,1,3,5,7,10,12,13,15,16,18,19,22,23,25];
+ if(level>2)eq.push(2,4,6,8,9,11,14,17,20,21,24,26);
+ let picks=choice(eq);
+ return createItem(picks,level);
 }
 // ---- Monsters ----
 const MONSTER_TYPES=[
@@ -396,7 +533,7 @@ function spawnMonster(typeId,x,y,level){
   typeId,t,x,y,hp,maxHp:hp,alive:true,
   dmg:t.dmg+Math.floor(level/2),ac:t.ac+Math.floor(level/3),xp:t.xp+level*5,
   color:t.color,level:level,id:G.gameTime+(G.turnCounter++),
-  moveTimer:0,aggro:false,animFrame:0
+   moveTimer:0,aggro:false,animFrame:0,hitTimer:0
  };
 }
 function getMonstersForLevel(level){
@@ -407,17 +544,17 @@ function getMonstersForLevel(level){
 }
 // ---- Quests ----
 const QUEST_DEFS=[
- {id:0,name:'Rat Extermination',desc:'Kill 5 rats in the dungeon.',objective:{type:'kill',monsterId:0,count:5},reward:{xp:50,gold:20},npcMsg:'Rats in the cellar! Kill 5 of them and I\'ll reward you.'},
+ {id:0,name:'Rat Extermination',desc:'Kill 5 rats in the dungeon.',objective:{type:'kill',monsterId:0,count:5,level:1},reward:{xp:50,gold:20},npcMsg:'Rats in the cellar! Kill 5 of them and I\'ll reward you.'},
  {id:1,name:'The Lost Relic',desc:'Find the hidden altar on level 3 and retrieve the relic.',objective:{type:'find',tile:T_ALTAR,level:3},reward:{xp:150,gold:50},npcMsg:'A powerful relic lies on dungeon level 3. Bring it to me.'},
-  {id:2,name:'Demon Lord',desc:'Defeat the Demon Lord on the deepest level.',objective:{type:'kill',monsterId:10,count:1},reward:{xp:1000,gold:200},npcMsg:'A great evil lurks below. Defeat the Demon Lord and save our lands!'}
+  {id:2,name:'Demon Lord',desc:'Defeat the Demon Lord on the deepest level.',objective:{type:'kill',monsterId:10,count:1,level:13},reward:{xp:1000,gold:200},npcMsg:'A great evil lurks below. Defeat the Demon Lord and save our lands!'}
 ];
 // ---- Town Entrances ----
 const ENTRANCES=[
- {x:12,y:10,name:'Temple',targetLevel:1,req:null},                              // always open
- {x:36,y:32,name:'Well',targetLevel:4,req:'well'},                              // unlock: kill boss on level 3
- {x:50,y:10,name:'Crypt',targetLevel:8,req:'crypt'},                              // unlock: kill boss on level 7
- {x:12,y:54,name:'Cave',targetLevel:12,req:'cave'},                              // unlock: kill boss on level 11
- {x:50,y:54,name:'Secret Hatch',targetLevel:14,req:'hatch'}                     // unlock: kill Diablo
+  {x:14,y:12,name:'Temple',targetLevel:1,req:null},
+  {x:38,y:34,name:'Well',targetLevel:4,req:'well'},
+  {x:52,y:12,name:'Crypt',targetLevel:8,req:'crypt'},
+  {x:14,y:56,name:'Cave',targetLevel:12,req:'cave'},
+  {x:52,y:56,name:'Secret Hatch',targetLevel:14,req:'hatch'}
 ];
 function handleTownEntrance(px,py){
  let ent=ENTRANCES.find(e=>e.x===px&&e.y===py);
@@ -433,12 +570,15 @@ const NPC_DEFS=[
  {id:0,name:'Elder Quinn',type:'quest',color:'#ca6',headColor:'#eee',msg:'Welcome, adventurer! I have tasks for you.'},
  {id:1,name:'Healer Aria',type:'heal',color:'#c8c',headColor:'#fee',msg:'I can heal your wounds. Click to be healed.'},
  {id:2,name:'Blacksmith Garn',type:'shop',color:'#888',headColor:'#ddd',msg:'I sell weapons and armor. Click to browse.'},
-  {id:3,name:'Trainer Kael',type:'train',color:'#6c6',headColor:'#efe',msg:'I can train you. Click to train.'}
+ {id:3,name:'Trainer Kael',type:'train',color:'#6c6',headColor:'#efe',msg:'I can train you. Click to train.'},
+ {id:4,name:'Merchant Lira',type:'shop_jewelry',color:'#ca6',headColor:'#ffe',msg:'Rings, amulets, and scrolls for sale.'},
+ {id:5,name:'Alchemist Zyn',type:'shop_potions',color:'#8c8',headColor:'#efe',msg:'Potions and reagents. Come take a look.'},
+ {id:6,name:'Casino Vex',type:'gamble',color:'#c6c',headColor:'#fef',msg:'Feeling lucky? 500 gold for a random item.'}
 ];
 // ---- Create NPC instances ----
 function createNPCsForTown(){
  return NPC_DEFS.map((n,i)=>{
-  let positions=[[32,28],[16,14],[42,42],[28,50]];
+   let positions=[[34,30],[18,16],[44,44],[30,52],[48,32],[26,34],[60,59]];
   let pos=positions[i]||[rand(15,45),rand(15,45)];
   return{...n,x:pos[0],y:pos[1],alive:true,dialogActive:false};
  });
@@ -447,33 +587,33 @@ function createNPCsForTown(){
 function createPlayer(charClass,name){
   let stats=BASE_STATS[charClass].slice();
   let plr={
-   x:29,y:28,charClass,name:name||CLASS_NAMES[charClass],
+    x:31,y:30,charClass,name:name||CLASS_NAMES[charClass],
   str:stats[0],mag:stats[1],dex:stats[2],vit:stats[3],
   baseStr:stats[0],baseMag:stats[1],baseDex:stats[2],baseVit:stats[3],
    level:1,xp:0,maxXp:XP_PER_LEVEL[1]||50,
    hp:36,maxHp:36,
    mana:35,maxMana:35,
   statPts:0,
-  equipment:{head:null,neck:null,ring1:null,ring2:null,body:null,hand1:null,hand2:null},
+   equipment:{neck:null,head:null,ring:null,weapon:null,body:null,offhand:null},
   inventory:[],
   gold:50,
   weaponType:charClass===CLASS_WARRIOR?'melee':'ranged',
-  movePath:null,moveIndex:0,moving:false,animFrame:0,dir:0,
+  movePath:null,moveIndex:0,moveTimer:0,moving:false,animFrame:0,dir:0,hitTimer:0,
   attacking:false,attackTimer:0,
   levelQuests:[],completedQuests:[],questProgress:{},
   dead:false,
   _questKills:{}
  };
- // Starting gear
- if(charClass===CLASS_WARRIOR){
-  plr.equipment.hand1=createItem(0,1);
-  plr.equipment.body=createItem(13,1);
- }else{
-  plr.equipment.hand2=createItem(4,1);
-  plr.equipment.body=createItem(13,1);
- }
- plr.inventory.push(createItem(19,1));
- plr.inventory.push(createItem(20,1));
+  // Starting gear
+   if(charClass===CLASS_WARRIOR){
+    plr.equipment.weapon=createItem(0,1);
+    plr.equipment.body=createItem(18,1);
+   }else{
+    plr.equipment.weapon=createItem(7,1);
+    plr.equipment.body=createItem(18,1);
+   }
+  plr.inventory.push(createItem(27,1));
+  plr.inventory.push(createItem(28,1));
   calcPlayerStats(plr);
   plr.hp=plr.maxHp;
   plr.mana=plr.maxMana;
@@ -482,6 +622,7 @@ function createPlayer(charClass,name){
 function calcPlayerStats(plr){
  let totStr=plr.baseStr,totMag=plr.baseMag,totDex=plr.baseDex,totVit=plr.baseVit;
  let minDmg=0,maxDmg=0,totAc=0;
+ let bonusHp=0,bonusMana=0;
  for(let slot in plr.equipment){
   let item=plr.equipment[slot];
   if(!item)continue;
@@ -491,12 +632,23 @@ function calcPlayerStats(plr){
   if(item.minDmg){minDmg+=item.minDmg;maxDmg+=item.maxDmg;}
   if(item.type==='ring')totMag+=2;
   if(item.type==='amulet')totStr+=2;
+  // Suffix bonuses
+  if(item.suffix){
+   let s=item.suffix;
+   if(s.stat==='str')totStr+=s.val;
+   else if(s.stat==='mag')totMag+=s.val;
+   else if(s.stat==='dex')totDex+=s.val;
+   else if(s.stat==='vit')totVit+=s.val;
+   else if(s.stat==='hp')bonusHp+=s.val;
+   else if(s.stat==='mana')bonusMana+=s.val;
+   else if(s.stat==='dmg'){minDmg+=s.val;maxDmg+=s.val;}
+  }
  }
  plr.str=totStr;plr.mag=totMag;plr.dex=totDex;plr.vit=totVit;
- // Damage
- let baseMin=1,baseMax=3;
- let w=plr.equipment.hand1||plr.equipment.hand2;
- if(w&&w.minDmg){baseMin=w.minDmg;baseMax=w.maxDmg;}
+  // Damage
+  let baseMin=1,baseMax=3;
+  let w=plr.equipment.weapon;
+  if(w&&w.minDmg){baseMin=w.minDmg;baseMax=w.maxDmg;}
  if(plr.charClass===CLASS_WARRIOR){
   baseMin+=Math.floor(plr.str/5);
   baseMax+=Math.floor(plr.str/3);
@@ -506,14 +658,14 @@ function calcPlayerStats(plr){
  }
  plr.minDmg=Math.max(1,baseMin);plr.maxDmg=Math.max(2,baseMax);
  plr.ac=totAc+Math.floor(plr.dex/5);
-  // HP
-  let maxHp=35+plr.level*4+plr.vit*2*Math.round(plr.level/20+1);
-  plr.maxHp=Math.max(plr.hp||1,maxHp);
-  plr.hp=Math.min(plr.hp||plr.maxHp,plr.maxHp);
-  // Mana
-  let maxMana=35+plr.level*2+plr.mag*3*Math.round(plr.level/25+1);
-  plr.maxMana=Math.max(1,maxMana);
-  plr.mana=Math.min(plr.mana||plr.maxMana,plr.maxMana);
+   // HP
+   let maxHp=35+plr.level*4+plr.vit*2*Math.round(plr.level/20+1)+bonusHp;
+   plr.maxHp=Math.max(plr.hp||1,maxHp);
+   plr.hp=Math.min(plr.hp||plr.maxHp,plr.maxHp);
+   // Mana
+   let maxMana=35+plr.level*2+plr.mag*3*Math.round(plr.level/25+1)+bonusMana;
+   plr.maxMana=Math.max(1,maxMana);
+   plr.mana=Math.min(plr.mana||plr.maxMana,plr.maxMana);
  plr.toHit=40+Math.floor(plr.dex/3);
  plr.dodge=Math.floor(plr.dex/6);
 }
@@ -534,6 +686,9 @@ function addXp(plr,amount){
  plr.maxXp=needed;
 }
 // ---- Combat ----
+function addFloatingText(x,y,text,color){
+ G.floatingTexts.push({x,y,text,color:color||'#fe0',timer:45,vy:-1});
+}
 function playerAttack(plr,monster){
  if(!monster||!monster.alive)return;
  if(plr.charClass===CLASS_WARRIOR){
@@ -544,11 +699,19 @@ function playerAttack(plr,monster){
  let hitRoll=Math.floor(rng()*100);
  let hitChance=plr.toHit-monster.ac;
  hitChance=clamp(hitChance,20,95);
- if(hitRoll<hitChance){
-  let dmg=rand(plr.minDmg,plr.maxDmg);
-  if(plr.charClass===CLASS_MAGE)dmg+=Math.floor(plr.mag/4);
-   monster.hp-=dmg;
-  showMsg(`Hit ${monster.t.name} for ${dmg} damage!`);
+  if(hitRoll<hitChance){
+    let dmg=rand(plr.minDmg,plr.maxDmg);
+    if(plr.charClass===CLASS_MAGE)dmg+=Math.floor(plr.mag/4);
+    // Super attack mode: 2x damage costs mana
+    if(G.superAttackMode){
+     let manaCost=Math.max(2,Math.floor((plr.minDmg+plr.maxDmg)/2));
+     if(plr.mana>=manaCost){plr.mana-=manaCost;dmg*=2;}
+     else{G.superAttackMode=false;updateSuperBtn();showMsg('Super attack: out of mana!');}
+    }
+     monster.hp-=dmg;
+   monster.hitTimer=6;
+   addFloatingText(monster.x,monster.y-1,'-'+dmg,'#f88');
+   showMsg(`Hit ${monster.t.name} for ${dmg} damage!`);
    if(monster.hp<=0){
     monster.alive=false;plr.hp=Math.min(plr.hp+5,plr.maxHp);
     if(!plr._questKills)plr._questKills={};
@@ -582,10 +745,12 @@ function monsterAttack(plr,monster){
  let hitChance=50-Math.floor(plr.dodge/2);
  hitChance=clamp(hitChance,10,95);
  if(hitRoll<hitChance){
-  let dmg=monster.dmg-plr.ac;
-  dmg=Math.max(1,dmg+rand(-2,2));
-  plr.hp-=dmg;
-  showMsg(`${monster.t.name} hits you for ${dmg}!`);
+   let dmg=monster.dmg-plr.ac;
+   dmg=Math.max(1,dmg+rand(-2,2));
+   plr.hp-=dmg;
+   plr.hitTimer=6;
+   addFloatingText(plr.x,plr.y-1,'-'+dmg,'#f44');
+   showMsg(`${monster.t.name} hits you for ${dmg}!`);
   if(plr.hp<=0){plr.hp=0;plr.dead=true;showDeath();}
  }else{
   showMsg(`${monster.t.name} missed!`);
@@ -597,13 +762,15 @@ function playerRangedAttack(plr,monster){
 }
 // ---- Monster AI ----
 function updateMonsters(){
+ let now=performance.now();
  for(let m of G.monsters){
   if(!m.alive)continue;
-  m.moveTimer++;
+  if(!m._lastMove)m._lastMove=now;
+  if(now-m._lastMove<200)continue;
+  m._lastMove=now;
   let d=dist(m.x,m.y,G.player.x,G.player.y);
   if(d<8)m.aggro=true;
   if(d>15)m.aggro=false;
-  if(m.moveTimer%3!==0)continue;
   if(m.aggro){
    let dx=Math.sign(G.player.x-m.x);
    let dy=Math.sign(G.player.y-m.y);
@@ -686,25 +853,91 @@ function interactNPC(plr,npc){
    }else{showMsg('Not enough gold!');}
   };
   btnsEl.appendChild(btn);
- }else if(npc.type==='shop'){
-  textEl.textContent='Browse my wares:';
-  let items=[0,1,4,7,10,13,14,17,18,19,20];
-  for(let id of items.slice(0,4+G.level)){
-   let item=createItem(id,Math.max(1,G.level));
-   if(!item)continue;
-   let cost=item.minDmg?item.minDmg*10+20:item.ac?item.ac*8+20:20;
-   let btn=document.createElement('div');btn.className='npc_btn';
-   btn.textContent=`${item.name} - ${cost}g`;
+  }else if(npc.type==='shop'||npc.type==='shop_jewelry'||npc.type==='shop_potions'){
+    textEl.textContent=npc.type==='shop'?'Weapons, armor, shields & helms':npc.type==='shop_jewelry'?'Rings, amulets & scrolls':'Potions of all kinds';
+    let itemPool=npc.type==='shop'?[0,1,2,3,4,5,6,7,8,9,12,13,14,15,16,17,18,19,20,21]:npc.type==='shop_jewelry'?[22,23,24,25,26,31,32,33]:[27,28,29,30];
+    let shopItems=[];
+    for(let i=0;i<18;i++){
+     let id=choice(itemPool);
+     let item=createItem(id,Math.max(1,Math.min(G.level,rand(1,plr.level))));
+     if(item)shopItems.push(item);
+    }
+    let container=document.createElement('div');container.style.cssText='display:flex;gap:min(1.5vw,2vh);margin:min(.8vw,1vh)0';
+    // NPC stock column
+    let npcCol=document.createElement('div');npcCol.style.cssText='flex:1;text-align:center';
+    npcCol.innerHTML='<div style="color:#960;font-size:min(4vw,4.5vh);line-height:1.0;margin-bottom:min(.3vw,.5vh)">Buy</div>';
+    let npcGrid=document.createElement('div');npcGrid.style.cssText='display:grid;grid-template-columns:repeat(4,1fr);gap:min(.2vw,.3vh)';
+    npcCol.appendChild(npcGrid);
+    // Player items column
+    let plrCol=document.createElement('div');plrCol.style.cssText='flex:1;text-align:center';
+    plrCol.innerHTML='<div style="color:#960;font-size:min(4vw,4.5vh);line-height:1.0;margin-bottom:min(.3vw,.5vh)">Sell</div>';
+    let plrGrid=document.createElement('div');plrGrid.style.cssText='display:grid;grid-template-columns:repeat(4,1fr);gap:min(.2vw,.3vh)';
+    plrCol.appendChild(plrGrid);
+    container.appendChild(npcCol);container.appendChild(plrCol);
+    let infoDiv=document.createElement('div');infoDiv.style.cssText='color:#aaa;font-size:min(4vw,4.5vh);line-height:1.0;min-height:min(2.5vw,3vh);text-align:center;margin-top:min(.3vw,.4vh);border-top:min(.05vw,.08vh)solid #333;padding-top:min(.3vw,.4vh)';
+    let goldDiv=document.createElement('div');goldDiv.id='shop_gold';goldDiv.style.cssText='color:#ca0;font-size:min(4vw,4.5vh);line-height:1.0;text-align:center;margin-top:min(.3vw,.4vh)';
+    function renderShopGrids(){
+     npcGrid.innerHTML='';plrGrid.innerHTML='';
+     for(let i=0;i<32;i++){
+      let cell=document.createElement('div');
+      cell.style.cssText='background:#1a1a1a;border:min(.08vw,.1vh)solid #444;cursor:pointer;text-align:center;font-size:min(4vw,4.5vh);line-height:1.0;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#000';
+      if(i<shopItems.length){
+       let si=shopItems[i];
+       let cost=si.minDmg?Math.max(10,si.minDmg*10+20):si.ac?Math.max(10,si.ac*8+20):30;
+       if(si.type==='potion')cost=15;
+       cell.textContent=si.icon||'?';cell.style.background=si.color||'#1a1a1a';
+       cell.onmouseenter=((si,cost)=>()=>{
+        let cStr=plr.gold>=cost?`<span style="color:#ca0">${cost}g</span>`:`<span style="color:#f00">${cost}g</span>`;
+        infoDiv.innerHTML=`<b>${si.name}</b>${si.minDmg?` DMG:${si.minDmg}-${si.maxDmg}`:''}${si.ac?` AC:${si.ac}`:''} | ${cStr}`;
+       })(si,cost);
+       cell.onclick=((si,i,cost)=>()=>{
+        if(plr.gold>=cost&&plr.inventory.length<32){
+         plr.gold-=cost;plr.inventory.push(JSON.parse(JSON.stringify(si)));shopItems.splice(i,1);
+         renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Bought ${si.name}!`);
+        }else if(plr.inventory.length>=32){showMsg('Inventory full!');}
+        else{showMsg('Not enough gold!');}
+       })(si,i,cost);
+      }
+      npcGrid.appendChild(cell);
+     }
+     for(let i=0;i<32;i++){
+      let cell=document.createElement('div');
+      cell.style.cssText='background:#1a1a1a;border:min(.08vw,.1vh)solid #444;cursor:pointer;text-align:center;font-size:min(4vw,4.5vh);line-height:1.0;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#000';
+      if(i<plr.inventory.length){
+       let item=plr.inventory[i];
+       let price=item.minDmg?Math.max(5,Math.floor((item.minDmg*10+20)/2)):item.ac?Math.max(5,Math.floor((item.ac*8+20)/2)):10;
+       if(item.type==='potion')price=7;
+       cell.textContent=item.icon||'?';cell.style.background=item.color||'#1a1a1a';
+       cell.onmouseenter=((item,price)=>()=>{
+        infoDiv.innerHTML=`<b>${item.name}</b>${item.minDmg?` DMG:${item.minDmg}-${item.maxDmg}`:''}${item.ac?` AC:${item.ac}`:''} | <span style="color:#ca0">Sell: ${price}g</span>`;
+       })(item,price);
+       cell.onclick=((item,i,price)=>()=>{
+        plr.gold+=price;plr.inventory.splice(i,1);
+        renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Sold ${item.name} for ${price}g`);
+       })(item,i,price);
+      }
+      plrGrid.appendChild(cell);
+     }
+    }
+    renderShopGrids();
+    goldDiv.textContent=`Gold: ${plr.gold}`;
+    btnsEl.appendChild(container);btnsEl.appendChild(infoDiv);btnsEl.appendChild(goldDiv);
+  }else if(npc.type==='gamble'){
+   textEl.textContent='500 gold for a random item! Could be anything...';
+   let btn=document.createElement('div');btn.className='npc_btn';btn.textContent='Gamble 500g';
    btn.onclick=()=>{
-    if(plr.gold>=cost&&plr.inventory.length<40){
-     plr.gold-=cost;plr.inventory.push(item);
-     showMsg(`Bought ${item.name}!`);
+    if(plr.gold>=500){
+     plr.gold-=500;
+     let ids=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26];
+     let item=createItem(choice(ids),Math.max(1,plr.level+rand(0,3)));
+     if(item){
+      plr.inventory.push(item);
+      showMsg(`Got ${item.name}!`);
+     }
      dlg.classList.remove('active');
-    }else if(plr.inventory.length>=40){showMsg('Inventory full!');}
-    else{showMsg('Not enough gold!');}
+    }else{showMsg('Not enough gold!');}
    };
    btnsEl.appendChild(btn);
-  }
  }else if(npc.type==='train'){
   let cost=plr.level*20;
   textEl.textContent=`Training costs ${cost} gold. Gain extra XP!`;
@@ -786,6 +1019,33 @@ function loadGame(){
   return plr;
  }catch(e){return null;}
 }
+// ---- Minimap toggle ----
+function toggleMinimap(){
+ let el=document.getElementById('minimap');
+ el.style.display=el.style.display==='none'?'block':'none';
+}
+// ---- Super Attack ----
+function toggleSuperAttack(){
+ let plr=G.player;
+ if(!plr||plr.dead)return;
+ G.superAttackMode=!G.superAttackMode;
+ updateSuperBtn();
+ if(G.superAttackMode)showMsg('Super attack mode: ON');
+ else showMsg('Super attack mode: OFF');
+}
+function updateSuperBtn(){
+ let btn=document.getElementById('btn_super');
+ if(!btn)return;
+ if(G.superAttackMode){btn.style.cssText='background:#f00;border-color:#f88;color:#fff;box-shadow:0 0 min(1vw,1vh) #f00';}
+ else{btn.style.cssText='background:#555;border-color:#888;color:#999';}
+}
+function toggleDeleteMode(){
+ G._deleteMode=!G._deleteMode;
+ let btn=document.getElementById('btn_del_inv');
+ if(!btn)return;
+ if(G._deleteMode){btn.style.cssText='background:#f00;border-color:#f88;color:#fff;font-size:min(2.5vw,3vh);cursor:pointer;margin-left:min(2vw,2vh);padding:min(.2vw,.3vh) min(.4vw,.6vh);border-radius:min(.2vw,.3vh)';showMsg('Delete mode: ON - click item to remove');}
+ else{btn.style.cssText='background:transparent;color:#555;font-size:min(2.5vw,3vh);cursor:pointer;margin-left:min(2vw,2vh);border:min(.1vw,.15vh)solid #555;padding:min(.2vw,.3vh) min(.4vw,.6vh);border-radius:min(.2vw,.3vh)';showMsg('Delete mode: OFF');}
+}
 // ---- Show messages ----
 let msgTimer=null;
 function showMsg(text){
@@ -858,8 +1118,8 @@ function render(){
   for(let x=startX;x<endX;x++){
    let t=G.map[y]&&G.map[y][x]?G.map[y][x]:T_VOID;
    let sx=x*TILE-cam.x,sy=y*TILE-cam.y;
-   let color=TILE_COLORS[t]||'#000';
-   ctx.fillStyle=color;ctx.fillRect(sx,sy,TILE,TILE);
+    let color=TILE_COLORS[t]||'#000';
+    ctx.fillStyle=color;ctx.fillRect(sx+1,sy,TILE-1,TILE-1); // left+bottom borders only
    // Detail
    if(t===T_DOOR){
     ctx.fillStyle='#653';ctx.fillRect(sx+4,sy+2,TILE-8,4);
@@ -890,8 +1150,16 @@ function render(){
    if(t===T_STAIRS_DOWN){
     ctx.fillStyle='#236';ctx.fillRect(sx+4,sy+4,TILE-8,TILE-8);
     ctx.fillStyle='#468';ctx.fillRect(sx+8,sy+8,TILE-16,TILE-16);
-    ctx.fillStyle='#8cf';ctx.font='bold 14px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText('D',sx+16,sy+16);
+    ctx.fillStyle='#8cf';ctx.font='bold '+Math.max(10,TILE/2.5)+'px Miniablo';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('D',sx+TILE/2,sy+TILE/2);
+   }
+   if(t===T_PORTAL){
+    ctx.fillStyle='#636';ctx.fillRect(sx+2,sy+2,TILE-4,TILE-4);
+    ctx.fillStyle='#848';ctx.fillRect(sx+5,sy+5,TILE-10,TILE-10);
+    let pl=G.portals&&G.portals.find(p=>p.x===x&&p.y===y);
+    let plbl=pl?pl.label:'?';
+    ctx.fillStyle='#f8f';ctx.font='bold '+Math.max(10,TILE/2.5)+'px Miniablo';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(plbl,sx+TILE/2,sy+TILE/2);
    }
   }
  }
@@ -925,33 +1193,34 @@ function render(){
   if(!m.alive)continue;
   let sx=m.x*TILE-cam.x,sy=m.y*TILE-cam.y;
   if(sx<-TILE||sx>canvas.width+TILE||sy<-TILE*3||sy>canvas.height+TILE)continue;
-  // Body
-  ctx.fillStyle=m.color;ctx.fillRect(sx+4,sy+10,TILE-8,TILE-10);
-  // Head
-  let hc='#ddd';if(m.typeId===10)hc='#f00';else if(m.typeId>=8)hc='#c88';
-  ctx.fillStyle=hc;ctx.fillRect(sx+6,sy,TILE-12,TILE-12);
+   // Body (flash red on hit)
+   ctx.fillStyle=m.hitTimer>0?'#f00':m.color;ctx.fillRect(sx+4,sy+10,TILE-8,TILE-10);
+   // Head
+   let hc=m.hitTimer>0?'#ff0':'#ddd';if(m.typeId===10)hc=m.hitTimer>0?'#ff0':'#f00';else if(m.typeId>=8&&m.hitTimer<=0)hc='#c88';
+   ctx.fillStyle=hc;ctx.fillRect(sx+6,sy,TILE-12,TILE-12);
   // Eyes
-  ctx.fillStyle='#000';ctx.fillRect(sx+9,sy+3,3,3);ctx.fillRect(sx+18,sy+3,3,3);
+   let es=Math.max(2,Math.floor(TILE/10));ctx.fillStyle='#000';ctx.fillRect(sx+Math.floor(TILE*0.28),sy+Math.floor(TILE*0.1),es,es);ctx.fillRect(sx+Math.floor(TILE*0.56),sy+Math.floor(TILE*0.1),es,es);
   // HP bar
   if(m.hp<m.maxHp&&m.aggro){
    let bw=TILE-8;ctx.fillStyle='#400';ctx.fillRect(sx+4,sy-4,bw,3);
    ctx.fillStyle='#c00';ctx.fillRect(sx+4,sy-4,bw*(m.hp/m.maxHp),3);
   }
-  // Name
-   if(m.aggro||dist(m.x,m.y,plr.x,plr.y)<5){
-    ctx.fillStyle='#c90';ctx.font='bold '+Math.max(9,TILE/3)+'px MiniabloBold';ctx.textAlign='center';ctx.textBaseline='bottom';
-    ctx.fillText(m.t.name,sx+TILE/2,sy-5);
-   }
+   // Name
+    if(m.aggro||dist(m.x,m.y,plr.x,plr.y)<5){
+     ctx.fillStyle=m.boss?'#c00':'#c90';
+     ctx.font='bold '+Math.max(9,TILE/3)+'px MiniabloBold';ctx.textAlign='center';ctx.textBaseline='bottom';
+     ctx.fillText(m.t.name,sx+TILE/2,sy-5);
+    }
  }
  // Draw player
  let px=plr.x*TILE-cam.x,py=plr.y*TILE-cam.y;
  let colors=CLASS_COLORS[plr.charClass]||CLASS_COLORS[0];
- // Body
- ctx.fillStyle=colors.body;ctx.fillRect(px+6,py+16,TILE-12,TILE-14);
- // Head
- ctx.fillStyle=colors.head;ctx.fillRect(px+8,py+2,TILE-16,TILE-16);
+  // Body (flash red on hit)
+  ctx.fillStyle=plr.hitTimer>0?'#f00':colors.body;ctx.fillRect(px+6,py+16,TILE-12,TILE-14);
+  // Head
+  ctx.fillStyle=plr.hitTimer>0?'#ff0':colors.head;ctx.fillRect(px+8,py+2,TILE-16,TILE-16);
  // Eyes
- ctx.fillStyle='#000';ctx.fillRect(px+12,py+7,3,3);ctx.fillRect(px+17,py+7,3,3);
+  let pes=Math.max(2,Math.floor(TILE/10));ctx.fillStyle='#000';ctx.fillRect(px+Math.floor(TILE*0.38),py+Math.floor(TILE*0.22),pes,pes);ctx.fillRect(px+Math.floor(TILE*0.53),py+Math.floor(TILE*0.22),pes,pes);
  // Weapon indicator
  let w=plr.equipment.hand1||plr.equipment.hand2;
  if(w){
@@ -959,61 +1228,76 @@ function render(){
   if(plr.charClass===CLASS_WARRIOR){ctx.fillRect(px+TILE-6,py+12,4,TILE-14);}
   else{ctx.fillRect(px+4,py+10,TILE-8,4);ctx.fillRect(px+TILE/2-2,py+2,4,TILE-14);}
  }
- // Name
- ctx.fillStyle='#c90';ctx.font='10px Miniablo';ctx.textAlign='center';ctx.textBaseline='bottom';
- ctx.fillText(CLASS_NAMES[plr.charClass],px+TILE/2,py-2);
- // HP/MP bars
- let barW=TILE+8;ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(px-4,py-8,barW,5);
- ctx.fillStyle='#c00';ctx.fillRect(px-4,py-8,barW*(plr.hp/plr.maxHp),5);
- ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(px-4,py-3,barW,4);
- ctx.fillStyle='#00c';ctx.fillRect(px-4,py-3,barW*(plr.mana/plr.maxMana),4);
+  // HP/MP bars above head (replaces class name)
+  let barW=TILE+8;ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(px-4,py-9,barW,10);
+  ctx.fillStyle='#c00';ctx.fillRect(px-4,py-9,barW*(plr.hp/plr.maxHp),5);
+  ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(px-4,py-4,barW,5);
+  ctx.fillStyle='#00c';ctx.fillRect(px-4,py-4,barW*(plr.mana/plr.maxMana),5);
  // Selection highlight
  let mx=G.mouse.worldX,my=G.mouse.worldY;
  if(mx>=0&&mx<MAP_W&&my>=0&&my<MAP_H){
   ctx.strokeStyle='rgba(255,200,0,.3)';ctx.lineWidth=1;
   ctx.strokeRect(mx*TILE-cam.x,my*TILE-cam.y,TILE,TILE);
  }
- // Draw minimap
- drawMinimap();
- // UI
- updateUI();
+  // Floating damage numbers
+  for(let ft of G.floatingTexts){
+   let fx=ft.x*TILE-cam.x+TILE/2,fy=ft.y*TILE-cam.y-ft.timer*0.3;
+   ctx.globalAlpha=Math.min(1,ft.timer/20);
+   ctx.fillStyle=ft.color;
+   ctx.font='bold '+Math.max(10,TILE/2.5)+'px MiniabloBold';
+   ctx.textAlign='center';ctx.textBaseline='bottom';
+   ctx.fillText(ft.text,fx,fy);
+  }
+  ctx.globalAlpha=1;
+   // Draw minimap (every 20 frames)
+   if(G.gameTime%20===0)drawMinimap();
+   // UI
+   updateUI();
 }
 function drawMinimap(){
  let el=document.getElementById('minimap');
  el.style.display='block';
  let sz=el.offsetWidth;
+ if(!sz){el.style.display='none';return;}
  let scale=sz/MAP_W;
- el.innerHTML='';
+ // Use canvas instead of DOM elements
+ let mc=document.getElementById('minimapCanvas');
+ if(!mc||mc.width!==sz){
+  if(!mc){mc=document.createElement('canvas');mc.id='minimapCanvas';el.appendChild(mc);}
+  mc.width=sz;mc.height=sz;
+  mc.style.cssText='position:absolute;inset:0;width:100%;height:100%';
+ }
+ let mctx=mc.getContext('2d');
+ mctx.fillStyle='rgba(0,0,0,.7)';mctx.fillRect(0,0,mc.width,mc.height);
  // Map
  for(let y=0;y<MAP_H;y+=2)for(let x=0;x<MAP_W;x+=2){
   let t=G.map[y]&&G.map[y][x]?G.map[y][x]:T_VOID;
   if(t===T_VOID||t===T_WALL)continue;
-  let pixel=document.createElement('div');pixel.className='minimap_pixel';
-  let c=TILE_COLORS[t]||'#000';
-  pixel.style.cssText=`left:${x*scale}px;top:${y*scale}px;background:${c};width:${Math.ceil(scale*2)}px;height:${Math.ceil(scale*2)}px`;
-  el.appendChild(pixel);
+  mctx.fillStyle=TILE_COLORS[t]||'#000';
+  mctx.fillRect(x*scale,y*scale,Math.ceil(scale*2),Math.ceil(scale*2));
  }
  // Player
- let pp=document.createElement('div');pp.className='minimap_pixel';
- pp.style.cssText=`left:${G.player.x*scale}px;top:${G.player.y*scale}px;background:#fe0;width:${Math.ceil(scale*3)}px;height:${Math.ceil(scale*3)}px;z-index:2`;
- el.appendChild(pp);
+ mctx.fillStyle='#fe0';mctx.fillRect(G.player.x*scale,G.player.y*scale,Math.ceil(scale*3),Math.ceil(scale*3));
  // Monsters
  for(let m of G.monsters){
   if(!m.alive)continue;
-  let mp=document.createElement('div');mp.className='minimap_pixel';
-  mp.style.cssText=`left:${m.x*scale}px;top:${m.y*scale}px;background:#c00;width:${Math.ceil(scale*2)}px;height:${Math.ceil(scale*2)}px;border-radius:50%`;
-  el.appendChild(mp);
+  mctx.fillStyle='#c00';mctx.beginPath();mctx.arc(m.x*scale+scale,m.y*scale+scale,scale,0,Math.PI*2);mctx.fill();
  }
-}
+ // Portals
+ if(G.portals)for(let p of G.portals){
+  mctx.fillStyle='#f0f';mctx.fillRect(p.x*scale,p.y*scale,Math.ceil(scale*2),Math.ceil(scale*2));
+ }
+ }
 function updateUI(){
- let plr=G.player;
- document.getElementById('hp_bar_fill').style.width=Math.max(0,(plr.hp/plr.maxHp)*100)+'%';
- document.getElementById('mp_bar_fill').style.width=Math.max(0,(plr.mana/plr.maxMana)*100)+'%';
- document.getElementById('bar_text').textContent=`HP: ${Math.max(0,Math.floor(plr.hp))}/${plr.maxHp}`;
- document.getElementById('mp_text').textContent=`MP: ${Math.max(0,Math.floor(plr.mana))}/${plr.maxMana}`;
- let mapName=G.level===0?'Town':G.level===G.MAX_COW_LEVEL?'Cow Level':'Dungeon Level '+G.level;
- document.getElementById('lvl_text').innerHTML=`${mapName}<br>${CLASS_NAMES[plr.charClass]} Lv${plr.level}<br>Gold: ${plr.gold}`;
-}
+  let plr=G.player;
+  document.getElementById('hp_fill').style.height=Math.max(0,(plr.hp/plr.maxHp)*100)+'%';
+  document.getElementById('hp_label').textContent=`HP: ${Math.max(0,Math.floor(plr.hp))}/${plr.maxHp}`;
+  document.getElementById('mp_fill').style.height=Math.max(0,(plr.mana/plr.maxMana)*100)+'%';
+  document.getElementById('mp_label').textContent=`MP: ${Math.max(0,Math.floor(plr.mana))}/${plr.maxMana}`;
+  document.getElementById('xp_fill').style.width=Math.min(100,(plr.xp/plr.maxXp)*100)+'%';
+  let mapName=G.level===0?'Town':G.level===G.MAX_LEVELS?"Diablo's Lair":G.level===G.MAX_COW_LEVEL?'Cow Level':'Level '+G.level;
+  document.getElementById('top_info').innerHTML=`${mapName}<br>${CLASS_NAMES[plr.charClass]} Lv${plr.level}<br>Gold: ${plr.gold}`;
+ }
 // ---- Cow Level Respawn ----
 let cowRespawnTimer=0;
 // ---- Load Level ----
@@ -1031,8 +1315,9 @@ function loadLevel(lvl){
     if(ent){G.player.x=ent.x;G.player.y=ent.name==='Temple'?ent.y+2:ent.y-2;}
    else{G.player.x=30;G.player.y=28;}
    G.lastEntranceName=null;
-  }else if(G._returnFromDungeon){G.player.x=30;G.player.y=30;G._returnFromDungeon=false;}
-  else{G.player.x=30;G.player.y=28;}
+   }else if(G.spawnEntry==='town'){G.player.x=31;G.player.y=34;G.spawnEntry=null;}
+   else if(G._returnFromDungeon){G.player.x=30;G.player.y=30;G._returnFromDungeon=false;}
+   else{G.player.x=30;G.player.y=28;}
  }else if(lvl===G.MAX_COW_LEVEL){
   // Cow level - open field with respawning cows
   G.map=Array.from({length:MAP_H},()=>Array(MAP_W).fill(T_GRASS));
@@ -1044,13 +1329,15 @@ function loadLevel(lvl){
  }else{
   let {map,rooms}=generateDungeon(lvl);
   G.map=map;
-  G.npcs=[];
-  if(rooms&&rooms.length>0){G.player.x=rooms[0].cx;G.player.y=rooms[0].cy;}
-  else{G.player.x=30;G.player.y=30;}
-  // Spawn monsters
-  let pool=getMonstersForLevel(lvl);
-  let count=8+lvl*2;
-  for(let i=0;i<count;i++){
+   G.npcs=[];
+   if(G.spawnEntry==='down'&&rooms&&rooms.length>1){G.player.x=rooms[rooms.length-1].cx;G.player.y=rooms[rooms.length-1].cy;G.spawnEntry=null;}
+   else if(G.spawnEntry==='up'&&rooms&&rooms.length>0){G.player.x=rooms[0].cx;G.player.y=rooms[0].cy;G.spawnEntry=null;}
+   else if(rooms&&rooms.length>0){G.player.x=rooms[0].cx;G.player.y=rooms[0].cy;}
+   else{G.player.x=30;G.player.y=30;}
+   // Spawn monsters
+   let pool=getMonstersForLevel(lvl);
+   let count=Math.floor(16*Math.pow(1.1,lvl));
+   for(let i=0;i<count;i++){
    let mt=choice(pool);
    for(let t=0;t<20;t++){
     let x=rand(5,MAP_W-6),y=rand(5,MAP_H-6);
@@ -1069,7 +1356,7 @@ function loadLevel(lvl){
     G.player.x=rooms[0].cx;G.player.y=rooms[0].cy;
     for(let dy=er.y-2;dy<er.y+er.h+2;dy++)for(let dx=er.x-2;dx<er.x+er.w+2;dx++)
      if(dy>=0&&dy<MAP_H&&dx>=0&&dx<MAP_W)G.map[dy][dx]=T_FLOOR;
-    G.monsters.push(spawnMonster(10,er.cx,er.cy-2,lvl));
+     let diablo=spawnMonster(10,er.cx,er.cy-2,lvl);diablo.boss=true;G.monsters.push(diablo);
     // No down stairs - this is the final level
    }
   }else{
@@ -1080,9 +1367,9 @@ function loadLevel(lvl){
     if(bossType>9)bossType=9;
     if(lvl===3||lvl===7||lvl===11){
      // Key boss levels - spawn extra boss pack
-     let boss=spawnMonster(Math.min(bossType+1,9),er.cx,er.cy-2,lvl);
-     boss.maxHp*=2;boss.hp=boss.maxHp;boss.dmg*=2;boss.xp*=3;
-     boss.name='Boss '+boss.t.name;G.monsters.push(boss);
+      let boss=spawnMonster(Math.min(bossType+1,9),er.cx,er.cy-2,lvl);
+      boss.maxHp*=2;boss.hp=boss.maxHp;boss.dmg*=2;boss.xp*=3;
+      boss.name='Boss '+boss.t.name;boss.boss=true;G.monsters.push(boss);
     }
    }
   }
@@ -1102,12 +1389,26 @@ function loadLevel(lvl){
   if(rooms&&rooms.length>0){
    let r=rooms[0];G.map[r.cy][r.cx]=T_ALTAR;
   }
-  // Down stairs in last room (go deeper)
-  if(rooms&&rooms.length>1&&lvl<G.MAX_LEVELS){
-   let r=rooms[rooms.length-1];
-   G.map[r.cy][r.cx]=T_STAIRS_DOWN;
+   // Down stairs in last room (go deeper)
+   if(rooms&&rooms.length>1&&lvl<G.MAX_LEVELS){
+    let r=rooms[rooms.length-1];
+    G.map[r.cy][r.cx]=T_STAIRS_DOWN;
+   }
+   // Portals on levels 4,8,12 (D/U/T)
+   if(lvl===4||lvl===8||lvl===12){
+    let pr=rooms[rooms.length-1];
+    G.portals=[];
+    let pdirs=[[-2,-2],[0,-2],[2,-2]];
+    let plabels=['D','U','T'];
+    for(let pi=0;pi<3;pi++){
+     let px=pr.cx+pdirs[pi][0],py=pr.cy+pdirs[pi][1];
+     if(px>=0&&px<MAP_W&&py>=0&&py<MAP_H&&G.map[py][px]!==T_WALL){
+      G.map[py][px]=T_PORTAL;
+      G.portals.push({x:px,y:py,label:plabels[pi]});
+     }
+    }
+   }
   }
- }
  checkQuests();
  LOADING=false;
  if(!G._loopStarted){G._loopStarted=true;gameLoop();}
@@ -1156,24 +1457,29 @@ function gameLoop(){
  if(!G.player||G.dead){requestAnimationFrame(gameLoop);return;}
  let plr=G.player;
  G.gameTime++;
- // Move along path
- if(plr.movePath&&plr.moveIndex<plr.movePath.length-1){
-  plr.moveIndex++;
-  let [nx,ny]=plr.movePath[plr.moveIndex];
-  if(canWalk(plr.movePath[plr.moveIndex][0],plr.movePath[plr.moveIndex][1],G.map)){
-   plr.x=plr.movePath[plr.moveIndex][0];
-   plr.y=plr.movePath[plr.moveIndex][1];
+    // Move along path (1 step per 1/6 second)
+    if(plr.movePath&&plr.moveIndex<plr.movePath.length-1){
+     if(!plr._lastMove)plr._lastMove=performance.now();
+     let now=performance.now();
+     if(now-plr._lastMove>=166){
+     plr._lastMove=now;
+     plr.moveIndex++;
+    let [nx,ny]=plr.movePath[plr.moveIndex];
+    if(canWalk(plr.movePath[plr.moveIndex][0],plr.movePath[plr.moveIndex][1],G.map)){
+     plr.x=plr.movePath[plr.moveIndex][0];
+     plr.y=plr.movePath[plr.moveIndex][1];
    // Check for items
    for(let i=G.items.length-1;i>=0;i--){
     let item=G.items[i];
     if(item.mapX===plr.x&&item.mapY===plr.y){
      if(item.type==='gold'){plr.gold+=rand(5,20);showMsg(`Picked up ${rand(5,20)} gold`);G.items.splice(i,1);continue;}
-     if(item.type==='potion'||item.type==='scroll'){
-      if(item.misc==='heal'||item.misc==='healscroll'){plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-      if(item.misc==='mana'){plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-      if(item.misc==='rejuv'){plr.hp=Math.min(plr.hp+40,plr.maxHp);plr.mana=Math.min(plr.mana+40,plr.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-     }
-     if(plr.inventory.length<40){
+      if(item.type==='potion'||item.type==='scroll'){
+       if(item.misc==='heal'||item.misc==='healscroll'){plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+       if(item.misc==='mana'){plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+       if(item.misc==='rejuv'){plr.hp=Math.min(plr.hp+40,plr.maxHp);plr.mana=Math.min(plr.mana+40,plr.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+       if(item.misc==='fullrejuv'){plr.hp=plr.maxHp;plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+      }
+      if(plr.inventory.length<32){
       plr.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);
      }else{showMsg('Inventory full!');}
     }
@@ -1201,16 +1507,58 @@ function gameLoop(){
     else{showMsg('The path is sealed. Defeat Diablo first!');}
     requestAnimationFrame(gameLoop);return;
    }
-  }else{
-   plr.movePath=null;plr.moving=false;
-  }
- }else{plr.movePath=null;plr.moving=false;}
-  // Cow level - auto respawn
-  if(G.level===G.MAX_COW_LEVEL){cowRespawnTimer++;if(cowRespawnTimer%120===0)spawnCowWave();}
+   // Portals on levels 4/8/12
+   if(t===T_PORTAL&&G.portals){
+    let portal=G.portals.find(p=>p.x===plr.x&&p.y===plr.y);
+    if(portal){
+     if(portal.label==='D'){G.spawnEntry='down';G.level++;loadLevel(G.level);showMsg(`Descending to Level ${G.level}`);}
+     else if(portal.label==='U'){G.spawnEntry='up';let prev=G.level-1;if(prev<=0){G.level=0;loadLevel(0);showMsg('Returning to town');}else{G.level=prev;loadLevel(prev);showMsg(`Ascending to Level ${prev}`);}}
+     else if(portal.label==='T'){G.spawnEntry='town';G.level=0;loadLevel(0);showMsg('Returning to town');}
+     requestAnimationFrame(gameLoop);return;
+    }
+   }
+   }
+   }}else{plr.movePath=null;plr.moving=false;plr._lastMove=0;}
+     // Periodic respawn every 1800 frames (30 seconds) if below max
+    if(G.gameTime%1800===0){
+     // Clean up dead monsters (memory leak)
+     G.monsters=G.monsters.filter(m=>m.alive);
+     // Respawn
+     if(G.level>0&&G.level<G.MAX_LEVELS){
+      let maxMobs=Math.floor(16*Math.pow(1.1,G.level));
+      let alive=G.monsters.length;
+      if(alive<maxMobs){
+       let pool=getMonstersForLevel(G.level);
+       let toSpawn=Math.min(maxMobs-alive,3);
+       for(let s=0;s<toSpawn;s++){
+        for(let t=0;t<10;t++){
+         let sx=rand(5,MAP_W-6),sy=rand(5,MAP_H-6);
+         if(canWalk(sx,sy,G.map)&&dist(sx,sy,G.player.x,G.player.y)>5){
+          let occupied=false;
+          for(let om of G.monsters)if(om.alive&&om.x===sx&&om.y===sy)occupied=true;
+          if(!occupied){let nm=spawnMonster(choice(pool).id,sx,sy,G.level);G.monsters.push(nm);break;}
+         }
+        }
+       }
+      }
+     }
+    }
+   // Cow level - auto respawn
+   if(G.level===G.MAX_COW_LEVEL){cowRespawnTimer++;if(cowRespawnTimer%120===0)spawnCowWave();}
   // Check entrance unlocks when bosses die
   checkEntranceUnlocks();
-  // Update monsters every 2 frames
-  if(G.gameTime%2===0)updateMonsters();
+  // Update hit timers
+  for(let m of G.monsters)if(m.hitTimer>0)m.hitTimer--;
+  if(plr.hitTimer>0)plr.hitTimer--;
+  // Update floating texts
+  for(let i=G.floatingTexts.length-1;i>=0;i--){
+   let ft=G.floatingTexts[i];
+   ft.timer--;
+   ft.y+=ft.vy*0.05;
+   if(ft.timer<=0)G.floatingTexts.splice(i,1);
+  }
+  // Update monsters (time-based, each monster tracks its own timer)
+  updateMonsters();
   // Check quests
   checkQuests();
  // HP/Mana regen
@@ -1242,8 +1590,10 @@ canvas.addEventListener('click',(e)=>{
    if(item.type==='potion'||item.type==='scroll'){
     if(item.misc==='heal'||item.misc==='healscroll'){G.player.hp=Math.min(G.player.hp+30,G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
     if(item.misc==='mana'){G.player.mana=Math.min(G.player.mana+30,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
+    if(item.misc==='rejuv'){G.player.hp=Math.min(G.player.hp+40,G.player.maxHp);G.player.mana=Math.min(G.player.mana+40,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
+    if(item.misc==='fullrejuv'){G.player.hp=G.player.maxHp;G.player.mana=G.player.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
    }
-   if(G.player.inventory.length<40){G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);}
+   if(G.player.inventory.length<32){G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);}
    else{showMsg('Inventory full!');}
    return;
   }
@@ -1255,29 +1605,33 @@ canvas.addEventListener('click',(e)=>{
 });
 // ---- Panel functions ----
 function togglePanel(id){
- let panel=document.getElementById(id);
- let isActive=panel.classList.contains('active');
- closeAllPanels();
- if(!isActive){
-  panel.classList.add('active');
-  if(id==='inventory_panel')updateInventoryPanel();
-  if(id==='char_panel')updateCharPanel();
-  if(id==='quest_panel')updateQuestPanel();
+  let panel=document.getElementById(id);
+  let isActive=panel.classList.contains('active');
+  closeAllPanels();
+  if(!isActive){
+   panel.classList.add('active');
+   if(id==='inventory_panel')updateInventoryPanel();
+   if(id==='char_panel')updateCharPanel();
+   if(id==='quest_panel')updateQuestPanel();
+  }else{
+   // Auto-deactivate delete mode when inventory closes
+   if(id==='inventory_panel'&&G._deleteMode)toggleDeleteMode();
+  }
  }
-}
 function closeAllPanels(){
- ['inventory_panel','char_panel','quest_panel'].forEach(id=>document.getElementById(id).classList.remove('active'));
- document.getElementById('levelup_overlay').classList.remove('active');
- document.getElementById('npcDialog').classList.remove('active');
-}
+  ['inventory_panel','char_panel','quest_panel'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById('levelup_overlay').classList.remove('active');
+  document.getElementById('npcDialog').classList.remove('active');
+  if(G._deleteMode)toggleDeleteMode();
+ }
 function updateInventoryPanel(){
  let plr=G.player;
  if(!plr)return;
  let equip=document.getElementById('equipSlots');
  let inv=document.getElementById('invSlots');
  let info=document.getElementById('itemInfo');
- let slots=['head','neck','ring1','ring2','body','hand1','hand2'];
- let slotNames=['Head','Neck','Ring 1','Ring 2','Body','Weapon','Off-hand'];
+  let slots=['neck','head','ring','weapon','body','offhand'];
+  let slotNames=['Neck','Head','Ring','Weapon','Body','Off-hand'];
  equip.innerHTML='';
  for(let i=0;i<slots.length;i++){
   let slot=document.createElement('div');slot.className='inv_slot equipped';
@@ -1317,51 +1671,78 @@ function updateInventoryPanel(){
   inv.appendChild(slot);
  }
 }
+function usePotionFromInventory(type){
+ let plr=G.player;
+ for(let i=0;i<plr.inventory.length;i++){
+  let item=plr.inventory[i];
+  if(item.type==='potion'||item.type==='scroll'){
+   if((type==='heal'&&(item.misc==='heal'||item.misc==='healscroll'))||(type==='mana'&&item.misc==='mana')){
+    if(type==='heal'){plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);}
+    else{plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);}
+    plr.inventory.splice(i,1);
+    if(document.getElementById('inventory_panel').classList.contains('active'))updateInventoryPanel();
+    return;
+   }
+  }
+ }
+ showMsg(`No ${type==='heal'?'health':'mana'} potion!`);
+}
 function useInventoryItem(index){
- let plr=G.player,item=plr.inventory[index];
- if(!item)return;
- if(item.type==='potion'||item.type==='scroll'){
+  let plr=G.player,item=plr.inventory[index];
+  if(!item)return;
+  // Delete mode
+  if(G._deleteMode){
+   plr.inventory.splice(index,1);
+   showMsg(`Deleted ${item.name}`);
+   updateInventoryPanel();return;
+  }
+  if(item.type==='potion'||item.type==='scroll'){
   if(item.misc==='heal'||item.misc==='healscroll'){plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);}
-  else if(item.misc==='mana'){plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);}
-  else if(item.misc==='rejuv'){plr.hp=Math.min(plr.hp+40,plr.maxHp);plr.mana=Math.min(plr.mana+40,plr.maxMana);showMsg(`Used ${item.name}`);}
-  else if(item.misc==='firebolt'){
+   else if(item.misc==='mana'){plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);}
+   else if(item.misc==='rejuv'){plr.hp=Math.min(plr.hp+40,plr.maxHp);plr.mana=Math.min(plr.mana+40,plr.maxMana);showMsg(`Used ${item.name}`);}
+   else if(item.misc==='fullrejuv'){plr.hp=plr.maxHp;plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);}
+   else if(item.misc==='firebolt'){
    // Ranged attack - find nearest monster
    let nearest=null,nd=99;
    for(let m of G.monsters){if(!m.alive)continue;let d=dist(plr.x,plr.y,m.x,m.y);if(d<nd&&d<6){nd=d;nearest=m;}}
    if(nearest){let dmg=rand(8,16)+Math.floor(plr.mag/3);nearest.hp-=dmg;showMsg(`Firebolt hits ${nearest.t.name} for ${dmg}!`);if(nearest.hp<=0){nearest.alive=false;if(!plr._questKills)plr._questKills={};let key='kill_'+nearest.typeId;plr._questKills[key]=(plr._questKills[key]||0)+1;trackBossKill(nearest,plr,G.level);addXp(plr,nearest.xp);}}
-  }
+   }else if(item.misc==='lightning'){
+    let dmg=rand(12,24)+Math.floor(plr.mag/2);
+    for(let m of G.monsters){if(!m.alive)continue;if(dist(plr.x,plr.y,m.x,m.y)<5){m.hp-=dmg;showMsg(`Lightning hits ${m.t.name} for ${dmg}!`);if(m.hp<=0){m.alive=false;if(!plr._questKills)plr._questKills={};let key='kill_'+m.typeId;plr._questKills[key]=(plr._questKills[key]||0)+1;trackBossKill(m,plr,G.level);addXp(plr,m.xp);}}}
+   }
   plr.inventory.splice(index,1);updateInventoryPanel();
   calcPlayerStats(plr);return;
  }
- if(item.type==='weapon'||item.type==='shield'||item.type==='armor'||item.type==='helm'||item.type==='ring'||item.type==='amulet'){
-  let slot=item.slot;
-  if(!slot)return;
-  // Unequip current
-  let old=plr.equipment[slot];
-  if(old)plr.inventory.push(old);
-  plr.equipment[slot]=item;
-  plr.inventory.splice(index,1);
-  calcPlayerStats(plr);updateInventoryPanel();
-  showMsg(`Equipped ${item.name}`);
- }
+  if(item.type==='weapon'||item.type==='shield'||item.type==='armor'||item.type==='helm'||item.type==='ring'||item.type==='amulet'){
+   let slot=item.slot;
+   if(!slot)return;
+   // Class restrictions
+   if(item.weapClass){
+    if(plr.charClass===CLASS_WARRIOR&&(item.weapClass==='staff'||item.weapClass==='wand')){showMsg('Warriors cannot use staves or wands!');return;}
+    if(plr.charClass===CLASS_MAGE&&(item.weapClass==='sword'||item.weapClass==='axe'||item.weapClass==='blunt')){showMsg('Mages cannot use swords, axes, or blunt weapons!');return;}
+   }
+   // Unequip current
+   let old=plr.equipment[slot];
+   if(old)plr.inventory.push(old);
+   plr.equipment[slot]=item;
+   plr.inventory.splice(index,1);
+   calcPlayerStats(plr);updateInventoryPanel();
+   showMsg(`Equipped ${item.name}`);
+  }
 }
 function unequipItem(slot){
  let plr=G.player;
  if(!plr.equipment[slot])return;
- if(plr.inventory.length>=40){showMsg('Inventory full!');return;}
+  if(plr.inventory.length>=32){showMsg('Inventory full!');return;}
  plr.inventory.push(plr.equipment[slot]);
  plr.equipment[slot]=null;
  calcPlayerStats(plr);
  updateInventoryPanel();
  showMsg('Unequipped item');
 }
-function updateCharPanel(){
- let plr=G.player;
- if(!plr)return;
- let el=document.getElementById('char_panel');
- el.classList.add('active');
- closeAllPanels();
- el.classList.add('active');
+ function updateCharPanel(){
+  let plr=G.player;
+  if(!plr)return;
  document.getElementById('charInfo').innerHTML=`
 <div class="stat_row"><span>Level</span><span class="stat_val">${plr.level}</span></div>
 <div class="stat_row"><span>Class</span><span class="stat_val">${CLASS_NAMES[plr.charClass]}</span></div>
@@ -1488,9 +1869,11 @@ document.addEventListener('keydown',(e)=>{
  // Game keys only work when game is running and player is alive
  if(!G.player||G.dead)return;
  if(key==='i'){togglePanel('inventory_panel');e.preventDefault();}
- if(key==='c'){updateCharPanel();e.preventDefault();}
- if(key==='q'){updateQuestPanel();e.preventDefault();}
- // Movement
+  if(key==='c'){togglePanel('char_panel');e.preventDefault();}
+  if(key==='q'){updateQuestPanel();e.preventDefault();}
+  if(key==='h'){usePotionFromInventory('heal');e.preventDefault();}
+  if(key==='m'){usePotionFromInventory('mana');e.preventDefault();}
+  // Movement
  if(!document.querySelector('.panel.active')&&!byId('npcDialog').classList.contains('active')){
   let dx=0,dy=0;
   if(key==='w'||key==='arrowup')dy=-1;
@@ -1510,7 +1893,7 @@ document.addEventListener('keydown',(e)=>{
        if(item.misc==='heal'||item.misc==='healscroll'){G.player.hp=Math.min(G.player.hp+30,G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
        if(item.misc==='mana'){G.player.mana=Math.min(G.player.mana+30,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
       }
-      if(G.player.inventory.length<40){G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);}
+       if(G.player.inventory.length<32){G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);}
       else{showMsg('Inventory full!');}
      }
     }
