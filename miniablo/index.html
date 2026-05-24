@@ -208,7 +208,6 @@ Esc - Close panels / Menu<br>
  <div style="text-align:center"><div style="color:#960;font-size:min(4vw,4.5vh);line-height:1.0;margin-bottom:min(.5vw,.7vh)">Equipment</div><div class="equip_grid" id="equipSlots"></div></div>
  <div style="text-align:center"><div style="color:#960;font-size:min(4vw,4.5vh);line-height:1.0;margin-bottom:min(.5vw,.7vh)">Backpack</div><div class="inv_grid" id="invSlots"></div></div>
 </div>
-<div id="itemInfo" style="margin-top:min(1vw,1.5vh);color:#aaa;font-size:min(4vw,4.5vh);line-height:1.0;min-height:min(3.5vw,4.5vh);border-top:min(.05vw,.08vh)solid #333;padding-top:min(.5vw,.7vh);max-width:100%;overflow-wrap:break-word;overflow:hidden"></div>
 </div>
 <div id="char_panel" class="panel">
 <span class="close" id="closeChar">X</span>
@@ -268,6 +267,7 @@ Esc - Close panels / Menu<br>
 <div style="color:#fe0;font-size:min(3.5vw,4vh)" id="questCompleteReward"></div>
 <div class="button" id="questCompleteOk" style="margin:min(1.5vw,2vh) auto">OK</div>
 </div>
+<div id="floatingTooltip" style="display:none;position:fixed;pointer-events:none;z-index:100;background:rgba(0,0,0,.9);border:min(.15vw,.2vh)solid #960;padding:min(.8vw,1vh);font-size:min(3vw,3.5vh);color:#ddd;line-height:1.4;white-space:nowrap"></div>
 <script>
 // ============================ MINIABLO ============================
 const app=document.getElementById('app');
@@ -631,10 +631,20 @@ function createItem(typeId,level){
  let t=ITEM_TYPES.find(it=>it.id===typeId);
  if(!t)return null;
  let item=JSON.parse(JSON.stringify(t));
- item.level=level;item.id=G.gameTime+(G.turnCounter++);
- // Apply suffix
- let suffixChance=Math.min(.25+.02*level,.6);
- if(rng()<suffixChance){
+  item.level=level;item.id=G.gameTime+(G.turnCounter++);
+  // Potions and scrolls don't get quality or suffixes
+  let isConsumable=item.type==='potion'||item.type==='scroll';
+  // Quality prefix (replaces old 'Magic' prefix)
+  let qualityChance=Math.min(.15+.02*level,.5);
+  if(!isConsumable&&rng()<qualityChance){
+  let q=choice(ITEM_QUALITIES);
+  item.quality=q;
+  item.name=q.name+' '+item.name;
+  item.magic=true;
+ }
+  // Apply suffix
+  let suffixChance=Math.min(.25+.02*level,.6);
+  if(!isConsumable&&rng()<suffixChance){
   let pool=SUFFIXES.filter(s=>s.types.includes(item.type));
   if(pool.length){
    let sfx=choice(pool);
@@ -643,17 +653,57 @@ function createItem(typeId,level){
    item.magic=true;
   }
  }
+ // Random damage bonus
  if(item.minDmg&&rng()<.2+level*.03){
   let bonus=Math.floor(level*(rng()*.3+.1));
   item.minDmg+=bonus;item.maxDmg+=bonus;
-  if(!item.suffix){item.magic=true;item.name='Magic '+item.name;}
+  if(!item.suffix&&!item.quality)item.magic=true;
  }
+ // Random armor bonus
  if(item.ac&&rng()<.15+level*.02){
   let bonus=Math.floor(level*(rng()*.2+.1));
-  item.ac+=bonus;item.magic=true;
-  if(!item.suffix){item.magic=true;item.name='Magic '+item.name;}
+  item.ac+=bonus;
+  if(!item.suffix&&!item.quality)item.magic=true;
+ }
+ // Apply statKf from quality (multiplies base stats, bonuses, and suffix values)
+ if(item.quality){
+  let kf=item.quality.statKf;
+  if(item.minDmg){item.minDmg=Math.max(1,Math.round(item.minDmg*kf));item.maxDmg=Math.max(1,Math.round(item.maxDmg*kf));}
+  if(item.ac)item.ac=Math.round(item.ac*kf);
+  if(item.minStr)item.minStr=Math.round(item.minStr*kf);
+  if(item.minMag)item.minMag=Math.round(item.minMag*kf);
+  if(item.suffix&&item.suffix.val)item.suffix={...item.suffix,val:Math.round(item.suffix.val*kf)};
  }
  return item;
+}
+function itemTooltip(item, price){
+ let html=`<b>${item.name}</b>`;
+ let totMinDmg=item.minDmg||0,totMaxDmg=item.maxDmg||0,totAc=item.ac||0;
+ let extra=[];
+ if(item.suffix){
+  let s=item.suffix;
+  if(s.stat==='dmg'){totMinDmg+=s.val;totMaxDmg+=s.val;}
+  else if(s.stat==='str')extra.push(`STR: +${s.val}`);
+  else if(s.stat==='mag')extra.push(`MAG: +${s.val}`);
+  else if(s.stat==='dex')extra.push(`DEX: +${s.val}`);
+  else if(s.stat==='vit')extra.push(`VIT: +${s.val}`);
+  else if(s.stat==='hp')extra.push(`HP: +${s.val}`);
+  else if(s.stat==='mana')extra.push(`Mana: +${s.val}`);
+ }
+ if(totMinDmg)html+=`<br>DMG: ${totMinDmg}-${totMaxDmg}`;
+ if(totAc)html+=`<br>AC: ${totAc}`;
+ for(let e of extra)html+=`<br>${e}`;
+ if(item.type==='potion'||item.type==='scroll')html+='<br><span style="color:#0a0">Click to use</span>';
+ if(price!==undefined)html+=`<br><span style="color:#ca0">Price: ${price}g</span>`;
+ return html;
+}
+function showTooltip(html, e){
+ let el=document.getElementById('floatingTooltip');
+ el.innerHTML=html;el.style.display='block';
+ el.style.left=(e.clientX+10)+'px';el.style.top=(e.clientY+10)+'px';
+}
+function hideTooltip(){
+ document.getElementById('floatingTooltip').style.display='none';
 }
 function randomItemDrop(level){
  let cat=rng();
@@ -755,7 +805,7 @@ const NPC_DEFS=[
  {id:11,name:'Anastacia',type:'quest',color:'#cc6',headColor:'#ddc',msg:'Hello! I don\'t see my thing anywhere!',x:16,y:24,questIds:[1]},
  {id:12,name:'Natalie',type:'quest',color:'#c6d',headColor:'#ede',msg:'Excuse me! Do you see my letter?',x:16,y:36,questIds:[6]},
  {id:13,name:'Kile',type:'quest',color:'#bbc',headColor:'#eee',msg:'Hi Fellow! I\'m looking for some treasure!',x:56,y:48,questIds:[7]},
- {id:14,name:'Leric',type:'quest',color:'#cc7',headColor:'#ee7',msg:'You know that the Taurus is very smart? I need\'em!',x:52,y:22,questIds:[8]}
+ {id:14,name:'Leric',type:'quest',color:'#c70',headColor:'#eed',msg:'You know that the Taurus is very smart? I need\'em!',x:52,y:22,questIds:[8]}
 ];
 // ---- Create NPC instances ----
 function createNPCsForTown(){
@@ -1059,18 +1109,19 @@ function interactNPC(plr,npc){
       let id=choice(itemPool);
       let item=createItem(id,Math.max(1,Math.min(G.level,rand(1,plr.level))));
       // Merchant Lira: ensure all rings/amulets/scrolls are magic
-      if(npc.type==='shop_jewelry'&&(item.type==='ring'||item.type==='amulet')){
-       // Force a suffix if none
-       if(!item.suffix){
-        let pool=SUFFIXES.filter(s=>s.types.includes(item.type));
-        if(pool.length){
-         let sfx=choice(pool);
-         item.suffix=sfx;
-         item.name+=' '+sfx.name;
-         item.magic=true;
+       if(npc.type==='shop_jewelry'&&(item.type==='ring'||item.type==='amulet')){
+        // Force a suffix if none
+        if(!item.suffix){
+         let pool=SUFFIXES.filter(s=>s.types.includes(item.type));
+         if(pool.length){
+          let sfx=choice(pool);
+          if(item.quality)sfx={...sfx,val:Math.round(sfx.val*item.quality.statKf)};
+          item.suffix=sfx;
+          item.name+=' '+sfx.name;
+          item.magic=true;
+         }
         }
        }
-      }
       if(item)shopItems.push(item);
      }
     let container=document.createElement('div');container.style.cssText='display:flex;gap:min(1.5vw,2vh);margin:min(.8vw,1vh)0';
@@ -1084,9 +1135,8 @@ function interactNPC(plr,npc){
      plrCol.innerHTML='<div style="color:#960;font-size:min(4vw,4.5vh);line-height:1.0;margin-bottom:min(.3vw,.5vh)">Sell</div>';
      let plrGrid=document.createElement('div');plrGrid.style.cssText='display:grid;grid-template-columns:repeat(4,min(4.2vw,5.4vh));gap:min(.2vw,.3vh)';
     plrCol.appendChild(plrGrid);
-    container.appendChild(npcCol);container.appendChild(plrCol);
-    let infoDiv=document.createElement('div');infoDiv.style.cssText='color:#aaa;font-size:min(4vw,4.5vh);line-height:1.0;min-height:min(5vw,6vh);text-align:center;margin-top:min(.3vw,.4vh);border-top:min(.05vw,.08vh)solid #333;padding-top:min(.3vw,.4vh);max-width:100%;overflow-wrap:break-word;overflow:hidden;max-height:min(5vw,6vh)';
-    let goldDiv=document.createElement('div');goldDiv.id='shop_gold';goldDiv.style.cssText='color:#ca0;font-size:min(4vw,4.5vh);line-height:1.0;text-align:center;margin-top:min(.3vw,.4vh)';
+     container.appendChild(npcCol);container.appendChild(plrCol);
+     let goldDiv=document.createElement('div');goldDiv.id='shop_gold';goldDiv.style.cssText='color:#ca0;font-size:min(4vw,4.5vh);line-height:1.0;text-align:center;margin-top:min(.3vw,.4vh)';
     function renderShopGrids(){
      npcGrid.innerHTML='';plrGrid.innerHTML='';
      for(let i=0;i<32;i++){
@@ -1094,21 +1144,25 @@ function interactNPC(plr,npc){
       cell.style.cssText='background:#1a1a1a;border:min(.08vw,.1vh)solid #444;cursor:pointer;text-align:center;font-size:min(4vw,4.5vh);line-height:1.0;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#000';
       if(i<shopItems.length){
        let si=shopItems[i];
-       let cost=si.minDmg?Math.max(10,si.minDmg*10+20):si.ac?Math.max(10,si.ac*8+20):30;
-        if(si.type==='potion')cost=15;
-        // Merchant Lira: magic items cost 10x
-        if(npc.type==='shop_jewelry'&&si.magic)cost*=10;
+        let cost=si.minDmg?Math.max(10,si.minDmg*10+20):si.ac?Math.max(10,si.ac*8+20):30;
+         if(si.type==='potion')cost=15;
+         // Apply priceKf from quality and suffix
+         let priceKf=1;
+         if(si.quality)priceKf*=si.quality.priceKf;
+         if(si.suffix)priceKf*=si.suffix.priceKf;
+         cost=Math.round(cost*priceKf);
        cell.textContent=si.icon||'?';cell.style.background=si.color||'#1a1a1a';
-       cell.onmouseenter=((si,cost)=>()=>{
-        let cStr=plr.gold>=cost?`<span style="color:#ca0">${cost}g</span>`:`<span style="color:#f00">${cost}g</span>`;
-        infoDiv.innerHTML=`<b>${si.name}</b>${si.minDmg?` DMG:${si.minDmg}-${si.maxDmg}`:''}${si.ac?` AC:${si.ac}`:''} | ${cStr}`;
-       })(si,cost);
-       cell.onclick=((si,i,cost)=>()=>{
-        if(plr.gold>=cost&&plr.inventory.length<32){
-         plr.gold-=cost;plr.inventory.push(JSON.parse(JSON.stringify(si)));shopItems.splice(i,1);
-         renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Bought ${si.name}!`);
-        }else if(plr.inventory.length>=32){showMsg('Inventory full!');}
-        else{showMsg('Not enough gold!');}
+         cell.onmouseenter=((si,cost)=>(e)=>{
+          showTooltip(itemTooltip(si,cost),e);
+         })(si,cost);
+         cell.onmouseleave=()=>hideTooltip();
+         cell.onclick=((si,i,cost)=>(e)=>{
+          e.stopPropagation();hideTooltip();
+          if(plr.gold>=cost&&plr.inventory.length<32){
+          plr.gold-=cost;plr.inventory.push(JSON.parse(JSON.stringify(si)));shopItems.splice(i,1);
+          renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Bought ${si.name}!`);
+         }else if(plr.inventory.length>=32){showMsg('Inventory full!');}
+         else{showMsg('Not enough gold!');}
        })(si,i,cost);
       }
       npcGrid.appendChild(cell);
@@ -1119,16 +1173,21 @@ function interactNPC(plr,npc){
       if(i<plr.inventory.length){
        let item=plr.inventory[i];
         let price=item.minDmg?Math.max(5,Math.floor((item.minDmg*10+20)/2)):item.ac?Math.max(5,Math.floor((item.ac*8+20)/2)):10;
-        if(item.type==='potion')price=7;
-        // Merchant Lira: magic items sell for 10x
-        if(npc.type==='shop_jewelry'&&item.magic)price*=10;
+         if(item.type==='potion')price=7;
+         // Apply priceKf from quality and suffix
+         let sellPriceKf=1;
+         if(item.quality)sellPriceKf*=item.quality.priceKf;
+         if(item.suffix)sellPriceKf*=item.suffix.priceKf;
+         price=Math.round(price*sellPriceKf);
        cell.textContent=item.icon||'?';cell.style.background=item.color||'#1a1a1a';
-       cell.onmouseenter=((item,price)=>()=>{
-        infoDiv.innerHTML=`<b>${item.name}</b>${item.minDmg?` DMG:${item.minDmg}-${item.maxDmg}`:''}${item.ac?` AC:${item.ac}`:''} | <span style="color:#ca0">Sell: ${price}g</span>`;
-       })(item,price);
-       cell.onclick=((item,i,price)=>()=>{
-        plr.gold+=price;plr.inventory.splice(i,1);
-        renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Sold ${item.name} for ${price}g`);
+         cell.onmouseenter=((item,price)=>(e)=>{
+          showTooltip(itemTooltip(item,price),e);
+         })(item,price);
+         cell.onmouseleave=()=>hideTooltip();
+         cell.onclick=((item,i,price)=>(e)=>{
+          e.stopPropagation();hideTooltip();
+         plr.gold+=price;plr.inventory.splice(i,1);
+         renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Sold ${item.name} for ${price}g`);
        })(item,i,price);
       }
       plrGrid.appendChild(cell);
@@ -1136,7 +1195,7 @@ function interactNPC(plr,npc){
     }
     renderShopGrids();
     goldDiv.textContent=`Gold: ${plr.gold}`;
-    btnsEl.appendChild(container);btnsEl.appendChild(infoDiv);btnsEl.appendChild(goldDiv);
+     btnsEl.appendChild(container);btnsEl.appendChild(goldDiv);
   }else if(npc.type==='gamble'){
    textEl.textContent='500 gold for a random item! Could be anything...';
    let btn=document.createElement('div');btn.className='npc_btn';btn.textContent='Gamble 500g';
@@ -1714,7 +1773,6 @@ function checkQuests(){
    }
    }
   }
-  saveGame();
 }
 function showQuestComplete(q){
  let el=document.getElementById('questCompleteDialog');
@@ -1913,7 +1971,6 @@ function updateInventoryPanel(){
  if(!plr)return;
  let equip=document.getElementById('equipSlots');
  let inv=document.getElementById('invSlots');
- let info=document.getElementById('itemInfo');
   let slots=['neck','head','ring','weapon','body','offhand'];
   let slotNames=['Neck','Head','Ring','Weapon','Body','Off-hand'];
  equip.innerHTML='';
@@ -1925,10 +1982,11 @@ function updateInventoryPanel(){
    slot.title=item.name;
    slot.style.background=item.color;
    slot.style.color='#000';
-   slot.onclick=()=>{unequipItem(slots[i]);};
-   slot.onmouseenter=()=>{
-    info.innerHTML=`<b>${item.name}</b>${item.minDmg?` DMG:${item.minDmg}-${item.maxDmg}`:''}${item.ac?` AC:${item.ac}`:''}`;
-   };
+    slot.onclick=()=>{hideTooltip();unequipItem(slots[i]);};
+     slot.onmouseenter=(e)=>{
+      showTooltip(itemTooltip(item),e);
+     };
+     slot.onmouseleave=()=>hideTooltip();
   }else{
    slot.textContent='';
    slot.title=slotNames[i];
@@ -1945,10 +2003,11 @@ function updateInventoryPanel(){
    slot.title=item.name;
    slot.style.background=item.color;
    slot.style.color='#000';
-   slot.onclick=()=>{useInventoryItem(i);};
-   slot.onmouseenter=()=>{
-    info.innerHTML=`<b>${item.name}</b>${item.minDmg?` DMG:${item.minDmg}-${item.maxDmg}`:''}${item.ac?` AC:${item.ac}`:''}${item.type==='potion'||item.type==='scroll'?' <span style="color:#0a0">Click to use</span>':''}`;
-   };
+    slot.onclick=()=>{hideTooltip();useInventoryItem(i);};
+     slot.onmouseenter=(e)=>{
+      showTooltip(itemTooltip(item),e);
+     };
+     slot.onmouseleave=()=>hideTooltip();
   }else{
    slot.style.background='#1a1a1a';
   }
