@@ -527,52 +527,57 @@ function generateDiabloLair(){
 
 // ---- Items ----
 const ITEM_TYPES=[
- // Swords (id 0-2)
- {id:0,name:'Short Sword',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minStr:0,color:'#888',icon:'/',weapClass:'sword'},
- {id:1,name:'Long Sword',type:'weapon',slot:'weapon',minDmg:5,maxDmg:12,minStr:10,color:'#aaa',icon:'/',weapClass:'sword'},
- {id:2,name:'Great Sword',type:'weapon',slot:'weapon',minDmg:10,maxDmg:22,minStr:30,color:'#bbb',icon:'/',weapClass:'sword'},
- // Axes (id 3-4)
- {id:3,name:'Hand Axe',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#987',icon:'/',weapClass:'axe'},
- {id:4,name:'Battle Axe',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#a98',icon:'/',weapClass:'axe'},
- // Blunt (id 5-6)
- {id:5,name:'Club',type:'weapon',slot:'weapon',minDmg:3,maxDmg:9,minStr:5,color:'#876',icon:'/',weapClass:'blunt'},
- {id:6,name:'Mace',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minStr:15,color:'#a87',icon:'/',weapClass:'blunt'},
- // Staves (id 7-9)
- {id:7,name:'Short Staff',type:'weapon',slot:'weapon',minDmg:2,maxDmg:6,minMag:0,color:'#897',icon:'\\',weapClass:'staff'},
- {id:8,name:'Long Staff',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minMag:15,color:'#a98',icon:'\\',weapClass:'staff'},
- {id:9,name:'War Staff',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minMag:25,color:'#ba9',icon:'\\',weapClass:'staff'},
- // Wands (id 10-11)
- {id:10,name:'Simple Wand',type:'weapon',slot:'weapon',minDmg:1,maxDmg:4,minMag:5,color:'#cba',icon:'\\',weapClass:'wand'},
- {id:11,name:'Sorcerer Wand',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minMag:20,color:'#dcb',icon:'\\',weapClass:'wand'},
- // Shields (id 12-14)
- {id:12,name:'Buckler',type:'shield',slot:'offhand',ac:5,minStr:0,color:'#876',icon:'-'},
- {id:13,name:'Small Shield',type:'shield',slot:'offhand',ac:10,minStr:15,color:'#987',icon:'-'},
- {id:14,name:'Large Shield',type:'shield',slot:'offhand',ac:18,minStr:25,color:'#a98',icon:'-'},
- // Helms (id 15-17)
- {id:15,name:'Cap',type:'helm',slot:'head',ac:3,color:'#665',icon:'^'},
- {id:16,name:'Helm',type:'helm',slot:'head',ac:7,minStr:10,color:'#887',icon:'^'},
- {id:17,name:'Crown',type:'helm',slot:'head',ac:10,minStr:20,color:'#ca8',icon:'^'},
- // Armor (id 18-20)
- {id:18,name:'Rags',type:'armor',slot:'body',ac:5,color:'#554',icon:'#'},
- {id:19,name:'Leather Armor',type:'armor',slot:'body',ac:12,minStr:10,color:'#776',icon:'#'},
- {id:20,name:'Chain Mail',type:'armor',slot:'body',ac:22,minStr:25,color:'#998',icon:'#'},
- {id:21,name:'Plate Mail',type:'armor',slot:'body',ac:35,minStr:40,color:'#bba',icon:'#'},
- // Rings / Amulets (id 22-25)
- {id:22,name:'Copper Ring',type:'ring',slot:'ring',color:'#ca6',icon:'o'},
- {id:23,name:'Silver Ring',type:'ring',slot:'ring',color:'#ccc',icon:'o'},
- {id:24,name:'Gold Ring',type:'ring',slot:'ring',color:'#fc0',icon:'o'},
- {id:25,name:'Amulet',type:'amulet',slot:'neck',color:'#ac8',icon:'*'},
- {id:26,name:'Pendant',type:'amulet',slot:'neck',color:'#8ca',icon:'*'},
- // Potions (id 27-30)
- {id:27,name:'Health Potion',type:'potion',color:'#c44',icon:'!',misc:'heal'},
- {id:28,name:'Mana Potion',type:'potion',color:'#44c',icon:'!',misc:'mana'},
- {id:29,name:'Rejuvenation Potion',type:'potion',color:'#c4c',icon:'!',misc:'rejuv'},
- {id:30,name:'Full Rejuvenation',type:'potion',color:'#fcf',icon:'!',misc:'fullrejuv'},
- // Scrolls (id 31-33)
- {id:31,name:'Scroll of Firebolt',type:'scroll',color:'#c84',icon:'?',misc:'firebolt'},
- {id:32,name:'Scroll of Lightning',type:'scroll',color:'#84c',icon:'?',misc:'lightning'},
- {id:33,name:'Scroll of Heal',type:'scroll',color:'#4c8',icon:'?',misc:'healscroll'},
- {id:34,name:'Gold',type:'gold',color:'#ca0',icon:'$'}
+  // Swords
+  {key:'short_sword',name:'Short Sword',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minStr:0,color:'#888',icon:'/',weapClass:'sword'},
+  {key:'long_sword',name:'Long Sword',type:'weapon',slot:'weapon',minDmg:5,maxDmg:12,minStr:10,color:'#aaa',icon:'/',weapClass:'sword'},
+  {key:'great_sword',name:'Great Sword',type:'weapon',slot:'weapon',minDmg:10,maxDmg:22,minStr:30,color:'#bbb',icon:'/',weapClass:'sword'},
+  // Axes
+  {key:'hand_axe',name:'Hand Axe',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#987',icon:'/',weapClass:'axe'},
+  {key:'battle_axe',name:'Battle Axe',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#a98',icon:'/',weapClass:'axe'},
+  // Blunt
+  {key:'club',name:'Club',type:'weapon',slot:'weapon',minDmg:3,maxDmg:9,minStr:5,color:'#876',icon:'/',weapClass:'blunt'},
+  {key:'mace',name:'Mace',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minStr:15,color:'#a87',icon:'/',weapClass:'blunt'},
+  // Staves
+  {key:'short_staff',name:'Short Staff',type:'weapon',slot:'weapon',minDmg:2,maxDmg:6,minMag:0,color:'#897',icon:'\\',weapClass:'staff'},
+  {key:'long_staff',name:'Long Staff',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minMag:15,color:'#a98',icon:'\\',weapClass:'staff'},
+  {key:'war_staff',name:'War Staff',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minMag:25,color:'#ba9',icon:'\\',weapClass:'staff'},
+  // Wands
+  {key:'simple_wand',name:'Simple Wand',type:'weapon',slot:'weapon',minDmg:1,maxDmg:4,minMag:5,color:'#cba',icon:'\\',weapClass:'wand'},
+  {key:'sorcerer_wand',name:'Sorcerer Wand',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minMag:20,color:'#dcb',icon:'\\',weapClass:'wand'},
+  // Shields
+  {key:'buckler',name:'Buckler',type:'shield',slot:'offhand',ac:5,minStr:0,color:'#876',icon:'-'},
+  {key:'small_shield',name:'Small Shield',type:'shield',slot:'offhand',ac:10,minStr:15,color:'#987',icon:'-'},
+  {key:'large_shield',name:'Large Shield',type:'shield',slot:'offhand',ac:18,minStr:25,color:'#a98',icon:'-'},
+  // Helms
+  {key:'cap',name:'Cap',type:'helm',slot:'head',ac:3,color:'#665',icon:'^'},
+  {key:'helm',name:'Helm',type:'helm',slot:'head',ac:7,minStr:10,color:'#887',icon:'^'},
+  {key:'crown',name:'Crown',type:'helm',slot:'head',ac:10,minStr:20,color:'#ca8',icon:'^'},
+  // Armor
+  {key:'rags',name:'Rags',type:'armor',slot:'body',ac:5,color:'#554',icon:'#'},
+  {key:'leather_armor',name:'Leather Armor',type:'armor',slot:'body',ac:12,minStr:10,color:'#776',icon:'#'},
+  {key:'chain_mail',name:'Chain Mail',type:'armor',slot:'body',ac:22,minStr:25,color:'#998',icon:'#'},
+  {key:'plate_mail',name:'Plate Mail',type:'armor',slot:'body',ac:35,minStr:40,color:'#bba',icon:'#'},
+  // Rings / Amulets
+  {key:'copper_ring',name:'Copper Ring',type:'ring',slot:'ring',color:'#ca6',icon:'o'},
+  {key:'silver_ring',name:'Silver Ring',type:'ring',slot:'ring',color:'#ccc',icon:'o'},
+  {key:'gold_ring',name:'Gold Ring',type:'ring',slot:'ring',color:'#fc0',icon:'o'},
+  {key:'amulet',name:'Amulet',type:'amulet',slot:'neck',color:'#ac8',icon:'*'},
+  {key:'pendant',name:'Pendant',type:'amulet',slot:'neck',color:'#8ca',icon:'*'},
+  // Potions
+  {key:'health_potion',name:'Health Potion',type:'potion',color:'#c44',icon:'!',misc:'heal'},
+  {key:'mana_potion',name:'Mana Potion',type:'potion',color:'#44c',icon:'!',misc:'mana'},
+  {key:'rejuvenation_potion',name:'Rejuvenation Potion',type:'potion',color:'#c4c',icon:'!',misc:'rejuv'},
+  {key:'full_rejuvenation',name:'Full Rejuvenation',type:'potion',color:'#fcf',icon:'!',misc:'fullrejuv'},
+  {key:'big_health_potion',name:'Big Health Potion',type:'potion',color:'#c44',icon:'!',misc:'bigheal'},
+  {key:'full_health_potion',name:'Full Health Potion',type:'potion',color:'#e66',icon:'!',misc:'fullheal'},
+  {key:'big_mana_potion',name:'Big Mana Potion',type:'potion',color:'#44c',icon:'!',misc:'bigmana'},
+  {key:'full_mana_potion',name:'Full Mana Potion',type:'potion',color:'#66e',icon:'!',misc:'fullmana'},
+  // Scrolls
+  {key:'scroll_firebolt',name:'Scroll of Firebolt',type:'scroll',color:'#c84',icon:'?',misc:'firebolt'},
+  {key:'scroll_lightning',name:'Scroll of Lightning',type:'scroll',color:'#84c',icon:'?',misc:'lightning'},
+  {key:'scroll_heal',name:'Scroll of Heal',type:'scroll',color:'#4c8',icon:'?',misc:'healscroll'},
+  {key:'scroll_townportal',name:'Scroll of Town Portal',type:'scroll',color:'#84c',icon:'?',misc:'townportal'},
+  {key:'gold',name:'Gold',type:'gold',color:'#ca0',icon:'$'}
 ];
 const SUFFIXES=[
  {name:'of Strength',stat:'str',val:5,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5},
@@ -627,11 +632,11 @@ const ITEM_QUALITIES=[
   {name:'Super',priceKf:5,statKf:2},
   {name:'Poor',priceKf:0.25,statKf:0.5}
 ];
-function createItem(typeId,level){
- let t=ITEM_TYPES.find(it=>it.id===typeId);
+function createItem(key,level){
+ let t=ITEM_TYPES.find(it=>it.key===key);
  if(!t)return null;
  let item=JSON.parse(JSON.stringify(t));
-  item.level=level;item.id=G.gameTime+(G.turnCounter++);
+  item.level=level;
   // Potions and scrolls don't get quality or suffixes
   let isConsumable=item.type==='potion'||item.type==='scroll';
   // Quality prefix (replaces old 'Magic' prefix)
@@ -707,14 +712,15 @@ function hideTooltip(){
 }
 function randomItemDrop(level){
  let cat=rng();
- if(cat<.2)return createItem(27,level); // health
- if(cat<.3)return createItem(28,level); // mana
- if(cat<.4)return createItem(34,level); // gold
- if(cat<.45)return createItem(33,level); // heal scroll
- if(cat<.5)return createItem(29,level); // rejuv
+ if(cat<.2)return createItem('health_potion',level);
+ if(cat<.3)return createItem('mana_potion',level);
+ if(cat<.4)return createItem('gold',level);
+ if(cat<.45)return createItem('scroll_heal',level);
+ if(cat<.5)return createItem('rejuvenation_potion',level);
+ if(cat<.55)return createItem('scroll_townportal',level);
  // Equipment pool
- let eq=[0,1,3,5,7,10,12,13,15,16,18,19,22,23,25];
- if(level>2)eq.push(2,4,6,8,9,11,14,17,20,21,24,26);
+ let eq=['short_sword','long_sword','hand_axe','club','short_staff','simple_wand','buckler','small_shield','cap','helm','rags','leather_armor','copper_ring','silver_ring','amulet','pendant'];
+ if(level>2)eq.push('great_sword','battle_axe','mace','long_staff','war_staff','sorcerer_wand','large_shield','crown','chain_mail','plate_mail','gold_ring');
  let picks=choice(eq);
  return createItem(picks,level);
 }
@@ -832,16 +838,16 @@ function createPlayer(charClass,name){
   dead:false,
   _questKills:{}
  };
-  // Starting gear
+  // Starting gear (hardcoded, no quality/suffix)
    if(charClass===CLASS_WARRIOR){
-    plr.equipment.weapon=createItem(0,1);
-    plr.equipment.body=createItem(18,1);
+    plr.equipment.weapon={key:'short_sword',name:'Short Sword',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minStr:0,color:'#888',icon:'/',weapClass:'sword',level:1};
+    plr.equipment.body={key:'rags',name:'Rags',type:'armor',slot:'body',ac:5,color:'#554',icon:'#',level:1};
    }else{
-    plr.equipment.weapon=createItem(7,1);
-    plr.equipment.body=createItem(18,1);
+    plr.equipment.weapon={key:'short_staff',name:'Short Staff',type:'weapon',slot:'weapon',minDmg:2,maxDmg:6,minMag:0,color:'#897',icon:'\\',weapClass:'staff',level:1};
+    plr.equipment.body={key:'rags',name:'Rags',type:'armor',slot:'body',ac:5,color:'#554',icon:'#',level:1};
    }
-  plr.inventory.push(createItem(27,1));
-  plr.inventory.push(createItem(28,1));
+  plr.inventory.push(createItem('health_potion',1));
+  plr.inventory.push(createItem('mana_potion',1));
   calcPlayerStats(plr);
   plr.hp=plr.maxHp;
   plr.mana=plr.maxMana;
@@ -947,7 +953,7 @@ function playerAttack(plr,monster){
     plr._questKills[key]=(plr._questKills[key]||0)+1;
     trackBossKill(monster,plr,G.level);
     addXp(plr,monster.xp);
-   plr.gold+=rand(1,5+plr.level);
+   plr.gold=(plr.gold||0)+rand(1,5+plr.level);
    showMsg(`Killed ${monster.t.name}! +${monster.xp} XP`);
    // Drop item
    if(rng()<.35){
@@ -1094,8 +1100,8 @@ function interactNPC(plr,npc){
   let btn=document.createElement('div');btn.className='npc_btn';
   btn.textContent='Heal Me!';
   btn.onclick=()=>{
-   if(plr.gold>=cost){
-    plr.gold-=cost;plr.hp=plr.maxHp;plr.mana=plr.maxMana;
+   if((plr.gold||0)>=cost){
+    plr.gold=(plr.gold||0)-cost;plr.hp=plr.maxHp;plr.mana=plr.maxMana;
     showMsg('You have been healed!');
     dlg.classList.remove('active');
    }else{showMsg('Not enough gold!');}
@@ -1103,11 +1109,11 @@ function interactNPC(plr,npc){
   btnsEl.appendChild(btn);
   }else if(npc.type==='shop'||npc.type==='shop_jewelry'||npc.type==='shop_potions'){
     textEl.textContent=npc.type==='shop'?'Weapons, armor, shields & helms':npc.type==='shop_jewelry'?'Rings, amulets & scrolls':'Potions of all kinds';
-    let itemPool=npc.type==='shop'?[0,1,2,3,4,5,6,7,8,9,12,13,14,15,16,17,18,19,20,21]:npc.type==='shop_jewelry'?[22,23,24,25,26,31,32,33]:[27,28,29,30];
+    let itemPool=npc.type==='shop'?['short_sword','long_sword','great_sword','hand_axe','battle_axe','club','mace','short_staff','long_staff','war_staff','buckler','small_shield','large_shield','cap','helm','crown','rags','leather_armor','chain_mail','plate_mail']:npc.type==='shop_jewelry'?['copper_ring','silver_ring','gold_ring','amulet','pendant','scroll_firebolt','scroll_lightning','scroll_heal','scroll_townportal']:['health_potion','mana_potion','rejuvenation_potion','full_rejuvenation','big_health_potion','full_health_potion','big_mana_potion','full_mana_potion'];
     let shopItems=[];
      for(let i=0;i<18;i++){
-      let id=choice(itemPool);
-      let item=createItem(id,Math.max(1,Math.min(G.level,rand(1,plr.level))));
+      let key=choice(itemPool);
+      let item=createItem(key,Math.max(1,Math.min(G.level,rand(1,plr.level))));
       // Merchant Lira: ensure all rings/amulets/scrolls are magic
        if(npc.type==='shop_jewelry'&&(item.type==='ring'||item.type==='amulet')){
         // Force a suffix if none
@@ -1143,23 +1149,24 @@ function interactNPC(plr,npc){
       let cell=document.createElement('div');
       cell.style.cssText='background:#1a1a1a;border:min(.08vw,.1vh)solid #444;cursor:pointer;text-align:center;font-size:min(4vw,4.5vh);line-height:1.0;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#000';
       if(i<shopItems.length){
-       let si=shopItems[i];
-        let cost=si.minDmg?Math.max(10,si.minDmg*10+20):si.ac?Math.max(10,si.ac*8+20):30;
-         if(si.type==='potion')cost=15;
-         // Apply priceKf from quality and suffix
-         let priceKf=1;
-         if(si.quality)priceKf*=si.quality.priceKf;
-         if(si.suffix)priceKf*=si.suffix.priceKf;
-         cost=Math.round(cost*priceKf);
+        let si=shopItems[i];
+         let cost=si.minDmg?Math.max(10,si.minDmg*10+20):si.ac?Math.max(10,si.ac*8+20):30;
+           if(si.type==='potion'){let pm={'big_health_potion':150,'big_mana_potion':150,'full_health_potion':250,'full_mana_potion':250,'rejuvenation_potion':250,'full_rejuvenation':500};cost=pm[si.key]||15;}
+          // Apply priceKf from quality and suffix
+          let priceKf=1;
+          if(si.quality)priceKf*=(si.quality.priceKf||1);
+          if(si.suffix)priceKf*=(si.suffix.priceKf||1);
+          cost=Math.round(cost*priceKf)||0;
        cell.textContent=si.icon||'?';cell.style.background=si.color||'#1a1a1a';
          cell.onmouseenter=((si,cost)=>(e)=>{
           showTooltip(itemTooltip(si,cost),e);
          })(si,cost);
          cell.onmouseleave=()=>hideTooltip();
-         cell.onclick=((si,i,cost)=>(e)=>{
-          e.stopPropagation();hideTooltip();
-          if(plr.gold>=cost&&plr.inventory.length<32){
-          plr.gold-=cost;plr.inventory.push(JSON.parse(JSON.stringify(si)));shopItems.splice(i,1);
+          cell.onclick=((si,i,cost)=>(e)=>{
+           e.stopPropagation();hideTooltip();
+           plr.gold=plr.gold||0;cost=cost||0;
+           if(plr.gold>=cost&&plr.inventory.length<32){
+           plr.gold=(plr.gold-cost);plr.inventory.push(JSON.parse(JSON.stringify(si)));shopItems.splice(i,1);
           renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Bought ${si.name}!`);
          }else if(plr.inventory.length>=32){showMsg('Inventory full!');}
          else{showMsg('Not enough gold!');}
@@ -1172,13 +1179,13 @@ function interactNPC(plr,npc){
       cell.style.cssText='background:#1a1a1a;border:min(.08vw,.1vh)solid #444;cursor:pointer;text-align:center;font-size:min(4vw,4.5vh);line-height:1.0;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#000';
       if(i<plr.inventory.length){
        let item=plr.inventory[i];
-        let price=item.minDmg?Math.max(5,Math.floor((item.minDmg*10+20)/2)):item.ac?Math.max(5,Math.floor((item.ac*8+20)/2)):10;
-         if(item.type==='potion')price=7;
-         // Apply priceKf from quality and suffix
-         let sellPriceKf=1;
-         if(item.quality)sellPriceKf*=item.quality.priceKf;
-         if(item.suffix)sellPriceKf*=item.suffix.priceKf;
-         price=Math.round(price*sellPriceKf);
+         let price=item.minDmg?Math.max(5,Math.floor((item.minDmg*10+20)/2)):item.ac?Math.max(5,Math.floor((item.ac*8+20)/2)):10;
+          if(item.type==='potion')price=7;
+          // Apply priceKf from quality and suffix
+          let sellPriceKf=1;
+          if(item.quality)sellPriceKf*=(item.quality.priceKf||1);
+          if(item.suffix)sellPriceKf*=(item.suffix.priceKf||1);
+          price=Math.round(price*sellPriceKf)||0;
        cell.textContent=item.icon||'?';cell.style.background=item.color||'#1a1a1a';
          cell.onmouseenter=((item,price)=>(e)=>{
           showTooltip(itemTooltip(item,price),e);
@@ -1186,7 +1193,7 @@ function interactNPC(plr,npc){
          cell.onmouseleave=()=>hideTooltip();
          cell.onclick=((item,i,price)=>(e)=>{
           e.stopPropagation();hideTooltip();
-         plr.gold+=price;plr.inventory.splice(i,1);
+          plr.gold=(plr.gold||0)+(price||0);plr.inventory.splice(i,1);
          renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Sold ${item.name} for ${price}g`);
        })(item,i,price);
       }
@@ -1194,14 +1201,14 @@ function interactNPC(plr,npc){
      }
     }
     renderShopGrids();
-    goldDiv.textContent=`Gold: ${plr.gold}`;
+     goldDiv.textContent=`Gold: ${plr.gold||0}`;
      btnsEl.appendChild(container);btnsEl.appendChild(goldDiv);
   }else if(npc.type==='gamble'){
    textEl.textContent='500 gold for a random item! Could be anything...';
    let btn=document.createElement('div');btn.className='npc_btn';btn.textContent='Gamble 500g';
    btn.onclick=()=>{
-    if(plr.gold>=500){
-     plr.gold-=500;
+     if((plr.gold||0)>=500){
+      plr.gold=(plr.gold||0)-500;
      let ids=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26];
      let item=createItem(choice(ids),Math.max(1,plr.level+rand(0,3)));
      if(item){
@@ -1218,11 +1225,11 @@ function interactNPC(plr,npc){
   let btn=document.createElement('div');btn.className='npc_btn';
   btn.textContent='Train';
   btn.onclick=()=>{
-   if(plr.gold>=cost){
-    plr.gold-=cost;addXp(plr,Math.floor(plr.level*30));
-    showMsg('Trained! Gained XP!');
-    dlg.classList.remove('active');
-   }else{showMsg('Not enough gold!');}
+    if((plr.gold||0)>=cost){
+     plr.gold=(plr.gold||0)-cost;addXp(plr,Math.floor(plr.level*30));
+     showMsg('Trained! Gained XP!');
+     dlg.classList.remove('active');
+    }else{showMsg('Not enough gold!');}
   };
   btnsEl.appendChild(btn);
  }
@@ -1274,7 +1281,8 @@ function loadGame(){
   }
   if(!data||!data.player)return null;
   if(!data||!data.player)return null;
-  let plr=createPlayer(data.player.charClass,data.player.name);
+   data.player.gold=data.player.gold||0;
+   let plr=createPlayer(data.player.charClass,data.player.name);
   plr.baseStr=data.player.baseStr;plr.baseMag=data.player.baseMag;
   plr.baseDex=data.player.baseDex;plr.baseVit=data.player.baseVit;
   plr.level=data.player.level;plr.xp=data.player.xp;
@@ -1425,12 +1433,11 @@ function render(){
      if(ent){ctx.fillStyle=locked?'#555':'#c90';ctx.font=Math.max(7,TILE/4)+'px Miniablo';ctx.textAlign='center';ctx.textBaseline='top';ctx.fillText(ent.name,sx+TILE/2,sy+TILE-2);}
     }
    }
-   if(t===T_QUEST_ALTAR){
-    ctx.fillStyle='#a0a';ctx.fillRect(sx+2,sy+2,TILE-4,TILE-4);
-    ctx.fillStyle='#c4c';ctx.fillRect(sx+6,sy+6,TILE-12,TILE-12);
-    ctx.fillStyle='#fff';ctx.font='bold '+Math.max(10,TILE/2.5)+'px Miniablo';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText('?',sx+TILE/2,sy+TILE/2-4);
-   }
+    if(t===T_QUEST_ALTAR){
+     ctx.fillStyle='#ca0';ctx.fillRect(sx+4,sy+4,TILE-8,TILE-8);
+     ctx.fillStyle='#fff';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+     ctx.fillText('X',sx+TILE/2,sy+TILE/2);
+    }
    if(t===T_STAIRS_DOWN){
     ctx.fillStyle='#236';ctx.fillRect(sx+4,sy+4,TILE-8,TILE-8);
     ctx.fillStyle='#468';ctx.fillRect(sx+8,sy+8,TILE-16,TILE-16);
@@ -1583,7 +1590,7 @@ function drawMinimap(){
   document.getElementById('mp_label').textContent=`MP: ${Math.max(0,Math.floor(plr.mana))}/${plr.maxMana}`;
   document.getElementById('xp_fill').style.width=Math.min(100,(plr.xp/plr.maxXp)*100)+'%';
   let mapName=G.level===0?'Town':G.level===G.MAX_LEVELS?"Diablo's Lair":G.level===G.MAX_COW_LEVEL?'Cow Level':'Level '+G.level;
-  document.getElementById('top_info').innerHTML=`${mapName}<br>${CLASS_NAMES[plr.charClass]} Lv${plr.level}<br>Gold: ${plr.gold}`;
+  document.getElementById('top_info').innerHTML=`${mapName}<br>${CLASS_NAMES[plr.charClass]} Lv${plr.level}<br>Gold: ${plr.gold||0}`;
  }
 // ---- Cow Level Respawn ----
 let cowRespawnTimer=0;
@@ -1800,7 +1807,7 @@ function gameLoop(){
    for(let i=G.items.length-1;i>=0;i--){
     let item=G.items[i];
     if(item.mapX===plr.x&&item.mapY===plr.y){
-     if(item.type==='gold'){plr.gold+=rand(5,20);showMsg(`Picked up ${rand(5,20)} gold`);G.items.splice(i,1);continue;}
+      if(item.type==='gold'){plr.gold=(plr.gold||0)+rand(5,20);showMsg(`Picked up ${rand(5,20)} gold`);G.items.splice(i,1);continue;}
       if(item.type==='potion'||item.type==='scroll'){
        if(item.misc==='heal'||item.misc==='healscroll'){plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
        if(item.misc==='mana'){plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
@@ -2019,8 +2026,17 @@ function usePotionFromInventory(type){
  for(let i=0;i<plr.inventory.length;i++){
   let item=plr.inventory[i];
   if(item.type==='potion'||item.type==='scroll'){
-   if((type==='heal'&&(item.misc==='heal'||item.misc==='healscroll'))||(type==='mana'&&item.misc==='mana')){
-    if(type==='heal'){plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);}
+   if(type==='heal'&&(item.misc==='heal'||item.misc==='bigheal'||item.misc==='fullheal'||item.misc==='healscroll')){
+    if(item.misc==='fullheal'){plr.hp=plr.maxHp;showMsg(`Used ${item.name}`);}
+    else if(item.misc==='bigheal'){plr.hp=Math.min(plr.hp+Math.floor(plr.maxHp/2),plr.maxHp);showMsg(`Used ${item.name}`);}
+    else{plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);}
+    plr.inventory.splice(i,1);
+    if(document.getElementById('inventory_panel').classList.contains('active'))updateInventoryPanel();
+    return;
+   }
+   if(type==='mana'&&(item.misc==='mana'||item.misc==='bigmana'||item.misc==='fullmana')){
+    if(item.misc==='fullmana'){plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);}
+    else if(item.misc==='bigmana'){plr.mana=Math.min(plr.mana+Math.floor(plr.maxMana/2),plr.maxMana);showMsg(`Used ${item.name}`);}
     else{plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);}
     plr.inventory.splice(i,1);
     if(document.getElementById('inventory_panel').classList.contains('active'))updateInventoryPanel();
@@ -2044,6 +2060,14 @@ function useInventoryItem(index){
    else if(item.misc==='mana'){plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);}
    else if(item.misc==='rejuv'){plr.hp=Math.min(plr.hp+40,plr.maxHp);plr.mana=Math.min(plr.mana+40,plr.maxMana);showMsg(`Used ${item.name}`);}
    else if(item.misc==='fullrejuv'){plr.hp=plr.maxHp;plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);}
+   else if(item.misc==='bigheal'){plr.hp=Math.min(plr.hp+Math.floor(plr.maxHp/2),plr.maxHp);showMsg(`Used ${item.name}`);}
+   else if(item.misc==='fullheal'){plr.hp=plr.maxHp;showMsg(`Used ${item.name}`);}
+   else if(item.misc==='bigmana'){plr.mana=Math.min(plr.mana+Math.floor(plr.maxMana/2),plr.maxMana);showMsg(`Used ${item.name}`);}
+   else if(item.misc==='fullmana'){plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);}
+   else if(item.misc==='townportal'){
+    G.lastLevel=G.level;G.level=0;loadLevel(0);
+    showMsg('Town Portal - returned to town!');
+   }
    else if(item.misc==='firebolt'){
    // Ranged attack - find nearest monster
    let nearest=null,nd=99;
@@ -2220,7 +2244,7 @@ function showMenuSub(content){
  mc.style.display='none';mi.style.display='block';mic.innerHTML=content;
 }
 byId('btnMenuControls').addEventListener('click',()=>showMenuSub(
- 'WASD / Arrow keys - Move<br>Click - Attack / Interact / Move<br>I - Inventory<br>C - Character Stats<br>Q - Quest Log<br>M - Game Menu<br>H - Use Health Potion<br>S - Toggle Super Attack<br>Space - Close panels<br>Esc - Close panels'
+ 'WASD / Arrow keys - Move<br>Click - Attack / Interact / Move<br>I - Inventory<br>C - Character Stats<br>Q - Quest Log<br>E - Game Menu<br>H - Use Health Potion<br>M - Use Mana Potion<br>U - Toggle Super Attack<br>Space / Esc - Close panels'
 ));
 byId('btnMenuTips').addEventListener('click',()=>showMenuSub(
  'Talk to NPCs in town for quests, healing, items.<br>Click monsters to attack.<br>Press C on level up to spend stat points.<br>Find portals (T) on levels 4/8/12.<br>Find stairs (D) to go deeper.<br>Game auto-saves every 30 seconds.'
@@ -2243,9 +2267,10 @@ document.addEventListener('keydown',(e)=>{
  if(key==='i'){togglePanel('inventory_panel');e.preventDefault();}
   if(key==='c'){togglePanel('char_panel');e.preventDefault();}
    if(key==='q'){togglePanel('quest_panel');e.preventDefault();}
-    if(key==='h'){usePotionFromInventory('heal');e.preventDefault();}
-    if(key==='u'){toggleSuperAttack();e.preventDefault();}
-    if(key==='m'){toggleGameMenu();e.preventDefault();}
+  if(key==='h'){usePotionFromInventory('heal');e.preventDefault();}
+   if(key==='m'){usePotionFromInventory('mana');e.preventDefault();}
+   if(key==='u'){toggleSuperAttack();e.preventDefault();}
+   if(key==='e'){toggleGameMenu();e.preventDefault();}
    // Movement
   if(!document.querySelector('.panel.active')&&!byId('npcDialog').classList.contains('active')&&!byId('questCompleteDialog').classList.contains('active')){
   let dx=0,dy=0;
@@ -2261,10 +2286,16 @@ document.addEventListener('keydown',(e)=>{
     for(let i=G.items.length-1;i>=0;i--){
      let item=G.items[i];
      if(item.mapX===nx&&item.mapY===ny){
-      if(item.type==='gold'){G.player.gold+=rand(5,20);showMsg(`+${rand(5,20)} gold`);G.items.splice(i,1);continue;}
-      if(item.type==='potion'||item.type==='scroll'){
-       if(item.misc==='heal'||item.misc==='healscroll'){G.player.hp=Math.min(G.player.hp+30,G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-       if(item.misc==='mana'){G.player.mana=Math.min(G.player.mana+30,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+       if(item.type==='gold'){G.player.gold=(G.player.gold||0)+rand(5,20);showMsg(`+${rand(5,20)} gold`);G.items.splice(i,1);continue;}
+       if(item.type==='potion'||item.type==='scroll'){
+        if(item.misc==='heal'||item.misc==='healscroll'){G.player.hp=Math.min(G.player.hp+30,G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+        if(item.misc==='mana'){G.player.mana=Math.min(G.player.mana+30,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+        if(item.misc==='bigheal'){G.player.hp=Math.min(G.player.hp+Math.floor(G.player.maxHp/2),G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+        if(item.misc==='fullheal'){G.player.hp=G.player.maxHp;showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+        if(item.misc==='bigmana'){G.player.mana=Math.min(G.player.mana+Math.floor(G.player.maxMana/2),G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+        if(item.misc==='fullmana'){G.player.mana=G.player.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+        if(item.misc==='rejuv'){G.player.hp=Math.min(G.player.hp+40,G.player.maxHp);G.player.mana=Math.min(G.player.mana+40,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+        if(item.misc==='fullrejuv'){G.player.hp=G.player.maxHp;G.player.mana=G.player.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
       }
        if(G.player.inventory.length<32){G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);}
       else{showMsg('Inventory full!');}
