@@ -576,7 +576,7 @@ const ITEM_TYPES=[
   {key:'scroll_firebolt',name:'Scroll of Firebolt',type:'scroll',color:'#c84',icon:'?',misc:'firebolt'},
   {key:'scroll_lightning',name:'Scroll of Lightning',type:'scroll',color:'#84c',icon:'?',misc:'lightning'},
   {key:'scroll_heal',name:'Scroll of Heal',type:'scroll',color:'#4c8',icon:'?',misc:'healscroll'},
-  {key:'scroll_townportal',name:'Scroll of Town Portal',type:'scroll',color:'#84c',icon:'?',misc:'townportal'},
+  {key:'scroll_townportal',name:'Scroll of Town Portal',type:'scroll',color:'#66c',icon:'?',misc:'townportal'},
   {key:'gold',name:'Gold',type:'gold',color:'#ca0',icon:'$'}
 ];
 const SUFFIXES=[
@@ -623,6 +623,7 @@ const SUFFIXES=[
  {name:'of Carnage',stat:'dmg',val:10,types:['weapon','staff','wand'],weaponBonus:10,priceKf:3},
  {name:'of Slaughter',stat:'dmg',val:15,types:['weapon','staff','wand'],weaponBonus:15,priceKf:5},
  {name:'of Butchery',stat:'dmg',val:20,types:['weapon','staff','wand'],weaponBonus:20,priceKf:7},
+ {name:'of Juggernaut',stat:'dmg',val:22,types:['weapon','staff','wand'],weaponBonus:22,priceKf:8},
  {name:'of Evisceration',stat:'dmg',val:25,types:['weapon','staff','wand'],weaponBonus:25,priceKf:10}
 ];
 const ITEM_QUALITIES=[
@@ -733,11 +734,11 @@ const MONSTER_TYPES=[
  {id:4,name:'Fallen One',color:'#c66',headColor:'#e88',minHP:10,maxHP:20,dmg:6,ac:3,xp:18,level:2},
  {id:5,name:'Scavenger',color:'#886',headColor:'#aa8',minHP:12,maxHP:24,dmg:7,ac:5,xp:22,level:3},
  {id:6,name:'Goat Man',color:'#686',headColor:'#8a8',minHP:16,maxHP:30,dmg:9,ac:7,xp:30,level:3},
- {id:7,name:'Acid Beast',color:'#6c6',headColor:'#8e8',minHP:20,maxHP:35,dmg:10,ac:6,xp:35,level:4},
- {id:8,name:'Winged Fiend',color:'#868',headColor:'#a8a',minHP:22,maxHP:38,dmg:12,ac:8,xp:40,level:4},
- {id:9,name:'Blood Knight',color:'#c44',headColor:'#e66',minHP:30,maxHP:55,dmg:15,ac:12,xp:60,level:5},
- {id:10,name:'Magma Demon',color:'#c60',headColor:'#e82',minHP:40,maxHP:70,dmg:18,ac:15,xp:80,level:6},
- {id:11,name:'Minion',color:'#d33',headColor:'#f55',minHP:100,maxHP:150,dmg:18,ac:40,xp:150,level:7},
+ {id:7,name:'Acid Beast',color:'#6c6',headColor:'#8e8',minHP:25,maxHP:60,dmg:10,ac:6,xp:35,level:4},
+ {id:8,name:'Winged Fiend',color:'#868',headColor:'#a8a',minHP:40,maxHP:80,dmg:12,ac:8,xp:40,level:4},
+ {id:9,name:'Blood Knight',color:'#c44',headColor:'#e66',minHP:60,maxHP:100,dmg:15,ac:12,xp:60,level:5},
+ {id:10,name:'Magma Demon',color:'#c60',headColor:'#e82',minHP:80,maxHP:140,dmg:18,ac:15,xp:80,level:6},
+ {id:11,name:'Minion',color:'#d33',headColor:'#f55',minHP:100,maxHP:200,dmg:18,ac:40,xp:150,level:7},
  {id:12,name:'Taurus',color:'#cc0',headColor:'#ee2',minHP:170,maxHP:240,dmg:20,ac:50,xp:250,level:8},
  {id:13,name:'Succub',color:'#33d',headColor:'#55f',minHP:250,maxHP:350,dmg:20,ac:80,xp:350,level:9},
  {id:14,name:'Wiwern',color:'#63c',headColor:'#85e',minHP:350,maxHP:450,dmg:20,ac:100,xp:500,level:10},
@@ -855,18 +856,15 @@ function createPlayer(charClass,name){
 }
 function calcPlayerStats(plr){
  let totStr=plr.baseStr,totMag=plr.baseMag,totDex=plr.baseDex,totVit=plr.baseVit;
- let minDmg=0,maxDmg=0,totAc=0;
+ let bonusDmg=0,totAc=0;
  let bonusHp=0,bonusMana=0;
+ let oldMaxHp=plr.maxHp||0,oldMaxMana=plr.maxMana||0;
  for(let slot in plr.equipment){
   let item=plr.equipment[slot];
   if(!item)continue;
-  if(item.minStr)totStr+=item.minStr;
-  if(item.minMag)totMag+=item.minMag;
   if(item.ac)totAc+=item.ac;
-  if(item.minDmg){minDmg+=item.minDmg;maxDmg+=item.maxDmg;}
   if(item.type==='ring')totMag+=2;
   if(item.type==='amulet')totStr+=2;
-  // Suffix bonuses
   if(item.suffix){
    let s=item.suffix;
    if(s.stat==='str')totStr+=s.val;
@@ -875,7 +873,7 @@ function calcPlayerStats(plr){
    else if(s.stat==='vit')totVit+=s.val;
    else if(s.stat==='hp')bonusHp+=s.val;
    else if(s.stat==='mana')bonusMana+=s.val;
-   else if(s.stat==='dmg'){minDmg+=s.val;maxDmg+=s.val;}
+   else if(s.stat==='dmg')bonusDmg+=s.val;
   }
  }
  plr.str=totStr;plr.mag=totMag;plr.dex=totDex;plr.vit=totVit;
@@ -890,16 +888,18 @@ function calcPlayerStats(plr){
   baseMin+=Math.floor(plr.mag/5);
   baseMax+=Math.floor(plr.mag/3);
  }
- plr.minDmg=Math.max(1,baseMin);plr.maxDmg=Math.max(2,baseMax);
+ plr.minDmg=Math.max(1,baseMin+bonusDmg);plr.maxDmg=Math.max(2,baseMax+bonusDmg);
  plr.ac=totAc+Math.floor(plr.dex/5);
    // HP
    let maxHp=35+plr.level*4+plr.vit*2*Math.round(plr.level/20+1)+bonusHp;
-   plr.maxHp=Math.max(plr.hp||1,maxHp);
+    plr.maxHp=Math.max(1,maxHp);
    plr.hp=Math.min(plr.hp||plr.maxHp,plr.maxHp);
+   if(plr.maxHp>oldMaxHp)plr.hp=Math.min(plr.hp+plr.maxHp-oldMaxHp,plr.maxHp);
    // Mana
    let maxMana=35+plr.level*2+plr.mag*3*Math.round(plr.level/25+1)+bonusMana;
    plr.maxMana=Math.max(1,maxMana);
    plr.mana=Math.min(plr.mana||plr.maxMana,plr.maxMana);
+   if(plr.maxMana>oldMaxMana)plr.mana=Math.min(plr.mana+plr.maxMana-oldMaxMana,plr.maxMana);
  plr.toHit=40+Math.floor(plr.dex/3);
  plr.dodge=Math.floor(plr.dex/6);
 }
@@ -908,9 +908,8 @@ function addXp(plr,amount){
  let needed=XP_PER_LEVEL[plr.level]||plr.level*150+200;
  while(plr.xp>=needed&&plr.level<50){
    plr.xp-=needed;plr.level++;plr.statPts+=5;
-    plr.maxHp=35+plr.level*4+plr.vit*2*Math.round(plr.level/20+1);
-    plr.hp=plr.maxHp;
-    plr.maxMana=35+plr.level*2+plr.mag*3*Math.round(plr.level/25+1);
+   calcPlayerStats(plr);
+   plr.hp=plr.maxHp;
    plr.mana=plr.maxMana;
   if(plr.charClass===CLASS_MAGE){plr.maxMana+=20;plr.mana=plr.maxMana;}
   needed=XP_PER_LEVEL[plr.level]||plr.level*150+200;
@@ -934,13 +933,14 @@ function playerAttack(plr,monster){
  let hitChance=plr.toHit-monster.ac;
  hitChance=clamp(hitChance,20,95);
   if(hitRoll<hitChance){
-    let dmg=rand(plr.minDmg,plr.maxDmg);
-    if(plr.charClass===CLASS_MAGE)dmg+=Math.floor(plr.mag/4);
-    // Super attack mode: 2x damage costs mana
-     if(G.superAttackMode){
-      if(plr.mana>=10){plr.mana-=10;dmg*=2;}
-     else{G.superAttackMode=false;updateSuperBtn();showMsg('Super attack: out of mana!');}
-    }
+     let dmg=rand(plr.minDmg,plr.maxDmg);
+     dmg=Math.round((1-1/(1+Math.exp(dmg*(1+dmg/monster.ac)/(1+monster.ac/dmg)/monster.ac)))*dmg)+1;
+     dmg=Math.max(1,dmg+rand(-1,1));
+     // Super attack mode: 2x damage costs mana
+      if(G.superAttackMode){
+       if(plr.mana>=10){plr.mana-=10;dmg*=2;}
+      else{G.superAttackMode=false;updateSuperBtn();showMsg('Super attack: out of mana!');}
+     }
      monster.hp-=dmg;
    monster.hitTimer=6;
    addFloatingText(monster.x,monster.y-1,'-'+dmg,'#f88');
@@ -963,15 +963,14 @@ function playerAttack(plr,monster){
      if(d){d.mapX=monster.x;d.mapY=monster.y;G.items.push(d);}
     }
    }
-   return true;
-  }else{
-   // Monster counterattacks
-   monsterAttack(plr,monster);
-  }
- }else{
-  showMsg(`Missed ${monster.t.name}!`);
-  monsterAttack(plr,monster);
- }
+     return true;
+     }
+    }else{
+    showMsg(`Missed ${monster.t.name}!`);
+    if(rng()<.25){
+     monsterAttack(plr,monster);
+    }
+   }
  return false;
 }
 function monsterAttack(plr,monster){
@@ -1007,50 +1006,71 @@ function updateMonsters(){
    if(m.aggro&&d<=1.5&&now-m._lastAttack>=1000){
     m._lastAttack=now;monsterAttack(G.player,m);
    }
-  // Movement tick — 150ms gated
-  if(!m._lastMove)m._lastMove=now;
-  if(now-m._lastMove<150)continue;
-   m._lastMove=now;
-   if(m.aggro&&d>1.5){
-    let dx=Math.sign(G.player.x-m.x);
-    let dy=Math.sign(G.player.y-m.y);
-    let nx=m.x+dx,ny=m.y+dy;
-    if(dx!==0&&dy!==0){
-     let ok=canWalk(nx,ny,G.map)&&!(nx===G.player.x&&ny===G.player.y);
-     if(ok){
-      let occupied=false;
-      for(let om of G.monsters)if(om!==m&&om.alive&&om.x===nx&&om.y===ny)occupied=true;
-      if(!occupied){m.x=nx;m.y=ny;}
-     }else{
-      let steps=rng()<.5?[[nx-m.x,0],[0,ny-m.y]]:[[0,ny-m.y],[nx-m.x,0]];
-      for(let s of steps){
-       let sx=m.x+s[0],sy=m.y+s[1];
-       if(canWalk(sx,sy,G.map)&&!(sx===G.player.x&&sy===G.player.y)){
-        let occ=false;
-        for(let om of G.monsters)if(om!==m&&om.alive&&om.x===sx&&om.y===sy)occ=true;
-        if(!occ){m.x=sx;m.y=sy;break;}
+   // Movement tick — 150ms gated
+   if(!m._lastMove)m._lastMove=now;
+   if(now-m._lastMove<150)continue;
+    m._lastMove=now;
+    if(m.aggro&&d>1.5){
+     let dx=Math.sign(G.player.x-m.x);
+     let dy=Math.sign(G.player.y-m.y);
+     let nx=m.x+dx,ny=m.y+dy;
+     let moved=false;
+     if(dx!==0&&dy!==0){
+      let ok=canWalk(nx,ny,G.map)&&!(nx===G.player.x&&ny===G.player.y);
+      if(ok){
+       let occupied=false;
+       for(let om of G.monsters)if(om!==m&&om.alive&&om.x===nx&&om.y===ny)occupied=true;
+       if(!occupied){m.x=nx;m.y=ny;moved=true;}
+      }else{
+       let steps=rng()<.5?[[nx-m.x,0],[0,ny-m.y]]:[[0,ny-m.y],[nx-m.x,0]];
+       for(let s of steps){
+        let sx=m.x+s[0],sy=m.y+s[1];
+        if(canWalk(sx,sy,G.map)&&!(sx===G.player.x&&sy===G.player.y)){
+         let occ=false;
+         for(let om of G.monsters)if(om!==m&&om.alive&&om.x===sx&&om.y===sy)occ=true;
+         if(!occ){m.x=sx;m.y=sy;moved=true;break;}
+        }
        }
       }
+     }else{
+      if(canWalk(nx,ny,G.map)&&!(nx===G.player.x&&ny===G.player.y)){
+       let occupied=false;
+       for(let om of G.monsters)if(om!==m&&om.alive&&om.x===nx&&om.y===ny)occupied=true;
+       if(!occupied){m.x=nx;m.y=ny;moved=true;}
+      }
      }
-    }else{
-     if(canWalk(nx,ny,G.map)&&!(nx===G.player.x&&ny===G.player.y)){
-      let occupied=false;
-      for(let om of G.monsters)if(om!==m&&om.alive&&om.x===nx&&om.y===ny)occupied=true;
-      if(!occupied){m.x=nx;m.y=ny;}
+     // Stuck detection: if blocked by wall, try random steps to path around
+     if(!moved){
+      if(m._stuck===undefined)m._stuck=0;
+      m._stuck++;
+      if(m._stuck>=3){
+       m._stuck=0;
+       let dirs=[[0,-1],[0,1],[-1,0],[1,0]];
+       for(let i=dirs.length-1;i>0;i--){let j=Math.floor(rng()*(i+1));[dirs[i],dirs[j]]=[dirs[j],dirs[i]];}
+       for(let d of dirs){
+        let rx=m.x+d[0],ry=m.y+d[1];
+        if(canWalk(rx,ry,G.map)&&!(rx===G.player.x&&ry===G.player.y)){
+         let occ=false;
+         for(let om of G.monsters)if(om!==m&&om.alive&&om.x===rx&&om.y===ry)occ=true;
+         if(!occ){m.x=rx;m.y=ry;break;}
+        }
+       }
+      }
+     }else{
+      m._stuck=0;
+     }
+    }else if(!m.aggro){
+     if(rng()<.3){
+      let dirs=[[0,-1],[0,1],[-1,0],[1,0]];
+      let dir=choice(dirs);
+      let nx=m.x+dir[0],ny=m.y+dir[1];
+      if(canWalk(nx,ny,G.map)){
+       let occupied=false;
+       for(let om of G.monsters)if(om!==m&&om.alive&&om.x===nx&&om.y===ny)occupied=true;
+       if(!occupied){m.x=nx;m.y=ny;}
+      }
      }
     }
-   }else if(!m.aggro){
-    if(rng()<.3){
-     let dirs=[[0,-1],[0,1],[-1,0],[1,0]];
-     let dir=choice(dirs);
-     let nx=m.x+dir[0],ny=m.y+dir[1];
-     if(canWalk(nx,ny,G.map)){
-      let occupied=false;
-      for(let om of G.monsters)if(om!==m&&om.alive&&om.x===nx&&om.y===ny)occupied=true;
-      if(!occupied){m.x=nx;m.y=ny;}
-     }
-    }
-   }
   }
  }
 // ---- NPC Interaction ----
@@ -1151,7 +1171,7 @@ function interactNPC(plr,npc){
       if(i<shopItems.length){
         let si=shopItems[i];
          let cost=si.minDmg?Math.max(10,si.minDmg*10+20):si.ac?Math.max(10,si.ac*8+20):30;
-           if(si.type==='potion'){let pm={'big_health_potion':150,'big_mana_potion':150,'full_health_potion':250,'full_mana_potion':250,'rejuvenation_potion':250,'full_rejuvenation':500};cost=pm[si.key]||15;}
+          if(si.type==='potion')cost=15;
           // Apply priceKf from quality and suffix
           let priceKf=1;
           if(si.quality)priceKf*=(si.quality.priceKf||1);
@@ -1433,11 +1453,12 @@ function render(){
      if(ent){ctx.fillStyle=locked?'#555':'#c90';ctx.font=Math.max(7,TILE/4)+'px Miniablo';ctx.textAlign='center';ctx.textBaseline='top';ctx.fillText(ent.name,sx+TILE/2,sy+TILE-2);}
     }
    }
-    if(t===T_QUEST_ALTAR){
-     ctx.fillStyle='#ca0';ctx.fillRect(sx+4,sy+4,TILE-8,TILE-8);
-     ctx.fillStyle='#fff';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
-     ctx.fillText('X',sx+TILE/2,sy+TILE/2);
-    }
+   if(t===T_QUEST_ALTAR){
+    ctx.fillStyle='#a0a';ctx.fillRect(sx+2,sy+2,TILE-4,TILE-4);
+    ctx.fillStyle='#c4c';ctx.fillRect(sx+6,sy+6,TILE-12,TILE-12);
+    ctx.fillStyle='#fff';ctx.font='bold '+Math.max(10,TILE/2.5)+'px Miniablo';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('?',sx+TILE/2,sy+TILE/2-4);
+   }
    if(t===T_STAIRS_DOWN){
     ctx.fillStyle='#236';ctx.fillRect(sx+4,sy+4,TILE-8,TILE-8);
     ctx.fillStyle='#468';ctx.fillRect(sx+8,sy+8,TILE-16,TILE-16);
@@ -2064,17 +2085,17 @@ function useInventoryItem(index){
    else if(item.misc==='fullheal'){plr.hp=plr.maxHp;showMsg(`Used ${item.name}`);}
    else if(item.misc==='bigmana'){plr.mana=Math.min(plr.mana+Math.floor(plr.maxMana/2),plr.maxMana);showMsg(`Used ${item.name}`);}
    else if(item.misc==='fullmana'){plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);}
-   else if(item.misc==='townportal'){
-    G.lastLevel=G.level;G.level=0;loadLevel(0);
-    showMsg('Town Portal - returned to town!');
-   }
+    else if(item.misc==='townportal'){
+     G.lastLevel=0;G.level=0;loadLevel(0);
+     showMsg('Town Portal - returned to town!');
+    }
    else if(item.misc==='firebolt'){
    // Ranged attack - find nearest monster
    let nearest=null,nd=99;
    for(let m of G.monsters){if(!m.alive)continue;let d=dist(plr.x,plr.y,m.x,m.y);if(d<nd&&d<6){nd=d;nearest=m;}}
-   if(nearest){let dmg=rand(8,16)+Math.floor(plr.mag/3);nearest.hp-=dmg;showMsg(`Firebolt hits ${nearest.t.name} for ${dmg}!`);if(nearest.hp<=0){nearest.alive=false;if(!plr._questKills)plr._questKills={};let key='kill_'+nearest.typeId;plr._questKills[key]=(plr._questKills[key]||0)+1;trackBossKill(nearest,plr,G.level);addXp(plr,nearest.xp);}}
+   if(nearest){let dmg=rand(12,24)+Math.floor(plr.mag/3);nearest.hp-=dmg;showMsg(`Firebolt hits ${nearest.t.name} for ${dmg}!`);if(nearest.hp<=0){nearest.alive=false;if(!plr._questKills)plr._questKills={};let key='kill_'+nearest.typeId;plr._questKills[key]=(plr._questKills[key]||0)+1;trackBossKill(nearest,plr,G.level);addXp(plr,nearest.xp);}}
    }else if(item.misc==='lightning'){
-    let dmg=rand(12,24)+Math.floor(plr.mag/2);
+    let dmg=rand(8,16)+Math.floor(plr.mag/2);
     for(let m of G.monsters){if(!m.alive)continue;if(dist(plr.x,plr.y,m.x,m.y)<5){m.hp-=dmg;showMsg(`Lightning hits ${m.t.name} for ${dmg}!`);if(m.hp<=0){m.alive=false;if(!plr._questKills)plr._questKills={};let key='kill_'+m.typeId;plr._questKills[key]=(plr._questKills[key]||0)+1;trackBossKill(m,plr,G.level);addXp(plr,m.xp);}}}
    }
   plr.inventory.splice(index,1);updateInventoryPanel();
