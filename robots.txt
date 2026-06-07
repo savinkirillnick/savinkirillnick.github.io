@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://savinkirillnick.github.io/sitemap.xml
