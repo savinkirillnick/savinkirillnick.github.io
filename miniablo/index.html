@@ -919,7 +919,7 @@ const MONSTER_TYPES=[
   {id:22,name:'Ghost',color:'#ddd',headColor:'#fff',minHP:60,maxHP:100,dmg:12,ac:20,xp:70,level:8},
   {id:23,name:'Cannibal',color:'#852',headColor:'#a74',minHP:120,maxHP:200,dmg:18,ac:35,xp:180,level:10},
   {id:24,name:'Merfork',color:'#228',headColor:'#44a',minHP:200,maxHP:320,dmg:20,ac:60,xp:300,level:10},
-  {id:25,name:'Backroom Monster',color:'#111',headColor:'#333',minHP:4,maxHP:9,dmg:100,ac:0,xp:500,level:15}
+  {id:25,name:'Backroom Monster',color:'#111',headColor:'#333',minHP:4,maxHP:9,dmg:100,ac:100,xp:500,level:15}
 ];
 function spawnMonster(typeId,x,y,level){
  let t=MONSTER_TYPES.find(m=>m.id===typeId);
@@ -988,12 +988,13 @@ const NPC_DEFS=[
  {id:11,name:'Anastacia',type:'quest',color:'#cc6',headColor:'#ddc',msg:'Hello! I don\'t see my thing anywhere!',x:16,y:24,questIds:[1]},
  {id:12,name:'Natalie',type:'quest',color:'#c6d',headColor:'#ede',msg:'Excuse me! Do you see my letter?',x:16,y:36,questIds:[6]},
  {id:13,name:'Kile',type:'quest',color:'#bbc',headColor:'#eee',msg:'Hi Fellow! I\'m looking for some treasure!',x:56,y:48,questIds:[7]},
-  {id:14,name:'Leric',type:'quest',color:'#c70',headColor:'#eed',msg:'You know that the Taurus is very smart? I need\'em!',x:52,y:22,questIds:[8]},
-  {id:15,name:'Bookmaker Virt',type:'bet',color:'#c86',headColor:'#fda',msg:'Place your bets! 100, 200 or 500 gold on the red or blue fighter!',x:38,y:23},
-  {id:16,name:'Carl',type:'greet',color:'#988',headColor:'#ddd',msg:'Hi there!',x:41,y:18},
-  {id:17,name:'Dwain',type:'greet',color:'#898',headColor:'#ddd',msg:'Welcome!',x:44,y:18},
-  {id:18,name:'Jack',type:'greet',color:'#889',headColor:'#ddd',msg:'Greetings!',x:42,y:26},
-  {id:19,name:'Spock',type:'greet',color:'#998',headColor:'#ddd',msg:'Hello!',x:38,y:25}
+ {id:14,name:'Leric',type:'quest',color:'#c70',headColor:'#eed',msg:'You know that the Taurus is very smart? I need\'em!',x:52,y:22,questIds:[8]},
+
+ {id:15,name:'Bookmaker Virt',type:'bet',color:'#c86',headColor:'#fda',msg:'Place your bets! 100, 200 or 500 gold on the red or blue fighter!',x:38,y:23},
+ {id:16,name:'Carl',type:'greet',color:'#988',headColor:'#ddd',msg:'Hi there!',x:41,y:18},
+ {id:17,name:'Dwain',type:'greet',color:'#898',headColor:'#ddd',msg:'Welcome!',x:44,y:18},
+ {id:18,name:'Jack',type:'greet',color:'#889',headColor:'#ddd',msg:'Greetings!',x:42,y:26},
+ {id:19,name:'Spock',type:'greet',color:'#998',headColor:'#ddd',msg:'Hello!',x:38,y:25}
 ];
 // ---- Create NPC instances ----
 function createNPCsForTown(){
