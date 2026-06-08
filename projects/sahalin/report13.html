@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>13. Продаваемость SKU — Sahalin LK</title>
+<link rel="stylesheet" href="report13_files/tailwind.min.css">
+<link rel="stylesheet" href="report13_files/app.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+<div class="flex min-h-screen">
+  <aside class="w-64 bg-white border-r border-slate-200 flex flex-col">
+    <div class="p-5 border-b border-slate-200">
+      <a href="#" alt="dashboard.php" class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">S</div>
+        <div>
+          <div class="font-semibold text-slate-900">Sahalin</div>
+          <div class="text-xs text-slate-500">Аналитика 1С</div>
+        </div>
+      </a>
+    </div>
+    <nav class="flex-1 overflow-y-auto py-3 text-sm">
+                    <a href="#" alt="dashboard.php" class="flex items-center gap-2 px-5 py-2 hover:bg-slate-100 text-slate-700">
+          <span>📊</span><span>Дашборд</span>
+        </a>
+              <a href="#" alt="upload.php" class="flex items-center gap-2 px-5 py-2 hover:bg-slate-100 text-slate-700">
+          <span>⬆️</span><span>Загрузка XML</span>
+        </a>
+              <a href="#" alt="ai_console.php" class="flex items-center gap-2 px-5 py-2 hover:bg-slate-100 text-slate-700">
+          <span>🤖</span><span>ИИ-анализ (GigaChat)</span>
+        </a>
+      
+      <div class="px-5 mt-4 mb-1 text-[11px] uppercase tracking-wider text-slate-400">Отчёты</div>
+      <a href="#" alt="reports/r1.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>1. Трафик</span></a><a href="#" alt="reports/r2.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>2. Трафик по ТТ</span></a><a href="#" alt="reports/r3.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>3. Выполнение ТО по сети</span></a><a href="#" alt="reports/r4.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>4. Средний чек по категории</span></a><a href="#" alt="reports/r5.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>5. Выполнение ТО по ТТ</span></a><a href="#" alt="reports/r6.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>6. Оборачиваемость</span></a><a href="#" alt="reports/r7.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>7. Оборачиваемость по ТТ</span></a><a href="#" alt="reports/r8.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>8. Оборачиваемость по поставщику</span></a><a href="#" alt="reports/r9.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>9. Service Level</span></a><a href="#" alt="reports/r10.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>10. Списания</span></a><a href="#" alt="reports/r11.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>11. Списания по ТТ</span></a><a href="#" alt="reports/r12.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>12. Маржа</span></a><a href="#" alt="reports/r13.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs bg-indigo-50 text-indigo-700 border-r-2 border-indigo-600"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>13. Продаваемость SKU</span></a><a href="#" alt="reports/r14.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>14. ТБД по субкатегориям</span></a>
+      <div class="px-5 mt-4 mb-1 text-[11px] uppercase tracking-wider text-slate-400">Сервис</div>
+      <a href="#" alt="settings.php" class="flex items-center gap-2 px-5 py-2 hover:bg-slate-100 text-slate-700">
+        <span>⚙️</span><span>Настройки</span>
+      </a>
+    </nav>
+    <div class="p-4 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
+      <span>admin</span>
+      <a href="#" alt="logout.php" class="text-slate-500 hover:text-rose-600">Выйти</a>
+    </div>
+  </aside>
+  <main class="flex-1 flex flex-col">
+    <header class="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between">
+      <h1 class="text-xl font-semibold text-slate-900">13. Продаваемость SKU</h1>
+            <div class="text-sm text-slate-500">
+                  Текущий отчёт: <span class="text-slate-800 font-medium">Продажи.xml</span>
+          <span class="text-slate-400">·</span>
+          13124 зап.
+          <span class="text-slate-400">·</span>
+          2026-05-12 23:36:08              </div>
+    </header>
+    <div class="p-8 flex-1">
+      <div class="card mb-4 flex items-center justify-between">
+  <div>
+    <h3>Скорость продаж (продаваемость) по SKU</h3>
+    <p class="text-sm text-slate-500">Кол-во проданных единиц делится на
+ число дней между первой и последней продажей. После добавления 
+справочника номенклатуры — будут видны названия товаров.</p>
+  </div>
+  <form method="get" class="flex items-center gap-2">
+    <label class="text-xs text-slate-500">Показать топ:</label>
+    <select name="limit" class="select" onchange="this.form.submit()">
+              <option value="20">20</option>
+              <option value="50" selected="selected">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+          </select>
+  </form>
+</div>
+
+<div class="card">
+  <table class="data">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>SKU (GUID)</th>
+        <th class="num">Кол-во продано</th>
+        <th class="num">Выручка</th>
+        <th class="num">Дней в продаже</th>
+        <th class="num">Скорость (ед/день)</th>
+      </tr>
+    </thead>
+    <tbody>
+            <tr>
+        <td>1</td>
+        <td><span class="font-mono text-xs">c7db9041-aea4-11ee-9a38-9ead9df9071d</span></td>
+        <td class="num">1 221</td>
+        <td class="num">6 101,68</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">1 221,00</td>
+      </tr>
+            <tr>
+        <td>2</td>
+        <td><span class="font-mono text-xs">c42c8fa0-11e6-11f1-8469-002590fb2817</span></td>
+        <td class="num">460</td>
+        <td class="num">39 402,58</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">460,46</td>
+      </tr>
+            <tr>
+        <td>3</td>
+        <td><span class="font-mono text-xs">c7db9044-aea4-11ee-9a38-9ead9df9071d</span></td>
+        <td class="num">334</td>
+        <td class="num">2 327,54</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">334,00</td>
+      </tr>
+            <tr>
+        <td>4</td>
+        <td><span class="font-mono text-xs">f6cd266e-c7e8-11e6-80c4-1c98ec0f87cd</span></td>
+        <td class="num">279</td>
+        <td class="num">23 996,86</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">279,46</td>
+      </tr>
+            <tr>
+        <td>5</td>
+        <td><span class="font-mono text-xs">b5a5a031-c8f0-11e6-80c4-1c98ec0f87cd</span></td>
+        <td class="num">251</td>
+        <td class="num">62 819,38</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">251,44</td>
+      </tr>
+            <tr>
+        <td>6</td>
+        <td><span class="font-mono text-xs">68e329a1-c8ef-11e6-80c4-1c98ec0f87cd</span></td>
+        <td class="num">247</td>
+        <td class="num">19 662,61</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">247,87</td>
+      </tr>
+            <tr>
+        <td>7</td>
+        <td><span class="font-mono text-xs">f77920cc-c571-4a3d-beb5-e425a25da1fc</span></td>
+        <td class="num">228</td>
+        <td class="num">37 018,46</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">228,00</td>
+      </tr>
+            <tr>
+        <td>8</td>
+        <td><span class="font-mono text-xs">a82cd146-c1cf-496f-96a2-43546a451369</span></td>
+        <td class="num">227</td>
+        <td class="num">62 775,59</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">227,68</td>
+      </tr>
+            <tr>
+        <td>9</td>
+        <td><span class="font-mono text-xs">95d5b1ec-9d6c-4765-b7cc-caa3360e9d47</span></td>
+        <td class="num">205</td>
+        <td class="num">38 817,26</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">205,00</td>
+      </tr>
+            <tr>
+        <td>10</td>
+        <td><span class="font-mono text-xs">85e5a8a1-ebee-495c-b888-7cd54d809d15</span></td>
+        <td class="num">200</td>
+        <td class="num">23 971,87</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">200,00</td>
+      </tr>
+            <tr>
+        <td>11</td>
+        <td><span class="font-mono text-xs">c7db903e-aea4-11ee-9a38-9ead9df9071d</span></td>
+        <td class="num">177</td>
+        <td class="num">1 238,99</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">177,00</td>
+      </tr>
+            <tr>
+        <td>12</td>
+        <td><span class="font-mono text-xs">a2b4ffe9-8e7e-11ea-af0b-0cc47adc7f6d</span></td>
+        <td class="num">173</td>
+        <td class="num">10 268,07</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">173,00</td>
+      </tr>
+            <tr>
+        <td>13</td>
+        <td><span class="font-mono text-xs">3f2f7fb6-62cd-11e7-80d3-1c98ec0f87cd</span></td>
+        <td class="num">142</td>
+        <td class="num">8 652,12</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">142,00</td>
+      </tr>
+            <tr>
+        <td>14</td>
+        <td><span class="font-mono text-xs">5cdc22f5-62cd-11e7-80d3-1c98ec0f87cd</span></td>
+        <td class="num">138</td>
+        <td class="num">8 383,63</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">138,00</td>
+      </tr>
+            <tr>
+        <td>15</td>
+        <td><span class="font-mono text-xs">4068d523-c971-11e6-80c4-1c98ec0f87cd</span></td>
+        <td class="num">123</td>
+        <td class="num">15 619,13</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">123,00</td>
+      </tr>
+            <tr>
+        <td>16</td>
+        <td><span class="font-mono text-xs">ea0a3e97-36f8-11e8-a269-0cc47a9b764b</span></td>
+        <td class="num">120</td>
+        <td class="num">9 577,79</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">120,00</td>
+      </tr>
+            <tr>
+        <td>17</td>
+        <td><span class="font-mono text-xs">c42c8faf-11e6-11f1-8469-002590fb2817</span></td>
+        <td class="num">117</td>
+        <td class="num">10 022,67</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">117,35</td>
+      </tr>
+            <tr>
+        <td>18</td>
+        <td><span class="font-mono text-xs">436166d1-9ca7-4057-baa2-d07c3d9247d4</span></td>
+        <td class="num">111</td>
+        <td class="num">9 869,50</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">111,18</td>
+      </tr>
+            <tr>
+        <td>19</td>
+        <td><span class="font-mono text-xs">4a369d41-4522-4bda-9e42-059c669f5696</span></td>
+        <td class="num">91</td>
+        <td class="num">8 137,37</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">91,00</td>
+      </tr>
+            <tr>
+        <td>20</td>
+        <td><span class="font-mono text-xs">5c387464-9c20-11e8-a280-0cc47a9b764b</span></td>
+        <td class="num">89</td>
+        <td class="num">11 560,94</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">89,00</td>
+      </tr>
+            <tr>
+        <td>21</td>
+        <td><span class="font-mono text-xs">9d1b6e6d-c401-11e6-80c3-1c98ec0f87cd</span></td>
+        <td class="num">86</td>
+        <td class="num">2 316,75</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">86,00</td>
+      </tr>
+            <tr>
+        <td>22</td>
+        <td><span class="font-mono text-xs">5763ff19-a1b4-40b9-8aa0-1b57f4926a51</span></td>
+        <td class="num">84</td>
+        <td class="num">8 395,72</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">84,00</td>
+      </tr>
+            <tr>
+        <td>23</td>
+        <td><span class="font-mono text-xs">4650bfae-c401-11e6-80c3-1c98ec0f87cd</span></td>
+        <td class="num">83</td>
+        <td class="num">5 380,63</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">83,00</td>
+      </tr>
+            <tr>
+        <td>24</td>
+        <td><span class="font-mono text-xs">9e0cd3a8-d22f-4a05-aac7-4810bdd3db60</span></td>
+        <td class="num">79</td>
+        <td class="num">6 444,58</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">79,00</td>
+      </tr>
+            <tr>
+        <td>25</td>
+        <td><span class="font-mono text-xs">550ee3cb-9c3a-11e8-a280-0cc47a9b764b</span></td>
+        <td class="num">78</td>
+        <td class="num">6 769,12</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">78,00</td>
+      </tr>
+            <tr>
+        <td>26</td>
+        <td><span class="font-mono text-xs">e648e5c0-d93a-404c-ab30-44ea95694e93</span></td>
+        <td class="num">77</td>
+        <td class="num">7 677,28</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">77,00</td>
+      </tr>
+            <tr>
+        <td>27</td>
+        <td><span class="font-mono text-xs">58e3449f-3aa3-4269-8ffc-59f1b50bd544</span></td>
+        <td class="num">77</td>
+        <td class="num">2 026,15</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">77,00</td>
+      </tr>
+            <tr>
+        <td>28</td>
+        <td><span class="font-mono text-xs">23365e66-07ce-4fd6-8dd5-45b248ad7665</span></td>
+        <td class="num">75</td>
+        <td class="num">9 914,89</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">75,00</td>
+      </tr>
+            <tr>
+        <td>29</td>
+        <td><span class="font-mono text-xs">3909bda9-eb8e-11e7-a241-0cc47a9b764b</span></td>
+        <td class="num">74</td>
+        <td class="num">10 937,09</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">74,00</td>
+      </tr>
+            <tr>
+        <td>30</td>
+        <td><span class="font-mono text-xs">82e366da-d6a5-11ee-9a42-b6b3460d53df</span></td>
+        <td class="num">72</td>
+        <td class="num">1 940,40</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">72,00</td>
+      </tr>
+            <tr>
+        <td>31</td>
+        <td><span class="font-mono text-xs">c17c556c-c7e2-11e6-80c4-1c98ec0f87cd</span></td>
+        <td class="num">71</td>
+        <td class="num">3 920,72</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">71,47</td>
+      </tr>
+            <tr>
+        <td>32</td>
+        <td><span class="font-mono text-xs">128dbdec-d307-11e7-a22e-0cc47a9b764b</span></td>
+        <td class="num">69</td>
+        <td class="num">1 849,43</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">69,00</td>
+      </tr>
+            <tr>
+        <td>33</td>
+        <td><span class="font-mono text-xs">2a2c5149-1c57-4ad3-8d91-aa34503b4a85</span></td>
+        <td class="num">67</td>
+        <td class="num">1 926,36</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">67,00</td>
+      </tr>
+            <tr>
+        <td>34</td>
+        <td><span class="font-mono text-xs">db6a5469-e786-493d-9c05-e9de35e424ce</span></td>
+        <td class="num">66</td>
+        <td class="num">9 880,06</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">66,00</td>
+      </tr>
+            <tr>
+        <td>35</td>
+        <td><span class="font-mono text-xs">b83de773-49c6-11e8-a26c-0cc47a9b764b</span></td>
+        <td class="num">66</td>
+        <td class="num">9 828,98</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">66,00</td>
+      </tr>
+            <tr>
+        <td>36</td>
+        <td><span class="font-mono text-xs">3ba562b3-5c7d-11e8-a26e-0cc47a9b764b</span></td>
+        <td class="num">64</td>
+        <td class="num">2 721,47</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">64,00</td>
+      </tr>
+            <tr>
+        <td>37</td>
+        <td><span class="font-mono text-xs">72f2ab9b-4dfc-4d1f-893e-75b064ea5e4e</span></td>
+        <td class="num">63</td>
+        <td class="num">10 252,90</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">63,00</td>
+      </tr>
+            <tr>
+        <td>38</td>
+        <td><span class="font-mono text-xs">0e3299a3-1ec6-4450-bc6f-0d19b6fcebf7</span></td>
+        <td class="num">62</td>
+        <td class="num">8 807,93</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">62,00</td>
+      </tr>
+            <tr>
+        <td>39</td>
+        <td><span class="font-mono text-xs">e4b7a100-6a72-11e7-80d3-1c98ec0f87cd</span></td>
+        <td class="num">61</td>
+        <td class="num">5 557,24</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">61,00</td>
+      </tr>
+            <tr>
+        <td>40</td>
+        <td><span class="font-mono text-xs">d4a2f1dd-011a-49f9-b75d-243e09acbc3b</span></td>
+        <td class="num">61</td>
+        <td class="num">4 446,01</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">61,00</td>
+      </tr>
+            <tr>
+        <td>41</td>
+        <td><span class="font-mono text-xs">a2c23c44-4722-4d88-95f9-36e421ea43f7</span></td>
+        <td class="num">60</td>
+        <td class="num">5 784,35</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">60,00</td>
+      </tr>
+            <tr>
+        <td>42</td>
+        <td><span class="font-mono text-xs">2ce7920a-cf32-4123-910e-d4eb7d9d209d</span></td>
+        <td class="num">60</td>
+        <td class="num">4 780,15</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">60,00</td>
+      </tr>
+            <tr>
+        <td>43</td>
+        <td><span class="font-mono text-xs">11e9cc7b-c8ef-11e6-80c4-1c98ec0f87cd</span></td>
+        <td class="num">59</td>
+        <td class="num">6 253,69</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">59,19</td>
+      </tr>
+            <tr>
+        <td>44</td>
+        <td><span class="font-mono text-xs">3ba562b0-5c7d-11e8-a26e-0cc47a9b764b</span></td>
+        <td class="num">58</td>
+        <td class="num">2 760,69</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">58,00</td>
+      </tr>
+            <tr>
+        <td>45</td>
+        <td><span class="font-mono text-xs">787a277c-62cd-11e7-80d3-1c98ec0f87cd</span></td>
+        <td class="num">56</td>
+        <td class="num">4 697,50</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">56,00</td>
+      </tr>
+            <tr>
+        <td>46</td>
+        <td><span class="font-mono text-xs">0d37af35-18cf-11f0-83c9-f76bb3933358</span></td>
+        <td class="num">56</td>
+        <td class="num">1 509,20</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">56,00</td>
+      </tr>
+            <tr>
+        <td>47</td>
+        <td><span class="font-mono text-xs">dc70f9a3-0a0a-11e7-80cb-1c98ec0f87cd</span></td>
+        <td class="num">55</td>
+        <td class="num">4 763,08</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">55,00</td>
+      </tr>
+            <tr>
+        <td>48</td>
+        <td><span class="font-mono text-xs">32b0e3c2-2648-11f1-8469-002590fb2817</span></td>
+        <td class="num">55</td>
+        <td class="num">1 151,25</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">55,00</td>
+      </tr>
+            <tr>
+        <td>49</td>
+        <td><span class="font-mono text-xs">65e19474-7d3b-11ea-af03-0cc47adc7f6d</span></td>
+        <td class="num">54</td>
+        <td class="num">8 958,27</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">54,00</td>
+      </tr>
+            <tr>
+        <td>50</td>
+        <td><span class="font-mono text-xs">02ab49f9-de6b-44d8-adc5-3ae576209c6a</span></td>
+        <td class="num">54</td>
+        <td class="num">5 913,98</td>
+        <td class="num">1</td>
+        <td class="num font-medium text-indigo-700">54,00</td>
+      </tr>
+          </tbody>
+  </table>
+</div>
+    </div>
+    <footer class="px-8 py-4 text-xs text-slate-400">Sahalin LK · v1 · 2026</footer>
+  </main>
+</div>
+
+
+</body></html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИИ-анализ (GigaChat) — Sahalin LK</title>
+<link rel="stylesheet" href="ai-analysis_files/tailwind.min.css">
+<link rel="stylesheet" href="ai-analysis_files/app.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+<div class="flex min-h-screen">
+  <aside class="w-64 bg-white border-r border-slate-200 flex flex-col">
+    <div class="p-5 border-b border-slate-200">
+      <a href="#" alt="dashboard.php" class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">S</div>
+        <div>
+          <div class="font-semibold text-slate-900">Sahalin</div>
+          <div class="text-xs text-slate-500">Аналитика 1С</div>
+        </div>
+      </a>
+    </div>
+    <nav class="flex-1 overflow-y-auto py-3 text-sm">
+                    <a href="#" alt="dashboard.php" class="flex items-center gap-2 px-5 py-2 hover:bg-slate-100 text-slate-700">
+          <span>📊</span><span>Дашборд</span>
+        </a>
+              <a href="#" alt="upload.php" class="flex items-center gap-2 px-5 py-2 hover:bg-slate-100 text-slate-700">
+          <span>⬆️</span><span>Загрузка XML</span>
+        </a>
+              <a href="#" alt="ai_console.php" class="flex items-center gap-2 px-5 py-2 hover:bg-slate-100 bg-indigo-50 text-indigo-700 border-r-2 border-indigo-600">
+          <span>🤖</span><span>ИИ-анализ (GigaChat)</span>
+        </a>
+      
+      <div class="px-5 mt-4 mb-1 text-[11px] uppercase tracking-wider text-slate-400">Отчёты</div>
+      <a href="#" alt="reports/r1.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>1. Трафик</span></a><a href="#" alt="reports/r2.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>2. Трафик по ТТ</span></a><a href="#" alt="reports/r3.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>3. Выполнение ТО по сети</span></a><a href="#" alt="reports/r4.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>4. Средний чек по категории</span></a><a href="#" alt="reports/r5.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>5. Выполнение ТО по ТТ</span></a><a href="#" alt="reports/r6.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>6. Оборачиваемость</span></a><a href="#" alt="reports/r7.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>7. Оборачиваемость по ТТ</span></a><a href="#" alt="reports/r8.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>8. Оборачиваемость по поставщику</span></a><a href="#" alt="reports/r9.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>9. Service Level</span></a><a href="#" alt="reports/r10.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>10. Списания</span></a><a href="#" alt="reports/r11.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>11. Списания по ТТ</span></a><a href="#" alt="reports/r12.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>12. Маржа</span></a><a href="#" alt="reports/r13.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>13. Продаваемость SKU</span></a><a href="#" alt="reports/r14.php" class="flex items-center gap-2 pl-7 pr-5 py-1.5 text-xs text-slate-600 hover:bg-slate-100"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span>14. ТБД по субкатегориям</span></a>
+      <div class="px-5 mt-4 mb-1 text-[11px] uppercase tracking-wider text-slate-400">Сервис</div>
+      <a href="#" alt="settings.php" class="flex items-center gap-2 px-5 py-2 hover:bg-slate-100 text-slate-700">
+        <span>⚙️</span><span>Настройки</span>
+      </a>
+    </nav>
+    <div class="p-4 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
+      <span>admin</span>
+      <a href="#" alt="logout.php" class="text-slate-500 hover:text-rose-600">Выйти</a>
+    </div>
+  </aside>
+  <main class="flex-1 flex flex-col">
+    <header class="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between">
+      <h1 class="text-xl font-semibold text-slate-900">ИИ-анализ (GigaChat)</h1>
+            <div class="text-sm text-slate-500">
+                  Текущий отчёт: <span class="text-slate-800 font-medium">Продажи.xml</span>
+          <span class="text-slate-400">·</span>
+          13124 зап.
+          <span class="text-slate-400">·</span>
+          2026-05-12 23:36:08              </div>
+    </header>
+    <div class="p-8 flex-1">
+      
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="card lg:col-span-2">
+    <h3>Запуск анализа</h3>
+    <p class="text-sm text-slate-500 mb-4">Выберите готовый промпт или напишите свой. ИИ получит агрегированную сводку по загруженному отчёту и выдаст рекомендации.</p>
+
+    <form id="aiForm" class="space-y-4">
+      <div>
+        <label class="label-block">Готовый промпт</label>
+        <select id="presetSelect" class="select">
+          <option value="" selected="selected">— выбрать из шаблонов —</option>
+                      <option value="Проанализируй данные продаж: выяви тренды по неделям, топ-5 SKU по выручке и марже, найди аномалии (резкие просадки/всплески), укажи на что обратить внимание управляющему.">Анализ продаж (по умолчанию)</option>
+                      <option value="Оцени маржинальность: средняя маржа в %, какие SKU тянут маржу вниз, какие — вверх. Дай 3 конкретные рекомендации.">Маржинальный анализ</option>
+                      <option value="Посчитай скорость продаж (продаваемость) по топ-20 SKU. Какие позиции вымываются быстро, какие &quot;висят&quot;? Что заказать дополнительно?">Скорость продаж</option>
+                  </select>
+      </div>
+      <div>
+        <label class="label-block">Промпт</label>
+        <textarea id="promptText" class="textarea" rows="5" placeholder="Например: Проанализируй продажи за период, найди отклонения и дай 3 рекомендации.">Проанализируй
+ данные продаж: выяви тренды по неделям, топ-5 SKU по выручке и марже, 
+найди аномалии (резкие просадки/всплески), укажи на что обратить 
+внимание управляющему.</textarea>
+      </div>
+      <div class="flex gap-2">
+        <button type="button" id="runBtn" class="btn btn-primary">🤖 Запустить анализ</button>
+        <button type="button" id="savePromptBtn" class="btn btn-secondary">💾 Сохранить как шаблон</button>
+      </div>
+    </form>
+
+    <div id="loading" class="hidden mt-6 text-sm text-slate-500">⏳ Запрос отправлен в GigaChat, ждём ответ…</div>
+    <div id="result" class="mt-6 hidden">
+      <h4 class="font-semibold text-slate-800 mb-2">Результат анализа</h4>
+      <div id="resultBody" class="prose prose-sm max-w-none p-4 rounded-lg bg-slate-50 border border-slate-200 whitespace-pre-wrap"></div>
+      <p id="resultMeta" class="text-xs text-slate-400 mt-2"></p>
+    </div>
+    <div id="errBox" class="hidden mt-6 px-3 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-sm"></div>
+  </div>
+
+  <div class="card">
+    <h3>История запросов</h3>
+          <div class="space-y-3 max-h-[500px] overflow-y-auto">
+              <details class="border border-slate-200 rounded-lg p-3" open="">
+          <summary class="cursor-pointer text-xs text-slate-500">
+            <span class="font-medium text-slate-700">Посчитай скорость продаж (продаваемость) по топ-20 SKU. Каки…</span>
+            <span class="block text-[10px] text-slate-400 mt-1">2026-05-13 09:55:43 · 1788 ток.</span>
+          </summary>
+          <div class="text-sm text-slate-700 whitespace-pre-wrap mt-2">1. **Скорость продаж (продаваемость)**:
+   - Топ-20 SKU имеют среднюю продаваемость от 200 до 1221 ед./день.
+   
+2. **Быстрое вымирание позиций**:
+   - SKU с низкой скоростью продаж (&lt;200 ед./день):  
+     - 5dc72a66 – 9 ед./дн  
+     - 4068d523 – 123 ед./дн  
+     - 5dc72a66 требует срочного пополнения запасов.
+
+3. **Позиции, которые «висят» на полках**:
+   - Позиции с высокой себестоимостью относительно выручки и низким спросом:  
+     - SKU 5dc72a66 (низкий спрос при высокой цене).  
+     - Рассмотреть снижение цены или продвижение для увеличения спроса.
+
+4. **Рекомендации**:
+   - Заказать дополнительные товары из списка быстро распродающихся:  
+     - SKU 5dc72a66, 4068d523.  
+   - Провести акцию/скидку на медленно движущиеся SKU (5dc72a66), чтобы стимулировать продажи.</div>
+        </details>
+              <details class="border border-slate-200 rounded-lg p-3" open="">
+          <summary class="cursor-pointer text-xs text-slate-500">
+            <span class="font-medium text-slate-700">Оцени маржинальность: средняя маржа в %, какие SKU тянут мар…</span>
+            <span class="block text-[10px] text-slate-400 mt-1">2026-05-13 09:55:12 · 1819 ток.</span>
+          </summary>
+          <div class="text-sm text-slate-700 whitespace-pre-wrap mt-2">**Анализ маржинальности**
+
+Средняя маржа = **25.75%**, что соответствует нормальному уровню.
+
+**Маржинальные лидеры:**
+- Топовые ТТ и SKU с высокой маржей:
+  - ТТ 9bc95002 – маржа 237 833.35 ₽
+  - SKU a82cd146 – маржа 13 887.71 ₽
+  
+**Маржинальные аутсайдеры:**
+- Низкая маржа отдельных SKU тянет вниз общую маржу:
+  - SKU 5dc72a66 – маржа 4 187.82 ₽ (низкий уровень на фоне объёма продаж)
+
+**Рекомендации:**
+
+1. **Повысить цены или снизить закупочную стоимость:** 
+   Рассмотреть возможность повышения цен для SKU с низкой маржой (например, SKU 5dc72a66) при условии сохранения конкурентоспособности.
+   
+2. **Оптимизация ассортимента:**
+   Исключить из ассортимента товары с крайне низкой маржой (SKU 5dc72a66), заменив их более прибыльными позициями.
+
+3. **Мониторинг скидок:**
+   Проанализировать причины предоставления скидок для товаров с низкой маржой и пересмотреть политику скидок, чтобы избежать необоснованных потерь прибыли.</div>
+        </details>
+              <details class="border border-slate-200 rounded-lg p-3" open="">
+          <summary class="cursor-pointer text-xs text-slate-500">
+            <span class="font-medium text-slate-700">Проанализируй данные продаж: выяви тренды по неделям, топ-5 …</span>
+            <span class="block text-[10px] text-slate-400 mt-1">2026-05-13 09:54:27 · 2211 ток.</span>
+          </summary>
+          <div class="text-sm text-slate-700 whitespace-pre-wrap mt-2">**Анализ данных продаж**
+
+1. **Тренды по неделям:**  
+   - В отчетном периоде (2026-W17) зафиксирована стабильная выручка в размере 3 963 800.70 ₽ и маржа 1 020 490.38 ₽.
+   
+2. **Топ-5 SKU по выручке и марже:**  
+   - **Выручка:**  
+     1. SKU `b5a5a031` – 62 819.38 ₽  
+     2. SKU `a82cd146` – 62 775.59 ₽  
+     3. SKU `c42c8fa0` – 39 402.58 ₽  
+     4. SKU `95d5b1ec` – 38 817.26 ₽  
+     5. SKU `f77920cc` – 37 018.46 ₽  
+     
+   - **Маржа:**  
+     1. SKU `a82cd146` – 13 887.71 ₽  
+     2. SKU `c42c8fa0` – 12 977.00 ₽  
+     3. SKU `95d5b1ec` – 7 042.26 ₽  
+     4. SKU `f77920cc` – 6 238.46 ₽  
+     5. SKU `b5a5a031` – 7 374.97 ₽  
+
+3. **Скорость продаж:**  
+   - Высокий спрос на следующие товары:  
+     1. SKU `c7db9041` – 1 221 ед./день  
+     2. SKU `c42c8fa0` – 460 ед./день  
+     3. SKU `c7db9044` – 334 ед./день  
+
+4. **Аномалии:**  
+   - Не выявлены резкие всплески или падения выручки и маржи относительно предыдущих периодов.  
+   - Отдельно стоит отметить товар с низкой скоростью продаж (`SKU 5dc72a66`) – всего продано 9 шт. за неделю при высокой марже (4 187.82 ₽). Возможно, это единичный случай или ошибка учета.
+
+**Рекомендации управляющему:**
+- Провести анализ причин высокого спроса на популярные SKU (`c7db9041`, `c42c8fa0`, `c7db9044`), возможно, скорректировать ассортиментную политику.
+- Рассмотреть возможность увеличения запасов товаров с высоким спросом для поддержания стабильности продаж.
+- Проверить корректность учета товара с низкой скоростью продаж (`SKU 5dc72a66`).</div>
+        </details>
+            </div>
+      </div>
+</div>
+
+<script>
+const presetSelect = document.getElementById('presetSelect');
+const promptText   = document.getElementById('promptText');
+presetSelect.addEventListener('change', () => { if (presetSelect.value) promptText.value = presetSelect.value; });
+
+document.getElementById('runBtn').addEventListener('click', async () => {
+  const p = promptText.value.trim();
+  if (!p) { alert('Введите промпт'); return; }
+  document.getElementById('loading').classList.remove('hidden');
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('errBox').classList.add('hidden');
+  try {
+    const r = await fetch('/1ClientsProjects/sahalin/v1/api/ai_run.php', {
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: new URLSearchParams({ csrf:'8ce330c628f4e3a316201633ad4d4666', prompt: p })
+    });
+    const j = await r.json();
+    document.getElementById('loading').classList.add('hidden');
+    if (!j.ok) {
+      const e = document.getElementById('errBox');
+      e.textContent = j.error || 'Ошибка'; e.classList.remove('hidden'); return;
+    }
+    document.getElementById('result').classList.remove('hidden');
+    document.getElementById('resultBody').textContent = j.text;
+    document.getElementById('resultMeta').textContent = 'Токенов: ' + (j.tokens || 0) + ' · ' + (j.created_at || '');
+  } catch (e) {
+    document.getElementById('loading').classList.add('hidden');
+    const eb = document.getElementById('errBox'); eb.textContent = 'Сеть: ' + e.message; eb.classList.remove('hidden');
+  }
+});
+
+document.getElementById('savePromptBtn').addEventListener('click', async () => {
+  const t = prompt('Название шаблона:');
+  if (!t) return;
+  const r = await fetch('/1ClientsProjects/sahalin/v1/api/prompt_save.php', {
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body: new URLSearchParams({ csrf:'8ce330c628f4e3a316201633ad4d4666', title: t, prompt: promptText.value })
+  });
+  const j = await r.json();
+  if (j.ok) { alert('Сохранено'); location.reload(); }
+  else alert(j.error || 'Ошибка');
+});
+</script>
+    </div>
+    <footer class="px-8 py-4 text-xs text-slate-400">Sahalin LK · v1 · 2026</footer>
+  </main>
+</div>
+
+
+</body></html>
