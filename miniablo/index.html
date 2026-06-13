@@ -410,9 +410,9 @@ function generateTown(){
 [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,4,4,4,5,5,4,4,4,4,4,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
 [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,2,2,2,2,2,2,2,5,5,4,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4],
 [4,4,4,4,4,4,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,5,2,5,5,5,5,5,2,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
-[4,4,4,4,4,4,2,8,8,8,2,4,4,4,2,2,2,2,2,2,2,2,2,2,4,5,5,5,5,5,5,5,5,5,4,4,4,5,5,2,5,5,5,5,5,2,5,5,5,4,2,2,2,2,2,2,2,2,2,4,4,4,4,4],
-[4,4,4,4,4,4,2,8,8,8,2,4,4,4,2,8,8,8,8,8,2,8,8,2,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,5,5,5,5,5,2,5,5,5,4,2,8,8,8,2,8,8,8,2,4,4,4,4,4],
-[4,4,4,4,4,4,2,8,8,8,2,4,4,4,2,8,8,8,8,8,2,8,8,2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,5,5,5,5,5,2,5,5,5,4,2,8,8,8,2,8,8,8,2,4,4,4,4,4],
+[4,4,4,4,4,4,2,8,8,8,2,4,4,4,2,2,2,2,2,2,2,2,2,2,4,5,5,5,5,5,5,5,5,5,4,4,4,5,5,2,5,8,5,8,5,2,5,5,5,4,2,2,2,2,2,2,2,2,2,4,4,4,4,4],
+[4,4,4,4,4,4,2,8,8,8,2,4,4,4,2,8,8,8,8,8,2,8,8,2,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,5,5,8,5,5,2,5,5,5,4,2,8,8,8,2,8,8,8,2,4,4,4,4,4],
+[4,4,4,4,4,4,2,8,8,8,2,4,4,4,2,8,8,8,8,8,2,8,8,2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,5,8,5,8,5,2,5,5,5,4,2,8,8,8,2,8,8,8,2,4,4,4,4,4],
 [4,4,4,4,4,4,2,8,8,8,2,4,4,4,2,8,8,8,8,8,8,8,8,2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,5,5,5,5,5,2,5,5,5,4,2,8,8,8,8,8,8,8,2,4,4,4,4,4],
 [4,4,4,4,4,4,2,2,6,2,2,4,4,4,2,8,8,8,8,8,2,2,2,2,5,5,2,2,5,5,5,5,2,2,5,5,5,5,5,2,2,2,2,2,2,2,5,5,5,4,2,8,8,8,2,8,8,8,2,4,4,4,4,4],
 [4,4,4,4,4,4,4,4,5,5,5,4,4,4,2,8,8,8,8,8,8,8,8,2,5,5,2,5,5,5,5,5,5,2,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,2,8,8,8,2,2,2,2,2,4,4,4,4,4],
@@ -466,7 +466,8 @@ function getBRTile(x,y){
  let cx=Math.floor(x/BR_CHUNK_SIZE),cy=Math.floor(y/BR_CHUNK_SIZE);
  let lx=x-cx*BR_CHUNK_SIZE,ly=y-cy*BR_CHUNK_SIZE;
  let key=brChunkKey(cx,cy);
- if(!G.brChunks[key])generateChunk(cx,cy);
+ if(!G.brChunks[key])try{generateChunk(cx,cy);}catch(e){console.error('genChunk err',e);}
+ if(!G.brChunks[key])return T_BR_WALL;
  return G.brChunks[key][ly][lx];
 }
 function setBRTile(x,y,v){
@@ -479,12 +480,15 @@ function setBRTile(x,y,v){
 }
 function generateChunk(cx,cy){
  if(G.brChunks[brChunkKey(cx,cy)])return;
+ let seq=G._brChunkGenCount||0;
+ G._brChunkGenCount=(G._brChunkGenCount||0)+1;
+ let maxR=Math.max(4,16-seq),monsterChance=Math.min(50,5+seq);
  let map=Array.from({length:BR_CHUNK_SIZE},()=>Array(BR_CHUNK_SIZE).fill(T_BR_WALL));
   let rooms=[];
-  // 1. Many rooms (3x3 to 16x16, 2x count)
-  let numRooms=rand(6,16);
+  // 1. Many rooms (3x3 to maxR, 2x count)
+  let numRooms=rand(16,24);
   for(let i=0;i<numRooms;i++){
-   let w=rand(3,16),h=rand(3,16);
+   let w=rand(3,maxR),h=rand(3,maxR);
   let x=rand(1,BR_CHUNK_SIZE-w-2),y=rand(1,BR_CHUNK_SIZE-h-2);
   for(let dy=y;dy<y+h&&dy<BR_CHUNK_SIZE;dy++)
    for(let dx=x;dx<x+w&&dx<BR_CHUNK_SIZE;dx++)
@@ -551,9 +555,9 @@ function generateChunk(cx,cy){
    }
   }
  }
- // 5% chance Backroom Monster per room
- for(let r of rooms){
-  if(rng()<.05&&r.cx<BR_CHUNK_SIZE&&r.cy<BR_CHUNK_SIZE){
+  // Backroom Monster per room (progressive chance)
+  for(let r of rooms){
+   if(rng()<monsterChance/100&&r.cx<BR_CHUNK_SIZE&&r.cy<BR_CHUNK_SIZE){
    let bm=spawnMonster(25,r.cx+cx*BR_CHUNK_SIZE,r.cy+cy*BR_CHUNK_SIZE,LEVEL_BACKROOM);
    if(bm){bm._brId=++itemCounter;G.monsters.push(bm);monsterIds.push(bm._brId);}
   }
@@ -580,7 +584,7 @@ function generateChunk(cx,cy){
 }
 function loadBackroomLevel(){
  G.map=[];G.monsters=[];G.items=[];G.npcs=[];G.portals=[];
- G.brChunks={};G.brPlayerCX=0;G.brPlayerCY=0;
+ G.brChunks={};G.brPlayerCX=0;G.brPlayerCY=0;G._brChunkGenCount=0;
  // Generate center chunk and neighbors
  for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++){
   G.brPlayerCX=dx;G.brPlayerCY=dy;
@@ -2139,6 +2143,7 @@ function showQuestComplete(q){
 }
 // ---- Game Loop ----
 function gameLoop(){
+ try{
  if(!G.player||G.dead){requestAnimationFrame(gameLoop);return;}
  let plr=G.player;
  G.gameTime++;
@@ -2319,6 +2324,7 @@ function gameLoop(){
  // Auto save every 30 seconds
  if(G.gameTime%1800===0)saveGame();
  render();
+ }catch(e){console.error('gameLoop error:',e);}
  requestAnimationFrame(gameLoop);
 }
 // ---- Input ----
