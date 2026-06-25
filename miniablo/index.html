@@ -147,8 +147,8 @@ body{font-family:Miniablo;background:#000;color:#c90;overflow:hidden;width:100vw
 <div id="settingsMain">
 <div class="button" id="btnControls" style="margin:min(1vw,1.5vh)">CONTROLS</div>
 <div class="button" id="btnTips" style="margin:min(1vw,1.5vh)">TIPS</div>
-<div class="button" id="btnBackSettings" style="margin:min(2vh,2vw)">BACK</div>
 <div class="button" id="btnFullscreen" style="margin:min(1vh,1vw)">FULLSCREEN</div>
+<div class="button" id="btnBackSettings" style="margin:min(2vh,2vw)">BACK</div>
 </div>
 <div id="settingsControls" style="display:none">
 <div class="settings_text">
@@ -253,6 +253,7 @@ Esc - Close panels / Menu<br>
 <div class="button" id="btnMenuLoad" style="margin:min(.5vw,.7vh)">LOAD</div>
 <div class="button" id="btnMenuControls" style="margin:min(.5vw,.7vh)">CONTROLS</div>
 <div class="button" id="btnMenuTips" style="margin:min(.5vw,.7vh)">TIPS</div>
+<div class="button" id="btnMenuFullscreen" style="margin:min(.5vw,.7vh)">FULLSCREEN</div>
 </div>
 <div id="menuInfo" style="display:none;color:#aaa;font-size:min(3.5vw,4vh);text-align:left;line-height:1.6;padding:min(1vw,1.5vh);max-width:100%">
 <div id="menuInfoContent"></div>
@@ -316,9 +317,9 @@ const DMG_PER_MAG=[0,3];
 const XP_PER_LEVEL=[0,50,130,260,450,720,1100,1600,2300,3200,4500,6200,8500,11500,15500,21000,28000,37000,49000,65000,86000,
                     114000,152000,205000,278000,381000,524000,727000,1010000,1393000,1876000];
 // ---- Tiles ----
-const T_VOID=0,T_FLOOR=1,T_WALL=2,T_WATER=3,T_GRASS=4,T_ROAD=5,T_DOOR=6,T_DWALL=7,T_TOWN_FLOOR=8,T_ALTAR=9,T_STAIRS_DOWN=10,T_PORTAL=11,T_QUEST_ALTAR=12,T_BR_FLOOR=13,T_BR_WALL=14,T_HIDDEN_PORTAL=15;
-const TILE_COLORS={0:'#000',1:'#444',2:'#111',3:'#236',4:'#252',5:'#863',6:'#654',7:'#322',8:'#433',9:'#644',10:'#446',11:'#848',12:'#a0a',13:'#863',14:'#000',15:'#ff0'};
-const TILE_WALK={0:0,1:1,2:0,3:0,4:1,5:1,6:1,7:0,8:1,9:1,10:1,11:1,12:1,13:1,14:0,15:1};
+const T_VOID=0,T_FLOOR=1,T_WALL=2,T_WATER=3,T_GRASS=4,T_ROAD=5,T_DOOR=6,T_DWALL=7,T_TOWN_FLOOR=8,T_ALTAR=9,T_STAIRS_DOWN=10,T_PORTAL=11,T_QUEST_ALTAR=12,T_BR_FLOOR=13,T_BR_WALL=14,T_HIDDEN_PORTAL=15,T_ACID=16,T_LAVA=17;
+const TILE_COLORS={0:'#000',1:'#444',2:'#111',3:'#236',4:'#252',5:'#863',6:'#654',7:'#322',8:'#433',9:'#644',10:'#446',11:'#848',12:'#a0a',13:'#863',14:'#000',15:'#ff0',16:'#aa0',17:'#e40'};
+const TILE_WALK={0:0,1:1,2:0,3:0,4:1,5:1,6:1,7:0,8:1,9:1,10:1,11:1,12:1,13:1,14:0,15:1,16:0,17:0};
 // ---- Game State ----
 const LEVEL_BACKROOM=15;
 let G={screen:'title',player:null,monsters:[],items:[],npcs:[],quests:[],map:[],level:0,levelType:0,MAX_LEVELS:13,MAX_COW_LEVEL:14,camera:{x:0,y:0},keys:{},mouse:{x:0,y:0,worldX:0,worldY:0},selectedInv:null,msgTimeout:0,msgText:'',gameTime:0,turnCounter:0,dead:false,towners:[],unlocked:{well:false,crypt:false,cave:false,hatch:false,backroom:false},gameSeed:0,portals:[],floatingTexts:[],superAttackMode:false,_deleteMode:false,lastLevel:0,gameWon:false,brChunks:{},brPlayerCX:0,brPlayerCY:0,betMonsters:[],betActive:false,bettorChoice:null,bettorAmount:0};
@@ -374,17 +375,36 @@ let levelCache={};
 function generateDungeon(level){
  let key='lvl_'+level;
  if(levelCache[key])return {map:levelCache[key].map.map(r=>[...r]),rooms:levelCache[key].rooms};
- if(G.gameSeed)RNG_SEED=G.gameSeed+level*1000;
- let map=Array.from({length:MAP_H},()=>Array(MAP_W).fill(T_WALL));
- let rooms=[];
- let attempts=35+level*5,minRoomSize=4+Math.floor(level/2),maxRoomSize=8+Math.floor(level/2);
+  if(G.gameSeed)RNG_SEED=G.gameSeed+level*1000;
+  let map=Array.from({length:MAP_H},()=>Array(MAP_W).fill(T_WALL));
+  let rooms=[];
+  // Acid/lava pools for levels 4-9
+  let poolTile=null;
+  if(level>=4&&level<=6)poolTile=T_ACID;
+  else if(level>=7&&level<=9)poolTile=T_LAVA;
+   if(poolTile){
+    // Generate small pools as irregular blobs, max ~30% of map area
+    let totalPools=0,maxTotal=Math.floor(MAP_W*MAP_H*0.3);
+    let numClusters=rand(15,25);
+    for(let p=0;p<numClusters&&totalPools<maxTotal;p++){
+     let px=rand(4,MAP_W-5),py=rand(4,MAP_H-5);
+     let radius=rand(1,3);
+     for(let dy=-radius-1;dy<=radius+1&&totalPools<maxTotal;dy++)for(let dx=-radius-1;dx<=radius+1&&totalPools<maxTotal;dx++){
+      let nx=px+dx,ny=py+dy;
+      if(nx>=0&&nx<MAP_W&&ny>=0&&ny<MAP_H&&map[ny][nx]===T_WALL&&dist(px,py,nx,ny)<=radius+(rng()<.5?0:1)){
+       map[ny][nx]=poolTile;totalPools++;
+      }
+     }
+    }
+   }
+  let attempts=35+level*5,minRoomSize=4+Math.floor(level/2),maxRoomSize=8+Math.floor(level/2);
  function placeRoom(){
   for(let t=0;t<100;t++){
    let w=rand(minRoomSize,maxRoomSize),h=rand(minRoomSize,maxRoomSize);
    let x=rand(2,MAP_W-w-3),y=rand(2,MAP_H-h-3),ok=true;
-   for(let dy=y-1;dy<=y+h+1&&ok;dy++)
-    for(let dx=x-1;dx<=x+w+1&&ok;dx++)
-     if(dx>=0&&dy>=0&&dx<MAP_W&&dy<MAP_H&&map[dy][dx]!==T_WALL)ok=false;
+    for(let dy=y-1;dy<=y+h+1&&ok;dy++)
+     for(let dx=x-1;dx<=x+w+1&&ok;dx++)
+      if(dx>=0&&dy>=0&&dx<MAP_W&&dy<MAP_H&&map[dy][dx]!==T_WALL&&map[dy][dx]!==T_ACID&&map[dy][dx]!==T_LAVA)ok=false;
    if(!ok)continue;
    for(let dy=y;dy<y+h;dy++)for(let dx=x;dx<x+w;dx++)map[dy][dx]=T_FLOOR;
    let cx=Math.floor(x+w/2),cy=Math.floor(y+h/2);
@@ -393,11 +413,11 @@ function generateDungeon(level){
   }
   return false;
  }
- function connectRooms(r1,r2){
-  let x=r1.cx,y=r1.cy,tx=r2.cx,ty=r2.cy;
-  while(x!==tx){if(map[y][x]===T_WALL)map[y][x]=T_FLOOR;x+=x<tx?1:-1;}
-  while(y!==ty){if(map[y][x]===T_WALL)map[y][x]=T_FLOOR;y+=y<ty?1:-1;}
- }
+  function connectRooms(r1,r2){
+   let x=r1.cx,y=r1.cy,tx=r2.cx,ty=r2.cy;
+   while(x!==tx){if(map[y][x]===T_WALL||map[y][x]===T_ACID||map[y][x]===T_LAVA)map[y][x]=T_FLOOR;x+=x<tx?1:-1;}
+   while(y!==ty){if(map[y][x]===T_WALL||map[y][x]===T_ACID||map[y][x]===T_LAVA)map[y][x]=T_FLOOR;y+=y<ty?1:-1;}
+  }
  for(let i=0;i<attempts;i++)placeRoom();
  // Build minimum spanning tree-ish connectivity: each room connects to 3 nearest rooms
  if(rooms.length>0){
@@ -799,60 +819,95 @@ const ITEM_TYPES=[
   {key:'scroll_heal',name:'Scroll of Heal',type:'scroll',color:'#4c8',icon:'?',misc:'healscroll'},
   {key:'scroll_townportal',name:'Scroll of Town Portal',type:'scroll',color:'#66c',icon:'?',misc:'townportal'},
   {key:'gold',name:'Gold',type:'gold',color:'#ca0',icon:'$'}
-];
-const SUFFIXES=[
- {name:'of Strength',stat:'str',val:5,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5},
- {name:'of the Ox',stat:'str',val:10,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2},
- {name:'of the Giant',stat:'str',val:15,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3},
- {name:'of the Titan',stat:'str',val:25,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:5},
- 
- {name:'of Magic',stat:'mag',val:5,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5},
- {name:'of Mind',stat:'mag',val:10,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2},
- {name:'of Sorcery',stat:'mag',val:15,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3},
- {name:'of Wizardry',stat:'mag',val:25,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:5},
 
- {name:'of Dexterity',stat:'dex',val:5,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5},
- {name:'of Skill',stat:'dex',val:10,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2},
- {name:'of Precision',stat:'dex',val:15,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3},
- {name:'of Perfection',stat:'dex',val:25,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:5},
+];
+
+const PRESETTED_ITEMS = [
+
+  {key:'butchers_axe',name:'Butcher\'s Axe',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#909',icon:'/',weapClass:'axe',stats:[{stat:'str',val:20},{stat:'vit',val:10},{stat:'dmg',val:10}]},
+  {key:'butchers_knife',name:'Butcher\'s Knife',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#909',icon:'/',weapClass:'sword',stats:[{stat:'dex',val:20},{stat:'vit',val:10},{stat:'dmg',val:10}]},
+  {key:'butchers_shield',name:'Butcher\'s Shield',type:'shield',slot:'offhand',ac:20,minStr:35,color:'#909',icon:'-',stats:[{stat:'hp',val:50},{stat:'dex',val:15},{stat:'vit',val:10}]},
+  
+  {key:'leechs_staff',name:'Leech\'s Staff',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#909',icon:'\\',weapClass:'staff',stats:[{stat:'mag',val:20},{stat:'dex',val:10},{stat:'dmg',val:10}]},
+  {key:'leechs_wand',name:'Leech\'s Wand',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#909',icon:'\\',weapClass:'wand',stats:[{stat:'vit',val:20},{stat:'dex',val:10},{stat:'dmg',val:10}]},
+  {key:'leechs_shield',name:'Leech\'s Shield',type:'shield',slot:'offhand',ac:20,minStr:25,color:'#909',icon:'-',stats:[{stat:'mana',val:50},{stat:'dex',val:15},{stat:'mag',val:10}]},
+
+  {key:'skeletons_crown',name:'Skeleton\'s Crown',type:'helm',slot:'head',ac:20,minStr:40,color:'#909',icon:'^',stats:[{stat:'mag',val:20},{stat:'vit',val:20},{stat:'dex',val:10}]},
+  {key:'skeletons_mail',name:'Skeleton\'s Mail',type:'armor',slot:'body',ac:50,minStr:50,color:'#909',icon:'#',stats:[{stat:'dex',val:20},{stat:'str',val:20},{stat:'dmg',val:10}]},
+  {key:'skeletons_shield',name:'Skeleton\'s Shield',type:'shield',slot:'offhand',ac:25,minStr:45,color:'#909',icon:'-',stats:[{stat:'vit',val:20},{stat:'dex',val:10},{stat:'dmg',val:10}]},
+  
+  {key:'liliths_ring_doom',name:'Lilith\'s Ring of Doom',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'str',val:15},{stat:'dmg',val:25}]},
+  {key:'liliths_ring_death',name:'Lilith\'s Ring of Death',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'str',val:12},{stat:'hp',val:250}]},
+  {key:'liliths_ring_wind',name:'Lilith\'s Ring of Wind',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'dex',val:15},{stat:'dmg',val:25}]},
+  {key:'liliths_ring_swift',name:'Lilith\'s Ring of Swift',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'dex',val:12},{stat:'mana',val:250}]},
+  {key:'liliths_ring_arcane_insight',name:'Lilith\'s Ring of Arcane Insight',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'mag',val:15},{stat:'dmg',val:25}]},
+  {key:'liliths_ring_void',name:'Lilith\'s Ring of Void',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'mag',val:18},{stat:'mana',val:150}]},
+  {key:'liliths_ring_guardian',name:'Lilith\'s Ring of the Guardian',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'vit',val:15},{stat:'ac',val:50}]},
+  {key:'liliths_ring_force',name:'Lilith\'s Ring of Force',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'vit',val:18},{stat:'hp',val:150}]},
+
+  {key:'liliths_amulet_titan',name:'Lilith\'s Amulet of Titan',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'str',val:20},{stat:'hp',val:200}]},
+  {key:'liliths_amulet_wrath',name:'Lilith\'s Amulet of Wrath',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'str',val:15},{stat:'dmg',val:15}]},
+  {key:'liliths_amulet_shadow',name:'Lilith\'s Amulet of Shadow',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'dex',val:20},{stat:'mana',val:200}]},
+  {key:'liliths_amulet_ranger',name:'Lilith\'s Amulet of Ranger',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'dex',val:15},{stat:'dmg',val:15}]},
+  {key:'liliths_amulet_eternal_knowledge',name:'Lilith\'s Amulet of Eternal Knowledge',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'mag',val:20},{stat:'mana',val:200}]},
+  {key:'liliths_amulet_arcane_mastery',name:'Lilith\'s Amulet of Arcane Mastery',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'mag',val:15},{stat:'dmg',val:25}]},
+  {key:'liliths_amulet_infinity_life',name:'Lilith\'s Amulet of Infinity Life',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'vit',val:18},{stat:'hp',val:500}]},
+  {key:'liliths_amulet_warding',name:'Lilith\'s Amulet of Warding',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'vit',val:18},{stat:'ac',val:50}]}
+];
+
+const SUFFIXES=[
+ {name:'of Strength',stat:'str',val:5,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5,level:3},
+ {name:'of the Ox',stat:'str',val:10,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2,level:6},
+ {name:'of the Giant',stat:'str',val:15,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3,level:9},
+ {name:'of the Titan',stat:'str',val:25,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:5,level:12},
  
- {name:'of Vitality',stat:'vit',val:5,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5},
- {name:'of Heart',stat:'vit',val:10,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2},
- {name:'of the Oak',stat:'vit',val:15,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3},
- {name:'of Life',stat:'vit',val:25,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:4},
+ {name:'of Magic',stat:'mag',val:5,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5,level:3},
+ {name:'of Mind',stat:'mag',val:10,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2,level:6},
+ {name:'of Sorcery',stat:'mag',val:15,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3,level:9},
+ {name:'of Wizardry',stat:'mag',val:25,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:5,level:12},
+
+ {name:'of Dexterity',stat:'dex',val:5,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5,level:3},
+ {name:'of Skill',stat:'dex',val:10,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2,level:6},
+ {name:'of Precision',stat:'dex',val:15,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3,level:9},
+ {name:'of Perfection',stat:'dex',val:25,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:5,level:12},
  
- {name:'of Health',stat:'hp',val:15,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5},
- {name:'of the Jackal',stat:'hp',val:20,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.75},
- {name:'of the Fox',stat:'hp',val:25,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2},
- {name:'of the Wolf',stat:'hp',val:30,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2.5},
- {name:'of the Tiger',stat:'hp',val:50,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3},
- {name:'of the Lion',stat:'hp',val:75,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3.5},
- {name:'of the Colossus',stat:'hp',val:85,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:4},
- {name:'of the Mammoth',stat:'hp',val:100,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:5},
+ {name:'of Vitality',stat:'vit',val:5,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5,level:3},
+ {name:'of Heart',stat:'vit',val:10,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2,level:6},
+ {name:'of the Oak',stat:'vit',val:15,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3,level:9},
+ {name:'of Life',stat:'vit',val:25,types:['armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:4,level:12},
  
-  {name:'of Mana',stat:'mana',val:10,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:1.5},
-  {name:'of Lizard',stat:'mana',val:15,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:1.75},
-  {name:'of Snake',stat:'mana',val:20,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:2},
-  {name:'of Scorpion',stat:'mana',val:30,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:2.5},
-  {name:'of Drake',stat:'mana',val:50,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:3},
-  {name:'of Whelp',stat:'mana',val:25,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:3.5},
-  {name:'of Wyrm',stat:'mana',val:75,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:4},
-  {name:'of Bahamut',stat:'mana',val:100,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:5},
+ {name:'of Health',stat:'hp',val:15,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.5,level:2},
+ {name:'of the Jackal',stat:'hp',val:20,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:1.75,level:3},
+ {name:'of the Fox',stat:'hp',val:25,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2,level:4},
+ {name:'of the Wolf',stat:'hp',val:30,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:2.5,level:5},
+ {name:'of the Tiger',stat:'hp',val:50,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3,level:6},
+ {name:'of the Lion',stat:'hp',val:75,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:3.5,level:8},
+ {name:'of the Colossus',stat:'hp',val:85,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:4,level:10},
+ {name:'of the Mammoth',stat:'hp',val:100,types:['weapon','armor','helm','shield','ring','amulet'],weaponBonus:0,priceKf:5,level:12},
  
- {name:'of Might',stat:'dmg',val:3,types:['weapon','staff','wand'],weaponBonus:3,priceKf:1.5},
- {name:'of Dragons',stat:'dmg',val:6,types:['weapon','staff','wand'],weaponBonus:6,priceKf:2},
- {name:'of Carnage',stat:'dmg',val:10,types:['weapon','staff','wand'],weaponBonus:10,priceKf:3},
- {name:'of Slaughter',stat:'dmg',val:15,types:['weapon','staff','wand'],weaponBonus:15,priceKf:5},
- {name:'of Butchery',stat:'dmg',val:20,types:['weapon','staff','wand'],weaponBonus:20,priceKf:7},
- {name:'of Juggernaut',stat:'dmg',val:22,types:['weapon','staff','wand'],weaponBonus:22,priceKf:8},
- {name:'of Evisceration',stat:'dmg',val:25,types:['weapon','staff','wand'],weaponBonus:25,priceKf:10}
+ {name:'of Mana',stat:'mana',val:10,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:1.5,level:2},
+ {name:'of Lizard',stat:'mana',val:15,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:1.75,level:3},
+ {name:'of Snake',stat:'mana',val:20,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:2,level:4},
+ {name:'of Scorpion',stat:'mana',val:30,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:2.5,level:5},
+ {name:'of Drake',stat:'mana',val:50,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:3,level:6},
+ {name:'of Whelp',stat:'mana',val:25,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:3.5,level:8},
+ {name:'of Wyrm',stat:'mana',val:75,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:4,level:10},
+ {name:'of Bahamut',stat:'mana',val:100,types:['armor','helm','shield','ring','amulet','staff','wand'],weaponBonus:0,priceKf:5,level:12},
+ 
+ {name:'of Might',stat:'dmg',val:3,types:['weapon','staff','wand'],weaponBonus:3,priceKf:1.5,level:2},
+ {name:'of Dragons',stat:'dmg',val:6,types:['weapon','staff','wand'],weaponBonus:6,priceKf:2,level:4},
+ {name:'of Carnage',stat:'dmg',val:10,types:['weapon','staff','wand'],weaponBonus:10,priceKf:3,level:6},
+ {name:'of Slaughter',stat:'dmg',val:15,types:['weapon','staff','wand'],weaponBonus:15,priceKf:5,level:8},
+ {name:'of Butchery',stat:'dmg',val:20,types:['weapon','staff','wand'],weaponBonus:20,priceKf:7,level:10},
+ {name:'of Juggernaut',stat:'dmg',val:22,types:['weapon','staff','wand'],weaponBonus:22,priceKf:8,level:12},
+ {name:'of Evisceration',stat:'dmg',val:25,types:['weapon','staff','wand'],weaponBonus:25,priceKf:10,level:12}
 ];
 const ITEM_QUALITIES=[
-  {name:'Fine',priceKf:1.5,statKf:1.25},
-  {name:'Good',priceKf:2.5,statKf:1.5},
-  {name:'Magic',priceKf:3,statKf:1.75},
-  {name:'Super',priceKf:5,statKf:2},
-  {name:'Poor',priceKf:0.25,statKf:0.5}
+  {name:'Fine',priceKf:1.5,statKf:1.25,chance:20},
+  {name:'Good',priceKf:2.5,statKf:1.5,chance:10},
+  {name:'Magic',priceKf:3,statKf:1.75,chance:5},
+  {name:'Super',priceKf:5,statKf:2,chance:2},
+  {name:'Poor',priceKf:0.25,statKf:0.5,chance:5}
 ];
 function createItem(key,level){
  let t=ITEM_TYPES.find(it=>it.key===key);
@@ -862,17 +917,18 @@ function createItem(key,level){
   // Potions and scrolls don't get quality or suffixes
   let isConsumable=item.type==='potion'||item.type==='scroll';
   // Quality prefix (replaces old 'Magic' prefix)
-  let qualityChance=Math.min(.15+.02*level,.5);
-  if(!isConsumable&&rng()<qualityChance){
-  let q=choice(ITEM_QUALITIES);
-  item.quality=q;
+   let qualityChance=Math.min(.15+.02*level,.5);
+   if(!isConsumable&&rng()<qualityChance){
+   let totalChance=ITEM_QUALITIES.reduce((s,q)=>s+q.chance,0),r=rng()*totalChance,qi=0;
+   for(let i=0;i<ITEM_QUALITIES.length;i++){r-=ITEM_QUALITIES[i].chance;if(r<=0){qi=i;break;}}
+   let q=ITEM_QUALITIES[qi];
   item.name=q.name+' '+item.name;
   item.magic=true;
  }
-  // Apply suffix
-  let suffixChance=Math.min(.25+.02*level,.6);
-  if(!isConsumable&&rng()<suffixChance){
-  let pool=SUFFIXES.filter(s=>s.types.includes(item.type));
+   // Apply suffix (filter by dungeon level)
+   let suffixChance=Math.min(.25+.02*level,.6);
+   if(!isConsumable&&rng()<suffixChance){
+   let pool=SUFFIXES.filter(s=>s.types.includes(item.type)&&s.level<=level);
   if(pool.length){
    let sfx=choice(pool);
    item.suffix=sfx;
@@ -901,22 +957,68 @@ function createItem(key,level){
   if(item.minMag)item.minMag=Math.round(item.minMag*kf);
   if(item.suffix&&item.suffix.val)item.suffix={...item.suffix,val:Math.round(item.suffix.val*kf)};
  }
- return item;
-}
-function itemTooltip(item, price){
+  return item;
+ }
+ function applyQuality(item,qlvl){
+  if(item.type==='potion'||item.type==='scroll')return;
+  let qualityChance=Math.min(.15+.02*(qlvl||3),.5);
+  if(rng()<qualityChance){
+   let totalChance=ITEM_QUALITIES.reduce((s,q)=>s+q.chance,0),r=rng()*totalChance,qi=0;
+   for(let i=0;i<ITEM_QUALITIES.length;i++){r-=ITEM_QUALITIES[i].chance;if(r<=0){qi=i;break;}}
+   let q=ITEM_QUALITIES[qi];
+   item.quality=q;
+   item.name=q.name+' '+item.name;
+   let kf=q.statKf;
+   if(item.minDmg){item.minDmg=Math.max(1,Math.round(item.minDmg*kf));item.maxDmg=Math.max(1,Math.round(item.maxDmg*kf));}
+   if(item.ac)item.ac=Math.round(item.ac*kf);
+   if(item.minStr)item.minStr=Math.round(item.minStr*kf);
+   if(item.minMag)item.minMag=Math.round(item.minMag*kf);
+   if(item.stats)item.stats=item.stats.map(s=>({...s,val:Math.round(s.val*kf)}));
+  }
+ }
+ function createPresetItem(presetKey,qlvl){
+  let p=PRESETTED_ITEMS.find(x=>x.key===presetKey);
+  if(!p)return createItem(presetKey,1);
+  let item=JSON.parse(JSON.stringify(p));
+  item.level=1;item.magic=true;
+  applyQuality(item,qlvl);
+  return item;
+ }
+ function rollBossDrop(bossTypeId,qlvl){
+  if(rng()<0.5)return null;
+  let pool=[];
+  if(bossTypeId===26)pool=PRESETTED_ITEMS.filter(x=>x.key.startsWith('butchers_'));
+  else if(bossTypeId===27)pool=PRESETTED_ITEMS.filter(x=>x.key.startsWith('skeletons_'));
+  else if(bossTypeId===28)pool=PRESETTED_ITEMS.filter(x=>x.key.startsWith('liliths_'));
+  else if(bossTypeId===29)pool=PRESETTED_ITEMS.filter(x=>x.key.startsWith('leechs_'));
+  if(!pool.length)return null;
+  let chosen=choice(pool);
+  return createPresetItem(chosen.key,qlvl);
+ }
+ function itemTooltip(item, price){
  let html=`<b>${item.name}</b>`;
  let totMinDmg=item.minDmg||0,totMaxDmg=item.maxDmg||0,totAc=item.ac||0;
  let extra=[];
- if(item.suffix){
-  let s=item.suffix;
-  if(s.stat==='dmg'){totMinDmg+=s.val;totMaxDmg+=s.val;}
-  else if(s.stat==='str')extra.push(`STR: +${s.val}`);
-  else if(s.stat==='mag')extra.push(`MAG: +${s.val}`);
-  else if(s.stat==='dex')extra.push(`DEX: +${s.val}`);
-  else if(s.stat==='vit')extra.push(`VIT: +${s.val}`);
-  else if(s.stat==='hp')extra.push(`HP: +${s.val}`);
-  else if(s.stat==='mana')extra.push(`Mana: +${s.val}`);
- }
+  if(item.suffix){
+   let s=item.suffix;
+   if(s.stat==='dmg'){totMinDmg+=s.val;totMaxDmg+=s.val;}
+   else if(s.stat==='str')extra.push(`STR: +${s.val}`);
+   else if(s.stat==='mag')extra.push(`MAG: +${s.val}`);
+   else if(s.stat==='dex')extra.push(`DEX: +${s.val}`);
+   else if(s.stat==='vit')extra.push(`VIT: +${s.val}`);
+   else if(s.stat==='hp')extra.push(`HP: +${s.val}`);
+   else if(s.stat==='mana')extra.push(`Mana: +${s.val}`);
+  }
+  if(item.stats)for(let s of item.stats){
+   if(s.stat==='dmg'){totMinDmg+=s.val;totMaxDmg+=s.val;}
+   else if(s.stat==='str')extra.push(`STR: +${s.val}`);
+   else if(s.stat==='mag')extra.push(`MAG: +${s.val}`);
+   else if(s.stat==='dex')extra.push(`DEX: +${s.val}`);
+   else if(s.stat==='vit')extra.push(`VIT: +${s.val}`);
+   else if(s.stat==='hp')extra.push(`HP: +${s.val}`);
+   else if(s.stat==='mana')extra.push(`Mana: +${s.val}`);
+   else if(s.stat==='ac')extra.push(`AC: +${s.val}`);
+  }
  if(totMinDmg)html+=`<br>DMG: ${totMinDmg}-${totMaxDmg}`;
  if(totAc)html+=`<br>AC: ${totAc}`;
  for(let e of extra)html+=`<br>${e}`;
@@ -948,33 +1050,52 @@ function randomItemDrop(level){
 }
 // ---- Monsters ----
 const MONSTER_TYPES=[
- {id:0,name:'Rat',color:'#866',headColor:'#a88',minHP:3,maxHP:6,dmg:2,ac:0,xp:5,level:1},
- {id:1,name:'Larva',color:'#486',headColor:'#6a8',minHP:5,maxHP:10,dmg:2,ac:10,xp:8,level:1},
- {id:2,name:'Zombie',color:'#686',headColor:'#8a8',minHP:6,maxHP:12,dmg:4,ac:2,xp:10,level:1},
- {id:3,name:'Skeleton',color:'#bbb',headColor:'#ddd',minHP:8,maxHP:16,dmg:5,ac:4,xp:15,level:2},
- {id:4,name:'Fallen One',color:'#c66',headColor:'#e88',minHP:10,maxHP:20,dmg:6,ac:3,xp:18,level:2},
- {id:5,name:'Scavenger',color:'#886',headColor:'#aa8',minHP:12,maxHP:24,dmg:7,ac:5,xp:22,level:3},
- {id:6,name:'Goat Man',color:'#686',headColor:'#8a8',minHP:16,maxHP:30,dmg:9,ac:7,xp:30,level:3},
- {id:7,name:'Acid Beast',color:'#6c6',headColor:'#8e8',minHP:25,maxHP:60,dmg:10,ac:6,xp:35,level:4},
- {id:8,name:'Winged Fiend',color:'#868',headColor:'#a8a',minHP:40,maxHP:80,dmg:12,ac:8,xp:40,level:4},
- {id:9,name:'Blood Knight',color:'#c44',headColor:'#e66',minHP:60,maxHP:100,dmg:15,ac:12,xp:60,level:5},
- {id:10,name:'Magma Demon',color:'#c60',headColor:'#e82',minHP:80,maxHP:140,dmg:18,ac:15,xp:80,level:6},
- {id:11,name:'Minion',color:'#d33',headColor:'#f55',minHP:100,maxHP:200,dmg:18,ac:40,xp:150,level:7},
- {id:12,name:'Taurus',color:'#cc0',headColor:'#ee2',minHP:170,maxHP:240,dmg:20,ac:50,xp:250,level:8},
- {id:13,name:'Succub',color:'#33d',headColor:'#55f',minHP:250,maxHP:350,dmg:20,ac:80,xp:350,level:9},
- {id:14,name:'Wiwern',color:'#63c',headColor:'#85e',minHP:350,maxHP:450,dmg:20,ac:100,xp:500,level:10},
- {id:15,name:'Cursed Demon',color:'#0d0',headColor:'#2f2',minHP:300,maxHP:480,dmg:22,ac:120,xp:700,level:11},
- {id:16,name:'Miniablo',color:'#d30',headColor:'#f66',minHP:650,maxHP:800,dmg:50,ac:180,xp:1500,level:12},
-  {id:17,name:'Diablo',color:'#c00',headColor:'#e22',minHP:2500,maxHP:2500,dmg:100,ac:200,xp:15000,level:13},
-  {id:18,name:'Imp',color:'#d62',headColor:'#f84',minHP:4,maxHP:9,dmg:3,ac:1,xp:7,level:1},
-  {id:19,name:'Demon',color:'#a22',headColor:'#c44',minHP:8,maxHP:16,dmg:6,ac:5,xp:20,level:2},
-  {id:20,name:'Spirit',color:'#6ad',headColor:'#8cf',minHP:15,maxHP:30,dmg:8,ac:6,xp:28,level:5},
-  {id:21,name:'Throll',color:'#484',headColor:'#6a6',minHP:30,maxHP:55,dmg:10,ac:10,xp:45,level:5},
-  {id:22,name:'Ghost',color:'#ddd',headColor:'#fff',minHP:60,maxHP:100,dmg:12,ac:20,xp:70,level:8},
-  {id:23,name:'Cannibal',color:'#852',headColor:'#a74',minHP:120,maxHP:200,dmg:18,ac:35,xp:180,level:10},
-  {id:24,name:'Merfork',color:'#228',headColor:'#44a',minHP:200,maxHP:320,dmg:20,ac:60,xp:300,level:10},
-  {id:25,name:'Backroom Monster',color:'#111',headColor:'#333',minHP:4,maxHP:9,dmg:100,ac:0,xp:500,level:15}
-];
+ {id:0,name:'Rat',color:'#866',headColor:'#a88',            minHP:3,    maxHP:6,    dmg:12, ac:20,  xp:5,level:1},
+ {id:1,name:'Larva',color:'#486',headColor:'#6a8',          minHP:5,    maxHP:10,   dmg:15, ac:20,  xp:8,level:1},
+ {id:2,name:'Zombie',color:'#686',headColor:'#8a8',         minHP:6,    maxHP:12,   dmg:24, ac:32,  xp:10,level:1},
+ {id:18,name:'Imp',color:'#d62',headColor:'#f84',           minHP:4,    maxHP:9,    dmg:20, ac:21,  xp:7,level:1},
+
+ {id:3,name:'Skeleton',color:'#bbb',headColor:'#ddd',       minHP:8,    maxHP:16,   dmg:25, ac:34,  xp:15,level:2},
+ {id:4,name:'Fallen One',color:'#c66',headColor:'#e88',     minHP:10,   maxHP:20,   dmg:26, ac:33,  xp:18,level:2},
+ {id:19,name:'Demon',color:'#a22',headColor:'#c44',         minHP:8,    maxHP:16,   dmg:26, ac:25,  xp:20,level:2},
+
+ {id:5,name:'Scavenger',color:'#886',headColor:'#aa8',      minHP:12,   maxHP:24,   dmg:27, ac:35,  xp:22,level:3},
+ {id:6,name:'Goat Man',color:'#686',headColor:'#8a8',       minHP:16,   maxHP:30,   dmg:29, ac:37,  xp:30,level:3},
+
+ {id:7,name:'Acid Beast',color:'#6c6',headColor:'#8e8',     minHP:25,   maxHP:60,   dmg:30, ac:36,  xp:35,level:4},
+ {id:8,name:'Winged Fiend',color:'#868',headColor:'#a8a',   minHP:40,   maxHP:80,   dmg:32, ac:38,  xp:40,level:4},
+
+ {id:9,name:'Blood Knight',color:'#c44',headColor:'#e66',   minHP:60,   maxHP:100,  dmg:35, ac:52,  xp:60,level:5},
+ {id:20,name:'Spirit',color:'#6ad',headColor:'#8cf',        minHP:15,   maxHP:30,   dmg:28, ac:36,  xp:28,level:5},
+ {id:21,name:'Throll',color:'#484',headColor:'#6a6',        minHP:30,   maxHP:55,   dmg:30, ac:40,  xp:45,level:5},
+
+ {id:10,name:'Magma Demon',color:'#c60',headColor:'#e82',   minHP:80,   maxHP:140,  dmg:38, ac:55,  xp:80,level:6},
+
+ {id:11,name:'Minion',color:'#d33',headColor:'#f55',        minHP:100,  maxHP:200,  dmg:40, ac:60,  xp:150,level:7},
+
+ {id:12,name:'Taurus',color:'#cc0',headColor:'#ee2',        minHP:170,  maxHP:240,  dmg:50, ac:70,  xp:250,level:8},
+ {id:22,name:'Ghost',color:'#ddd',headColor:'#fff',         minHP:60,   maxHP:100,  dmg:32, ac:50,  xp:70,level:8},
+
+ {id:13,name:'Succub',color:'#33d',headColor:'#55f',        minHP:250,  maxHP:350,  dmg:60, ac:80,  xp:350,level:9},
+
+ {id:14,name:'Wiwern',color:'#63c',headColor:'#85e',        minHP:350,  maxHP:450,  dmg:65, ac:100, xp:500,level:10},
+ {id:23,name:'Cannibal',color:'#852',headColor:'#a74',      minHP:120,  maxHP:200,  dmg:40, ac:55,  xp:180,level:10},
+ {id:24,name:'Merfork',color:'#228',headColor:'#44a',       minHP:200,  maxHP:320,  dmg:50, ac:60,  xp:300,level:10},
+
+ {id:15,name:'Cursed Demon',color:'#0d0',headColor:'#2f2',  minHP:300,  maxHP:480,  dmg:70, ac:100, xp:700,level:11},
+
+ {id:16,name:'Miniablo',color:'#d30',headColor:'#f66',      minHP:650,  maxHP:800,  dmg:80, ac:180, xp:1500,level:12},
+
+ {id:17,name:'Diablo',color:'#c00',headColor:'#e22',        minHP:1500, maxHP:1500, dmg:200,ac:200, xp:15000,level:13},
+
+ {id:25,name:'Backroom Monster',color:'#111',headColor:'#333',minHP:100,maxHP:900,  dmg:100,ac:10,  xp:500,level:15},
+
+ {id:26,name:'Butcher',color:'#c11',headColor:'#ee6',       minHP:300,  maxHP:300,  dmg:30,ac:50,  xp:1500,level:-1},
+ {id:27,name:'Skeleton King',color:'#666',headColor:'#eee', minHP:600,  maxHP:600,  dmg:50,ac:70,  xp:2500,level:-1},
+ {id:28,name:'Lilith',color:'#222',headColor:'#ffe',        minHP:900,  maxHP:900,  dmg:70,ac:90,  xp:3500,level:-1},
+ {id:29,name:'Leech',color:'#224',headColor:'#66e',         minHP:300,  maxHP:300,  dmg:30,ac:50,  xp:1500,level:-1}
+
+]; // id=29
 function spawnMonster(typeId,x,y,level){
  let t=MONSTER_TYPES.find(m=>m.id===typeId);
  if(!t)return null;
@@ -992,21 +1113,23 @@ function getMonstersForLevel(level){
   if(level===12)return [MONSTER_TYPES[16]];
   if(level===11)return [MONSTER_TYPES[11], MONSTER_TYPES[12], MONSTER_TYPES[13], MONSTER_TYPES[14], MONSTER_TYPES[15]];
   if(level===10)return [MONSTER_TYPES[9], MONSTER_TYPES[10], MONSTER_TYPES[11], MONSTER_TYPES[12], MONSTER_TYPES[13]];
-  let pool=MONSTER_TYPES.filter(m=>m.level<=Math.min(18,Math.ceil(level/2)+3)&&m.level>=Math.max(1,Math.floor(level/3)));
+  let pool;
+  if(level<=9){pool=MONSTER_TYPES.filter(m=>m.level<=level+1&&m.level>=Math.max(1,level-1));}
+  else{pool=MONSTER_TYPES.filter(m=>m.level<=Math.min(18,Math.ceil(level/2)+3)&&m.level>=Math.max(1,Math.floor(level/3)));}
   if(pool.length===0)pool=[MONSTER_TYPES[0]];
   return pool;
 }
 // ---- Quests ----
 const QUEST_DEFS=[
-  {id:0,name:'Rat Extermination',desc:'Kill 5 rats in the dungeon.',objective:{type:'kill',monsterId:0,count:5,level:1},reward:{xp:50,gold:20},npcMsg:'Rats in the cellar! Kill 5 of them and I\'ll reward you.',repeatable:true},
-  {id:1,name:'The Lost Relic',desc:'Find the hidden altar on level 3 and retrieve the relic.',objective:{type:'find',tile:T_QUEST_ALTAR,level:3},reward:{xp:150,gold:50},npcMsg:'A powerful relic lies on dungeon level 3. Bring it to me.'},
-  {id:2,name:'Boss of Level 3',desc:'Defeat the guardian of level 3.',objective:{type:'kill',monsterId:6,count:1,level:3},reward:{xp:200,gold:60},npcMsg:'A fierce guardian blocks the way below. Defeat it!'},
-  {id:3,name:'Boss of Level 7',desc:'Defeat the guardian of level 7.',objective:{type:'kill',monsterId:11,count:1,level:7},reward:{xp:400,gold:100},npcMsg:'A dark power stirs on level 7. The guardian must fall!'},
-  {id:4,name:'Boss of Level 11',desc:'Defeat the guardian of level 11.',objective:{type:'kill',monsterId:15,count:1,level:11},reward:{xp:700,gold:150},npcMsg:'The depths tremble! Defeat the ancient guardian of level 11!'},
-  {id:5,name:'Demon Lord',desc:'Defeat the Demon Lord on the deepest level.',objective:{type:'kill',monsterId:17,count:1,level:13},reward:{xp:1000,gold:200},npcMsg:'A great evil lurks below. Defeat the Demon Lord and save our lands!'},
-  {id:6,name:'Forgotten Letter',desc:'Find the forgotten letter on level 1 and catch it.',objective:{type:'find',tile:T_QUEST_ALTAR,level:1},reward:{xp:100,gold:50},npcMsg:'An important letter lies on dungeon level 1. Bring it to me.',repeatable:true},
-  {id:7,name:'Treasure of the Hell',desc:'Find the treasure on level 12.',objective:{type:'find',tile:T_QUEST_ALTAR,level:12},reward:{xp:10000,gold:500},npcMsg:'An unic treasure are on dungeon level 12. Look around. Be strong!',repeatable:true},
-  {id:8,name:'Values of Taurus',desc:'Kill 10 Taurus in the Dungeon.',objective:{type:'kill',monsterId:12,count:10,level:10},reward:{xp:10000,gold:1500},npcMsg:'The Taurus brain holds a valuable secret! Bring me 10 heads of them and I\'ll reward you.',repeatable:true},
+  {id:0,name:'Rat Extermination',desc:'Kill 5 rats in the dungeon.',objective:{type:'kill',monsterId:0,count:5,level:1},reward:{xp:50,gold:20},npcMsg:'The basement of my tavern has been overrun by hordes of rats, gnawing at the ale barrels and scaring away the patrons! I tried to smoke them out, but the creatures only burrowed deeper into the cracks behind the old wine racks. I need someone to go down there and kill at least five of the most brazen ones, or I\'ll go broke. Be careful: the rats might be carrying the plague. Do it, and I\'ll pay you handsomely from my last earnings.',repeatable:true, playerLevel:1},
+  {id:1,name:'The Lost Relic',desc:'Find the hidden altar on level 3 and retrieve the relic.',objective:{type:'find',tile:T_QUEST_ALTAR,level:3},reward:{xp:150,gold:50},npcMsg:'Hidden on the third level of the ancient dungeon is an altar containing a powerful relic, but I don\'t know its exact location. Can you find this artifact? If you can, that bring it to me.', playerLevel:3},
+     {id:2,name:'Boss of the Dungeon',desc:'Defeat the Guardian of level 3.',objective:{type:'kill',monsterId:26,count:1,level:3},reward:{xp:200,gold:60},npcMsg:'On the stairs leading to the lower level of the catacombs, a ferocious Guardian blocks the way. Its blows can shatter bones even through armor, and my magic merely scratches its granite hide, causing no visible damage. I tried to hold it back with a barrier, but it shattered the spell in seconds. If you wish to proceed further, you will have to find a way to defeat this beast.', playerLevel:1},
+     {id:3,name:'Boss of Catacombs',desc:'Defeat the guardian of level 7.',objective:{type:'kill',monsterId:27,count:1,level:7},reward:{xp:400,gold:100},npcMsg:'On the seventh level of the ancient necropolis, a true darkness has awakened, its aura draining the life from all living things. My blades merely ring off its ethereal shadow, and my arrows pass through harmlessly. Apparently, ordinary weapons are powerless here. Tell me, is there a way to use magic or a weapon imbued with light to banish this creature back to the abyss?', playerLevel:3},
+     {id:4,name:'Boss of Deep Lair',desc:'Defeat the guardian of level 11.',objective:{type:'kill',monsterId:28,count:1,level:11},reward:{xp:700,gold:150},npcMsg:'We have awakened something ancient in the very depths. This is no ordinary monster, but a level 11 Guardian—a colossus of living obsidian and magic, whose power shakes the very vaults of the cave. My most powerful spells shatter against its anti-magic shell like glass against stone, leaving not a scratch. I am powerless against it; any direct attack will only lead to death. Help us finish this beast and open the door to a deeper evil.', playerLevel:7},
+  {id:5,name:'Demon Lord',desc:'Defeat the Demon Lord on the deepest level.',objective:{type:'kill',monsterId:17,count:1,level:13},reward:{xp:1000,gold:200},npcMsg:'Within the very heart of the abyss, on a throne of bone and lava, sits the Demon Lord. His power is such that even the air around him scorches the lungs, and a single glance from his blazing eyes can turn even the bravest warrior to stone. I tried to bind him with ancient seals, but he scattered them like dust. Alone, we don\'t stand a chance.', playerLevel:1},
+  {id:6,name:'Forgotten Letter',desc:'Find the forgotten letter on level 1 and take it.',objective:{type:'find',tile:T_QUEST_ALTAR,level:1},reward:{xp:100,gold:50,statPts:5},npcMsg:'On the first level, in the Hall of Records, lies a forgotten letter bearing the seal of our king. I know it lies on a stone pedestal, but all my attempts to retrieve it have failed: as soon as I approach, monsters begin to attack. I cannot defeat them alone. Can you find this letter in the labyrinth of the first level and bring it to me?', playerLevel:1},
+  {id:7,name:'Treasure of the Hell',desc:'Find the treasure on level 12.',objective:{type:'find',tile:T_QUEST_ALTAR,level:12},reward:{xp:10000,gold:500},npcMsg:'There\'s treasure hidden on the twelfth level, but the path to it is blocked by an ingenious trap. I saw it through the magic crystal: the chest stands in the center of the hall, entangled in glowing threads of ancient magic. Any attempt to pick the lock will cause the entire level to collapse on us. I need someone who can disarm the runic mechanism. If you have knowledge in this area or a special tool for removing magical seals, we can split the loot. What do you say?',repeatable:true, playerLevel:10},
+  {id:8,name:'Values of Taurus',desc:'Kill 10 Taurus in the Dungeon.',objective:{type:'kill',monsterId:12,count:10,level:10},reward:{xp:10000,gold:1500},npcMsg:'I urgently need brains for my research, but these damned Taurus... they\'re too powerful. Their thick bone armor on their heads makes them nearly invulnerable to regular arrows and daggers, and my assistants can\'t penetrate it in close combat. Can you figure out a way to defeat these creatures? Bring me ten of their brains, and the reward will be more than generous.',repeatable:true, playerLevel:10},
 ];
 // ---- Town Entrances ----
 const ENTRANCES=[
@@ -1020,7 +1143,7 @@ function handleTownEntrance(px,py){
   let ent=ENTRANCES.find(e=>e.x===px&&e.y===py);
   if(!ent){showMsg('Nothing happens...');return;}
   if(ent.req&&!G.unlocked[ent.req]){showMsg(`${ent.name} is sealed. Complete more challenges first!`);return;}
-  if(ent.targetLevel===G.MAX_COW_LEVEL&&!G.unlocked.hatch){showMsg('The hatch is sealed. Defeat Diablo first!');return;}
+  if(ent.targetLevel===G.MAX_COW_LEVEL&&!G.unlocked.hatch){showMsg('The hatch is sealed. Defeat Magma Demon first!');return;}
    G.lastLevel=G.level;
    G.level=ent.targetLevel;loadLevel(ent.targetLevel);
   showMsg(`Entering ${ent.name} (Level ${ent.targetLevel})`);
@@ -1036,18 +1159,19 @@ const NPC_DEFS=[
  {id:6,name:'Casino Vex',type:'gamble',color:'#c6c',headColor:'#fef',msg:'Feeling lucky? 500 gold for a random item.',x:58,y:57},
 
  {id:7,name:'Eric',type:'quest',color:'#666',headColor:'#ccc',msg:'Hi there! I need you help.',x:19,y:51,questIds:[4]},
- {id:8,name:'Mark',type:'quest',color:'#966',headColor:'#dcc',msg:'Hello pal! Only you can help me. I see that.',x:22,y:42,questIds:[0]},
+ {id:8,name:'Mark',type:'quest',color:'#966',headColor:'#dcc',msg:'Hello pal! Only you can help me. I see that.',x:23,y:43,questIds:[0]},
  {id:9,name:'Irida',type:'quest',color:'#6c6',headColor:'#cdc',msg:'Hello! I have some task for you!',x:51,y:12,questIds:[3]},
  {id:10,name:'Teodor',type:'quest',color:'#8c8',headColor:'#cdc',msg:'Hello! Something strange in this well!',x:36,y:30,questIds:[2]},
  {id:11,name:'Anastacia',type:'quest',color:'#cc6',headColor:'#ddc',msg:'Hello! I don\'t see my thing anywhere!',x:16,y:24,questIds:[1]},
  {id:12,name:'Natalie',type:'quest',color:'#c6d',headColor:'#ede',msg:'Excuse me! Do you see my letter?',x:16,y:36,questIds:[6]},
  {id:13,name:'Kile',type:'quest',color:'#bbc',headColor:'#eee',msg:'Hi Fellow! I\'m looking for some treasure!',x:56,y:48,questIds:[7]},
-  {id:14,name:'Leric',type:'quest',color:'#c70',headColor:'#eed',msg:'You know that the Taurus is very smart? I need\'em!',x:52,y:22,questIds:[8]},
-  {id:15,name:'Bookmaker Virt',type:'bet',color:'#c86',headColor:'#fda',msg:'Place your bets! 100, 200 or 500 gold on the red or blue fighter!',x:38,y:23},
-  {id:16,name:'Carl',type:'greet',color:'#988',headColor:'#ddd',msg:'Hi there!',x:41,y:18},
-  {id:17,name:'Dwain',type:'greet',color:'#898',headColor:'#ddd',msg:'Welcome!',x:44,y:18},
-  {id:18,name:'Jack',type:'greet',color:'#889',headColor:'#ddd',msg:'Greetings!',x:42,y:26},
-  {id:19,name:'Spock',type:'greet',color:'#998',headColor:'#ddd',msg:'Hello!',x:38,y:25}
+ {id:14,name:'Leric',type:'quest',color:'#c70',headColor:'#eed',msg:'You know that the Taurus is very smart? I need\'em!',x:52,y:22,questIds:[8]},
+ {id:15,name:'Bookmaker Virt',type:'bet',color:'#c86',headColor:'#fda',msg:'Place your bets! 100, 200 or 500 gold on the red or blue fighter!',x:38,y:23},
+ {id:16,name:'Carl',type:'greet',color:'#988',headColor:'#ddd',msg:'Hi there!',x:41,y:18},
+ {id:17,name:'Dwain',type:'greet',color:'#898',headColor:'#ddd',msg:'Welcome!',x:44,y:18},
+ {id:18,name:'Jack',type:'greet',color:'#889',headColor:'#ddd',msg:'Greetings!',x:42,y:26},
+ {id:19,name:'Spock',type:'greet',color:'#998',headColor:'#ddd',msg:'Hello!',x:38,y:25},
+ {id:20,name:'Clark',type:'greet',color:'#ccb',headColor:'#cde',msg:'Where is this door? I swear I saw it here!',x:56,y:33}
 ];
 // ---- Create NPC instances ----
 function createNPCsForTown(){
@@ -1060,10 +1184,8 @@ function createPlayer(charClass,name){
     x:31,y:30,charClass,name:name||CLASS_NAMES[charClass],
   str:stats[0],mag:stats[1],dex:stats[2],vit:stats[3],
   baseStr:stats[0],baseMag:stats[1],baseDex:stats[2],baseVit:stats[3],
-   level:1,xp:0,maxXp:XP_PER_LEVEL[1]||50,
-   hp:36,maxHp:36,
-   mana:35,maxMana:35,
-  statPts:0,
+    level:1,xp:0,maxXp:XP_PER_LEVEL[1]||50,
+   statPts:0,
    equipment:{neck:null,head:null,ring:null,weapon:null,body:null,offhand:null},
   inventory:[],
   gold:50,
@@ -1100,17 +1222,29 @@ function calcPlayerStats(plr){
   if(item.ac)totAc+=item.ac;
   if(item.type==='ring')totMag+=2;
   if(item.type==='amulet')totStr+=2;
-  if(item.suffix){
-   let s=item.suffix;
-   if(s.stat==='str')totStr+=s.val;
-   else if(s.stat==='mag')totMag+=s.val;
-   else if(s.stat==='dex')totDex+=s.val;
-   else if(s.stat==='vit')totVit+=s.val;
-   else if(s.stat==='hp')bonusHp+=s.val;
-   else if(s.stat==='mana')bonusMana+=s.val;
-   else if(s.stat==='dmg')bonusDmg+=s.val;
+   if(item.suffix){
+    let s=item.suffix;
+    if(s.stat==='str')totStr+=s.val;
+    else if(s.stat==='mag')totMag+=s.val;
+    else if(s.stat==='dex')totDex+=s.val;
+    else if(s.stat==='vit')totVit+=s.val;
+    else if(s.stat==='hp')bonusHp+=s.val;
+    else if(s.stat==='mana')bonusMana+=s.val;
+    else if(s.stat==='dmg')bonusDmg+=s.val;
+   }
+   if(item.stats){
+    for(let s of item.stats){
+     if(s.stat==='str')totStr+=s.val;
+     else if(s.stat==='mag')totMag+=s.val;
+     else if(s.stat==='dex')totDex+=s.val;
+     else if(s.stat==='vit')totVit+=s.val;
+     else if(s.stat==='hp')bonusHp+=s.val;
+     else if(s.stat==='mana')bonusMana+=s.val;
+     else if(s.stat==='dmg')bonusDmg+=s.val;
+     else if(s.stat==='ac')totAc+=s.val;
+    }
+   }
   }
- }
  plr.str=totStr;plr.mag=totMag;plr.dex=totDex;plr.vit=totVit;
   // Damage
   let baseMin=1,baseMax=3;
@@ -1181,23 +1315,26 @@ function playerAttack(plr,monster){
    addFloatingText(monster.x,monster.y-1,'-'+dmg,'#f88');
    showMsg(`Hit ${monster.t.name} for ${dmg} damage!`);
    if(monster.hp<=0){
-     monster.alive=false;plr.hp=Math.min(plr.hp+5,plr.maxHp);
-     if(monster.typeId===17){showVictory();requestAnimationFrame(gameLoop);return;}
-    if(!plr._questKills)plr._questKills={};
-    let key='kill_'+monster.typeId;
-    plr._questKills[key]=(plr._questKills[key]||0)+1;
-    trackBossKill(monster,plr,G.level);
+      monster.alive=false;plr.hp=Math.min(plr.hp+5,plr.maxHp);
+     trackBossKill(monster,plr,G.level);
+      if(monster.typeId===17){showVictory();requestAnimationFrame(gameLoop);return;}
+     if(!plr._questKills)plr._questKills={};
+     let key='kill_'+monster.typeId;
+     plr._questKills[key]=(plr._questKills[key]||0)+1;
     addXp(plr,monster.xp);
    plr.gold=(plr.gold||0)+rand(1,5+plr.level);
    showMsg(`Killed ${monster.t.name}! +${monster.xp} XP`);
-   // Drop item
-   if(rng()<.35){
-    let drop=randomItemDrop(plr.level);
-    let drops=Array.isArray(drop)?drop:[drop];
-    for(let d of drops){
-     if(d){d.mapX=monster.x;d.mapY=monster.y;G.items.push(d);}
+   // Drop item (bosses drop from preset pool, regular monsters drop randomly)
+    if(monster.typeId===26||monster.typeId===27||monster.typeId===28||monster.typeId===29){
+     let drop=rollBossDrop(monster.typeId,G.level);
+     if(drop){drop.mapX=monster.x;drop.mapY=monster.y;G.items.push(drop);}
+    }else if(rng()<.35){
+     let drop=randomItemDrop(plr.level);
+     let drops=Array.isArray(drop)?drop:[drop];
+     for(let d of drops){
+      if(d){d.mapX=monster.x;d.mapY=monster.y;G.items.push(d);}
+     }
     }
-   }
      return true;
      }
     }else{
@@ -1318,61 +1455,84 @@ function interactNPC(plr,npc){
  let textEl=document.getElementById('npcDlgText');
  let btnsEl=document.getElementById('npcDlgBtns');
  nameEl.textContent=npc.name;
- btnsEl.innerHTML='';
-  if(npc.type==='quest'){
-    let npcQuestIds=npc.questIds||[];
-    // Show quests that can be accepted
-    let availQ=QUEST_DEFS.filter(qd=>{
-     let existing=G.quests.find(q=>q.id===qd.id);
-     if(!existing)return true;
-     if(existing.state==='done'&&qd.repeatable)return true;
-     return false;
-    });
-    if(npcQuestIds.length)availQ=availQ.filter(qd=>npcQuestIds.includes(qd.id));
-    // Show ready-to-claim quests first
-    let readyQs=G.quests.filter(q=>q.state==='ready'&&(!npcQuestIds.length||npcQuestIds.includes(q.id)));
-    if(readyQs.length>0){
-     textEl.textContent='You have completed tasks! Claim your reward!';
-     for(let q of readyQs){
-      let btn=document.createElement('div');btn.className='npc_btn';
-      btn.textContent=`Claim: ${q.name} (+${q.reward.xp}XP +${q.reward.gold}G)`;
-      btn.style.color='#0f0';
-      btn.onclick=()=>{
-       q.state='done';q.rewardClaimed=true;
-       addXp(G.player,q.reward.xp);G.player.gold+=q.reward.gold;
-       showMsg(`Reward claimed: ${q.name}! +${q.reward.xp}XP +${q.reward.gold}G`);
-       dlg.classList.remove('active');
-       saveGame();
-      };
-      btnsEl.appendChild(btn);
-     }
-    }else if(availQ.length>0){
-     textEl.textContent='I have tasks for you.';
-     for(let qd of availQ){
+  btnsEl.innerHTML='';
+   if(npc.type==='quest'){
+     let npcQuestIds=npc.questIds||[];
+     // Show quests that can be accepted (check level)
+     let availQ=QUEST_DEFS.filter(qd=>{
+      if(G.player.level<qd.playerLevel)return false;
       let existing=G.quests.find(q=>q.id===qd.id);
-      let btnText=existing?'Re-Accept: '+qd.name:'Accept: '+qd.name;
-      let btn=document.createElement('div');btn.className='npc_btn';
-      btn.textContent=btnText;
-      btn.onclick=()=>{
-       if(existing){existing.state='active';existing.progress=0;}
-       else{G.quests.push({...qd,state:'active',progress:0});}
-       showMsg(`Quest accepted: ${qd.name}`);
-       dlg.classList.remove('active');
-      };
-      btnsEl.appendChild(btn);
+      if(!existing)return true;
+      if(existing.state==='done'&&qd.repeatable)return true;
+      return false;
+     });
+     if(npcQuestIds.length)availQ=availQ.filter(qd=>npcQuestIds.includes(qd.id));
+     // Show ready-to-claim quests first
+     let readyQs=G.quests.filter(q=>q.state==='ready'&&(!npcQuestIds.length||npcQuestIds.includes(q.id)));
+     if(readyQs.length>0){
+      textEl.textContent='You have completed tasks! Claim your reward!';
+      for(let q of readyQs){
+       let btn=document.createElement('div');btn.className='npc_btn';
+       let btnTxt=`Claim: ${q.name} (+${q.reward.xp}XP +${q.reward.gold}G`;
+       if(q.reward.statPts)btnTxt+=` +${q.reward.statPts}SP`;
+       btnTxt+=')';btn.textContent=btnTxt;
+       btn.style.color='#0f0';
+       btn.onclick=()=>{
+        q.state='done';q.rewardClaimed=true;
+         addXp(G.player,q.reward.xp);G.player.gold+=q.reward.gold;
+         if(q.reward.statPts)G.player.statPts=(G.player.statPts||0)+q.reward.statPts;
+         let msgText=`Reward claimed: ${q.name}! +${q.reward.xp}XP +${q.reward.gold}G`;
+         if(q.reward.statPts)msgText+=` +${q.reward.statPts}SP`;
+         showMsg(msgText);
+        dlg.classList.remove('active');
+        saveGame();
+       };
+       btnsEl.appendChild(btn);
+      }
+     }else if(availQ.length>0){
+      textEl.textContent=null; // will set per-quest below
+      for(let qd of availQ){
+       let btn=document.createElement('div');btn.className='npc_btn';
+       btn.textContent=qd.name;
+        btn.onclick=(e)=>{
+         e.stopPropagation();
+         textEl.textContent=qd.npcMsg;
+         btnsEl.innerHTML='';
+        let acceptBtn=document.createElement('div');acceptBtn.className='npc_btn';
+        let existing=G.quests.find(q=>q.id===qd.id);
+        acceptBtn.textContent='Accept';
+         acceptBtn.onclick=()=>{
+          if(existing){existing.state='active';existing.progress=0;}
+          else{G.quests.push({...qd,state:'active',progress:0});}
+          // Reset kill counter for this quest so it starts fresh
+          if(qd.objective&&qd.objective.type==='kill'){
+           let key='kill_'+qd.objective.monsterId;
+           if(G.player._questKills)G.player._questKills[key]=0;
+          }
+          showMsg(`Quest accepted: ${qd.name}`);
+          dlg.classList.remove('active');
+         };
+        btnsEl.appendChild(acceptBtn);
+        // Back button
+        let backBtn=document.createElement('div');backBtn.className='npc_btn';
+        backBtn.textContent='Back';backBtn.style.color='#960';
+        backBtn.onclick=()=>{interactNPC(plr,npc);};
+        btnsEl.appendChild(backBtn);
+       };
+       btnsEl.appendChild(btn);
+      }
+     }else{
+      textEl.textContent='I don\'t have any tasks for you right now. Come back later.';
      }
-    }else{
-     textEl.textContent='No tasks available right now. Come back later.';
-    }
-    // Show active quest status
-    for(let q of G.quests){
-     if(npcQuestIds.length&&!npcQuestIds.includes(q.id))continue;
-     if(q.state==='active'){
-      let btn=document.createElement('div');btn.className='npc_btn';
-      btn.textContent=`${q.name} (${q.progress||0}/${q.objective.count||1})`;
-      btnsEl.appendChild(btn);
+     // Show active quest status
+     for(let q of G.quests){
+      if(npcQuestIds.length&&!npcQuestIds.includes(q.id))continue;
+      if(q.state==='active'){
+       let btn=document.createElement('div');btn.className='npc_btn';
+       btn.textContent=`${q.name} (${q.progress||0}/${q.objective.count||1})`;
+       btnsEl.appendChild(btn);
+      }
      }
-    }
  }else if(npc.type==='heal'){
   let cost=Math.floor((plr.maxHp-plr.hp)/4)+1;
   textEl.textContent=`I can heal your wounds completely for ${cost} gold. (You have ${plr.gold} gold)`;
@@ -1392,12 +1552,12 @@ function interactNPC(plr,npc){
     let shopItems=[];
      for(let i=0;i<18;i++){
       let key=choice(itemPool);
-      let item=createItem(key,Math.max(1,Math.min(G.level,rand(1,plr.level))));
+       let item=createItem(key,Math.max(1,Math.min(G.level||plr.level,rand(1,plr.level))));
       // Merchant Lira: ensure all rings/amulets/scrolls are magic
        if(npc.type==='shop_jewelry'&&(item.type==='ring'||item.type==='amulet')){
         // Force a suffix if none
-        if(!item.suffix){
-         let pool=SUFFIXES.filter(s=>s.types.includes(item.type));
+         if(!item.suffix){
+         let pool=SUFFIXES.filter(s=>s.types.includes(item.type)&&s.level<=item.level);
          if(pool.length){
           let sfx=choice(pool);
           if(item.quality)sfx={...sfx,val:Math.round(sfx.val*item.quality.statKf)};
@@ -1544,8 +1704,8 @@ function interactNPC(plr,npc){
     }
    }
   }
- }else if(npc.type==='greet'){
-  textEl.textContent=choice(['Hi there!','Welcome!','Greetings!','Hello!','Hey there!','Good day!']);
+  }else if(npc.type==='greet'){
+   textEl.textContent=npc.msg||choice(['Hi there!','Welcome!','Greetings!','Hello!','Hey there!','Good day!']);
   let btn=document.createElement('div');btn.className='npc_btn';btn.textContent='Hi!';
   btn.onclick=()=>{dlg.classList.remove('active');};
   btnsEl.appendChild(btn);
@@ -1675,15 +1835,16 @@ function checkEntranceUnlocks(){
  if(G.player._bossKills['lvl7']>0&&!G.unlocked.crypt){G.unlocked.crypt=true;showMsg('Ancient gates creak open... The Crypt is now accessible!');}
  // Level 11 boss killed -> unlock cave
  if(G.player._bossKills['lvl11']>0&&!G.unlocked.cave){G.unlocked.cave=true;showMsg('The earth trembles... The Cave entrance is revealed!');}
- // MagmaDemon killed (level 13) -> unlock hatch
- if(G.player._bossKills['diablo']>0&&!G.unlocked.hatch){G.unlocked.hatch=true;showMsg('A hidden hatch appears in town! The Cow Level awaits!');}
+  // Unlock hatch (set directly in trackBossKill on MagmaDemon kill; diablo kills also work)
+  if(G.player._bossKills['diablo']>0&&!G.unlocked.hatch){G.unlocked.hatch=true;showMsg('A hidden hatch appears in town! The Cow Level awaits!');}
 }
 function trackBossKill(monster,plr,lvl){
  if(!plr._bossKills)plr._bossKills={};
  if(lvl===3)plr._bossKills['lvl3']=(plr._bossKills['lvl3']||0)+1;
  if(lvl===7)plr._bossKills['lvl7']=(plr._bossKills['lvl7']||0)+1;
  if(lvl===11)plr._bossKills['lvl11']=(plr._bossKills['lvl11']||0)+1;
-  if(monster.typeId===17)plr._bossKills['diablo']=(plr._bossKills['diablo']||0)+1;
+   if(monster.typeId===17)plr._bossKills['diablo']=(plr._bossKills['diablo']||0)+1;
+   if(monster.typeId===10&&!G.unlocked.hatch){G.unlocked.hatch=true;showMsg('A hidden hatch appears in town! The Cow Level awaits!');}
 }
 // ---- Death ----
 function showDeath(){
@@ -1743,9 +1904,26 @@ function render(){
     if(G.level===LEVEL_BACKROOM){t=getBRTile(x,y);}else{t=G.map[y]&&G.map[y][x]?G.map[y][x]:T_VOID;}
     let sx=x*TILE-cam.x,sy=y*TILE-cam.y;
      let color=TILE_COLORS[t]||'#000';
-     // Backroom special colors
-     if(G.level===LEVEL_BACKROOM&&t===T_BR_FLOOR)color='#cc0';
-     if(G.level===LEVEL_BACKROOM&&(t===T_BR_WALL||t===T_VOID))color='#000';
+      // Backroom special colors
+      if(G.level===LEVEL_BACKROOM&&t===T_BR_FLOOR)color='#cc0';
+      if(G.level===LEVEL_BACKROOM&&(t===T_BR_WALL||t===T_VOID))color='#000';
+      // Dungeon level-specific color schemes
+      let lvl=G.level;
+      if(lvl>0&&lvl<14){
+       if(t===T_FLOOR||t===T_ACID||t===T_LAVA){
+        if(lvl>=1&&lvl<=3){if(t===T_FLOOR)color='#444';else if(t===T_ACID)color='#aa0';}
+        else if(lvl>=4&&lvl<=6){if(t===T_FLOOR)color='#544';else if(t===T_ACID)color='#cc0';}
+        else if(lvl>=7&&lvl<=9){if(t===T_FLOOR)color='#333';else if(t===T_LAVA)color='#e60';}
+        else if(lvl>=10&&lvl<=12){if(t===T_FLOOR)color='#223';}
+        else if(lvl===13){if(t===T_FLOOR)color='#855';}
+       }else if(t===T_WALL){
+        if(lvl>=1&&lvl<=3)color='#000';
+        else if(lvl>=4&&lvl<=6)color='#100';
+        else if(lvl>=7&&lvl<=9)color='#200';
+        else if(lvl>=10&&lvl<=12)color='#000';
+        else if(lvl===13)color='#402';
+       }
+      }
      ctx.fillStyle=color;ctx.fillRect(sx+1,sy,TILE-1,TILE-1); // left+bottom borders only
     // Detail
     if(t===T_DOOR){
@@ -1826,10 +2004,29 @@ function render(){
     // Name
      ctx.fillStyle='#c90';ctx.font='bold '+Math.max(9,TILE/3)+'px MiniabloBold';ctx.textAlign='center';ctx.textBaseline='bottom';
      ctx.fillText(npc.name,sx+TILE/2,sy-2);
-   // Interaction circle
-   if(canTalkToNPC(plr,npc)){ctx.fillStyle='rgba(255,200,0,.3)';ctx.beginPath();ctx.arc(sx+TILE/2,sy+TILE/2,TILE/2+4,0,Math.PI*2);ctx.fill();}
+      // Quest indicator (!)
+      if(npc.type==='quest'){
+       let hasReady=G.quests.some(q=>q.state==='ready'&&npc.questIds&&npc.questIds.includes(q.id));
+       if(hasReady){
+        ctx.fillStyle='#0f0';ctx.font='bold '+Math.max(12,TILE/2)+'px MiniabloBold';ctx.textAlign='center';ctx.textBaseline='bottom';
+        ctx.fillText('!',sx+TILE/2,sy-16-Math.max(9,TILE/3));
+       }else{
+        let hasAvail=QUEST_DEFS.some(qd=>{
+         if(!npc.questIds||!npc.questIds.includes(qd.id))return false;
+         if(G.player.level<qd.playerLevel)return false;
+         let q=G.quests.find(x=>x.id===qd.id);
+         return !q||(q.state==='done'&&qd.repeatable);
+        });
+        if(hasAvail){
+         ctx.fillStyle='#ff0';ctx.font='bold '+Math.max(12,TILE/2)+'px MiniabloBold';ctx.textAlign='center';ctx.textBaseline='bottom';
+         ctx.fillText('!',sx+TILE/2,sy-16-Math.max(9,TILE/3));
+        }
+       }
+      }
+    // Interaction circle
+    if(canTalkToNPC(plr,npc)){ctx.fillStyle='rgba(255,200,0,.3)';ctx.beginPath();ctx.arc(sx+TILE/2,sy+TILE/2,TILE/2+4,0,Math.PI*2);ctx.fill();}
+   }
   }
- }
  // Draw monsters
  for(let m of G.monsters){
   if(!m.alive)continue;
@@ -1847,12 +2044,12 @@ function render(){
    let bw=TILE-8;ctx.fillStyle='#400';ctx.fillRect(sx+4,sy-4,bw,3);
    ctx.fillStyle='#c00';ctx.fillRect(sx+4,sy-4,bw*(m.hp/m.maxHp),3);
   }
-   // Name
-    if(m.aggro||dist(m.x,m.y,plr.x,plr.y)<5){
-     ctx.fillStyle=m.boss?'#c00':'#c90';
-     ctx.font='bold '+Math.max(9,TILE/3)+'px MiniabloBold';ctx.textAlign='center';ctx.textBaseline='bottom';
-     ctx.fillText(m.t.name,sx+TILE/2,sy-5);
-    }
+    // Name
+     if(m.aggro||dist(m.x,m.y,plr.x,plr.y)<5){
+      ctx.fillStyle=m.boss?'#c00':m.champion?'#8af':'#c90';
+      ctx.font='bold '+Math.max(9,TILE/3)+'px MiniabloBold';ctx.textAlign='center';ctx.textBaseline='bottom';
+      ctx.fillText(m.t.name,sx+TILE/2,sy-5);
+     }
  }
   // Draw player
   let px=plr.x*TILE-cam.x,py=plr.y*TILE-cam.y;
@@ -1890,6 +2087,7 @@ function render(){
    updateUI();
 }
 function drawMinimap(){
+ if(G.level===LEVEL_BACKROOM)return;
  let el=document.getElementById('minimap');
  el.style.display='block';
  let sz=el.offsetWidth;
@@ -1904,13 +2102,24 @@ function drawMinimap(){
  }
  let mctx=mc.getContext('2d');
  mctx.fillStyle='rgba(0,0,0,.7)';mctx.fillRect(0,0,mc.width,mc.height);
-  // Map
-  for(let y=0;y<MAP_H;y++)for(let x=0;x<MAP_W;x++){
-   let t=G.map[y]&&G.map[y][x]?G.map[y][x]:T_VOID;
-    if(t===T_VOID||t===T_WALL||t===T_DWALL||t===T_QUEST_ALTAR)continue;
-   mctx.fillStyle=TILE_COLORS[t]||'#000';
-   mctx.fillRect(x*scale,y*scale,Math.ceil(scale),Math.ceil(scale));
-   }
+   // Map
+   for(let y=0;y<MAP_H;y++)for(let x=0;x<MAP_W;x++){
+    let t=G.map[y]&&G.map[y][x]?G.map[y][x]:T_VOID;
+     if(t===T_VOID||t===T_WALL||t===T_DWALL||t===T_QUEST_ALTAR)continue;
+    let mc=TILE_COLORS[t]||'#000';
+    let lvl=G.level;
+    if(lvl>0&&lvl<14){
+     if(t===T_FLOOR){
+      if(lvl>=1&&lvl<=3)mc='#555';
+      else if(lvl>=4&&lvl<=6)mc='#544';
+      else if(lvl>=7&&lvl<=9)mc='#444';
+      else if(lvl>=10&&lvl<=12)mc='#334';
+      else if(lvl===13)mc='#855';
+     }
+    }
+    mctx.fillStyle=mc;
+    mctx.fillRect(x*scale,y*scale,Math.ceil(scale),Math.ceil(scale));
+    }
   // Portals
   if(G.level===0){
    for(let ent of ENTRANCES){
@@ -1925,8 +2134,20 @@ function drawMinimap(){
     mctx.fillStyle=col;mctx.fillRect(p.x*scale,p.y*scale,Math.ceil(scale*2),Math.ceil(scale*2));
    }
   }
-  // Player
- mctx.fillStyle='#fe0';mctx.fillRect(G.player.x*scale,G.player.y*scale,Math.ceil(scale*3),Math.ceil(scale*3));
+   // NPC quest indicators on minimap
+   if(G.level===0)for(let npc of G.npcs)if(npc.type==='quest'){
+    let hasReady=G.quests.some(q=>q.state==='ready'&&npc.questIds&&npc.questIds.includes(q.id));
+    if(hasReady){mctx.fillStyle='#0f0';mctx.fillRect(npc.x*scale,npc.y*scale,Math.ceil(scale*2),Math.ceil(scale*2));continue;}
+    let hasAvail=QUEST_DEFS.some(qd=>{
+     if(!npc.questIds||!npc.questIds.includes(qd.id))return false;
+     if(G.player.level<qd.playerLevel)return false;
+     let q=G.quests.find(x=>x.id===qd.id);
+     return !q||(q.state==='done'&&qd.repeatable);
+    });
+    if(hasAvail){mctx.fillStyle='#ff0';mctx.fillRect(npc.x*scale,npc.y*scale,Math.ceil(scale*2),Math.ceil(scale*2));}
+   }
+   // Player
+  mctx.fillStyle='#fe0';mctx.fillRect(G.player.x*scale,G.player.y*scale,Math.ceil(scale*3),Math.ceil(scale*3));
  // Monsters
  for(let m of G.monsters){
   if(!m.alive)continue;
@@ -2032,21 +2253,32 @@ function loadLevel(lvl){
     if(canWalk(x,y,G.map)&&dist(x,y,G.player.x,G.player.y)>5){
      let occupied=false;
      for(let m of G.monsters)if(m.x===x&&m.y===y)occupied=true;
-     if(!occupied){let m=spawnMonster(mt.id,x,y,lvl);G.monsters.push(m);break;}
+      if(!occupied){
+       let m=spawnMonster(mt.id,x,y,lvl);
+        // Champion monster chance (10%, excludes bosses)
+        if(mt.level>0&&rng()<0.1){
+        m.color='#8af';m.maxHp*=5;m.hp=m.maxHp;m.champion=true;
+       }
+       G.monsters.push(m);break;
+      }
+     }
     }
    }
-  }
-  // Mini-boss levels
-  if(rooms&&rooms.length>1){
-   let er=rooms[rooms.length-1];
-   let bossType=4+Math.floor(lvl/3);
-   if(bossType>9)bossType=9;
-   if(lvl===3||lvl===7||lvl===11){
-    let boss=spawnMonster(Math.min(bossType+1,9),er.cx,er.cy-2,lvl);
-    boss.maxHp*=2;boss.hp=boss.maxHp;boss.dmg*=2;boss.xp*=3;
-    boss.name='Boss '+boss.t.name;boss.boss=true;G.monsters.push(boss);
+   // Unique boss levels
+   if(rooms&&rooms.length>1){
+    let er=rooms[rooms.length-1];
+     if(lvl===3){
+      let bossId=G.player.charClass===CLASS_WARRIOR?26:29;
+      let boss=spawnMonster(bossId,er.cx,er.cy-2,lvl);
+      boss.boss=true;G.monsters.push(boss);
+     }else if(lvl===7){
+     let boss=spawnMonster(27,er.cx,er.cy-2,lvl);
+     boss.boss=true;G.monsters.push(boss);
+    }else if(lvl===11){
+     let boss=spawnMonster(28,er.cx,er.cy-2,lvl);
+     boss.boss=true;G.monsters.push(boss);
+    }
    }
-  }
   // Spawn items
   for(let i=0;i<3+lvl;i++){
    for(let t=0;t<10;t++){
@@ -2206,14 +2438,18 @@ function gameLoop(){
        // Generate surrounding chunks
         for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++){let k=brChunkKey(ncx+dx,ncy+dy);if(!G.brChunks[k])generateChunk(ncx+dx,ncy+dy);}
        // Prune distant chunks
-       let pKeys=Object.keys(G.brChunks);
-       for(let k of pKeys){
-        let [kc,kr]=k.split(',').map(Number);
-        if(Math.abs(kc-ncx)>2||Math.abs(kr-ncy)>2)delete G.brChunks[k];
+        let pKeys=Object.keys(G.brChunks);
+        for(let k of pKeys){
+         let [kc,kr]=k.split(',').map(Number);
+         if(Math.abs(kc-ncx)>2||Math.abs(kr-ncy)>2){
+          delete G.brChunks[k];
+          if(G._brChunkItems&&G._brChunkItems[k]){for(let id of G._brChunkItems[k]){let idx=G.items.findIndex(i=>i._brId===id);if(idx>=0)G.items.splice(idx,1);}delete G._brChunkItems[k];}
+          if(G._brChunkMonsters&&G._brChunkMonsters[k]){G.monsters=G.monsters.filter(m=>!G._brChunkMonsters[k].includes(m._brId));delete G._brChunkMonsters[k];}
+         }
+        }
        }
       }
-     }
-     if(t===T_ALTAR){
+      if(t===T_ALTAR){
       if(G.level===0){
        handleTownEntrance(plr.x,plr.y);
        requestAnimationFrame(gameLoop);return;
@@ -2705,6 +2941,18 @@ byId('btnMenuControls').addEventListener('click',()=>showMenuSub(
 byId('btnMenuTips').addEventListener('click',()=>showMenuSub(
  'Talk to NPCs in town for quests, healing, items.<br>Click monsters to attack.<br>Press C on level up to spend stat points.<br>Find portals (T) on levels 4/8/12.<br>Find stairs (D) to go deeper.<br>Game auto-saves every 30 seconds.'
 ));
+byId('btnMenuFullscreen').addEventListener('click',()=>{
+ if(!document.fullscreenElement&&!document.webkitFullscreenElement){
+  let el=document.documentElement;
+  if(el.requestFullscreen)el.requestFullscreen();
+  else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();
+  showMsg('Fullscreen mode');
+ }else{
+  if(document.exitFullscreen)document.exitFullscreen();
+  else if(document.webkitExitFullscreen)document.webkitExitFullscreen();
+  showMsg('Windowed mode');
+ }
+});
 byId('btnMenuBack').addEventListener('click',()=>{
  byId('menuInfo').style.display='none';byId('menuContent').style.display='block';
 });
@@ -2746,11 +2994,15 @@ document.addEventListener('keydown',(e)=>{
        G.brPlayerCX=ncx;G.brPlayerCY=ncy;
         for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++){let k=brChunkKey(ncx+dx,ncy+dy);if(!G.brChunks[k])generateChunk(ncx+dx,ncy+dy);}
        let pKeys=Object.keys(G.brChunks);
-       for(let k of pKeys){let [kc,kr]=k.split(',').map(Number);if(Math.abs(kc-ncx)>2||Math.abs(kr-ncy)>2)delete G.brChunks[k];}
+       for(let k of pKeys){let [kc,kr]=k.split(',').map(Number);if(Math.abs(kc-ncx)>2||Math.abs(kr-ncy)>2){
+        delete G.brChunks[k];
+        if(G._brChunkItems&&G._brChunkItems[k]){for(let id of G._brChunkItems[k]){let idx=G.items.findIndex(i=>i._brId===id);if(idx>=0)G.items.splice(idx,1);}delete G._brChunkItems[k];}
+        if(G._brChunkMonsters&&G._brChunkMonsters[k]){G.monsters=G.monsters.filter(m=>!G._brChunkMonsters[k].includes(m._brId));delete G._brChunkMonsters[k];}
+       }}
       }
      }
-    for(let i=G.items.length-1;i>=0;i--){
-     let item=G.items[i];
+     for(let i=G.items.length-1;i>=0;i--){
+      let item=G.items[i];
      if(item.mapX===nx&&item.mapY===ny){
        if(item.type==='gold'){G.player.gold=(G.player.gold||0)+rand(5,20);showMsg(`+${rand(5,20)} gold`);G.items.splice(i,1);continue;}
        if(item.type==='potion'||item.type==='scroll'){
@@ -2873,7 +3125,11 @@ canvas.addEventListener('touchend',(e)=>{
      G.brPlayerCX=ncx;G.brPlayerCY=ncy;
       for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++){let k=brChunkKey(ncx+dx,ncy+dy);if(!G.brChunks[k])generateChunk(ncx+dx,ncy+dy);}
       let pKeys=Object.keys(G.brChunks);
-      for(let k of pKeys){let [kc,kr]=k.split(',').map(Number);if(Math.abs(kc-ncx)>2||Math.abs(kr-ncy)>2)delete G.brChunks[k];}
+      for(let k of pKeys){let [kc,kr]=k.split(',').map(Number);if(Math.abs(kc-ncx)>2||Math.abs(kr-ncy)>2){
+       delete G.brChunks[k];
+       if(G._brChunkItems&&G._brChunkItems[k]){for(let id of G._brChunkItems[k]){let idx=G.items.findIndex(i=>i._brId===id);if(idx>=0)G.items.splice(idx,1);}delete G._brChunkItems[k];}
+       if(G._brChunkMonsters&&G._brChunkMonsters[k]){G.monsters=G.monsters.filter(m=>!G._brChunkMonsters[k].includes(m._brId));delete G._brChunkMonsters[k];}
+      }}
      }
     }
     for(let i=G.items.length-1;i>=0;i--){
