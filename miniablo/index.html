@@ -74,6 +74,11 @@ body{font-family:Miniablo;background:#000;color:#c90;overflow:hidden;width:100vw
 .action_btn:hover{background:#444;border-color:#c90}
 /* Top left info: 3 lines */
 #top_info{position:absolute;top:min(1vh,1vw);left:min(2vw,2vh);font-size:min(1.8vw,2.2vh);color:#c90;text-shadow:1px 1px 2px #000;font-family:MiniabloBold;z-index:5;line-height:1.5;pointer-events:none}
+#buff_container{position:absolute;top:min(2vh,2vw);left:50%;translate:-50%0;z-index:6;pointer-events:none;display:flex;flex-direction:column;align-items:center}
+#buff_bar{display:flex;gap:min(.3vw,.4vh);justify-content:center;margin:min(.3vh,.3vw) 0;flex-wrap:wrap;pointer-events:auto}
+.buff_cell{width:min(5vw,7vh);height:min(5vw,7vh);border:min(.15vw,.2vh)solid #555;font-family:Miniablo;font-size:min(1.25vw,1.5vh);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;user-select:none;text-shadow:1px 1px 2px #000;position:relative;line-height:1.2}
+.buff_cell .buff_name{color:#c90;text-shadow:1px 1px 2px #000;font-size:min(2.5vw,3.0vh)}
+.buff_cell .buff_time{color:#c90;text-shadow:1px 1px 2px #000;font-size:min(3.5vw,4.0vh);opacity:.8}
 #msg_text{position:absolute;bottom:min(16vh,16vw);left:50%;translate:-50%0;font-size:min(3vw,3.5vh);color:#fe0;text-shadow:1px 1px 2px #000;pointer-events:none;transition:opacity .3s;opacity:0;text-align:center;max-width:80vw;font-family:MiniabloBold;z-index:5}
 .panel{position:absolute;background:rgba(0,0,0,.92);border:min(.3vw,.3vh)solid #630;padding:min(2vw,2vh);display:none;z-index:10;font-size:min(3vw,3.5vh);max-height:90vh;overflow-y:auto;min-width:min(48vw,60vh)}
 .panel.active{display:block}
@@ -221,6 +226,7 @@ Esc - Close panels / Menu<br>
  </div>
 </div>
 <div id="top_info"></div>
+<div id="buff_container"></div>
 <div id="msg_text"></div>
 <div id="minimap"></div>
 </div>
@@ -253,10 +259,11 @@ Esc - Close panels / Menu<br>
 <div class="button" id="btnMenuLoad" style="margin:min(.5vw,.7vh)">LOAD</div>
 <div class="button" id="btnMenuControls" style="margin:min(.5vw,.7vh)">CONTROLS</div>
 <div class="button" id="btnMenuTips" style="margin:min(.5vw,.7vh)">TIPS</div>
+<div class="button" id="btnMenuStats" style="margin:min(.5vw,.7vh)">STATISTICS</div>
 <div class="button" id="btnMenuFullscreen" style="margin:min(.5vw,.7vh)">FULLSCREEN</div>
 </div>
 <div id="menuInfo" style="display:none;color:#aaa;font-size:min(3.5vw,4vh);text-align:left;line-height:1.6;padding:min(1vw,1.5vh);max-width:100%">
-<div id="menuInfoContent"></div>
+<div id="menuInfoContent" style="max-height:min(60vh,60vw);overflow-y:auto"></div>
 <div class="button" id="btnMenuBack" style="margin:min(1vw,1.5vh) auto;margin-top:min(2vw,2.5vh)">BACK</div>
 </div>
 </div>
@@ -322,7 +329,7 @@ const TILE_COLORS={0:'#000',1:'#444',2:'#111',3:'#236',4:'#252',5:'#863',6:'#654
 const TILE_WALK={0:0,1:1,2:0,3:0,4:1,5:1,6:1,7:0,8:1,9:1,10:1,11:1,12:1,13:1,14:0,15:1,16:0,17:0};
 // ---- Game State ----
 const LEVEL_BACKROOM=15;
-let G={screen:'title',player:null,monsters:[],items:[],npcs:[],quests:[],map:[],level:0,levelType:0,MAX_LEVELS:13,MAX_COW_LEVEL:14,camera:{x:0,y:0},keys:{},mouse:{x:0,y:0,worldX:0,worldY:0},selectedInv:null,msgTimeout:0,msgText:'',gameTime:0,turnCounter:0,dead:false,towners:[],unlocked:{well:false,crypt:false,cave:false,hatch:false,backroom:false},gameSeed:0,portals:[],floatingTexts:[],superAttackMode:false,_deleteMode:false,lastLevel:0,gameWon:false,brChunks:{},brPlayerCX:0,brPlayerCY:0,betMonsters:[],betActive:false,bettorChoice:null,bettorAmount:0};
+let G={screen:'title',player:null,monsters:[],items:[],npcs:[],quests:[],map:[],level:0,levelType:0,MAX_LEVELS:13,MAX_COW_LEVEL:14,camera:{x:0,y:0},keys:{},mouse:{x:0,y:0,worldX:0,worldY:0},selectedInv:null,msgTimeout:0,msgText:'',gameTime:0,turnCounter:0,dead:false,towners:[],unlocked:{well:false,crypt:false,cave:false,hatch:false,backroom:false},gameSeed:0,portals:[],floatingTexts:[],superAttackMode:false,_deleteMode:false,lastLevel:0,gameWon:false,brChunks:{},brPlayerCX:0,brPlayerCY:0,betMonsters:[],betActive:false,bettorChoice:null,bettorAmount:0,evilLevel:1,chestItems:[],   buffs:[],furyClaimed:0,rockClaimed:0};
 // ---- RNG ----
 let RNG_SEED=Date.now();
 function rng(){RNG_SEED=(RNG_SEED*1664525+1013904223)&0xffffffff;return (RNG_SEED>>>0)/4294967296;}
@@ -769,90 +776,104 @@ function generateDiabloLair(){
 // ---- Items ----
 const ITEM_TYPES=[
   // Swords
-  {key:'short_sword',name:'Short Sword',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minStr:0,color:'#888',icon:'/',weapClass:'sword'},
-  {key:'long_sword',name:'Long Sword',type:'weapon',slot:'weapon',minDmg:5,maxDmg:12,minStr:10,color:'#aaa',icon:'/',weapClass:'sword'},
-  {key:'great_sword',name:'Great Sword',type:'weapon',slot:'weapon',minDmg:10,maxDmg:22,minStr:30,color:'#bbb',icon:'/',weapClass:'sword'},
+  {key:'short_sword',name:'Short Sword',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minStr:0,color:'#888',icon:'/',weapClass:'sword',price:120},
+  {key:'long_sword',name:'Long Sword',type:'weapon',slot:'weapon',minDmg:5,maxDmg:12,minStr:10,color:'#aaa',icon:'/',weapClass:'sword',price:360},
+  {key:'great_sword',name:'Great Sword',type:'weapon',slot:'weapon',minDmg:10,maxDmg:22,minStr:30,color:'#bbb',icon:'/',weapClass:'sword',price:1200},
   // Axes
-  {key:'hand_axe',name:'Hand Axe',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#987',icon:'/',weapClass:'axe'},
-  {key:'battle_axe',name:'Battle Axe',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#a98',icon:'/',weapClass:'axe'},
+  {key:'hand_axe',name:'Hand Axe',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#987',icon:'/',weapClass:'axe',price:200},
+  {key:'battle_axe',name:'Battle Axe',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#a98',icon:'/',weapClass:'axe',price:800},
   // Blunt
-  {key:'club',name:'Club',type:'weapon',slot:'weapon',minDmg:3,maxDmg:9,minStr:5,color:'#876',icon:'/',weapClass:'blunt'},
-  {key:'mace',name:'Mace',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minStr:15,color:'#a87',icon:'/',weapClass:'blunt'},
+  {key:'club',name:'Club',type:'weapon',slot:'weapon',minDmg:3,maxDmg:9,minStr:5,color:'#876',icon:'/',weapClass:'blunt',price:150},
+  {key:'mace',name:'Mace',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minStr:15,color:'#a87',icon:'/',weapClass:'blunt',price:600},
   // Staves
-  {key:'short_staff',name:'Short Staff',type:'weapon',slot:'weapon',minDmg:2,maxDmg:6,minMag:0,color:'#897',icon:'\\',weapClass:'staff'},
-  {key:'long_staff',name:'Long Staff',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minMag:15,color:'#a98',icon:'\\',weapClass:'staff'},
-  {key:'war_staff',name:'War Staff',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minMag:25,color:'#ba9',icon:'\\',weapClass:'staff'},
+  {key:'short_staff',name:'Short Staff',type:'weapon',slot:'weapon',minDmg:2,maxDmg:6,minMag:0,color:'#897',icon:'\\',weapClass:'staff',price:100},
+  {key:'long_staff',name:'Long Staff',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minMag:15,color:'#a98',icon:'\\',weapClass:'staff',price:300},
+  {key:'war_staff',name:'War Staff',type:'weapon',slot:'weapon',minDmg:6,maxDmg:14,minMag:25,color:'#ba9',icon:'\\',weapClass:'staff',price:700},
   // Wands
-  {key:'simple_wand',name:'Simple Wand',type:'weapon',slot:'weapon',minDmg:1,maxDmg:4,minMag:5,color:'#cba',icon:'\\',weapClass:'wand'},
-  {key:'sorcerer_wand',name:'Sorcerer Wand',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minMag:20,color:'#dcb',icon:'\\',weapClass:'wand'},
+  {key:'simple_wand',name:'Simple Wand',type:'weapon',slot:'weapon',minDmg:1,maxDmg:4,minMag:5,color:'#cba',icon:'\\',weapClass:'wand',price:80},
+  {key:'sorcerer_wand',name:'Sorcerer Wand',type:'weapon',slot:'weapon',minDmg:3,maxDmg:8,minMag:20,color:'#dcb',icon:'\\',weapClass:'wand',price:240},
   // Shields
-  {key:'buckler',name:'Buckler',type:'shield',slot:'offhand',ac:5,minStr:0,color:'#876',icon:'-'},
-  {key:'small_shield',name:'Small Shield',type:'shield',slot:'offhand',ac:10,minStr:15,color:'#987',icon:'-'},
-  {key:'large_shield',name:'Large Shield',type:'shield',slot:'offhand',ac:18,minStr:25,color:'#a98',icon:'-'},
+  {key:'buckler',name:'Buckler',type:'shield',slot:'offhand',ac:5,minStr:0,color:'#876',icon:'-',price:500},
+  {key:'small_shield',name:'Small Shield',type:'shield',slot:'offhand',ac:10,minStr:15,color:'#987',icon:'-',price:1000},
+  {key:'large_shield',name:'Large Shield',type:'shield',slot:'offhand',ac:18,minStr:25,color:'#a98',icon:'-',price:1800},
   // Helms
-  {key:'cap',name:'Cap',type:'helm',slot:'head',ac:3,color:'#665',icon:'^'},
-  {key:'helm',name:'Helm',type:'helm',slot:'head',ac:7,minStr:10,color:'#887',icon:'^'},
-  {key:'crown',name:'Crown',type:'helm',slot:'head',ac:10,minStr:20,color:'#ca8',icon:'^'},
+  {key:'cap',name:'Cap',type:'helm',slot:'head',ac:3,color:'#665',icon:'^',price:300},
+  {key:'helm',name:'Helm',type:'helm',slot:'head',ac:7,minStr:10,color:'#887',icon:'^',price:700},
+  {key:'crown',name:'Crown',type:'helm',slot:'head',ac:10,minStr:20,color:'#ca8',icon:'^',price:1000},
   // Armor
-  {key:'rags',name:'Rags',type:'armor',slot:'body',ac:5,color:'#554',icon:'#'},
-  {key:'leather_armor',name:'Leather Armor',type:'armor',slot:'body',ac:12,minStr:10,color:'#776',icon:'#'},
-  {key:'chain_mail',name:'Chain Mail',type:'armor',slot:'body',ac:22,minStr:25,color:'#998',icon:'#'},
-  {key:'plate_mail',name:'Plate Mail',type:'armor',slot:'body',ac:35,minStr:40,color:'#bba',icon:'#'},
+  {key:'rags',name:'Rags',type:'armor',slot:'body',ac:5,color:'#554',icon:'#',price:500},
+  {key:'leather_armor',name:'Leather Armor',type:'armor',slot:'body',ac:12,minStr:10,color:'#776',icon:'#',price:1200},
+  {key:'chain_mail',name:'Chain Mail',type:'armor',slot:'body',ac:22,minStr:25,color:'#998',icon:'#',price:2200},
+  {key:'plate_mail',name:'Plate Mail',type:'armor',slot:'body',ac:35,minStr:40,color:'#bba',icon:'#',price:3500},
   // Rings / Amulets
-  {key:'copper_ring',name:'Copper Ring',type:'ring',slot:'ring',color:'#ca6',icon:'o'},
-  {key:'silver_ring',name:'Silver Ring',type:'ring',slot:'ring',color:'#ccc',icon:'o'},
-  {key:'gold_ring',name:'Gold Ring',type:'ring',slot:'ring',color:'#fc0',icon:'o'},
-  {key:'amulet',name:'Amulet',type:'amulet',slot:'neck',color:'#ac8',icon:'*'},
-  {key:'pendant',name:'Pendant',type:'amulet',slot:'neck',color:'#8ca',icon:'*'},
+  {key:'copper_ring',name:'Copper Ring',type:'ring',slot:'ring',color:'#ca6',icon:'o',price:5000},
+  {key:'silver_ring',name:'Silver Ring',type:'ring',slot:'ring',color:'#ccc',icon:'o',price:5000},
+  {key:'gold_ring',name:'Gold Ring',type:'ring',slot:'ring',color:'#fc0',icon:'o',price:5000},
+  {key:'amulet',name:'Amulet',type:'amulet',slot:'neck',color:'#ac8',icon:'*',price:5000},
+  {key:'pendant',name:'Pendant',type:'amulet',slot:'neck',color:'#8ca',icon:'*',price:5000},
   // Potions
-  {key:'health_potion',name:'Health Potion',type:'potion',color:'#c44',icon:'!',misc:'heal'},
-  {key:'mana_potion',name:'Mana Potion',type:'potion',color:'#44c',icon:'!',misc:'mana'},
-  {key:'rejuvenation_potion',name:'Rejuvenation Potion',type:'potion',color:'#c4c',icon:'!',misc:'rejuv'},
-  {key:'full_rejuvenation',name:'Full Rejuvenation',type:'potion',color:'#fcf',icon:'!',misc:'fullrejuv'},
-  {key:'big_health_potion',name:'Big Health Potion',type:'potion',color:'#c44',icon:'!',misc:'bigheal'},
-  {key:'full_health_potion',name:'Full Health Potion',type:'potion',color:'#e66',icon:'!',misc:'fullheal'},
-  {key:'big_mana_potion',name:'Big Mana Potion',type:'potion',color:'#44c',icon:'!',misc:'bigmana'},
-  {key:'full_mana_potion',name:'Full Mana Potion',type:'potion',color:'#66e',icon:'!',misc:'fullmana'},
+  {key:'health_potion',name:'Health Potion',type:'potion',color:'#c44',icon:'!',misc:'heal',price:60},
+  {key:'mana_potion',name:'Mana Potion',type:'potion',color:'#44c',icon:'!',misc:'mana',price:60},
+  {key:'rejuvenation_potion',name:'Rejuvenation Potion',type:'potion',color:'#c4c',icon:'!',misc:'rejuv',price:120},
+  {key:'full_rejuvenation',name:'Full Rejuvenation',type:'potion',color:'#fcf',icon:'!',misc:'fullrejuv',price:1500},
+  {key:'big_health_potion',name:'Big Health Potion',type:'potion',color:'#c44',icon:'!',misc:'bigheal',price:200},
+  {key:'full_health_potion',name:'Full Health Potion',type:'potion',color:'#e66',icon:'!',misc:'fullheal',price:750},
+  {key:'big_mana_potion',name:'Big Mana Potion',type:'potion',color:'#44c',icon:'!',misc:'bigmana',price:200},
+  {key:'full_mana_potion',name:'Full Mana Potion',type:'potion',color:'#66e',icon:'!',misc:'fullmana',price:750},
   // Scrolls
-  {key:'scroll_firebolt',name:'Scroll of Firebolt',type:'scroll',color:'#c84',icon:'?',misc:'firebolt'},
-  {key:'scroll_lightning',name:'Scroll of Lightning',type:'scroll',color:'#84c',icon:'?',misc:'lightning'},
-  {key:'scroll_heal',name:'Scroll of Heal',type:'scroll',color:'#4c8',icon:'?',misc:'healscroll'},
-  {key:'scroll_townportal',name:'Scroll of Town Portal',type:'scroll',color:'#66c',icon:'?',misc:'townportal'},
+  {key:'scroll_firebolt',name:'Scroll of Firebolt',type:'scroll',color:'#c84',icon:'?',misc:'firebolt',price:150},
+  {key:'scroll_lightning',name:'Scroll of Lightning',type:'scroll',color:'#84c',icon:'?',misc:'lightning',price:150},
+  {key:'scroll_heal',name:'Scroll of Heal',type:'scroll',color:'#4c8',icon:'?',misc:'healscroll',price:60},
+  {key:'scroll_townportal',name:'Scroll of Town Portal',type:'scroll',color:'#66c',icon:'?',misc:'townportal',price:120},
   {key:'gold',name:'Gold',type:'gold',color:'#ca0',icon:'$'}
 
 ];
 
 const PRESETTED_ITEMS = [
 
-  {key:'butchers_axe',name:'Butcher\'s Axe',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#909',icon:'/',weapClass:'axe',stats:[{stat:'str',val:20},{stat:'vit',val:10},{stat:'dmg',val:10}]},
-  {key:'butchers_knife',name:'Butcher\'s Knife',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#909',icon:'/',weapClass:'sword',stats:[{stat:'dex',val:20},{stat:'vit',val:10},{stat:'dmg',val:10}]},
-  {key:'butchers_shield',name:'Butcher\'s Shield',type:'shield',slot:'offhand',ac:20,minStr:35,color:'#909',icon:'-',stats:[{stat:'hp',val:50},{stat:'dex',val:15},{stat:'vit',val:10}]},
-  
-  {key:'leechs_staff',name:'Leech\'s Staff',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#909',icon:'\\',weapClass:'staff',stats:[{stat:'mag',val:20},{stat:'dex',val:10},{stat:'dmg',val:10}]},
-  {key:'leechs_wand',name:'Leech\'s Wand',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#909',icon:'\\',weapClass:'wand',stats:[{stat:'vit',val:20},{stat:'dex',val:10},{stat:'dmg',val:10}]},
-  {key:'leechs_shield',name:'Leech\'s Shield',type:'shield',slot:'offhand',ac:20,minStr:25,color:'#909',icon:'-',stats:[{stat:'mana',val:50},{stat:'dex',val:15},{stat:'mag',val:10}]},
+  {key:'scroll_fury',name:'Scroll of Fury',type:'scroll',color:'#e66',icon:'F',misc:'buff_fury',price:10000},
+  {key:'scroll_rock',name:'Scroll of Rock',type:'scroll',color:'#ddc',icon:'R',misc:'buff_rock',price:10000},
+  {key:'scroll_mana',name:'Scroll of Mana',type:'scroll',color:'#36d',icon:'M',misc:'buff_mana',price:10000},
+  {key:'scroll_vamp',name:'Scroll of Vamp',type:'scroll',color:'#60c',icon:'V',misc:'buff_vamp',price:10000},
+  {key:'scroll_skill',name:'Scroll of Skill',type:'scroll',color:'#dcd',icon:'S',misc:'buff_skill',price:10000},
+  {key:'scroll_exp',name:'Scroll of Experience',type:'scroll',color:'#cdd',icon:'X',misc:'buff_exp',price:10000},
 
-  {key:'skeletons_crown',name:'Skeleton\'s Crown',type:'helm',slot:'head',ac:20,minStr:40,color:'#909',icon:'^',stats:[{stat:'mag',val:20},{stat:'vit',val:20},{stat:'dex',val:10}]},
-  {key:'skeletons_mail',name:'Skeleton\'s Mail',type:'armor',slot:'body',ac:50,minStr:50,color:'#909',icon:'#',stats:[{stat:'dex',val:20},{stat:'str',val:20},{stat:'dmg',val:10}]},
-  {key:'skeletons_shield',name:'Skeleton\'s Shield',type:'shield',slot:'offhand',ac:25,minStr:45,color:'#909',icon:'-',stats:[{stat:'vit',val:20},{stat:'dex',val:10},{stat:'dmg',val:10}]},
-  
-  {key:'liliths_ring_doom',name:'Lilith\'s Ring of Doom',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'str',val:15},{stat:'dmg',val:25}]},
-  {key:'liliths_ring_death',name:'Lilith\'s Ring of Death',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'str',val:12},{stat:'hp',val:250}]},
-  {key:'liliths_ring_wind',name:'Lilith\'s Ring of Wind',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'dex',val:15},{stat:'dmg',val:25}]},
-  {key:'liliths_ring_swift',name:'Lilith\'s Ring of Swift',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'dex',val:12},{stat:'mana',val:250}]},
-  {key:'liliths_ring_arcane_insight',name:'Lilith\'s Ring of Arcane Insight',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'mag',val:15},{stat:'dmg',val:25}]},
-  {key:'liliths_ring_void',name:'Lilith\'s Ring of Void',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'mag',val:18},{stat:'mana',val:150}]},
-  {key:'liliths_ring_guardian',name:'Lilith\'s Ring of the Guardian',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'vit',val:15},{stat:'ac',val:50}]},
-  {key:'liliths_ring_force',name:'Lilith\'s Ring of Force',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'vit',val:18},{stat:'hp',val:150}]},
+  {key:'scroll_damage',name:'Scroll of Damage',type:'scroll',color:'#ff6',icon:'?',misc:'damagescroll',price:10000},
+  {key:'wax_charm',name:'Wax of Charm',type:'scroll',color:'#ff6',icon:'?',misc:'charmwax',price:10000},
+  {key:'stone_unique',name:'Magic Stone',type:'scroll',color:'#ff6',icon:'?',misc:'uniquestone',price:10000},
+  {key:'scroll_upgrade',name:'Scroll of Upgrade',type:'scroll',color:'#ff6',icon:'?',misc:'upgradescroll',price:10000},
 
-  {key:'liliths_amulet_titan',name:'Lilith\'s Amulet of Titan',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'str',val:20},{stat:'hp',val:200}]},
-  {key:'liliths_amulet_wrath',name:'Lilith\'s Amulet of Wrath',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'str',val:15},{stat:'dmg',val:15}]},
-  {key:'liliths_amulet_shadow',name:'Lilith\'s Amulet of Shadow',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'dex',val:20},{stat:'mana',val:200}]},
-  {key:'liliths_amulet_ranger',name:'Lilith\'s Amulet of Ranger',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'dex',val:15},{stat:'dmg',val:15}]},
-  {key:'liliths_amulet_eternal_knowledge',name:'Lilith\'s Amulet of Eternal Knowledge',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'mag',val:20},{stat:'mana',val:200}]},
-  {key:'liliths_amulet_arcane_mastery',name:'Lilith\'s Amulet of Arcane Mastery',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'mag',val:15},{stat:'dmg',val:25}]},
-  {key:'liliths_amulet_infinity_life',name:'Lilith\'s Amulet of Infinity Life',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'vit',val:18},{stat:'hp',val:500}]},
-  {key:'liliths_amulet_warding',name:'Lilith\'s Amulet of Warding',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'vit',val:18},{stat:'ac',val:50}]}
+  {key:'evil_crystal',name:'Evil Crystal',type:'scroll',color:'#fcc',icon:'0',misc:'evilcrystal',price:0},
+
+  {key:'butchers_axe',name:'Butcher\'s Axe',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#909',icon:'/',weapClass:'axe',stats:[{stat:'str',val:20},{stat:'vit',val:10},{stat:'dmg',val:10}],price:500},
+  {key:'butchers_knife',name:'Butcher\'s Knife',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#909',icon:'/',weapClass:'sword',stats:[{stat:'dex',val:20},{stat:'vit',val:10},{stat:'dmg',val:10}],price:500},
+  {key:'butchers_shield',name:'Butcher\'s Shield',type:'shield',slot:'offhand',ac:20,minStr:35,color:'#909',icon:'-',stats:[{stat:'hp',val:50},{stat:'dex',val:15},{stat:'vit',val:10}],price:500},
+  
+  {key:'leechs_staff',name:'Leech\'s Staff',type:'weapon',slot:'weapon',minDmg:4,maxDmg:10,minStr:8,color:'#909',icon:'\\',weapClass:'staff',stats:[{stat:'mag',val:20},{stat:'dex',val:10},{stat:'dmg',val:10}],price:500},
+  {key:'leechs_wand',name:'Leech\'s Wand',type:'weapon',slot:'weapon',minDmg:7,maxDmg:16,minStr:20,color:'#909',icon:'\\',weapClass:'wand',stats:[{stat:'vit',val:20},{stat:'dex',val:10},{stat:'dmg',val:10}],price:500},
+  {key:'leechs_shield',name:'Leech\'s Shield',type:'shield',slot:'offhand',ac:20,minStr:25,color:'#909',icon:'-',stats:[{stat:'mana',val:50},{stat:'dex',val:15},{stat:'mag',val:10}],price:500},
+
+  {key:'skeletons_crown',name:'Skeleton\'s Crown',type:'helm',slot:'head',ac:20,minStr:40,color:'#909',icon:'^',stats:[{stat:'mag',val:20},{stat:'vit',val:20},{stat:'dex',val:10}],price:1500},
+  {key:'skeletons_mail',name:'Skeleton\'s Mail',type:'armor',slot:'body',ac:50,minStr:50,color:'#909',icon:'#',stats:[{stat:'dex',val:20},{stat:'str',val:20},{stat:'dmg',val:10}],price:1500},
+  {key:'skeletons_shield',name:'Skeleton\'s Shield',type:'shield',slot:'offhand',ac:25,minStr:45,color:'#909',icon:'-',stats:[{stat:'vit',val:20},{stat:'dex',val:10},{stat:'dmg',val:10}],price:1500},
+  
+  {key:'liliths_ring_doom',name:'Lilith\'s Ring of Doom',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'str',val:15},{stat:'dmg',val:25}],price:10000},
+  {key:'liliths_ring_death',name:'Lilith\'s Ring of Death',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'str',val:12},{stat:'hp',val:250}],price:10000},
+  {key:'liliths_ring_wind',name:'Lilith\'s Ring of Wind',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'dex',val:15},{stat:'dmg',val:25}],price:10000},
+  {key:'liliths_ring_swift',name:'Lilith\'s Ring of Swift',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'dex',val:12},{stat:'mana',val:250}],price:10000},
+  {key:'liliths_ring_arcane_insight',name:'Lilith\'s Ring of Arcane Insight',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'mag',val:15},{stat:'dmg',val:25}],price:10000},
+  {key:'liliths_ring_void',name:'Lilith\'s Ring of Void',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'mag',val:18},{stat:'mana',val:150}],price:10000},
+  {key:'liliths_ring_guardian',name:'Lilith\'s Ring of the Guardian',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'vit',val:15},{stat:'ac',val:50}],price:10000},
+  {key:'liliths_ring_force',name:'Lilith\'s Ring of Force',type:'ring',slot:'ring',color:'#666',icon:'o',stats:[{stat:'vit',val:18},{stat:'hp',val:150}],price:10000},
+
+  {key:'liliths_amulet_titan',name:'Lilith\'s Amulet of Titan',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'str',val:20},{stat:'hp',val:200}],price:10000},
+  {key:'liliths_amulet_wrath',name:'Lilith\'s Amulet of Wrath',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'str',val:15},{stat:'dmg',val:15}],price:10000},
+  {key:'liliths_amulet_shadow',name:'Lilith\'s Amulet of Shadow',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'dex',val:20},{stat:'mana',val:200}],price:10000},
+  {key:'liliths_amulet_ranger',name:'Lilith\'s Amulet of Ranger',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'dex',val:15},{stat:'dmg',val:15}],price:10000},
+  {key:'liliths_amulet_eternal_knowledge',name:'Lilith\'s Amulet of Eternal Knowledge',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'mag',val:20},{stat:'mana',val:200}],price:10000},
+  {key:'liliths_amulet_arcane_mastery',name:'Lilith\'s Amulet of Arcane Mastery',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'mag',val:15},{stat:'dmg',val:25}],price:10000},
+  {key:'liliths_amulet_infinity_life',name:'Lilith\'s Amulet of Infinity Life',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'vit',val:18},{stat:'hp',val:500}],price:10000},
+  {key:'liliths_amulet_warding',name:'Lilith\'s Amulet of Warding',type:'amulet',slot:'neck',color:'#666',icon:'*',stats:[{stat:'vit',val:18},{stat:'ac',val:50}],price:10000}
 ];
 
 const SUFFIXES=[
@@ -909,6 +930,26 @@ const ITEM_QUALITIES=[
   {name:'Super',priceKf:5,statKf:2,chance:2},
   {name:'Poor',priceKf:0.25,statKf:0.5,chance:5}
 ];
+const BUFFS=[
+ {key:'stun',name:'Stun',duration:10,color:'#cee',desc:'Completely immobilizes the player.',debuff:true},
+ {key:'fire',name:'Fired',duration:6,color:'#fa0',desc:'Deals fire damage over time.',debuff:true},
+ {key:'acid',name:'Acid',duration:10,color:'#0f6',desc:'Deals damage over time with poisonous acid.',debuff:true},
+ {key:'bleed',name:'Bleed',duration:20,color:'#b00',desc:'Bleeding that causes the player to lose health.',debuff:true},
+ {key:'fag',name:'Fag',duration:20,color:'#363',desc:'Fatigue reduces your damage.',debuff:true},
+ {key:'mana',name:'Mana',duration:20,color:'#36d',desc:'Makes the supply of magical energy infinite.'},
+ {key:'vamp',name:'Vamp',duration:20,color:'#60c',desc:'Returns part of the damage dealt as health.'},
+ {key:'fury',name:'Fury',duration:30,color:'#e66',desc:'Increases all damage dealt by 200%.'},
+ {key:'rock',name:'Rock',duration:30,color:'#ddc',desc:'Increases defense by 200%.'},
+ {key:'skill',name:'Skill',duration:59,color:'#dcd',desc:'Increases all player stats by 5.'},
+ {key:'exp',name:'Exp',duration:59,color:'#cdd',desc:'Doubles all experience gained.'}
+];
+const BUFF_MONSTERS={
+ stun:['zombie','goat man','throll','taurus','cannibal','butcher','diablo'],
+ fire:['imp','demon','magma demon','miniablo','diablo'],
+ acid:['larva','acid beast','merfolk','cursed demon'],
+ bleed:['rat','skeleton','blood knight','merfolk','succub','diablo'],
+ fag:['fallen one','spirit','ghost','wiwern']
+};
 function createItem(key,level){
  let t=ITEM_TYPES.find(it=>it.key===key);
  if(!t)return null;
@@ -922,9 +963,10 @@ function createItem(key,level){
    let totalChance=ITEM_QUALITIES.reduce((s,q)=>s+q.chance,0),r=rng()*totalChance,qi=0;
    for(let i=0;i<ITEM_QUALITIES.length;i++){r-=ITEM_QUALITIES[i].chance;if(r<=0){qi=i;break;}}
    let q=ITEM_QUALITIES[qi];
-  item.name=q.name+' '+item.name;
-  item.magic=true;
- }
+   item.name=q.name+' '+item.name;
+   item.quality=q;
+   item.magic=true;
+  }
    // Apply suffix (filter by dungeon level)
    let suffixChance=Math.min(.25+.02*level,.6);
    if(!isConsumable&&rng()<suffixChance){
@@ -1086,23 +1128,26 @@ const MONSTER_TYPES=[
 
  {id:16,name:'Miniablo',color:'#d30',headColor:'#f66',      minHP:650,  maxHP:800,  dmg:80, ac:180, xp:1500,level:12},
 
- {id:17,name:'Diablo',color:'#c00',headColor:'#e22',        minHP:1500, maxHP:1500, dmg:200,ac:200, xp:15000,level:13},
+ {id:17,name:'Diablo',color:'#c00',headColor:'#e22',        minHP:5000, maxHP:5000, dmg:200,ac:200, xp:15000,level:13},
 
  {id:25,name:'Backroom Monster',color:'#111',headColor:'#333',minHP:100,maxHP:900,  dmg:100,ac:10,  xp:500,level:15},
 
  {id:26,name:'Butcher',color:'#c11',headColor:'#ee6',       minHP:300,  maxHP:300,  dmg:30,ac:50,  xp:1500,level:-1},
  {id:27,name:'Skeleton King',color:'#666',headColor:'#eee', minHP:600,  maxHP:600,  dmg:50,ac:70,  xp:2500,level:-1},
  {id:28,name:'Lilith',color:'#222',headColor:'#ffe',        minHP:900,  maxHP:900,  dmg:70,ac:90,  xp:3500,level:-1},
- {id:29,name:'Leech',color:'#224',headColor:'#66e',         minHP:300,  maxHP:300,  dmg:30,ac:50,  xp:1500,level:-1}
+ {id:29,name:'Leech',color:'#224',headColor:'#66e',         minHP:300,  maxHP:300,  dmg:30,ac:50,  xp:1500,level:-1},
 
-]; // id=29
+ {id:30,name:'Cow',color:'#886',headColor:'#a88',           minHP:300,  maxHP:300,  dmg:35,ac:60,  xp:500,level:-1}
+
+]; // id=30
 function spawnMonster(typeId,x,y,level){
  let t=MONSTER_TYPES.find(m=>m.id===typeId);
  if(!t)return null;
- let hp=rand(t.minHP,t.maxHP)+Math.floor(level*2);
+ let ek=G.evilLevel||1;
+ let hp=Math.round((rand(t.minHP,t.maxHP)+Math.floor(level*2))*ek);
  return{
   typeId,t,x,y,hp,maxHp:hp,alive:true,
-  dmg:t.dmg+Math.floor(level/2),ac:t.ac+Math.floor(level/3),xp:t.xp+level*5,
+  dmg:Math.round((t.dmg+Math.floor(level/2))*ek),ac:Math.round((t.ac+Math.floor(level/3))*ek),xp:t.xp+level*5,
   color:t.color,level:level,id:G.gameTime+(G.turnCounter++),
     moveTimer:0,aggro:false,animFrame:0,hitTimer:0,_lastAttack:0
  };
@@ -1122,15 +1167,18 @@ function getMonstersForLevel(level){
 }
 // ---- Quests ----
 const QUEST_DEFS=[
-  {id:0,name:'Rat Extermination',desc:'Kill 5 rats in the dungeon.',objective:{type:'kill',monsterId:0,count:5,level:1},reward:{xp:50,gold:20},npcMsg:'The basement of my tavern has been overrun by hordes of rats, gnawing at the ale barrels and scaring away the patrons! I tried to smoke them out, but the creatures only burrowed deeper into the cracks behind the old wine racks. I need someone to go down there and kill at least five of the most brazen ones, or I\'ll go broke. Be careful: the rats might be carrying the plague. Do it, and I\'ll pay you handsomely from my last earnings.',repeatable:true, playerLevel:1},
+  {id:0,name:'Rat Extermination',desc:'Kill 5 rats in the dungeon.',objective:{type:'kill',monsterId:0,count:5,level:1},reward:{xp:50,gold:20,items:['rejuvenation_potion']},npcMsg:'The basement of my tavern has been overrun by hordes of rats, gnawing at the ale barrels and scaring away the patrons! I tried to smoke them out, but the creatures only burrowed deeper into the cracks behind the old wine racks. I need someone to go down there and kill at least five of the most brazen ones, or I\'ll go broke. Be careful: the rats might be carrying the plague. Do it, and I\'ll pay you handsomely from my last earnings.',repeatable:true, playerLevel:1},
   {id:1,name:'The Lost Relic',desc:'Find the hidden altar on level 3 and retrieve the relic.',objective:{type:'find',tile:T_QUEST_ALTAR,level:3},reward:{xp:150,gold:50},npcMsg:'Hidden on the third level of the ancient dungeon is an altar containing a powerful relic, but I don\'t know its exact location. Can you find this artifact? If you can, that bring it to me.', playerLevel:3},
-  {id:2,name:'Boss of the Dungeon',desc:'Defeat the Guardian of level 3.',objective:{type:'kill',monsterId:26,count:1,level:3},reward:{xp:200,gold:60},npcMsg:'On the stairs leading to the lower level of the catacombs, a ferocious Guardian blocks the way. Its blows can shatter bones even through armor, and my magic merely scratches its granite hide, causing no visible damage. I tried to hold it back with a barrier, but it shattered the spell in seconds. If you wish to proceed further, you will have to find a way to defeat this beast.', playerLevel:1},
-  {id:3,name:'Boss of Catacombs',desc:'Defeat the guardian of level 7.',objective:{type:'kill',monsterId:27,count:1,level:7},reward:{xp:400,gold:100},npcMsg:'On the seventh level of the ancient necropolis, a true darkness has awakened, its aura draining the life from all living things. My blades merely ring off its ethereal shadow, and my arrows pass through harmlessly. Apparently, ordinary weapons are powerless here. Tell me, is there a way to use magic or a weapon imbued with light to banish this creature back to the abyss?', playerLevel:3},
-  {id:4,name:'Boss of Deep Lair',desc:'Defeat the guardian of level 11.',objective:{type:'kill',monsterId:28,count:1,level:11},reward:{xp:700,gold:150},npcMsg:'We have awakened something ancient in the very depths. This is no ordinary monster, but a level 11 Guardian—a colossus of living obsidian and magic, whose power shakes the very vaults of the cave. My most powerful spells shatter against its anti-magic shell like glass against stone, leaving not a scratch. I am powerless against it; any direct attack will only lead to death. Help us finish this beast and open the door to a deeper evil.', playerLevel:7},
-  {id:5,name:'Demon Lord',desc:'Defeat the Demon Lord on the deepest level.',objective:{type:'kill',monsterId:17,count:1,level:13},reward:{xp:1000,gold:200},npcMsg:'Within the very heart of the abyss, on a throne of bone and lava, sits the Demon Lord. His power is such that even the air around him scorches the lungs, and a single glance from his blazing eyes can turn even the bravest warrior to stone. I tried to bind him with ancient seals, but he scattered them like dust. Alone, we don\'t stand a chance.', playerLevel:1},
+  {id:2,name:'Boss of the Dungeon',desc:'Defeat the Guardian of level 3.',objective:{type:'kill',monsterId:26,count:1,level:3},reward:{xp:200,gold:60,stats:{mag:10}},npcMsg:'On the stairs leading to the lower level of the catacombs, a ferocious Guardian blocks the way. Its blows can shatter bones even through armor, and my magic merely scratches its granite hide, causing no visible damage. I tried to hold it back with a barrier, but it shattered the spell in seconds. If you wish to proceed further, you will have to find a way to defeat this beast.', playerLevel:1},
+  {id:3,name:'Boss of Catacombs',desc:'Defeat the guardian of level 7.',objective:{type:'kill',monsterId:27,count:1,level:7},reward:{xp:400,gold:100,stats:{vit:10}},npcMsg:'On the seventh level of the ancient necropolis, a true darkness has awakened, its aura draining the life from all living things. My blades merely ring off its ethereal shadow, and my arrows pass through harmlessly. Apparently, ordinary weapons are powerless here. Tell me, is there a way to use magic or a weapon imbued with light to banish this creature back to the abyss?', playerLevel:7},
+  {id:4,name:'Boss of Deep Lair',desc:'Defeat the guardian of level 11.',objective:{type:'kill',monsterId:28,count:1,level:11},reward:{xp:700,gold:150},npcMsg:'We have awakened something ancient in the very depths. This is no ordinary monster, but a level 11 Guardian—a colossus of living obsidian and magic, whose power shakes the very vaults of the cave. My most powerful spells shatter against its anti-magic shell like glass against stone, leaving not a scratch. I am powerless against it; any direct attack will only lead to death. Help us finish this beast and open the door to a deeper evil.', playerLevel:9},
+  {id:5,name:'Demon Lord',desc:'Defeat the Demon Lord on the deepest level.',objective:{type:'kill',monsterId:17,count:1,level:13},reward:{xp:1000,gold:200,items:['evil_crystal']},npcMsg:'Within the very heart of the abyss, on a throne of bone and lava, sits the Demon Lord. His power is such that even the air around him scorches the lungs, and a single glance from his blazing eyes can turn even the bravest warrior to stone. I tried to bind him with ancient seals, but he scattered them like dust. Alone, we don\'t stand a chance.', playerLevel:1},
   {id:6,name:'Forgotten Letter',desc:'Find the forgotten letter on level 1 and take it.',objective:{type:'find',tile:T_QUEST_ALTAR,level:1},reward:{xp:100,gold:50,statPts:5},npcMsg:'On the first level, in the Hall of Records, lies a forgotten letter bearing the seal of our king. I know it lies on a stone pedestal, but all my attempts to retrieve it have failed: as soon as I approach, monsters begin to attack. I cannot defeat them alone. Can you find this letter in the labyrinth of the first level and bring it to me?', playerLevel:1},
-  {id:7,name:'Treasure of the Hell',desc:'Find the treasure on level 12.',objective:{type:'find',tile:T_QUEST_ALTAR,level:12},reward:{xp:10000,gold:500},npcMsg:'There\'s treasure hidden on the twelfth level, but the path to it is blocked by an ingenious trap. I saw it through the magic crystal: the chest stands in the center of the hall, entangled in glowing threads of ancient magic. Any attempt to pick the lock will cause the entire level to collapse on us. I need someone who can disarm the runic mechanism. If you have knowledge in this area or a special tool for removing magical seals, we can split the loot. What do you say?',repeatable:true, playerLevel:10},
-  {id:8,name:'Values of Taurus',desc:'Kill 10 Taurus in the Dungeon.',objective:{type:'kill',monsterId:12,count:10,level:10},reward:{xp:10000,gold:1500},npcMsg:'I urgently need brains for my research, but these damned Taurus... they\'re too powerful. Their thick bone armor on their heads makes them nearly invulnerable to regular arrows and daggers, and my assistants can\'t penetrate it in close combat. Can you figure out a way to defeat these creatures? Bring me ten of their brains, and the reward will be more than generous.',repeatable:true, playerLevel:10},
+  {id:7,name:'Treasure of the Hell',desc:'Find the treasure on level 12.',objective:{type:'find',tile:T_QUEST_ALTAR,level:12},reward:{xp:1000,gold:500,items:['scroll_upgrade']},npcMsg:'There\'s treasure hidden on the twelfth level, but the path to it is blocked by an ingenious trap. I saw it through the magic crystal: the chest stands in the center of the hall, entangled in glowing threads of ancient magic. Any attempt to pick the lock will cause the entire level to collapse on us. I need someone who can disarm the runic mechanism. If you have knowledge in this area or a special tool for removing magical seals, we can split the loot. What do you say?',repeatable:true, playerLevel:10},
+  {id:8,name:'Values of Taurus',desc:'Kill 10 Taurus in the Dungeon.',objective:{type:'kill',monsterId:12,count:10,level:10},reward:{xp:1000,gold:1500,items:['full_rejuvenation']},npcMsg:'I urgently need brains for my research, but these damned Taurus... they\'re too powerful. Their thick bone armor on their heads makes them nearly invulnerable to regular arrows and daggers, and my assistants can\'t penetrate it in close combat. Can you figure out a way to defeat these creatures? Bring me ten of their brains, and the reward will be more than generous.',repeatable:true, playerLevel:10},
+  {id:9,name:'Veronica\'s Hair',desc:'Find the Golden Hair on the level 2.',objective:{type:'find',tile:T_QUEST_ALTAR,level:2},reward:{xp:100,gold:150,items:['scroll_damage']},npcMsg:'You must descend to the second level of the dungeon. Your goal is to find Veronica\'s Golden Hair. This legendary artifact is hidden deep within the abandoned halls of an ancient temple. The path to the relic is blocked by treacherous and aggressive Guardians of the Deep. Only the bravest heroes will be able to overcome the darkness and claim the shining artifact. Successful completion of this mission will earn you a generous reward.', playerLevel:5},
+  {id:10,name:'Great Candle',desc:'Find the Great Candle on the level 4.',objective:{type:'find',tile:T_QUEST_ALTAR,level:4},reward:{xp:250,gold:330,items:['wax_charm']},npcMsg:'An ancient prophecy foretells that on the coming night of the eclipse, the world will be plunged into eternal darkness unless a sacred ritual of purification is performed. To perform this sacrament, the mages are desperately short of the most important artifact—the Great Candle, capable of burning with the flame of pure, primordial light. You must embark on a perilous journey through the abandoned catacombs of a forgotten order, where this relic has been kept for centuries. Hurry, for the wax is running out, time is slipping away, and the fate of all life now rests solely in your hands.', playerLevel:6},
+  {id:11,name:'Stone of Unique',desc:'Find the Magic Stone.',objective:{type:'find',tile:T_QUEST_ALTAR,level:8},reward:{xp:100,gold:150,items:['stone_unique']},npcMsg:'An ancient prophecy foretells that on the coming night of the eclipse, the world will be plunged into eternal darkness unless a sacred ritual of purification is performed. To perform this sacrament, the mages are desperately short of the most important artifact—the Great Candle, capable of burning with the flame of pure, primordial light. You must embark on a perilous journey through the abandoned catacombs of a forgotten order, where this relic has been kept for centuries. Hurry, for the wax is running out, time is slipping away, and the fate of all life now rests solely in your hands.', playerLevel:13},
 ];
 // ---- Town Entrances ----
 const ENTRANCES=[
@@ -1147,7 +1195,7 @@ function handleTownEntrance(px,py){
   if(ent.targetLevel===G.MAX_COW_LEVEL&&!G.unlocked.hatch){showMsg('The hatch is sealed. Defeat Magma Demon first!');return;}
    G.lastLevel=G.level;
    G.level=ent.targetLevel;loadLevel(ent.targetLevel);
-  showMsg(`Entering ${ent.name} (Level ${ent.targetLevel})`);
+  showMsg(`Entering ${ent.name} - Level ${ent.targetLevel}`);
 }
 // ---- NPCs ----
 const NPC_DEFS=[
@@ -1161,18 +1209,19 @@ const NPC_DEFS=[
 
  {id:7,name:'Eric',type:'quest',color:'#666',headColor:'#ccc',msg:'Hi there! I need you help.',x:19,y:51,questIds:[4]},
  {id:8,name:'Mark',type:'quest',color:'#966',headColor:'#dcc',msg:'Hello pal! Only you can help me. I see that.',x:23,y:43,questIds:[0]},
- {id:9,name:'Irida',type:'quest',color:'#6c6',headColor:'#cdc',msg:'Hello! I have some task for you!',x:51,y:12,questIds:[3]},
+  {id:9,name:'Irida',type:'quest',color:'#6c6',headColor:'#cdc',msg:'Hello! I have some task for you!',x:51,y:12,questIds:[3,9]},
  {id:10,name:'Teodor',type:'quest',color:'#8c8',headColor:'#cdc',msg:'Hello! Something strange in this well!',x:36,y:30,questIds:[2]},
  {id:11,name:'Anastacia',type:'quest',color:'#cc6',headColor:'#ddc',msg:'Hello! I don\'t see my thing anywhere!',x:16,y:24,questIds:[1]},
- {id:12,name:'Natalie',type:'quest',color:'#c6d',headColor:'#ede',msg:'Excuse me! Do you see my letter?',x:16,y:36,questIds:[6]},
+  {id:12,name:'Natalie',type:'quest',color:'#c6d',headColor:'#ede',msg:'Excuse me! Do you see my letter?',x:16,y:36,questIds:[6,8,10]},
  {id:13,name:'Kile',type:'quest',color:'#bbc',headColor:'#eee',msg:'Hi Fellow! I\'m looking for some treasure!',x:56,y:48,questIds:[7]},
- {id:14,name:'Leric',type:'quest',color:'#c70',headColor:'#eed',msg:'You know that the Taurus is very smart? I need\'em!',x:52,y:22,questIds:[8]},
+ {id:14,name:'Leric',type:'quest',color:'#c70',headColor:'#eed',msg:'You know that the Taurus is very smart? I need\'em!',x:52,y:22,questIds:[8,11]},
  {id:15,name:'Bookmaker Virt',type:'bet',color:'#c86',headColor:'#fda',msg:'Place your bets! 100, 200 or 500 gold on the red or blue fighter!',x:38,y:23},
  {id:16,name:'Carl',type:'greet',color:'#988',headColor:'#ddd',msg:'Hi there!',x:41,y:18},
  {id:17,name:'Dwain',type:'greet',color:'#898',headColor:'#ddd',msg:'Welcome!',x:44,y:18},
  {id:18,name:'Jack',type:'greet',color:'#889',headColor:'#ddd',msg:'Greetings!',x:42,y:26},
  {id:19,name:'Spock',type:'greet',color:'#998',headColor:'#ddd',msg:'Hello!',x:38,y:25},
- {id:20,name:'Clark',type:'greet',color:'#ccb',headColor:'#cde',msg:'Where is this door? I swear I saw it here!',x:56,y:33}
+ {id:20,name:'Clark',type:'greet',color:'#ccb',headColor:'#cde',msg:'Where is this door? I swear I saw it here!',x:56,y:33},
+  {id:21,name:'Storage Chest',type:'chest',color:'#0000',headColor:'#fc0',msg:'Storage chest.',x:28,y:31}
 ];
 // ---- Create NPC instances ----
 function createNPCsForTown(){
@@ -1272,8 +1321,44 @@ function calcPlayerStats(plr){
    if(plr.maxMana>oldMaxMana)plr.mana=Math.min(plr.mana+plr.maxMana-oldMaxMana,plr.maxMana);
  plr.toHit=40+Math.floor(plr.dex/3);
  plr.dodge=Math.floor(plr.dex/6);
+ // Apply buff effects on stats
+ if(G.buffs){
+  if(G.buffs.some(b=>b.key==='skill')){plr.str+=5;plr.mag+=5;plr.dex+=5;plr.vit+=5;
+   plr.minDmg+=Math.floor(5/(plr.charClass===CLASS_WARRIOR?5:3));
+   plr.maxDmg+=Math.floor(5/(plr.charClass===CLASS_WARRIOR?3:3));
+   plr.ac+=Math.floor(5/5);
+   let addHp=5*2*Math.round(plr.level/20+1);plr.maxHp+=addHp;plr.hp=Math.min(plr.hp+addHp,plr.maxHp);
+   let addMana=5*3*Math.round(plr.level/25+1);plr.maxMana+=addMana;plr.mana=Math.min(plr.mana+addMana,plr.maxMana);
+  }
+  if(G.buffs.some(b=>b.key==='fag')){plr.minDmg=Math.max(1,Math.floor(plr.minDmg/2));plr.maxDmg=Math.max(1,Math.floor(plr.maxDmg/2));}
+  if(G.buffs.some(b=>b.key==='fury')){plr.minDmg*=3;plr.maxDmg*=3;}
+  if(G.buffs.some(b=>b.key==='rock')){plr.ac*=3;}
+ }
+}
+function hasBuff(key){return G.buffs&&G.buffs.some(b=>b.key===key);}
+function addBuff(key,duration){
+ let bd=BUFFS.find(b=>b.key===key);
+ if(!bd)return;
+ let existing=G.buffs.find(b=>b.key===key);
+ if(existing){existing.remaining=Math.max(existing.remaining,duration||bd.duration);updateBuffsUI();return;}
+ G.buffs.push({key:bd.key,name:bd.name,color:bd.color,desc:bd.desc,remaining:duration||bd.duration,total:(duration||bd.duration)});
+ if(G.player)calcPlayerStats(G.player);
+ updateBuffsUI();
+}
+function removeBuff(key){
+ let idx=G.buffs.findIndex(b=>b.key===key);
+ if(idx>=0){G.buffs.splice(idx,1);if(G.player)calcPlayerStats(G.player);updateBuffsUI();}
+}
+function updateBuffsUI(){
+ let el=document.getElementById('buff_container');
+ if(!el)return;
+ el.innerHTML='';
+ if(G.buffs&&G.buffs.length>0){
+  el.innerHTML='<div id="buff_bar">'+G.buffs.map(b=>`<div class="buff_cell" style="background:${b.color}" title="${b.desc}"><span class="buff_name">${b.name}</span><span class="buff_time">${Math.ceil(b.remaining)}s</span></div>`).join('')+'</div>';
+ }
 }
 function addXp(plr,amount){
+ if(hasBuff('exp'))amount*=2;
  plr.xp+=amount;
  let needed=XP_PER_LEVEL[plr.level]||plr.level*150+200;
  while(plr.xp>=needed&&plr.level<50){
@@ -1294,6 +1379,7 @@ function addFloatingText(x,y,text,color){
 }
 function playerAttack(plr,monster){
  if(!monster||!monster.alive)return;
+ if(hasBuff('stun')){showMsg('Stunned! Cannot attack!');return;}
   if(plr.charClass===CLASS_WARRIOR){
    if(dist(plr.x,plr.y,monster.x,monster.y)>2)return;
   }else{
@@ -1302,8 +1388,9 @@ function playerAttack(plr,monster){
  let hitRoll=Math.floor(rng()*100);
  let hitChance=plr.toHit-monster.ac;
  hitChance=clamp(hitChance,20,95);
-  if(hitRoll<hitChance){
-     let dmg=rand(plr.minDmg,plr.maxDmg);
+   if(hitRoll<hitChance){
+      trackStat('hitsDealt',1);
+      let dmg=rand(plr.minDmg,plr.maxDmg);
      dmg=Math.round((1-1/(1+Math.exp(dmg*(1+dmg/monster.ac)/(1+monster.ac/dmg)/monster.ac)))*dmg)+1;
      dmg=Math.max(1,dmg+rand(-1,1));
      // Super attack mode: 2x damage costs mana
@@ -1311,20 +1398,28 @@ function playerAttack(plr,monster){
        if(plr.mana>=10){plr.mana-=10;dmg*=2;}
       else{G.superAttackMode=false;updateSuperBtn();showMsg('Super attack: out of mana!');}
      }
-     monster.hp-=dmg;
-   monster.hitTimer=6;
-   addFloatingText(monster.x,monster.y-1,'-'+dmg,'#f88');
-   showMsg(`Hit ${monster.t.name} for ${dmg} damage!`);
-   if(monster.hp<=0){
-      monster.alive=false;plr.hp=Math.min(plr.hp+5,plr.maxHp);
-     trackBossKill(monster,plr,G.level);
-      if(monster.typeId===17){showVictory();requestAnimationFrame(gameLoop);return;}
-     if(!plr._questKills)plr._questKills={};
-     let key='kill_'+monster.typeId;
-     plr._questKills[key]=(plr._questKills[key]||0)+1;
-    addXp(plr,monster.xp);
-   plr.gold=(plr.gold||0)+rand(1,5+plr.level);
-   showMsg(`Killed ${monster.t.name}! +${monster.xp} XP`);
+       monster.hp-=dmg;
+       trackStat('damageDealt',dmg);
+       if(dmg>G.stats.maxDamageDealt)G.stats.maxDamageDealt=dmg;
+       // Vamp buff: return 50% of damage as health
+       if(hasBuff('vamp')){let heal=Math.max(1,Math.floor(dmg*0.5));plr.hp=Math.min(plr.hp+heal,plr.maxHp);addFloatingText(plr.x,plr.y-1,'+'+heal,'#60c');}
+     monster.hitTimer=6;
+     addFloatingText(monster.x,monster.y-1,'-'+dmg,'#f88');
+     showMsg(`Hit ${monster.t.name} for ${dmg} damage!`);
+    if(monster.hp<=0){
+       monster.alive=false;plr.hp=Math.min(plr.hp+5,plr.maxHp);
+       trackStat('killsTotal',1);
+       G.stats.killsByLevel[G.level]=(G.stats.killsByLevel[G.level]||0)+1;
+       G.stats.killsByMonster[monster.typeId]=(G.stats.killsByMonster[monster.typeId]||0)+1;
+       if(monster.champion)trackStat('championsKilled',1);
+       trackBossKill(monster,plr,G.level);
+       if(!plr._questKills)plr._questKills={};
+       let key='kill_'+monster.typeId;
+       plr._questKills[key]=(plr._questKills[key]||0)+1;
+       addXp(plr,monster.xp);
+     let goldDrop=rand(1,5+plr.level)*(G.level||1)*(G.evilLevel||1);plr.gold=(plr.gold||0)+goldDrop;trackStat('goldEarned',goldDrop);
+        if(monster.typeId===17){checkQuests();showVictory();requestAnimationFrame(gameLoop);return;}
+    showMsg(`Killed ${monster.t.name}! +${monster.xp} XP`);
    // Drop item (bosses drop from preset pool, regular monsters drop randomly)
     if(monster.typeId===26||monster.typeId===27||monster.typeId===28||monster.typeId===29){
      let drop=rollBossDrop(monster.typeId,G.level);
@@ -1338,8 +1433,9 @@ function playerAttack(plr,monster){
     }
      return true;
      }
-    }else{
-    showMsg(`Missed ${monster.t.name}!`);
+     }else{
+     trackStat('hitsMissed',1);
+     showMsg(`Missed ${monster.t.name}!`);
     if(rng()<.25){
      monsterAttack(plr,monster);
     }
@@ -1350,19 +1446,34 @@ function monsterAttack(plr,monster){
  let hitRoll=Math.floor(rng()*100);
  let hitChance=50-Math.floor(plr.dodge/2);
  hitChance=clamp(hitChance,10,95);
- if(hitRoll<hitChance){
-   let ac=Math.max(1,plr.ac);
+  if(hitRoll<hitChance){
+    trackStat('hitsReceived',1);
+    let ac=Math.max(1,plr.ac);
    let dmg=Math.round((1-1/(1+Math.exp(monster.dmg*(1+monster.dmg/ac)/(1+ac/monster.dmg)/ac)))*monster.dmg/2)+1;
    dmg=Math.max(1,dmg+rand(-1,1));
-   plr.hp-=dmg;
-   plr.hitTimer=6;
-   addFloatingText(plr.x,plr.y-1,'-'+dmg,'#f44');
-   showMsg(`${monster.t.name} hits you for ${dmg}!`);
-  if(plr.hp<=0){plr.hp=0;plr.dead=true;showDeath();}
- }else{
-  showMsg(`${monster.t.name} missed!`);
+    plr.hp-=dmg;
+    trackStat('damageTaken',dmg);
+    if(dmg>G.stats.maxDamageTaken)G.stats.maxDamageTaken=dmg;
+    plr.hitTimer=6;
+    addFloatingText(plr.x,plr.y-1,'-'+dmg,'#f44');
+    showMsg(`${monster.t.name} hits you for ${dmg}!`);
+    // 10% chance to apply debuff on hit
+     if(rng()<0.1&&monster.t&&monster.t.name){
+     let mName=monster.t.name.toLowerCase();
+     for(let bkey in BUFF_MONSTERS){
+      if(BUFF_MONSTERS[bkey].some(name=>mName===name)){
+        let bd=BUFFS.find(b=>b.key===bkey);let dur=rand(1,bd?bd.duration:10);
+       addBuff(bkey,dur);
+       showMsg(`Debuff: ${BUFFS.find(b=>b.key===bkey).name}!`);
+       break;
+     }}
+    }
+   if(plr.hp<=0){plr.hp=0;plr.dead=true;trackStat('deathsTotal',1);G.stats.deathsByLevel[G.level]=(G.stats.deathsByLevel[G.level]||0)+1;G.stats.deathsByMonster[monster.t.name]=(G.stats.deathsByMonster[monster.t.name]||0)+1;showDeath();}
+  }else{
+   trackStat('dodges',1);
+   showMsg(`${monster.t.name} missed!`);
+  }
  }
-}
 function playerRangedAttack(plr,monster){
  // Same as playerAttack for mage, just checks range differently
  playerAttack(plr,monster);
@@ -1470,26 +1581,98 @@ function interactNPC(plr,npc){
      if(npcQuestIds.length)availQ=availQ.filter(qd=>npcQuestIds.includes(qd.id));
      // Show ready-to-claim quests first
      let readyQs=G.quests.filter(q=>q.state==='ready'&&(!npcQuestIds.length||npcQuestIds.includes(q.id)));
-     if(readyQs.length>0){
-      textEl.textContent='You have completed tasks! Claim your reward!';
-      for(let q of readyQs){
-       let btn=document.createElement('div');btn.className='npc_btn';
-       let btnTxt=`Claim: ${q.name} (+${q.reward.xp}XP +${q.reward.gold}G`;
-       if(q.reward.statPts)btnTxt+=` +${q.reward.statPts}SP`;
-       btnTxt+=')';btn.textContent=btnTxt;
-       btn.style.color='#0f0';
-       btn.onclick=()=>{
-        q.state='done';q.rewardClaimed=true;
-         addXp(G.player,q.reward.xp);G.player.gold+=q.reward.gold;
-         if(q.reward.statPts)G.player.statPts=(G.player.statPts||0)+q.reward.statPts;
-         let msgText=`Reward claimed: ${q.name}! +${q.reward.xp}XP +${q.reward.gold}G`;
-         if(q.reward.statPts)msgText+=` +${q.reward.statPts}SP`;
-         showMsg(msgText);
-        dlg.classList.remove('active');
-        saveGame();
-       };
-       btnsEl.appendChild(btn);
-      }
+      if(readyQs.length>0){
+       textEl.textContent='You have completed tasks! Claim your reward!';
+       for(let q of readyQs){
+        if(q.reward.upgrade){
+         // Upgrade quest: show inventory to pick an item
+         let btn=document.createElement('div');btn.className='npc_btn';
+         btn.textContent=`Upgrade: ${q.name}`;btn.style.color='#0f0';
+          btn.onclick=(e)=>{
+           e.stopPropagation();
+           textEl.textContent='Select an item from your inventory to upgrade to Super quality:';
+           btnsEl.innerHTML='';
+          let backBtn=document.createElement('div');backBtn.className='npc_btn';backBtn.textContent='Back';backBtn.style.color='#aaa';
+          backBtn.onclick=()=>{dlg.classList.remove('active');};
+          btnsEl.appendChild(backBtn);
+          let invGrid=document.createElement('div');invGrid.style.cssText='display:grid;grid-template-columns:repeat(8,1fr);gap:1px;width:100%;margin-top:4px';
+          for(let i=0;i<32;i++){
+           let cell=document.createElement('div');
+           cell.style.cssText='background:#1a1a1a;border:1px solid #444;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:min(2vw,2.5vh);color:#000;cursor:pointer';
+           if(i<G.player.inventory.length){
+            let item=G.player.inventory[i];
+            cell.textContent=item.icon||'?';cell.style.background=item.color||'#1a1a1a';
+            cell.onmouseenter=(e=>showTooltip(itemTooltip(item),e));
+            cell.onmouseleave=()=>hideTooltip();
+            cell.onclick=()=>{
+             if(item.type==='potion'||item.type==='scroll'){showMsg('Cannot upgrade consumables!');return;}
+             let superQ=ITEM_QUALITIES.find(qu=>qu.name==='Super');
+             if(!superQ)return;
+             item.quality=superQ;
+             item.name='Super '+item.name.replace(/^(Fine|Good|Magic|Super|Poor) /,'');
+             let kf=superQ.statKf;
+             if(item.minDmg){item.minDmg=Math.max(1,Math.round(item.minDmg*kf));item.maxDmg=Math.max(1,Math.round(item.maxDmg*kf));}
+             if(item.ac)item.ac=Math.round(item.ac*kf);
+             if(item.minStr)item.minStr=Math.round(item.minStr*kf);
+             if(item.minMag)item.minMag=Math.round(item.minMag*kf);
+             if(item.stats)item.stats=item.stats.map(s=>({...s,val:Math.round(s.val*kf)}));
+              q.state='done';q.rewardClaimed=true;
+              addXp(G.player,q.reward.xp);G.player.gold+=q.reward.gold;
+              trackStat('goldEarned',q.reward.gold);trackStat('questsCompleted',1);
+              showMsg(`Reward claimed: ${q.name}! +${q.reward.xp}XP +${q.reward.gold}G, item upgraded to Super!`);
+             dlg.classList.remove('active');saveGame();
+            };
+           }
+           invGrid.appendChild(cell);
+          }
+          btnsEl.appendChild(invGrid);
+         };
+         btnsEl.appendChild(btn);
+         continue;
+        }
+        let btn=document.createElement('div');btn.className='npc_btn';
+        let btnTxt=`Claim: ${q.name} (${q.reward.xp}XP ${q.reward.gold}G`;
+        if(q.reward.statPts)btnTxt+=` ${q.reward.statPts}SP`;
+        if(q.reward.stats){ 
+         if(q.reward.stats.mag)btnTxt+=` ${q.reward.stats.mag} MAG`;
+         if(q.reward.stats.vit)btnTxt+=` ${q.reward.stats.vit} VIT`;
+        }
+        if(q.reward.items)btnTxt+=` *`;
+
+        btnTxt+=')';btn.textContent=btnTxt;
+        btn.style.color='#0f0';
+        btn.onclick=()=>{
+         q.state='done';q.rewardClaimed=true;
+          addXp(G.player,q.reward.xp);G.player.gold+=q.reward.gold;
+          if(q.reward.statPts)G.player.statPts=(G.player.statPts||0)+q.reward.statPts;
+          if(q.reward.stats){
+           if(q.reward.stats.mag)G.player.baseMag+=q.reward.stats.mag;
+           if(q.reward.stats.vit)G.player.baseVit+=q.reward.stats.vit;
+          }
+          let msgText=`Reward claimed: ${q.name}! +${q.reward.xp}XP +${q.reward.gold}G`;
+          if(q.reward.statPts)msgText+=` +${q.reward.statPts}SP`;
+          if(q.reward.stats){
+           if(q.reward.stats.mag)msgText+=` +${q.reward.stats.mag} MAG`;
+           if(q.reward.stats.vit)msgText+=` +${q.reward.stats.vit} VIT`;
+          }
+           // Sync reward items from definition (supports newly added rewards on old quests)
+           if(!q.reward.items){let qd=QUEST_DEFS.find(d=>d.id===q.id);if(qd&&qd.reward.items)q.reward.items=qd.reward.items;}
+           // Give reward items
+           if(q.reward.items){
+            for(let ik of q.reward.items){
+             let it=createItem(ik,G.level);
+             if(!it)it=createPresetItem(ik,G.level);
+             if(it&&G.player.inventory.length<32){G.player.inventory.push(it);msgText+=` +${it.name}`;}
+             else{msgText+=' (inventory full!)';}
+            }
+           }
+          trackStat('goldEarned',q.reward.gold);trackStat('questsCompleted',1);
+          showMsg(msgText);
+         dlg.classList.remove('active');
+         saveGame();
+        };
+        btnsEl.appendChild(btn);
+       }
      }else if(availQ.length>0){
       textEl.textContent=null; // will set per-quest below
       for(let qd of availQ){
@@ -1534,19 +1717,29 @@ function interactNPC(plr,npc){
        btnsEl.appendChild(btn);
       }
      }
- }else if(npc.type==='heal'){
-  let cost=Math.floor((plr.maxHp-plr.hp)/4)+1;
-  textEl.textContent=`I can heal your wounds completely for ${cost} gold. (You have ${plr.gold} gold)`;
-  let btn=document.createElement('div');btn.className='npc_btn';
-  btn.textContent='Heal Me!';
-  btn.onclick=()=>{
-   if((plr.gold||0)>=cost){
-    plr.gold=(plr.gold||0)-cost;plr.hp=plr.maxHp;plr.mana=plr.maxMana;
-    showMsg('You have been healed!');
-    dlg.classList.remove('active');
-   }else{showMsg('Not enough gold!');}
-  };
-  btnsEl.appendChild(btn);
+  }else if(npc.type==='heal'){
+   let cost=Math.floor((plr.maxHp-plr.hp)/4)+1;
+   textEl.textContent=`I can heal your wounds completely for ${cost} gold. (You have ${plr.gold} gold)`;
+   let btn=document.createElement('div');btn.className='npc_btn';
+   btn.textContent='Heal Me!';
+   btn.onclick=()=>{
+    if((plr.gold||0)>=cost){
+     plr.gold=(plr.gold||0)-cost;plr.hp=plr.maxHp;plr.mana=plr.maxMana;
+     showMsg('You have been healed!');
+     dlg.classList.remove('active');
+    }else{showMsg('Not enough gold!');}
+   };
+   btnsEl.appendChild(btn);
+   // Claim Scroll of Rock (once per life)
+   if(G.rockClaimed===0){
+    let rockBtn=document.createElement('div');rockBtn.className='npc_btn';rockBtn.textContent='Claim Scroll of Rock';rockBtn.style.color='#ddc';
+    rockBtn.onclick=()=>{
+     if(plr.inventory.length<32){let it=createPresetItem('scroll_rock',1);if(it){plr.inventory.push(it);G.rockClaimed=1;showMsg('Got Scroll of Rock!');}else showMsg('Failed to create item!');}
+     else showMsg('Inventory full!');
+     dlg.classList.remove('active');
+    };
+    btnsEl.appendChild(rockBtn);
+   }
   }else if(npc.type==='shop'||npc.type==='shop_jewelry'||npc.type==='shop_potions'){
     textEl.textContent=npc.type==='shop'?'Weapons, armor, shields & helms':npc.type==='shop_jewelry'?'Rings, amulets & scrolls':'Potions of all kinds';
     let itemPool=npc.type==='shop'?['short_sword','long_sword','great_sword','hand_axe','battle_axe','club','mace','short_staff','long_staff','war_staff','buckler','small_shield','large_shield','cap','helm','crown','rags','leather_armor','chain_mail','plate_mail']:npc.type==='shop_jewelry'?['copper_ring','silver_ring','gold_ring','amulet','pendant','scroll_firebolt','scroll_lightning','scroll_heal','scroll_townportal']:['health_potion','mana_potion','rejuvenation_potion','full_rejuvenation','big_health_potion','full_health_potion','big_mana_potion','full_mana_potion'];
@@ -1589,28 +1782,23 @@ function interactNPC(plr,npc){
       let cell=document.createElement('div');
       cell.style.cssText='background:#1a1a1a;border:min(.08vw,.1vh)solid #444;cursor:pointer;text-align:center;font-size:min(4vw,4.5vh);line-height:1.0;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#000';
       if(i<shopItems.length){
-        let si=shopItems[i];
-         let cost=si.minDmg?Math.max(10,si.minDmg*10+20):si.ac?Math.max(10,si.ac*8+20):30;
-          if(si.type==='potion')cost=15;
-          // Apply priceKf from quality and suffix
-          let priceKf=1;
-          if(si.quality)priceKf*=(si.quality.priceKf||1);
-          if(si.suffix)priceKf*=(si.suffix.priceKf||1);
-          cost=Math.round(cost*priceKf)||0;
+         let si=shopItems[i];
+          let cost=Math.round((si.price||30)*(si.quality?si.quality.priceKf:1)*(si.suffix?si.suffix.priceKf:1))||0;
        cell.textContent=si.icon||'?';cell.style.background=si.color||'#1a1a1a';
          cell.onmouseenter=((si,cost)=>(e)=>{
           showTooltip(itemTooltip(si,cost),e);
          })(si,cost);
          cell.onmouseleave=()=>hideTooltip();
-          cell.onclick=((si,i,cost)=>(e)=>{
-           e.stopPropagation();hideTooltip();
-           plr.gold=plr.gold||0;cost=cost||0;
-           if(plr.gold>=cost&&plr.inventory.length<32){
-           plr.gold=(plr.gold-cost);plr.inventory.push(JSON.parse(JSON.stringify(si)));shopItems.splice(i,1);
-          renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Bought ${si.name}!`);
-         }else if(plr.inventory.length>=32){showMsg('Inventory full!');}
-         else{showMsg('Not enough gold!');}
-       })(si,i,cost);
+           cell.onclick=((si,i,cost)=>(e)=>{
+            e.stopPropagation();hideTooltip();
+            plr.gold=plr.gold||0;cost=cost||0;
+            if(plr.gold>=cost&&plr.inventory.length<32){
+            plr.gold=(plr.gold-cost);plr.inventory.push(JSON.parse(JSON.stringify(si)));shopItems.splice(i,1);
+            trackStat('goldSpent',cost);trackStat('itemsBought',1);
+           renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Bought ${si.name}!`);
+          }else if(plr.inventory.length>=32){showMsg('Inventory full!');}
+          else{showMsg('Not enough gold!');}
+        })(si,i,cost);
       }
       npcGrid.appendChild(cell);
      }
@@ -1619,23 +1807,18 @@ function interactNPC(plr,npc){
       cell.style.cssText='background:#1a1a1a;border:min(.08vw,.1vh)solid #444;cursor:pointer;text-align:center;font-size:min(4vw,4.5vh);line-height:1.0;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#000';
       if(i<plr.inventory.length){
        let item=plr.inventory[i];
-         let price=item.minDmg?Math.max(5,Math.floor((item.minDmg*10+20)/2)):item.ac?Math.max(5,Math.floor((item.ac*8+20)/2)):10;
-          if(item.type==='potion')price=7;
-          // Apply priceKf from quality and suffix
-          let sellPriceKf=1;
-          if(item.quality)sellPriceKf*=(item.quality.priceKf||1);
-          if(item.suffix)sellPriceKf*=(item.suffix.priceKf||1);
-          price=Math.round(price*sellPriceKf)||0;
+          let price=Math.round(((item.price||30)/2)*(item.quality?item.quality.priceKf:1)*(item.suffix?item.suffix.priceKf:1))||0;
        cell.textContent=item.icon||'?';cell.style.background=item.color||'#1a1a1a';
          cell.onmouseenter=((item,price)=>(e)=>{
           showTooltip(itemTooltip(item,price),e);
          })(item,price);
          cell.onmouseleave=()=>hideTooltip();
-         cell.onclick=((item,i,price)=>(e)=>{
-          e.stopPropagation();hideTooltip();
-          plr.gold=(plr.gold||0)+(price||0);plr.inventory.splice(i,1);
-         renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Sold ${item.name} for ${price}g`);
-       })(item,i,price);
+          cell.onclick=((item,i,price)=>(e)=>{
+           e.stopPropagation();hideTooltip();
+           plr.gold=(plr.gold||0)+(price||0);plr.inventory.splice(i,1);
+           trackStat('goldEarned',price);trackStat('itemsSold',1);
+          renderShopGrids();goldDiv.textContent=`Gold: ${plr.gold}`;showMsg(`Sold ${item.name} for ${price}g`);
+        })(item,i,price);
       }
       plrGrid.appendChild(cell);
      }
@@ -1705,25 +1888,90 @@ function interactNPC(plr,npc){
     }
    }
   }
-  }else if(npc.type==='greet'){
-   textEl.textContent=npc.msg||choice(['Hi there!','Welcome!','Greetings!','Hello!','Hey there!','Good day!']);
-  let btn=document.createElement('div');btn.className='npc_btn';btn.textContent='Hi!';
-  btn.onclick=()=>{dlg.classList.remove('active');};
-  btnsEl.appendChild(btn);
- }else if(npc.type==='train'){
-  let cost=plr.level*20;
-  textEl.textContent=`Training costs ${cost} gold. Gain extra XP!`;
-  let btn=document.createElement('div');btn.className='npc_btn';
-  btn.textContent='Train';
-  btn.onclick=()=>{
-    if((plr.gold||0)>=cost){
-     plr.gold=(plr.gold||0)-cost;addXp(plr,Math.floor(plr.level*30));
-     showMsg('Trained! Gained XP!');
+  }else if(npc.type==='chest'){
+   textEl.textContent='Storage Chest - click items to transfer';
+   let container=document.createElement('div');container.style.cssText='display:flex;gap:min(1vw,1.5vh);margin:min(.5vw,.8vh)0;width:100%';
+   function renderChestUI(){
+    container.innerHTML='';
+    let pCol=document.createElement('div');pCol.style.cssText='flex:1;display:flex;flex-direction:column;align-items:center';
+    pCol.innerHTML='<div style="color:#960;font-size:min(3vw,3.5vh);line-height:1.0;margin-bottom:min(.2vw,.3vh)">Inventory</div>';
+    let pGrid=document.createElement('div');pGrid.style.cssText='display:grid;grid-template-columns:repeat(5,min(4.2vw,5.4vh));gap:min(.15vw,.2vh)';
+    for(let i=0;i<Math.max(G.player.inventory.length+1,20);i++){
+     let cell=document.createElement('div');cell.style.cssText='background:#1a1a1a;border:1px solid #444;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:min(2.2vw,2.8vh);color:#000;cursor:pointer';
+     let item=G.player.inventory[i];
+     if(item){
+      cell.textContent=item.icon||'?';cell.style.background=item.color;cell.title=item.name;
+      cell.onmouseenter=e=>showTooltip(itemTooltip(item),e);
+      cell.onmouseleave=()=>hideTooltip();
+      cell.onclick=e=>{
+       e.stopPropagation();
+       if(G.chestItems.length>=32){showMsg('Chest full!');return;}
+       G.chestItems.push(item);G.player.inventory.splice(i,1);
+       renderChestUI();
+      };
+     }else cell.style.background='#111';
+     pGrid.appendChild(cell);
+    }
+    pCol.appendChild(pGrid);container.appendChild(pCol);
+    let cCol=document.createElement('div');cCol.style.cssText='flex:1;display:flex;flex-direction:column;align-items:center';
+    cCol.innerHTML='<div style="color:#960;font-size:min(3vw,3.5vh);line-height:1.0;margin-bottom:min(.2vw,.3vh)">Chest</div>';
+    let cGrid=document.createElement('div');cGrid.style.cssText='display:grid;grid-template-columns:repeat(5,min(4.2vw,5.4vh));gap:min(.15vw,.2vh)';
+    for(let i=0;i<Math.max(G.chestItems.length+1,20);i++){
+     let cell=document.createElement('div');cell.style.cssText='background:#1a1a1a;border:1px solid #444;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:min(2.2vw,2.8vh);color:#000;cursor:pointer';
+     let item=G.chestItems[i];
+     if(item){
+      cell.textContent=item.icon||'?';cell.style.background=item.color;cell.title=item.name;
+      cell.onmouseenter=e=>showTooltip(itemTooltip(item),e);
+      cell.onmouseleave=()=>hideTooltip();
+      cell.onclick=e=>{
+       e.stopPropagation();
+       if(G.player.inventory.length>=32){showMsg('Inventory full!');return;}
+       G.player.inventory.push(item);G.chestItems.splice(i,1);
+       renderChestUI();
+      };
+     }else cell.style.background='#111';
+     cGrid.appendChild(cell);
+    }
+    cCol.appendChild(cGrid);container.appendChild(cCol);
+   }
+   renderChestUI();
+   btnsEl.appendChild(container);
+  let closeBtn=document.createElement('div');closeBtn.className='npc_btn';closeBtn.textContent='Close';closeBtn.style.color='#a44';
+  closeBtn.onclick=e=>{e.stopPropagation();hideTooltip();dlg.classList.remove('active');};
+  btnsEl.appendChild(closeBtn);
+  }else if(npc.type==='train'){
+    textEl.textContent='I can train you!';
+    let btn=document.createElement('div');btn.className='npc_btn';btn.textContent='Training';btn.style.color='#6c6';
+    btn.onclick=()=>{
+     let cost=plr.level*20;
+     if((plr.gold||0)>=cost){plr.gold=(plr.gold||0)-cost;addXp(plr,Math.floor(plr.level*30));showMsg('Trained! Gained XP!');}else showMsg('Not enough gold!');
      dlg.classList.remove('active');
-    }else{showMsg('Not enough gold!');}
-  };
-  btnsEl.appendChild(btn);
- }
+    };
+    btnsEl.appendChild(btn);
+    // Claim Scroll of Fury (once per life)
+    if(G.furyClaimed===0){
+     let furyBtn=document.createElement('div');furyBtn.className='npc_btn';furyBtn.textContent='Claim Scroll of Fury';furyBtn.style.color='#e66';
+     furyBtn.onclick=()=>{
+      if(plr.inventory.length<32){let it=createPresetItem('scroll_fury',1);if(it){plr.inventory.push(it);G.furyClaimed=1;showMsg('Got Scroll of Fury!');}else showMsg('Failed to create item!');}
+      else showMsg('Inventory full!');
+      dlg.classList.remove('active');
+     };
+     btnsEl.appendChild(furyBtn);
+    }
+  }else if(npc.type==='greet'){
+   let cost=plr.level*20;
+   textEl.textContent=`Training costs ${cost} gold. Gain extra XP!`;
+   let btn=document.createElement('div');btn.className='npc_btn';
+   btn.textContent='Train';
+   btn.onclick=()=>{
+     if((plr.gold||0)>=cost){
+      plr.gold=(plr.gold||0)-cost;addXp(plr,Math.floor(plr.level*30));
+      showMsg('Trained! Gained XP!');
+      dlg.classList.remove('active');
+     }else{showMsg('Not enough gold!');}
+   };
+   btnsEl.appendChild(btn);
+  }
  dlg.classList.add('active');
 }
 // ---- Dialog close ----
@@ -1732,21 +1980,48 @@ document.addEventListener('click',(e)=>{
  if(dlg.classList.contains('active')&&!e.target.closest('.npc_dialog'))dlg.classList.remove('active');
 });
 // ---- Save/Load ----
+function initStats(){
+  return {
+   playTime:0,townTime:0,dungeonTime:{},secretTime:0,backroomTime:0,
+   stepsTotal:0,stepsByLevel:{},
+   hpPotionsUsed:0,mpPotionsUsed:0,healScrollsUsed:0,townPortalScrollsUsed:0,fireboltScrollsUsed:0,lightningScrollsUsed:0,
+   goldEarned:0,goldSpent:0,itemsBought:0,itemsSold:0,itemsDropped:0,itemsPickedUp:0,
+   deathsTotal:0,deathsByLevel:{},deathsByMonster:{},
+   killsTotal:0,killsByLevel:{},killsByMonster:{},championsKilled:0,
+   hitsDealt:0,hitsMissed:0,hitsReceived:0,dodges:0,
+   damageDealt:0,maxDamageDealt:0,damageTaken:0,maxDamageTaken:0,
+   questsCompleted:0,statPointsStr:0,statPointsDex:0,statPointsMag:0,statPointsVit:0,
+   manualSaves:0,manualLoads:0
+  };
+}
+function trackStat(key,val=1){
+ if(!G.stats)G.stats=initStats();
+  if(key in G.stats){
+   if(typeof G.stats[key]==='number')G.stats[key]+=val;
+  }else if(key.startsWith('dungeonTime')){
+   let idx=parseInt(key.replace('dungeonTime',''),10);
+   if(!isNaN(idx)&&idx>=1&&idx<=13){G.stats.dungeonTime[idx]=((G.stats.dungeonTime[idx]||0)+val);}
+  }else if(typeof val==='number'){
+   G.stats[key]=val;
+  }
+}
 function saveGame(){
  if(!G.player)return;
  let data={
-  player:{
-   charClass:G.player.charClass,name:G.player.name,
-   baseStr:G.player.baseStr,baseMag:G.player.baseMag,baseDex:G.player.baseDex,baseVit:G.player.baseVit,
-   level:G.player.level,xp:G.player.xp,hp:G.player.hp,mana:G.player.mana,
-   statPts:G.player.statPts,gold:G.player.gold,
-   equipment:G.player.equipment,inventory:G.player.inventory,
-   completedQuests:G.player.completedQuests,questProgress:G.player.questProgress,
-   _questKills:G.player._questKills
-  },
-   quests:G.quests,level:G.level,gameTime:G.gameTime,
-   unlocked:G.unlocked,gameSeed:G.gameSeed
-  };
+   player:{
+    charClass:G.player.charClass,name:G.player.name,
+    baseStr:G.player.baseStr,baseMag:G.player.baseMag,baseDex:G.player.baseDex,baseVit:G.player.baseVit,
+    level:G.player.level,xp:G.player.xp,hp:G.player.hp,mana:G.player.mana,
+    statPts:G.player.statPts,gold:G.player.gold,
+    equipment:G.player.equipment,inventory:G.player.inventory,
+    completedQuests:G.player.completedQuests,questProgress:G.player.questProgress,
+    _questKills:G.player._questKills
+   },
+    quests:G.quests,level:G.level,gameTime:G.gameTime,
+    unlocked:G.unlocked,gameSeed:G.gameSeed,stats:G.stats,
+     chestItems:G.chestItems,evilLevel:G.evilLevel,
+     furyClaimed:G.furyClaimed,rockClaimed:G.rockClaimed
+    };
   let str=JSON.stringify(data);
   try{
    localStorage.setItem('miniablo_save',str);
@@ -1786,12 +2061,17 @@ function loadGame(){
   G.quests=data.quests||[];
   G.level=data.level||0;
   G.gameTime=data.gameTime||0;
-  G.unlocked=data.unlocked||{well:false,crypt:false,cave:false,hatch:false};
-  G.gameSeed=data.gameSeed||0;
-  calcPlayerStats(plr);
-  return plr;
- }catch(e){return null;}
-}
+   G.unlocked=data.unlocked||{well:false,crypt:false,cave:false,hatch:false};
+   G.gameSeed=data.gameSeed||0;
+    G.stats=Object.assign({}, initStats(), data.stats||{});
+    G.chestItems=data.chestItems||[];
+     G.evilLevel=data.evilLevel||1;
+     G.furyClaimed=data.furyClaimed||0;
+     G.rockClaimed=data.rockClaimed||0;
+    calcPlayerStats(plr);
+   return plr;
+  }catch(e){return null;}
+ }
 // ---- Minimap toggle ----
 function toggleMinimap(){
  let el=document.getElementById('minimap');
@@ -1850,6 +2130,10 @@ function trackBossKill(monster,plr,lvl){
 // ---- Death ----
 function showDeath(){
  G.dead=true;
+ G.furyClaimed=0;G.rockClaimed=0;
+ G.buffs=[];
+ if(G.player)calcPlayerStats(G.player);
+ updateBuffsUI();
  document.getElementById('death_screen').classList.add('active');
  document.getElementById('deathLevel').textContent=G.player.level;
 }
@@ -1973,12 +2257,15 @@ function render(){
      ctx.fillStyle='#f8f';ctx.font='bold '+Math.max(10,TILE/2.5)+'px Miniablo';ctx.textAlign='center';ctx.textBaseline='middle';
      ctx.fillText(plbl,sx+TILE/2,sy+TILE/2);
     }
-    if(t===T_HIDDEN_PORTAL){
-     ctx.fillStyle='#660';ctx.fillRect(sx+2,sy+2,TILE-4,TILE-4);
-     ctx.fillStyle='#cc0';ctx.fillRect(sx+5,sy+5,TILE-10,TILE-10);
-     ctx.fillStyle='#ff0';ctx.font='bold '+Math.max(10,TILE/2.5)+'px Miniablo';ctx.textAlign='center';ctx.textBaseline='middle';
-     ctx.fillText('?',sx+TILE/2,sy+TILE/2);
-    }
+     if(t===T_HIDDEN_PORTAL){
+      let wallColor='#000';
+      if(lvl>=1&&lvl<=3)wallColor='#000';
+      else if(lvl>=4&&lvl<=6)wallColor='#100';
+      else if(lvl>=7&&lvl<=9)wallColor='#200';
+      else if(lvl>=10&&lvl<=12)wallColor='#000';
+      else if(lvl===13)wallColor='#402';
+      ctx.fillStyle=wallColor;ctx.fillRect(sx+1,sy,TILE-1,TILE-1);
+     }
     if(t===T_BR_FLOOR&&G.level===LEVEL_BACKROOM){
      ctx.fillStyle='#aa0';ctx.fillRect(sx+4,sy+4,TILE-8,1);ctx.fillRect(sx+4,sy+4,1,TILE-8);
     }
@@ -2106,7 +2393,7 @@ function drawMinimap(){
    // Map
    for(let y=0;y<MAP_H;y++)for(let x=0;x<MAP_W;x++){
     let t=G.map[y]&&G.map[y][x]?G.map[y][x]:T_VOID;
-     if(t===T_VOID||t===T_WALL||t===T_DWALL||t===T_QUEST_ALTAR)continue;
+      if(t===T_VOID||t===T_WALL||t===T_DWALL||t===T_QUEST_ALTAR||t===T_HIDDEN_PORTAL)continue;
     let mc=TILE_COLORS[t]||'#000';
     let lvl=G.level;
     if(lvl>0&&lvl<14){
@@ -2162,9 +2449,10 @@ function drawMinimap(){
   document.getElementById('mp_fill').style.height=Math.max(0,(plr.mana/plr.maxMana)*100)+'%';
   document.getElementById('mp_label').textContent=`MP: ${Math.max(0,Math.floor(plr.mana))}/${plr.maxMana}`;
   document.getElementById('xp_fill').style.width=Math.min(100,(plr.xp/plr.maxXp)*100)+'%';
-   let mapName=G.level===0?'Town':G.level===G.MAX_LEVELS?"Diablo's Lair":G.level===G.MAX_COW_LEVEL?'Cow Level':G.level===LEVEL_BACKROOM?'Backroom':'Level '+G.level;
-  document.getElementById('top_info').innerHTML=`${mapName}<br>${CLASS_NAMES[plr.charClass]} Lv${plr.level}<br>Gold: ${plr.gold||0}`;
- }
+    let mapName=G.level===0?'Town':G.level===G.MAX_LEVELS?"Diablo's Lair":G.level===G.MAX_COW_LEVEL?'Cow Level':G.level===LEVEL_BACKROOM?'Backroom':'Level '+G.level;
+    let evHtml=(G.evilLevel||1)>1?`<br>Evil Level: ${G.evilLevel}`:'';
+    document.getElementById('top_info').innerHTML=`${mapName}<br>${CLASS_NAMES[plr.charClass]} Lv${plr.level}<br>Gold: ${plr.gold||0}${evHtml}`;
+  }
 // ---- Cow Level Respawn ----
 let cowRespawnTimer=0;
 // ---- Load Level ----
@@ -2296,11 +2584,14 @@ function loadLevel(lvl){
    if(rooms&&rooms.length>0&&G.map[rooms[0].cy][rooms[0].cx]!==T_PORTAL){
     G.map[rooms[0].cy][rooms[0].cx]=T_ALTAR;
    }
-    // Quest altar in second room (hidden from minimap)
-    if(rooms&&rooms.length>1){
-     let qa=G.quests&&G.quests.find(q=>q.state==='active'&&q.objective.type==='find'&&q.objective.tile===T_QUEST_ALTAR&&q.objective.level===lvl);
-     if(qa)G.map[rooms[1].cy][rooms[1].cx]=T_QUEST_ALTAR;
-    }
+     // Quest altar in a random room (hidden from minimap)
+     if(rooms&&rooms.length>1){
+      let qa=G.quests&&G.quests.find(q=>q.state==='active'&&q.objective.type==='find'&&q.objective.tile===T_QUEST_ALTAR&&q.objective.level===lvl);
+      if(qa){
+       let ri=rooms.length<2?0:rand(1,rooms.length-1);
+       G.map[rooms[ri].cy][rooms[ri].cx]=T_QUEST_ALTAR;
+      }
+     }
     // Hidden yellow portal to Backroom on level 1 (in a wall of room 2)
      if(lvl===1&&rooms&&rooms.length>1){
       let r2=rooms[1];
@@ -2355,8 +2646,7 @@ function spawnCowWave(){
   for(let i=0;i<12&&alive<32;i++){
    let x=rand(15,MAP_W-15),y=rand(15,MAP_H-15);
    if(canWalk(x,y,G.map)&&dist(x,y,G.player.x,G.player.y)>4){
-    let cow=spawnMonster(0,x,y,G.level); // rats as placeholder cows
-    cow.t.name='Cow';cow.color='#886';cow.dmg*=2;cow.xp*=2;cow.maxHp*=3;cow.hp=cow.maxHp;
+     let cow=spawnMonster(30,x,y,G.level);
     G.monsters.push(cow);alive++;
    }
   }
@@ -2401,36 +2691,43 @@ function gameLoop(){
  try{
  if(!G.player||G.dead){requestAnimationFrame(gameLoop);return;}
  let plr=G.player;
- G.gameTime++;
-    // Move along path (1 step per 1/6 second)
-    if(plr.movePath&&plr.moveIndex<plr.movePath.length-1){
+  G.gameTime++;
+  // Time tracking (1 frame = 1/60 sec)
+  if(!G.stats)G.stats=initStats();
+  G.stats.playTime+=1/60;
+  if(G.level===0)G.stats.townTime+=1/60;
+  else if(G.level===G.MAX_COW_LEVEL)G.stats.secretTime+=1/60;
+  else if(G.level===LEVEL_BACKROOM)G.stats.backroomTime+=1/60;
+  else if(G.level>=1&&G.level<=13){G.stats.dungeonTime[G.level]=(G.stats.dungeonTime[G.level]||0)+1/60;}
+      // Stun check: clear movement path
+      if(hasBuff('stun')){plr.movePath=null;plr.moving=false;plr._lastMove=0;}
+      // Move along path (1 step per 1/6 second)
+     if(plr.movePath&&plr.moveIndex<plr.movePath.length-1){
      if(!plr._lastMove)plr._lastMove=performance.now();
      let now=performance.now();
      if(now-plr._lastMove>=125){
      plr._lastMove=now;
      plr.moveIndex++;
     let [nx,ny]=plr.movePath[plr.moveIndex];
-    if(canWalk(plr.movePath[plr.moveIndex][0],plr.movePath[plr.moveIndex][1],G.map)){
-     plr.x=plr.movePath[plr.moveIndex][0];
-     plr.y=plr.movePath[plr.moveIndex][1];
-   // Check for items
+     if(canWalk(plr.movePath[plr.moveIndex][0],plr.movePath[plr.moveIndex][1],G.map)){
+      plr.x=plr.movePath[plr.moveIndex][0];
+      plr.y=plr.movePath[plr.moveIndex][1];
+      G.stats.stepsTotal++;if(!G.stats.stepsByLevel)G.stats.stepsByLevel={};G.stats.stepsByLevel[G.level]=(G.stats.stepsByLevel[G.level]||0)+1;
+    // Check for items
    for(let i=G.items.length-1;i>=0;i--){
     let item=G.items[i];
     if(item.mapX===plr.x&&item.mapY===plr.y){
-      if(item.type==='gold'){plr.gold=(plr.gold||0)+rand(5,20);showMsg(`Picked up ${rand(5,20)} gold`);G.items.splice(i,1);continue;}
-      if(item.type==='potion'||item.type==='scroll'){
-       if(item.misc==='heal'||item.misc==='healscroll'){plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-       if(item.misc==='mana'){plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-       if(item.misc==='rejuv'){plr.hp=Math.min(plr.hp+40,plr.maxHp);plr.mana=Math.min(plr.mana+40,plr.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-       if(item.misc==='fullrejuv'){plr.hp=plr.maxHp;plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
+       if(item.type==='gold'){plr.gold=(plr.gold||0)+rand(5,20);showMsg(`Picked up ${rand(5,20)} gold`);trackStat('goldEarned',rand(5,20));G.items.splice(i,1);continue;}
+       if(plr.inventory.length<32){
+        if(item.type==='potion'||item.type==='scroll'){trackStat('itemsPickedUp',1);}
+        plr.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);
+       }else{showMsg('Inventory full!');}
+       continue;
       }
-      if(plr.inventory.length<32){
-      plr.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);
-     }else{showMsg('Inventory full!');}
+     }
     }
-   }
-   // Check stairs / entrances
-   let t=G.map[plr.y]&&G.map[plr.y][plr.x];
+    // Check stairs / entrances
+    let t=G.map[plr.y]&&G.map[plr.y][plr.x];
      // Backroom: track which chunk the player is in
      if(G.level===LEVEL_BACKROOM){
       let ncx=Math.floor(plr.x/BR_CHUNK_SIZE),ncy=Math.floor(plr.y/BR_CHUNK_SIZE);
@@ -2462,12 +2759,15 @@ function gameLoop(){
        requestAnimationFrame(gameLoop);return;
       }
      }
-     if(t===T_STAIRS_DOWN&&G.level>0&&G.level<G.MAX_LEVELS){
-      G.lastLevel=G.level;
-      G.level++;loadLevel(G.level);
-      showMsg(`Descending to Level ${G.level}`);
-      requestAnimationFrame(gameLoop);return;
-     }
+      if(t===T_STAIRS_DOWN&&G.level>0&&G.level<G.MAX_LEVELS){
+       if(G.level===3&&(!plr._bossKills||!plr._bossKills['lvl3'])){showMsg('The path is blocked. Defeat the boss of this level first!');requestAnimationFrame(gameLoop);return;}
+       if(G.level===7&&(!plr._bossKills||!plr._bossKills['lvl7'])){showMsg('The path is blocked. Defeat the boss of this level first!');requestAnimationFrame(gameLoop);return;}
+       if(G.level===11&&(!plr._bossKills||!plr._bossKills['lvl11'])){showMsg('The path is blocked. Defeat the boss of this level first!');requestAnimationFrame(gameLoop);return;}
+       G.lastLevel=G.level;
+       G.level++;loadLevel(G.level);
+       showMsg(`Descending to Level ${G.level}`);
+       requestAnimationFrame(gameLoop);return;
+      }
      if(t===T_STAIRS_DOWN&&G.level===G.MAX_LEVELS){
       if(G.unlocked&&G.unlocked.hatch){G.lastLevel=G.level;G.level=G.MAX_COW_LEVEL;loadLevel(G.level);showMsg('Secret passage to the Cow Level!');}
       else{showMsg('The path is sealed. Defeat Diablo first!');}
@@ -2494,8 +2794,7 @@ function gameLoop(){
        requestAnimationFrame(gameLoop);return;
       }
     }
-   }
-   }}else{plr.movePath=null;plr.moving=false;plr._lastMove=0;}
+     }}else{plr.movePath=null;plr.moving=false;plr._lastMove=0;}
      // Periodic respawn every 1800 frames (30 seconds) if below max
     if(G.gameTime%1800===0){
      // Clean up dead monsters (memory leak)
@@ -2524,16 +2823,32 @@ function gameLoop(){
    if(G.level===G.MAX_COW_LEVEL){cowRespawnTimer++;if(cowRespawnTimer%120===0)spawnCowWave();}
   // Check entrance unlocks when bosses die
   checkEntranceUnlocks();
-  // Update hit timers
-  for(let m of G.monsters)if(m.hitTimer>0)m.hitTimer--;
-  if(plr.hitTimer>0)plr.hitTimer--;
-  // Update floating texts
-  for(let i=G.floatingTexts.length-1;i>=0;i--){
-   let ft=G.floatingTexts[i];
-   ft.timer--;
-   ft.y+=ft.vy*0.05;
-   if(ft.timer<=0)G.floatingTexts.splice(i,1);
-  }
+   // Update hit timers
+   for(let m of G.monsters)if(m.hitTimer>0)m.hitTimer--;
+   if(plr.hitTimer>0)plr.hitTimer--;
+   // Buff tick (every 60 frames = 1 second)
+   if(G.gameTime%60===0&&G.buffs&&G.buffs.length>0){
+    let oldLen=G.buffs.length;
+    for(let i=G.buffs.length-1;i>=0;i--){
+     let b=G.buffs[i];
+     b.remaining-=1;
+     if(b.key==='fire'){let dmg=Math.max(1,Math.floor(plr.maxHp*0.1));plr.hp-=dmg;addFloatingText(plr.x,plr.y-1,'-'+dmg+' fire','#fa0');}
+     if(b.key==='acid'){let dmg=Math.max(1,Math.floor(plr.maxHp*0.06));plr.hp-=dmg;addFloatingText(plr.x,plr.y-1,'-'+dmg+' acid','#0f6');}
+     if(b.key==='bleed'){let dmg=Math.max(1,Math.floor(plr.maxHp*0.03));plr.hp-=dmg;addFloatingText(plr.x,plr.y-1,'-'+dmg+' bleed','#b00');}
+     if(b.key==='mana'){plr.mana=plr.maxMana;}
+     if(b.remaining<=0)G.buffs.splice(i,1);
+    }
+    if(G.buffs.length!==oldLen)calcPlayerStats(plr);
+    updateBuffsUI();
+    if(plr.hp<=0){plr.hp=0;plr.dead=true;trackStat('deathsTotal',1);showDeath();}
+   }
+   // Update floating texts
+   for(let i=G.floatingTexts.length-1;i>=0;i--){
+    let ft=G.floatingTexts[i];
+    ft.timer--;
+    ft.y+=ft.vy*0.05;
+    if(ft.timer<=0)G.floatingTexts.splice(i,1);
+   }
   // Update monsters (time-based, each monster tracks its own timer)
   updateMonsters();
   // Bet fight AI
@@ -2581,7 +2896,7 @@ function gameLoop(){
  if(G.gameTime%60===0&&plr.hp<plr.maxHp)plr.hp=Math.min(plr.hp+1,plr.maxHp);
  if(G.gameTime%60===0&&plr.mana<plr.maxMana)plr.mana=Math.min(plr.mana+1,plr.maxMana);
  // Auto save every 30 seconds
- if(G.gameTime%1800===0)saveGame();
+  if(G.gameTime%3600===0)saveGame();
  render();
  }catch(e){console.error('gameLoop error:',e);}
  requestAnimationFrame(gameLoop);
@@ -2603,22 +2918,19 @@ canvas.addEventListener('click',(e)=>{
  for(let i=G.items.length-1;i>=0;i--){
   let item=G.items[i];
   if(item.mapX===wx&&item.mapY===wy&&dist(G.player.x,G.player.y,wx,wy)<=1.5){
-   if(item.type==='gold'){G.player.gold+=rand(5,20);showMsg(`+${rand(5,20)} gold`);G.items.splice(i,1);return;}
-   if(item.type==='potion'||item.type==='scroll'){
-    if(item.misc==='heal'||item.misc==='healscroll'){G.player.hp=Math.min(G.player.hp+30,G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
-    if(item.misc==='mana'){G.player.mana=Math.min(G.player.mana+30,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
-    if(item.misc==='rejuv'){G.player.hp=Math.min(G.player.hp+40,G.player.maxHp);G.player.mana=Math.min(G.player.mana+40,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
-    if(item.misc==='fullrejuv'){G.player.hp=G.player.maxHp;G.player.mana=G.player.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
-   }
-   if(G.player.inventory.length<32){G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);}
-   else{showMsg('Inventory full!');}
+     if(item.type==='gold'){let g=rand(5,20);G.player.gold+=g;trackStat('goldEarned',g);showMsg(`+${g} gold`);G.items.splice(i,1);return;}
+      if(G.player.inventory.length<32){
+       G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);
+      }
+    else{showMsg('Inventory full!');}
    return;
   }
  }
+ if(hasBuff('stun')){showMsg('Stunned! Cannot move!');return;}
  if(canWalk(wx,wy,G.map)){
-  let path=findPath(G.player.x,G.player.y,wx,wy,G.map);
-  if(path&&path.length>1){G.player.movePath=path;G.player.moveIndex=0;G.player.moving=true;}
- }
+   let path=findPath(G.player.x,G.player.y,wx,wy,G.map);
+   if(path&&path.length>1){G.player.movePath=path;G.player.moveIndex=0;G.player.moving=true;}
+  }
 });
 // ---- Panel functions ----
 function togglePanel(id){
@@ -2632,18 +2944,26 @@ function togglePanel(id){
    if(id==='quest_panel')updateQuestPanel();
   }else{
    // Auto-deactivate delete mode when inventory closes
-   if(id==='inventory_panel'&&G._deleteMode)toggleDeleteMode();
+    if(id==='inventory_panel'&&G._deleteMode)toggleDeleteMode();
+     if(id==='inventory_panel'&&G.upgradeMode)cancelUpgradeMode();
+     if(id==='inventory_panel'&&G.damageMode){G.damageMode=false;G.damageScrollIdx=-1;updateInventoryPanel();}
+     if(id==='inventory_panel'&&G.charmMode){G.charmMode=false;G.charmScrollIdx=-1;updateInventoryPanel();}
+     if(id==='inventory_panel'&&G.uniqueMode){G.uniqueMode=false;G.uniqueScrollIdx=-1;updateInventoryPanel();}
+   }
   }
- }
-function closeAllPanels(){
-  ['inventory_panel','char_panel','quest_panel'].forEach(id=>document.getElementById(id).classList.remove('active'));
-  document.getElementById('levelup_overlay').classList.remove('active');
-  document.getElementById('npcDialog').classList.remove('active');
-  document.getElementById('questCompleteDialog').classList.remove('active');
-  let gm=document.getElementById('game_menu_panel');
-  if(gm)gm.style.display='none';
-  if(G._deleteMode)toggleDeleteMode();
- }
+ function closeAllPanels(){
+   ['inventory_panel','char_panel','quest_panel'].forEach(id=>document.getElementById(id).classList.remove('active'));
+   document.getElementById('levelup_overlay').classList.remove('active');
+   document.getElementById('npcDialog').classList.remove('active');
+   document.getElementById('questCompleteDialog').classList.remove('active');
+   let gm=document.getElementById('game_menu_panel');
+   if(gm)gm.style.display='none';
+   if(G._deleteMode)toggleDeleteMode();
+   if(G.upgradeMode)cancelUpgradeMode();
+   if(G.damageMode){G.damageMode=false;G.damageScrollIdx=-1;}
+   if(G.charmMode){G.charmMode=false;G.charmScrollIdx=-1;}
+   if(G.uniqueMode){G.uniqueMode=false;G.uniqueScrollIdx=-1;}
+  }
  function toggleGameMenu(){
   let el=document.getElementById('game_menu_panel');
   if(!el)return;
@@ -2669,7 +2989,31 @@ function updateInventoryPanel(){
    slot.title=item.name;
    slot.style.background=item.color;
    slot.style.color='#000';
-    slot.onclick=()=>{hideTooltip();unequipItem(slots[i]);};
+     slot.onclick=()=>{
+      hideTooltip();
+      let eq=G.player.equipment[slots[i]];
+      if(!eq){unequipItem(slots[i]);return;}
+      if(G.upgradeMode){
+       if(doUpgradeItem(eq)){
+        G.player.inventory.splice(G.upgradeScrollIdx,1);
+        G.upgradeMode=false;G.upgradeScrollIdx=-1;
+        updateInventoryPanel();calcPlayerStats(G.player);
+       }return;
+      }
+      if(G.damageMode){
+       if(doDamageItem(eq)){G.damageMode=false;G.damageScrollIdx=-1;updateInventoryPanel();calcPlayerStats(G.player);}
+       return;
+      }
+      if(G.charmMode){
+       if(doCharmItem(eq)){G.charmMode=false;G.charmScrollIdx=-1;updateInventoryPanel();calcPlayerStats(G.player);}
+       return;
+      }
+      if(G.uniqueMode){
+       if(doUniqueItem(eq)){G.uniqueMode=false;G.uniqueScrollIdx=-1;updateInventoryPanel();calcPlayerStats(G.player);}
+       return;
+      }
+      unequipItem(slots[i]);
+     };
      slot.onmouseenter=(e)=>{
       showTooltip(itemTooltip(item),e);
      };
@@ -2710,6 +3054,7 @@ function usePotionFromInventory(type){
     if(item.misc==='fullheal'){plr.hp=plr.maxHp;showMsg(`Used ${item.name}`);}
     else if(item.misc==='bigheal'){plr.hp=Math.min(plr.hp+Math.floor(plr.maxHp/2),plr.maxHp);showMsg(`Used ${item.name}`);}
     else{plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);}
+    if(item.misc==='healscroll')trackStat('healScrollsUsed',1);else trackStat('hpPotionsUsed',1);
     plr.inventory.splice(i,1);
     if(document.getElementById('inventory_panel').classList.contains('active'))updateInventoryPanel();
     return;
@@ -2718,6 +3063,7 @@ function usePotionFromInventory(type){
     if(item.misc==='fullmana'){plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);}
     else if(item.misc==='bigmana'){plr.mana=Math.min(plr.mana+Math.floor(plr.maxMana/2),plr.maxMana);showMsg(`Used ${item.name}`);}
     else{plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);}
+    trackStat('mpPotionsUsed',1);
     plr.inventory.splice(i,1);
     if(document.getElementById('inventory_panel').classList.contains('active'))updateInventoryPanel();
     return;
@@ -2730,34 +3076,100 @@ function useInventoryItem(index){
   let plr=G.player,item=plr.inventory[index];
   if(!item)return;
   // Delete mode
-  if(G._deleteMode){
-   plr.inventory.splice(index,1);
-   showMsg(`Deleted ${item.name}`);
-   updateInventoryPanel();return;
-  }
-  if(item.type==='potion'||item.type==='scroll'){
-  if(item.misc==='heal'||item.misc==='healscroll'){plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);}
-   else if(item.misc==='mana'){plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);}
-   else if(item.misc==='rejuv'){plr.hp=Math.min(plr.hp+40,plr.maxHp);plr.mana=Math.min(plr.mana+40,plr.maxMana);showMsg(`Used ${item.name}`);}
-   else if(item.misc==='fullrejuv'){plr.hp=plr.maxHp;plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);}
-   else if(item.misc==='bigheal'){plr.hp=Math.min(plr.hp+Math.floor(plr.maxHp/2),plr.maxHp);showMsg(`Used ${item.name}`);}
-   else if(item.misc==='fullheal'){plr.hp=plr.maxHp;showMsg(`Used ${item.name}`);}
-   else if(item.misc==='bigmana'){plr.mana=Math.min(plr.mana+Math.floor(plr.maxMana/2),plr.maxMana);showMsg(`Used ${item.name}`);}
-   else if(item.misc==='fullmana'){plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);}
-     else if(item.misc==='townportal'){
-      document.getElementById('minimap').style.display='block';
-      G.lastLevel=0;G.level=0;loadLevel(0);
-      showMsg('Town Portal - returned to town!');
-     }
-   else if(item.misc==='firebolt'){
-   // Ranged attack - find nearest monster
-   let nearest=null,nd=99;
-   for(let m of G.monsters){if(!m.alive)continue;let d=dist(plr.x,plr.y,m.x,m.y);if(d<nd&&d<6){nd=d;nearest=m;}}
-   if(nearest){let dmg=rand(12,24)+Math.floor(plr.mag/3);nearest.hp-=dmg;showMsg(`Firebolt hits ${nearest.t.name} for ${dmg}!`);if(nearest.hp<=0){nearest.alive=false;if(!plr._questKills)plr._questKills={};let key='kill_'+nearest.typeId;plr._questKills[key]=(plr._questKills[key]||0)+1;trackBossKill(nearest,plr,G.level);addXp(plr,nearest.xp);}}
-   }else if(item.misc==='lightning'){
-    let dmg=rand(8,16)+Math.floor(plr.mag/2);
-    for(let m of G.monsters){if(!m.alive)continue;if(dist(plr.x,plr.y,m.x,m.y)<5){m.hp-=dmg;showMsg(`Lightning hits ${m.t.name} for ${dmg}!`);if(m.hp<=0){m.alive=false;if(!plr._questKills)plr._questKills={};let key='kill_'+m.typeId;plr._questKills[key]=(plr._questKills[key]||0)+1;trackBossKill(m,plr,G.level);addXp(plr,m.xp);}}}
+   if(G._deleteMode){
+    plr.inventory.splice(index,1);
+    trackStat('itemsDropped',1);
+    showMsg(`Deleted ${item.name}`);
+    updateInventoryPanel();return;
    }
+   // Scroll activations (mutually exclusive)
+  if(item.misc==='upgradescroll'&&!G.upgradeMode&&!G.damageMode&&!G.charmMode&&!G.uniqueMode){G.upgradeMode=true;G.upgradeScrollIdx=index;showMsg('Select an item to upgrade quality!');updateInventoryPanel();return;}
+  if(item.misc==='damagescroll'&&!G.upgradeMode&&!G.damageMode&&!G.charmMode&&!G.uniqueMode){G.damageMode=true;G.damageScrollIdx=index;showMsg('Damage mode: click equipment to add Juggernaut suffix!');updateInventoryPanel();return;}
+  if(item.misc==='charmwax'&&!G.upgradeMode&&!G.damageMode&&!G.charmMode&&!G.uniqueMode){G.charmMode=true;G.charmScrollIdx=index;showMsg('Charm mode: click equipment to add random charm suffix!');updateInventoryPanel();return;}
+  if(item.misc==='uniquestone'&&!G.upgradeMode&&!G.damageMode&&!G.charmMode&&!G.uniqueMode){G.uniqueMode=true;G.uniqueScrollIdx=index;showMsg('Unique mode: click equipment to make it Unique!');updateInventoryPanel();return;}
+  // Upgrade quality mode
+  if(G.upgradeMode){
+   if(item===plr.inventory[G.upgradeScrollIdx]){showMsg('Already in upgrade mode!');return;}
+   if(doUpgradeItem(item)){
+    plr.inventory.splice(G.upgradeScrollIdx,1);
+    G.upgradeMode=false;G.upgradeScrollIdx=-1;
+    updateInventoryPanel();calcPlayerStats(plr);
+   }return;
+  }
+  // Damage mode: apply Juggernaut suffix
+  if(G.damageMode){
+   if(item===plr.inventory[G.damageScrollIdx]){showMsg('Already in damage mode!');return;}
+   if(doDamageItem(item)){
+    G.damageMode=false;G.damageScrollIdx=-1;
+    updateInventoryPanel();calcPlayerStats(plr);
+   }return;
+  }
+  // Charm mode: apply random charm suffix
+  if(G.charmMode){
+   if(item===plr.inventory[G.charmScrollIdx]){showMsg('Already in charm mode!');return;}
+   if(doCharmItem(item)){
+    G.charmMode=false;G.charmScrollIdx=-1;
+    updateInventoryPanel();calcPlayerStats(plr);
+   }return;
+  }
+  // Unique mode: apply Unique enhancement
+  if(G.uniqueMode){
+   if(item===plr.inventory[G.uniqueScrollIdx]){showMsg('Already in unique mode!');return;}
+   if(doUniqueItem(item)){
+    G.uniqueMode=false;G.uniqueScrollIdx=-1;
+    updateInventoryPanel();calcPlayerStats(plr);
+   }return;
+  }
+    // Buff scrolls
+    if(item.misc==='buff_mana'){plr.inventory.splice(index,1);addBuff('mana');updateInventoryPanel();return;}
+    if(item.misc==='buff_vamp'){plr.inventory.splice(index,1);addBuff('vamp');updateInventoryPanel();return;}
+    if(item.misc==='buff_rock'){plr.inventory.splice(index,1);addBuff('rock');updateInventoryPanel();return;}
+    if(item.misc==='buff_fury'){plr.inventory.splice(index,1);addBuff('fury');updateInventoryPanel();return;}
+    if(item.misc==='buff_skill'){plr.inventory.splice(index,1);addBuff('skill');updateInventoryPanel();return;}
+    if(item.misc==='buff_exp'){plr.inventory.splice(index,1);addBuff('exp');updateInventoryPanel();return;}
+   if(item.type==='potion'||item.type==='scroll'){
+     if(item.misc==='evilcrystal'){
+      G.evilLevel*=2;
+      showMsg(`Evil Crystal activated! Difficulty increased to ${G.evilLevel}x!`);
+      plr.inventory.splice(index,1);
+      let chestSaved=[...G.chestItems];
+      let evilLvl=G.evilLevel;
+      saveGame();
+      let plr2=createPlayer(plr.charClass,plr.name);
+      G.player=null;G.quests=[];G.monsters=[];G.items=[];G.portals=[];G.dead=false;G.gameWon=false;G.gameTime=0;
+      G.lastLevel=0;G.unlocked={well:false,crypt:false,cave:false,hatch:false,backroom:false};
+      G.stats=initStats();
+      G.chestItems=chestSaved;
+      G.evilLevel=evilLvl;
+      startGame(plr2,true);
+      document.getElementById('game_menu_panel').style.display='none';
+      closeAllPanels();
+      showMsg(`Difficulty increased to ${G.evilLevel}x! All monsters are stronger!`);
+      return;
+     }
+    if(item.misc==='heal'||item.misc==='healscroll'){plr.hp=Math.min(plr.hp+30,plr.maxHp);showMsg(`Used ${item.name}`);if(item.misc==='healscroll')trackStat('healScrollsUsed',1);else trackStat('hpPotionsUsed',1);}
+    else if(item.misc==='mana'){plr.mana=Math.min(plr.mana+30,plr.maxMana);showMsg(`Used ${item.name}`);trackStat('mpPotionsUsed',1);}
+    else if(item.misc==='rejuv'){plr.hp=Math.min(plr.hp+40,plr.maxHp);plr.mana=Math.min(plr.mana+40,plr.maxMana);showMsg(`Used ${item.name}`);trackStat('hpPotionsUsed',1);}
+    else if(item.misc==='fullrejuv'){plr.hp=plr.maxHp;plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);trackStat('hpPotionsUsed',1);}
+    else if(item.misc==='bigheal'){plr.hp=Math.min(plr.hp+Math.floor(plr.maxHp/2),plr.maxHp);showMsg(`Used ${item.name}`);trackStat('hpPotionsUsed',1);}
+    else if(item.misc==='fullheal'){plr.hp=plr.maxHp;showMsg(`Used ${item.name}`);trackStat('hpPotionsUsed',1);}
+    else if(item.misc==='bigmana'){plr.mana=Math.min(plr.mana+Math.floor(plr.maxMana/2),plr.maxMana);showMsg(`Used ${item.name}`);trackStat('mpPotionsUsed',1);}
+    else if(item.misc==='fullmana'){plr.mana=plr.maxMana;showMsg(`Used ${item.name}`);trackStat('mpPotionsUsed',1);}
+      else if(item.misc==='townportal'){trackStat('townPortalScrollsUsed',1);
+       document.getElementById('minimap').style.display='block';
+       G.lastLevel=0;G.level=0;loadLevel(0);
+       showMsg('Town Portal - returned to town!');
+      }
+    else if(item.misc==='firebolt'){
+    trackStat('fireboltScrollsUsed',1);
+    let nearest=null,nd=99;
+    for(let m of G.monsters){if(!m.alive)continue;let d=dist(plr.x,plr.y,m.x,m.y);if(d<nd&&d<6){nd=d;nearest=m;}}
+    if(nearest){let dmg=rand(12,24)+Math.floor(plr.mag/3);nearest.hp-=dmg;trackStat('damageDealt',dmg);if(dmg>G.stats.maxDamageDealt)G.stats.maxDamageDealt=dmg;if(nearest.hp<=0){nearest.alive=false;G.stats.killsTotal++;if(nearest.champion)G.stats.championsKilled++;if(!plr._questKills)plr._questKills={};let key='kill_'+nearest.typeId;plr._questKills[key]=(plr._questKills[key]||0)+1;trackBossKill(nearest,plr,G.level);addXp(plr,nearest.xp);G.stats.killsByLevel[G.level]=(G.stats.killsByLevel[G.level]||0)+1;G.stats.killsByMonster[nearest.typeId]=(G.stats.killsByMonster[nearest.typeId]||0)+1;}}
+    }else if(item.misc==='lightning'){
+     trackStat('lightningScrollsUsed',1);
+     let dmg=rand(8,16)+Math.floor(plr.mag/2);
+     for(let m of G.monsters){if(!m.alive)continue;if(dist(plr.x,plr.y,m.x,m.y)<5){m.hp-=dmg;trackStat('damageDealt',dmg);if(dmg>G.stats.maxDamageDealt)G.stats.maxDamageDealt=dmg;if(m.hp<=0){m.alive=false;G.stats.killsTotal++;if(m.champion)G.stats.championsKilled++;if(!plr._questKills)plr._questKills={};let key='kill_'+m.typeId;plr._questKills[key]=(plr._questKills[key]||0)+1;trackBossKill(m,plr,G.level);addXp(plr,m.xp);G.stats.killsByLevel[G.level]=(G.stats.killsByLevel[G.level]||0)+1;G.stats.killsByMonster[m.typeId]=(G.stats.killsByMonster[m.typeId]||0)+1;}}}
+    }
   plr.inventory.splice(index,1);updateInventoryPanel();
   calcPlayerStats(plr);return;
  }
@@ -2777,6 +3189,102 @@ function useInventoryItem(index){
    calcPlayerStats(plr);updateInventoryPanel();
    showMsg(`Equipped ${item.name}`);
   }
+}
+function doUpgradeItem(item){
+ if(item.type==='potion'||item.type==='scroll'){showMsg('Cannot upgrade consumables!');return false;}
+ if(item.quality&&item.quality.name==='Super'){showMsg('Item is already Super quality, cannot upgrade further!');return false;}
+ let QUALITY_ORDER=['Fine','Good','Magic','Super'];
+ let curIdx=item.quality?QUALITY_ORDER.indexOf(item.quality.name):-1;
+ let nextIdx=curIdx+1;
+ if(nextIdx>=QUALITY_ORDER.length){showMsg('Item cannot be upgraded further!');return false;}
+ let nextQ=ITEM_QUALITIES.find(q=>q.name===QUALITY_ORDER[nextIdx]);
+ if(!nextQ)return false;
+ let oldKf=item.quality?item.quality.statKf:1;
+ let newKf=nextQ.statKf;
+ let adj=newKf/oldKf;
+ if(item.minDmg){item.minDmg=Math.max(1,Math.round(item.minDmg*adj));item.maxDmg=Math.max(1,Math.round(item.maxDmg*adj));}
+ if(item.ac)item.ac=Math.round(item.ac*adj);
+ if(item.minStr)item.minStr=Math.round(item.minStr*adj);
+ if(item.minMag)item.minMag=Math.round(item.minMag*adj);
+ if(item.stats)item.stats=item.stats.map(s=>({...s,val:Math.round(s.val*adj)}));
+ if(item.suffix&&item.suffix.val)item.suffix={...item.suffix,val:Math.round(item.suffix.val*adj)};
+ item.quality=nextQ;
+ item.name=nextQ.name+' '+item.name.replace(/^(Fine|Good|Magic|Super|Poor) /,'');
+ showMsg(`Upgraded to ${nextQ.name}!`);
+ return true;
+}
+function cancelUpgradeMode(){
+ if(G.upgradeMode&&G.upgradeScrollIdx>=0&&G.upgradeScrollIdx<G.player.inventory.length){
+  G.player.inventory.splice(G.upgradeScrollIdx,1);
+ }
+ G.upgradeMode=false;G.upgradeScrollIdx=-1;
+ if(document.getElementById('inventory_panel').classList.contains('active'))updateInventoryPanel();
+}
+function isEquipType(item){return item.type==='weapon'||item.type==='shield'||item.type==='armor'||item.type==='helm'||item.type==='ring'||item.type==='amulet';}
+function isPresetItem(item){return item.key&&PRESETTED_ITEMS.some(p=>p.key===item.key);}
+// Damage scroll: adds 'of Juggernaut' suffix with +22 dmg (works on equipment only, not preset items)
+function doDamageItem(item){
+ if(!isEquipType(item)){showMsg('Can only enhance equipment!');return false;}
+ if(isPresetItem(item)){showMsg('Cannot enhance unique/preset items!');return false;}
+ let sfx=SUFFIXES.find(s=>s.name==='of Juggernaut');
+ if(!sfx)return false;
+ let baseName=item.name.replace(/ (of \w+|of the \w+).*$/,'');
+ // Remove old weapon bonus first
+ if(item.suffix&&item.suffix.weaponBonus&&(item.type==='weapon'||item.type==='staff'||item.type==='wand')){
+  item.minDmg-=item.suffix.weaponBonus;item.maxDmg-=item.suffix.weaponBonus;
+ }
+ item.suffix=JSON.parse(JSON.stringify(sfx));
+ // Apply new weapon bonus
+ if(sfx.weaponBonus&&(item.type==='weapon'||item.type==='staff'||item.type==='wand')){
+  if(item.minDmg){item.minDmg+=sfx.weaponBonus;item.maxDmg+=sfx.weaponBonus;}
+ }
+ item.name=baseName+' '+sfx.name;
+ item.magic=true;
+ showMsg(`Item enhanced with ${sfx.name}!`);
+ return true;
+}
+// Charm scroll: adds random suffix from: of the Titan, of Wizardry, of Perfection, of Life (equipment only, not preset)
+function doCharmItem(item){
+ if(!isEquipType(item)){showMsg('Can only enhance equipment!');return false;}
+ if(isPresetItem(item)){showMsg('Cannot enhance unique/preset items!');return false;}
+ let charmSuffixes=['of the Titan','of Wizardry','of Perfection','of Life'];
+ let chosen=choice(charmSuffixes);
+ let sfx=SUFFIXES.find(s=>s.name===chosen);
+ if(!sfx)return false;
+ let baseName=item.name.replace(/ (of \w+|of the \w+).*$/,'');
+ // Remove old weapon bonus first
+ if(item.suffix&&item.suffix.weaponBonus&&(item.type==='weapon'||item.type==='staff'||item.type==='wand')){
+  item.minDmg-=item.suffix.weaponBonus;item.maxDmg-=item.suffix.weaponBonus;
+ }
+ item.suffix=JSON.parse(JSON.stringify(sfx));
+ // Apply new weapon bonus
+ if(sfx.weaponBonus&&(item.type==='weapon'||item.type==='staff'||item.type==='wand')){
+  if(item.minDmg){item.minDmg+=sfx.weaponBonus;item.maxDmg+=sfx.weaponBonus;}
+ }
+ item.name=baseName+' '+sfx.name;
+ item.magic=true;
+ showMsg(`Item enchanted with ${sfx.name}!`);
+ return true;
+}
+// Unique scroll: prefix "Unique", 2x stats, +10 all, color #ca0 (works on ALL equipment including presets)
+function doUniqueItem(item){
+ if(!isEquipType(item)){showMsg('Can only enhance equipment!');return false;}
+ // Double existing stats
+ if(item.stats)item.stats=item.stats.map(s=>({...s,val:Math.round(s.val*2)}));
+ if(item.suffix&&item.suffix.val)item.suffix={...item.suffix,val:Math.round(item.suffix.val*2)};
+ if(item.minDmg){item.minDmg=Math.max(1,Math.round(item.minDmg*2));item.maxDmg=Math.max(1,Math.round(item.maxDmg*2));}
+ if(item.ac)item.ac=Math.round(item.ac*2);
+ if(item.minStr)item.minStr=Math.round(item.minStr*2);
+ if(item.minMag)item.minMag=Math.round(item.minMag*2);
+ // Add +10 all stats via stats array
+ if(!item.stats)item.stats=[];
+ let addStat=(stat,val)=>{let ex=item.stats.find(s=>s.stat===stat);if(ex)ex.val+=val;else item.stats.push({stat,val});};
+ addStat('str',10);addStat('dex',10);addStat('mag',10);addStat('vit',10);
+ // Set prefix to "Unique" and color
+ item.name='Unique '+item.name.replace(/^(Fine|Good|Magic|Super|Poor|Unique) /,'');
+ item.color='#ca0';
+ showMsg('Item upgraded to Unique!');
+ return true;
 }
 function unequipItem(slot){
  let plr=G.player;
@@ -2819,11 +3327,14 @@ function spendStat(stat){
  let stats=['baseStr','baseMag','baseDex','baseVit'];
  let maxes=[250,250,250,250];
  if(plr[stats[stat]]>=maxes[stat]){showMsg('Maximum reached!');return;}
- plr[stats[stat]]++;
- plr.statPts--;
- calcPlayerStats(plr);
- updateCharPanel();
- showMsg(`Increased ${['Strength','Magic','Dexterity','Vitality'][stat]}!`);
+  plr[stats[stat]]++;
+  plr.statPts--;
+  let statNames=['Strength','Magic','Dexterity','Vitality'];
+  let statKeys=['statPointsStr','statPointsMag','statPointsDex','statPointsVit'];
+  trackStat(statKeys[stat],1);
+  calcPlayerStats(plr);
+  updateCharPanel();
+  showMsg(`Increased ${statNames[stat]}!`);
 }
 function updateQuestPanel(){
  let el=document.getElementById('quest_panel');
@@ -2930,8 +3441,8 @@ byId('btnFullscreen').addEventListener('click',()=>{
 });
 // Game menu panel
 byId('closeMenu').addEventListener('click',()=>byId('game_menu_panel').style.display='none');
-byId('btnMenuSave').addEventListener('click',()=>{saveGame();showMsg('Game saved!');byId('game_menu_panel').style.display='none';});
-byId('btnMenuLoad').addEventListener('click',()=>{let plr=loadGame();if(plr){G._savedLevel=G.level;startGame(plr,false);showMsg('Game loaded!');}else showMsg('No save found!');byId('game_menu_panel').style.display='none';});
+byId('btnMenuSave').addEventListener('click',()=>{trackStat('manualSaves',1);saveGame();showMsg('Game saved!');byId('game_menu_panel').style.display='none';});
+byId('btnMenuLoad').addEventListener('click',()=>{let plr=loadGame();if(plr){trackStat('manualLoads',1);G._savedLevel=G.level;startGame(plr,false);showMsg('Game loaded!');}else showMsg('No save found!');byId('game_menu_panel').style.display='none';});
 function showMenuSub(content){
  let mc=byId('menuContent');let mi=byId('menuInfo');let mic=byId('menuInfoContent');
  mc.style.display='none';mi.style.display='block';mic.innerHTML=content;
@@ -2940,8 +3451,87 @@ byId('btnMenuControls').addEventListener('click',()=>showMenuSub(
  'WASD / Arrow keys - Move<br>Click - Attack / Interact / Move<br>I - Inventory<br>C - Character Stats<br>Q - Quest Log<br>E - Game Menu<br>H - Use Health Potion<br>M - Use Mana Potion<br>U - Toggle Super Attack<br>Space / Esc - Close panels'
 ));
 byId('btnMenuTips').addEventListener('click',()=>showMenuSub(
- 'Talk to NPCs in town for quests, healing, items.<br>Click monsters to attack.<br>Press C on level up to spend stat points.<br>Find portals (T) on levels 4/8/12.<br>Find stairs (D) to go deeper.<br>Game auto-saves every 30 seconds.'
+ 'Talk to NPCs in town for quests, healing, items.<br>Click monsters to attack.<br>Press C on level up to spend stat points.<br>Find portals (T) on levels 4/8/12.<br>Find stairs (D) to go deeper.'
 ));
+byId('btnMenuStats').addEventListener('click',()=>{
+ let s=G.stats||initStats();
+ function lvlName(l){
+  if(l===0)return 'Town';
+  if(l===G.MAX_COW_LEVEL)return 'Cow Level';
+  if(l===LEVEL_BACKROOM)return 'Backroom';
+  if(l>=1&&l<=13)return 'Level '+l;
+  return 'Level '+l;
+ }
+ function fmt(sec){let m=Math.floor(sec/60);let s=Math.floor(sec%60);return m+'m '+s+'s';}
+ let html='<div style="color:#c90;font-size:min(4vw,4.5vh);margin-bottom:min(1vw,1.5vh)">STATISTICS</div>';
+ html+='<div style="font-size:min(3vw,3.5vh)">';
+  html+=`<div>--- Time ---</div>`;
+  html+=`<div>Play Time: ${fmt(s.playTime)}</div>`;
+  html+=`<div>Time by Level:</div>`;
+  let tv=s.townTime||0;if(tv>0)html+=`<div style="padding-left:min(2vw,2vh)">Town: ${fmt(tv)}</div>`;
+  for(let l=1;l<=13;l++){let v=s.dungeonTime[l]||0;if(v>0)html+=`<div style="padding-left:min(2vw,2vh)">Level ${l}: ${fmt(v)}</div>`;}
+  let stv=s.secretTime||0;if(stv>0)html+=`<div style="padding-left:min(2vw,2vh)">Cow Level: ${fmt(stv)}</div>`;
+   let btv=s.backroomTime||0;if(btv>0)html+=`<div style="padding-left:min(2vw,2vh)">Backroom: ${fmt(btv)}</div>`;
+  html+=`<div>--- Steps ---</div>`;
+   html+=`<div>Total Steps: ${s.stepsTotal||0}</div>`;
+  html+=`<div>Steps By Level:</div>`;
+   let sbl=s.stepsByLevel||{};
+    let s_tv=sbl[0]||0;if(s_tv>0)html+=`<div style="padding-left:min(2vw,2vh)">Town: ${s_tv}</div>`;
+   for(let l=1;l<=13;l++){let v=sbl[l]||0;if(v>0)html+=`<div style="padding-left:min(2vw,2vh)">Level ${l}: ${v}</div>`;}
+   let ssk=sbl[G.MAX_COW_LEVEL]||0;if(ssk>0)html+=`<div style="padding-left:min(2vw,2vh)">Cow Level: ${ssk}</div>`;
+   let sbk=sbl[LEVEL_BACKROOM]||0;if(sbk>0)html+=`<div style="padding-left:min(2vw,2vh)">Backroom: ${sbk}</div>`;
+  html+=`<div>--- Items ---</div>`;
+ html+=`<div>Health Potions Used: ${s.hpPotionsUsed}</div>`;
+ html+=`<div>Mana Potions Used: ${s.mpPotionsUsed}</div>`;
+ html+=`<div>Heal Scrolls Used: ${s.healScrollsUsed}</div>`;
+ html+=`<div>Town Portal Scrolls Used: ${s.townPortalScrollsUsed}</div>`;
+ html+=`<div>Firebolt Scrolls Used: ${s.fireboltScrollsUsed}</div>`;
+ html+=`<div>Lightning Scrolls Used: ${s.lightningScrollsUsed}</div>`;
+ html+=`<div>Items Bought: ${s.itemsBought}</div>`;
+ html+=`<div>Items Sold: ${s.itemsSold}</div>`;
+ html+=`<div>Items Dropped: ${s.itemsDropped}</div>`;
+ html+=`<div>Items Picked Up: ${s.itemsPickedUp}</div>`;
+ html+=`<div>--- Economy ---</div>`;
+ html+=`<div>Gold Earned: ${s.goldEarned}</div>`;
+ html+=`<div>Gold Spent: ${s.goldSpent}</div>`;
+  html+=`<div>--- Combat ---</div>`;
+   html+=`<div>Hits Dealt: ${s.hitsDealt||0}</div>`;
+   html+=`<div>Hits Missed: ${s.hitsMissed||0}</div>`;
+   html+=`<div>Hits Received: ${s.hitsReceived||0}</div>`;
+   html+=`<div>Dodges: ${s.dodges||0}</div>`;
+  html+=`<div>Kills Total: ${s.killsTotal}</div>`;
+ html+=`<div>Kills By Level:</div>`;
+ for(let l=1;l<=13;l++){let v=s.killsByLevel[l]||0;if(v>0)html+=`<div style="padding-left:min(2vw,2vh)">Level ${l}: ${v}</div>`;}
+ let sk=s.killsByLevel[G.MAX_COW_LEVEL]||0;if(sk>0)html+=`<div style="padding-left:min(2vw,2vh)">Cow Level: ${sk}</div>`;
+ let bk=s.killsByLevel[LEVEL_BACKROOM]||0;if(bk>0)html+=`<div style="padding-left:min(2vw,2vh)">Backroom: ${bk}</div>`;
+ html+=`<div>Kills By Monster:</div>`;
+ for(let mt of MONSTER_TYPES){let v=s.killsByMonster[mt.id]||0;if(v>0)html+=`<div style="padding-left:min(2vw,2vh)">${mt.name}: ${v}</div>`;}
+ html+=`<div>Champions Killed: ${s.championsKilled}</div>`;
+ html+=`<div>Damage Dealt (total): ${s.damageDealt}</div>`;
+ html+=`<div>Max Damage Dealt: ${s.maxDamageDealt}</div>`;
+ html+=`<div>Damage Taken (total): ${s.damageTaken}</div>`;
+ html+=`<div>Max Damage Taken: ${s.maxDamageTaken}</div>`;
+ html+=`<div>--- Deaths ---</div>`;
+ html+=`<div>Deaths Total: ${s.deathsTotal}</div>`;
+ html+=`<div>Deaths By Level:</div>`;
+ for(let l=1;l<=13;l++){let v=s.deathsByLevel[l]||0;if(v>0)html+=`<div style="padding-left:min(2vw,2vh)">Level ${l}: ${v}</div>`;}
+ let ds=s.deathsByLevel[G.MAX_COW_LEVEL]||0;if(ds>0)html+=`<div style="padding-left:min(2vw,2vh)">Cow Level: ${ds}</div>`;
+ let db=s.deathsByLevel[LEVEL_BACKROOM]||0;if(db>0)html+=`<div style="padding-left:min(2vw,2vh)">Backroom: ${db}</div>`;
+ html+=`<div>Deaths By Monster:</div>`;
+ for(let mt of MONSTER_TYPES){let v=s.deathsByMonster[mt.name]||0;if(v>0)html+=`<div style="padding-left:min(2vw,2vh)">${mt.name}: ${v}</div>`;}
+ html+=`<div>--- Quests ---</div>`;
+ html+=`<div>Quests Completed: ${s.questsCompleted}</div>`;
+ html+=`<div>--- Stats Allocated ---</div>`;
+ html+=`<div>Strength: ${s.statPointsStr}</div>`;
+ html+=`<div>Dexterity: ${s.statPointsDex}</div>`;
+ html+=`<div>Magic: ${s.statPointsMag}</div>`;
+ html+=`<div>Vitality: ${s.statPointsVit}</div>`;
+ html+=`<div>--- Save / Load ---</div>`;
+ html+=`<div>Manual Saves: ${s.manualSaves}</div>`;
+ html+=`<div>Manual Loads: ${s.manualLoads}</div>`;
+ html+='</div>';
+ showMenuSub(html);
+});
 byId('btnMenuFullscreen').addEventListener('click',()=>{
  if(!document.fullscreenElement&&!document.webkitFullscreenElement){
   let el=document.documentElement;
@@ -3004,20 +3594,12 @@ document.addEventListener('keydown',(e)=>{
      }
      for(let i=G.items.length-1;i>=0;i--){
       let item=G.items[i];
-     if(item.mapX===nx&&item.mapY===ny){
-       if(item.type==='gold'){G.player.gold=(G.player.gold||0)+rand(5,20);showMsg(`+${rand(5,20)} gold`);G.items.splice(i,1);continue;}
-       if(item.type==='potion'||item.type==='scroll'){
-        if(item.misc==='heal'||item.misc==='healscroll'){G.player.hp=Math.min(G.player.hp+30,G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-        if(item.misc==='mana'){G.player.mana=Math.min(G.player.mana+30,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-        if(item.misc==='bigheal'){G.player.hp=Math.min(G.player.hp+Math.floor(G.player.maxHp/2),G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-        if(item.misc==='fullheal'){G.player.hp=G.player.maxHp;showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-        if(item.misc==='bigmana'){G.player.mana=Math.min(G.player.mana+Math.floor(G.player.maxMana/2),G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-        if(item.misc==='fullmana'){G.player.mana=G.player.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-        if(item.misc==='rejuv'){G.player.hp=Math.min(G.player.hp+40,G.player.maxHp);G.player.mana=Math.min(G.player.mana+40,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-        if(item.misc==='fullrejuv'){G.player.hp=G.player.maxHp;G.player.mana=G.player.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-      }
-       if(G.player.inventory.length<32){G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);}
-      else{showMsg('Inventory full!');}
+      if(item.mapX===nx&&item.mapY===ny){
+        if(item.type==='gold'){G.player.gold=(G.player.gold||0)+rand(5,20);showMsg(`+${rand(5,20)} gold`);G.items.splice(i,1);continue;}
+        if(G.player.inventory.length<32){
+         if(item.type==='potion'||item.type==='scroll'){trackStat('itemsPickedUp',1);}
+         G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);
+        }else{showMsg('Inventory full!');}
      }
     }
       let st;
@@ -3033,6 +3615,9 @@ document.addEventListener('keydown',(e)=>{
        }else if(st===T_HIDDEN_PORTAL){
         showMsg('You found a hidden passage!');G.lastLevel=G.level;G.level=LEVEL_BACKROOM;loadLevel(G.level);
        }else if(st===T_STAIRS_DOWN&&G.level>0&&G.level<G.MAX_LEVELS){
+        if(G.level===3&&(!plr._bossKills||!plr._bossKills['lvl3'])){showMsg('The path is blocked. Defeat the boss of this level first!');requestAnimationFrame(gameLoop);return;}
+        if(G.level===7&&(!plr._bossKills||!plr._bossKills['lvl7'])){showMsg('The path is blocked. Defeat the boss of this level first!');requestAnimationFrame(gameLoop);return;}
+        if(G.level===11&&(!plr._bossKills||!plr._bossKills['lvl11'])){showMsg('The path is blocked. Defeat the boss of this level first!');requestAnimationFrame(gameLoop);return;}
         G.lastLevel=G.level;G.level++;loadLevel(G.level);showMsg(`Descending to Level ${G.level}`);
         }else if(st===T_STAIRS_DOWN&&G.level===G.MAX_LEVELS){
          if(G.unlocked&&G.unlocked.hatch){G.lastLevel=G.level;G.level=G.MAX_COW_LEVEL;loadLevel(G.level);showMsg('Secret passage to the Cow Level!');}
@@ -3092,19 +3677,15 @@ canvas.addEventListener('touchend',(e)=>{
   for(let i=G.items.length-1;i>=0;i--){
    let item=G.items[i];
    if(item.mapX===wx&&item.mapY===wy&&dist(G.player.x,G.player.y,wx,wy)<=1.5){
-    if(item.type==='gold'){G.player.gold+=rand(5,20);showMsg(`+${rand(5,20)} gold`);G.items.splice(i,1);return;}
-    if(item.type==='potion'||item.type==='scroll'){
-     if(item.misc==='heal'||item.misc==='healscroll'){G.player.hp=Math.min(G.player.hp+30,G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
-     if(item.misc==='mana'){G.player.mana=Math.min(G.player.mana+30,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
-     if(item.misc==='rejuv'){G.player.hp=Math.min(G.player.hp+40,G.player.maxHp);G.player.mana=Math.min(G.player.mana+40,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
-     if(item.misc==='fullrejuv'){G.player.hp=G.player.maxHp;G.player.mana=G.player.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);return;}
+     if(item.type==='gold'){let g=rand(5,20);G.player.gold+=g;trackStat('goldEarned',g);showMsg(`+${g} gold`);G.items.splice(i,1);return;}
+      if(G.player.inventory.length<32){
+       G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);
+      }
+     else{showMsg('Inventory full!');}
+     return;
     }
-    if(G.player.inventory.length<32){G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);}
-    else{showMsg('Inventory full!');}
-    return;
    }
-  }
-  if(G.level===LEVEL_BACKROOM?canWalkBR(wx,wy):canWalk(wx,wy,G.map)){
+   if(G.level===LEVEL_BACKROOM?canWalkBR(wx,wy):canWalk(wx,wy,G.map)){
    let path=G.level===LEVEL_BACKROOM?findPathBR(G.player.x,G.player.y,wx,wy):findPath(G.player.x,G.player.y,wx,wy,G.map);
    if(path&&path.length>1){G.player.movePath=path;G.player.moveIndex=0;G.player.moving=true;}
   }
@@ -3136,15 +3717,11 @@ canvas.addEventListener('touchend',(e)=>{
     for(let i=G.items.length-1;i>=0;i--){
     let item=G.items[i];
     if(item.mapX===nx&&item.mapY===ny){
-     if(item.type==='gold'){G.player.gold+=rand(5,20);showMsg(`+${rand(5,20)} gold`);G.items.splice(i,1);continue;}
-     if(item.type==='potion'||item.type==='scroll'){
-      if(item.misc==='heal'||item.misc==='healscroll'){G.player.hp=Math.min(G.player.hp+30,G.player.maxHp);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-      if(item.misc==='mana'){G.player.mana=Math.min(G.player.mana+30,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-      if(item.misc==='rejuv'){G.player.hp=Math.min(G.player.hp+40,G.player.maxHp);G.player.mana=Math.min(G.player.mana+40,G.player.maxMana);showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-      if(item.misc==='fullrejuv'){G.player.hp=G.player.maxHp;G.player.mana=G.player.maxMana;showMsg(`Used ${item.name}`);G.items.splice(i,1);continue;}
-     }
-     if(G.player.inventory.length<32){G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);}
-     else{showMsg('Inventory full!');}
+       if(item.type==='gold'){let g=rand(5,20);G.player.gold+=g;trackStat('goldEarned',g);showMsg(`+${g} gold`);G.items.splice(i,1);continue;}
+       if(G.player.inventory.length<32){
+        G.player.inventory.push(item);showMsg(`Picked up ${item.name}`);G.items.splice(i,1);
+       }
+      else{showMsg('Inventory full!');}
     }
    }
   }
