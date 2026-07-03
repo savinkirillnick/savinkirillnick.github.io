@@ -77,8 +77,8 @@ body{font-family:Miniablo;background:#000;color:#c90;overflow:hidden;width:100vw
 #buff_container{position:absolute;top:min(2vh,2vw);left:50%;translate:-50%0;z-index:6;pointer-events:none;display:flex;flex-direction:column;align-items:center}
 #buff_bar{display:flex;gap:min(.3vw,.4vh);justify-content:center;margin:min(.3vh,.3vw) 0;flex-wrap:wrap;pointer-events:auto}
 .buff_cell{width:min(5vw,7vh);height:min(5vw,7vh);border:min(.15vw,.2vh)solid #555;font-family:Miniablo;font-size:min(1.25vw,1.5vh);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;user-select:none;text-shadow:1px 1px 2px #000;position:relative;line-height:1.2}
-.buff_cell .buff_name{color:#c90;text-shadow:1px 1px 2px #000;font-size:min(2.5vw,3.0vh)}
-.buff_cell .buff_time{color:#c90;text-shadow:1px 1px 2px #000;font-size:min(3.5vw,4.0vh);opacity:.8}
+.buff_cell .buff_name{color:#eee;text-shadow:1px 1px 2px #000;font-size:min(2.5vw,3.0vh)}
+.buff_cell .buff_time{color:#eee;text-shadow:1px 1px 2px #000;font-size:min(3.5vw,4.0vh);opacity:.8}
 #msg_text{position:absolute;bottom:min(16vh,16vw);left:50%;translate:-50%0;font-size:min(3vw,3.5vh);color:#fe0;text-shadow:1px 1px 2px #000;pointer-events:none;transition:opacity .3s;opacity:0;text-align:center;max-width:80vw;font-family:MiniabloBold;z-index:5}
 .panel{position:absolute;background:rgba(0,0,0,.92);border:min(.3vw,.3vh)solid #630;padding:min(2vw,2vh);display:none;z-index:10;font-size:min(3vw,3.5vh);max-height:90vh;overflow-y:auto;min-width:min(48vw,60vh)}
 .panel.active{display:block}
@@ -931,17 +931,17 @@ const ITEM_QUALITIES=[
   {name:'Poor',priceKf:0.25,statKf:0.5,chance:5}
 ];
 const BUFFS=[
- {key:'stun',name:'Stun',duration:10,color:'#cee',desc:'Completely immobilizes the player.',debuff:true},
+ {key:'stun',name:'Stun',duration:10,color:'#556',desc:'Completely immobilizes the player.',debuff:true},
  {key:'fire',name:'Fired',duration:6,color:'#fa0',desc:'Deals fire damage over time.',debuff:true},
  {key:'acid',name:'Acid',duration:10,color:'#0f6',desc:'Deals damage over time with poisonous acid.',debuff:true},
  {key:'bleed',name:'Bleed',duration:20,color:'#b00',desc:'Bleeding that causes the player to lose health.',debuff:true},
  {key:'fag',name:'Fag',duration:20,color:'#363',desc:'Fatigue reduces your damage.',debuff:true},
  {key:'mana',name:'Mana',duration:20,color:'#36d',desc:'Makes the supply of magical energy infinite.'},
  {key:'vamp',name:'Vamp',duration:20,color:'#60c',desc:'Returns part of the damage dealt as health.'},
- {key:'fury',name:'Fury',duration:30,color:'#e66',desc:'Increases all damage dealt by 200%.'},
- {key:'rock',name:'Rock',duration:30,color:'#ddc',desc:'Increases defense by 200%.'},
- {key:'skill',name:'Skill',duration:59,color:'#dcd',desc:'Increases all player stats by 5.'},
- {key:'exp',name:'Exp',duration:59,color:'#cdd',desc:'Doubles all experience gained.'}
+ {key:'fury',name:'Fury',duration:30,color:'#e33',desc:'Increases all damage dealt by 200%.'},
+ {key:'rock',name:'Rock',duration:30,color:'#886',desc:'Increases defense by 200%.'},
+ {key:'skill',name:'Skill',duration:59,color:'#969',desc:'Increases all player stats by 5.'},
+ {key:'exp',name:'Exp',duration:59,color:'#68c',desc:'Doubles all experience gained.'}
 ];
 const BUFF_MONSTERS={
  stun:['zombie','goat man','throll','taurus','cannibal','butcher','diablo'],
@@ -1354,7 +1354,7 @@ function updateBuffsUI(){
  if(!el)return;
  el.innerHTML='';
  if(G.buffs&&G.buffs.length>0){
-  el.innerHTML='<div id="buff_bar">'+G.buffs.map(b=>`<div class="buff_cell" style="background:${b.color}" title="${b.desc}"><span class="buff_name">${b.name}</span><span class="buff_time">${Math.ceil(b.remaining)}s</span></div>`).join('')+'</div>';
+  el.innerHTML='<div id="buff_bar">'+G.buffs.map(b=>`<div class="buff_cell" style="background:${b.color}" title="${b.desc}"><span class="buff_name">${b.name}</span><span class="buff_time">${Math.ceil(b.remaining)}</span></div>`).join('')+'</div>';
  }
 }
 function addXp(plr,amount){
