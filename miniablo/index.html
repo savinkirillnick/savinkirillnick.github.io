@@ -1169,9 +1169,11 @@ const MONSTER_TYPES=[
  {id:28,name:'Lilith',color:'#222',headColor:'#ffe',        minHP:900,  maxHP:900,  dmg:70,ac:90,  xp:3500,level:-1},
  {id:29,name:'Leech',color:'#224',headColor:'#66e',         minHP:300,  maxHP:300,  dmg:30,ac:50,  xp:1500,level:-1},
 
- {id:30,name:'Cow',color:'#886',headColor:'#a88',           minHP:300,  maxHP:300,  dmg:35,ac:60,  xp:500,level:-1}
+ {id:30,name:'Cow',color:'#886',headColor:'#a88',           minHP:300,  maxHP:300,  dmg:35,ac:60,  xp:500,level:-1},
+ {id:31,name:'Red',color:'#c44',headColor:'#e66',           minHP:100,  maxHP:100,  dmg:10,ac:100, xp:0,  level:0},
+ {id:32,name:'Blue',color:'#44c',headColor:'#66e',          minHP:100,  maxHP:100,  dmg:10,ac:100, xp:0,  level:0}
 
-]; // id=30
+]; // id=32
 function spawnMonster(typeId,x,y,level){
  let t=MONSTER_TYPES.find(m=>m.id===typeId);
  if(!t)return null;
@@ -1436,7 +1438,7 @@ function playerAttack(plr,monster){
       dmg=Math.max(1,dmg+rand(-1,1));
       let isCrit=rng()*100<plr.crit;
       if(isCrit)dmg*=3;
-      AUDIO.playSFX('punch',0.3);AUDIO.playSFX('monster');
+      AUDIO.playSFX('punch',0.2);AUDIO.playSFX('monster',0.3);
       if(isCrit)AUDIO.playSFX('critical',0.3);
       // Super attack mode: 2x damage costs mana
       if(G.superAttackMode){
@@ -1930,14 +1932,14 @@ function interactNPC(plr,npc){
    for(let amt of [100,200,500]){
     for(let color of ['red','blue']){
      let btn=document.createElement('div');btn.className='npc_btn';
-     btn.textContent=`${amt}g on ${color==='red'?'Red (Cannibal)':'Blue (Demon)'}`;
+     btn.textContent=`${amt}g on ${color==='red'?'Red':'Blue'}`;
      btn.onclick=((a,c)=>()=>{
       if((plr.gold||0)<a){showMsg('Not enough gold!');return;}
        plr.gold=(plr.gold||0)-a;G.bettorAmount=a;G.bettorChoice=c;G.betActive=true;
        G.monsters=G.monsters.filter(m=>!m.betColor);G.items=G.items.filter(it=>!(it.mapX>=38&&it.mapX<=48&&it.mapY>=18&&it.mapY<=28));
-       // Spawn fighters
-       let redM=spawnMonster(23,41,21,1);redM.betColor='red';redM.t.name='Red Cannibal';redM.color='#c44';redM.headColor='#e66';
-       let blueM=spawnMonster(19,45,25,1);blueM.betColor='blue';blueM.t.name='Blue Demon';blueM.color='#44c';blueM.headColor='#66e';
+        // Spawn fighters
+        let redM=spawnMonster(31,41,21,1);redM.betColor='red';
+        let blueM=spawnMonster(32,45,25,1);blueM.betColor='blue';
        redM.maxHp=100;redM.hp=100;blueM.maxHp=100;blueM.hp=100;redM.ac=100;blueM.ac=100;redM.dmg=10;blueM.dmg=10;
       G.betMonsters=[redM,blueM];G.monsters.push(redM,blueM);
       showMsg(`Bet placed: ${a}g on ${color}!`);
@@ -3530,7 +3532,7 @@ function showMenuSub(content){
  mc.style.display='none';mi.style.display='block';mic.innerHTML=content;
 }
 byId('btnMenuControls').addEventListener('click',()=>showMenuSub(
- 'WASD / Arrow keys - Move<br>Click - Attack / Interact / Move<br>I - Inventory<br>C - Character Stats<br>Q - Quest Log<br>Esc - Open Game Menu<br>H - Use Health Potion<br>M - Use Mana Potion<br>R - Use Rejuvenation Potion<br>P - Use Pure Potion for debuff<br>U - Toggle Super Attack<br>Space - Close panels'
+ 'WASD / Arrow keys - Move<br>/ - Attack nearest monster<br>Click - Attack / Interact / Move<br>I - Inventory<br>C - Character Stats<br>Q - Quest Log<br>Esc - Open Game Menu<br>H - Use Health Potion<br>M - Use Mana Potion<br>R - Use Rejuvenation Potion<br>P - Use Pure Potion for debuff<br>U - Toggle Super Attack<br>Space - Close panels'
 ));
 byId('btnMenuTips').addEventListener('click',()=>showMenuSub(
  'Talk to NPCs in town for quests, healing, items.<br>Click monsters to attack.<br>Press C on level up to spend stat points.<br>Find portals (T) on levels 4/8/12.<br>Find stairs (D) to go deeper.'
@@ -3671,20 +3673,31 @@ document.addEventListener('keydown',(e)=>{
     if(key==='m'){usePotionFromInventory('mana');e.preventDefault();}
     if(key==='r'){usePotionFromInventory('rejuv');e.preventDefault();}
     if(key==='p'){usePotionFromInventory('pure');e.preventDefault();}
-    if(key==='u'){toggleSuperAttack();e.preventDefault();}
-    if(key==='e'){toggleGameMenu();e.preventDefault();}
-   // Movement
+     if(key==='u'){toggleSuperAttack();e.preventDefault();}
+     if(key==='e'){toggleGameMenu();e.preventDefault();}
+     if(key==='/'&&!G.dead){
+      e.preventDefault();let now=performance.now();
+      if(now-(G.player._lastAtk||0)<200)return;G.player._lastAtk=now;
+      let closest=null,closestDist=Infinity;
+      for(let m of G.monsters){if(m.alive){let d=dist(G.player.x,G.player.y,m.x,m.y);if(d<closestDist){closest=m;closestDist=d;}}}
+      if(closest)playerAttack(G.player,closest);
+     }
+    // Movement
   if(!document.querySelector('.panel.active')&&!byId('npcDialog').classList.contains('active')&&!byId('questCompleteDialog').classList.contains('active')){
   let dx=0,dy=0;
     if(key==='w'||key==='arrowup')dy=-1;
     if(key==='s'||key==='arrowdown')dy=1;
     if(key==='a'||key==='arrowleft')dx=-1;
    if(key==='d'||key==='arrowright')dx=1;
-   if(dx||dy){
-    e.preventDefault();
-    let nx=G.player.x+dx,ny=G.player.y+dy;
-    if(canWalk(nx,ny,G.map)){
-     G.player.x=nx;G.player.y=ny;
+    if(dx||dy){
+     e.preventDefault();
+      let now=performance.now();
+      if(now-(G.player._lastKbMove||0)<125)return;G.player._lastKbMove=now;
+      G.player.movePath=null;G.player.moving=false;
+     let nx=G.player.x+dx,ny=G.player.y+dy;
+     if(canWalk(nx,ny,G.map)){
+      G.player.x=nx;G.player.y=ny;
+      AUDIO.playSFX('footstep',0.1);
      // Backroom chunk tracking
      if(G.level===LEVEL_BACKROOM){
       let ncx=Math.floor(G.player.x/BR_CHUNK_SIZE),ncy=Math.floor(G.player.y/BR_CHUNK_SIZE);
